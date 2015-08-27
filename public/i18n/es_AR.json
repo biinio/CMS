@@ -1,0 +1,31 @@
+{
+  "dashboard": {
+    "WELCOME": "Bienvenido a {{appName}}"
+  },
+  "topbar": {
+    "search": {
+      "PLACEHOLDER": "Escribe y presiona enter.."
+    }
+  },
+  "sidebar": {
+    "WELCOME": "Bienvenido"
+  },
+  "PROFILE": {
+    "FIRST_NAME": "Nombre",
+    "LAST_NAME" : "Apellidos",
+    "USER_NAME" : "Nombre de usuario",
+    "EMAIL": "Email",
+    "PHONE":"Telefono",
+    "UPLOAD_IMAGE":"Subir imagen"
+  },
+  "ORGANIZATION":{
+    "TITLE": "Tus organizaciones",
+    "SUB_TITLE": "Aquí puedes administrar las organizaciones que manejas en Biin",
+    "ADD_NEW": "Añadir nueva",
+    "NAME": "Nombre",
+    "BRAND": "Marca",
+    "INFORMATION": "Acerca de",
+    "MORE_INFO": "Información Adicional",
+    "ORG_ID": "Identificador"
+  }
+}
