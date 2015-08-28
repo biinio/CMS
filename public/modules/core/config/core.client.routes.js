@@ -23,7 +23,7 @@
                 // url: '/',
                 abstract: true,
                 templateUrl: 'modules/core/views/core.client.view.html',
-                resolve: helper.resolveFor('modernizr', 'icons')
+                resolve: helper.resolveFor('modernizr', 'icons', 'filestyle')
             })
             .state('app.home', {
                 url: '/home',
