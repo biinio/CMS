@@ -14,7 +14,6 @@
             },
             // Angular based script (use the right module name)
             modules: [
-                // {name: 'toaster', files: ['/lib/angularjs-toaster/toaster.js', '/lib/angularjs-toaster/toaster.css']}
                 //{name: 'biinUsers', files: ['/modules/biinUsers/controllers/access-login.controller.js']},
                 //{name: 'dashboard', files: ['/modules/dashboard/controllers/dashboard.controller.js']}
 

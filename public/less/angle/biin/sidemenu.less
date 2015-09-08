@@ -1,0 +1,127 @@
+/* ========================================================================
+Component: sidemenu.less
+ ========================================================================== */
+
+@sidebar-bg:                      @aside-bg;
+
+@sidebar-item-color:              #515253;
+@sidebar-item-color-active:       @nav-top-bg;
+@sidebar-item-bg-active:          darken(@sidebar-bg, 6%);
+
+@sidebar-icon-color:              inherits;
+@sidebar-icon-color-active:       @nav-top-bg;
+
+@sidebar-bullet-color:            rgba(0,0,0,.25);
+@sidebar-bullet-color-active:     @sidebar-icon-color-active;
+
+@sidebar-heading-color:           #919DA8;
+@sidebar-label-color:             @sidebar-item-color;
+
+@submenu-header-hg:               40px;   // Submenu header when hover collapse sidebar
+@sidebar-item-border-wd:          3px;
+@scrollbar-wd:                    17px;
+
+.sidemenu {
+  height: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: @sidebar-bg;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+
+  // draw a divider for the sidebar
+  &:before {
+    content:"";
+    background: rgba(0,0,0,.15);
+    position: absolute;
+    display: block;
+    top:0;
+    bottom: 0;
+    right: 0;
+    width: 1px;
+    -webkit-transform: translateZ(0px);
+  }
+}
+
+.list-items-side-menu{
+    width: 100%;
+    height: 70px;
+}
+
+.list-items-side-menu.active{
+  width: 100%;
+  height: 70px;
+  background: @sidebar-icon-color-active;
+}
+
+// Hides the scrollbar only on desktops
+@tablet-landscape: ~"only screen and (min-width: 1025px)";
+@media @tablet-landscape {
+  .sidebar {
+    margin-right: -@scrollbar-wd;
+    overflow-y: scroll;
+  }
+}
+
+.thumbListImage{
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  position: relative;
+  max-height: 100%;
+  height: 100%;
+
+  img{
+    width: auto;
+    max-height: 100%;
+    height: 100%;
+  }
+}
+
+// Collapsed state styles
+.aside-collapsed {
+
+  .sidebar {
+    overflow-x: hidden;
+    // Applies to first level items
+    > .nav {
+
+      .nav,
+      > .nav-heading,
+      > li > a > span {
+        display: none !important;
+      }
+
+      > li {
+        width: @aside-wd-collapsed - 2;
+        > a, > .nav-item {
+          text-indent: -@sidebar-item-border-wd;
+          padding: 20px 0;
+          text-align: center;
+          > em {
+            font-size: 1.6em; // increase icons size
+            width: auto;
+          }
+          &:focus { // accessibility
+            background-color: transparent;
+            > em {
+              color: inherit;
+            }
+          }
+        }
+      }
+    }
+
+    // labels in menu items
+    .nav {
+      .label {
+        position: absolute;
+        top: 10px;
+        right: 5px;
+        text-indent: 0;
+      }
+    }
+
+  } // .sidebar
+} // .aside-collapsed

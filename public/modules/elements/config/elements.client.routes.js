@@ -10,7 +10,12 @@ angular.module('elements').config(['$stateProvider',
         $stateProvider.
             state('app.elements', {
                 url: '/elements',
-                templateUrl: 'modules/elements/views/elements.client.view.html'
+                templateUrl: 'modules/elements/views/elements.client.view.html',
+                resolve:{
+                    organization:function( Organization ){
+                        return Organization.promise;
+                    }
+                }
             });
     }
 ]);

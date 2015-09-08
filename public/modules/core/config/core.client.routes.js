@@ -27,7 +27,12 @@
             })
             .state('app.home', {
                 url: '/home',
-                templateUrl: 'modules/core/views/home.client.view.html'
+                templateUrl: 'modules/core/views/home.client.view.html',
+                resolve: {
+                    organization:function( Organization ){
+                        return Organization.promise;
+                    }
+                }
             })
             /*.state('app.biinUsers', {
                 url: '/login',
