@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app.core').controller('HeaderController', ['$scope', 'Authentication', 'Menus','Organization',
-	function($scope, Authentication, Menus, Organization ) {
+	function($scope, Authentication, Menus,Organization) {
 		$scope.authentication = Authentication;
 		$scope.isCollapsed = false;
 		$scope.menu = Menus.getMenu('topbar');
@@ -14,7 +14,6 @@ angular.module('app.core').controller('HeaderController', ['$scope', 'Authentica
 		// Collapsing the menu after navigation
 		$scope.$on('$stateChangeSuccess', function() {
 			$scope.isCollapsed = false;
-            $scope.organizationService.getOrganizations();
 		});
 
 	}

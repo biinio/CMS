@@ -1,38 +1,40 @@
 'use strict';
 
-//Menu service used for managing  menus
-angular.module('app.core').service('Organization', ['$http','$window',
+angular.module('app.core').service('Organization', ['$http','$rootScope',
 
-	function($http,$window) {
-        this.selectedOrganization = {};
-        this.organizationsList = [];
+	function($http, $rootScope) {
+        var selectedOrganization = {};
+        var organizationsList = [];
+        var promise = $http.get('/api/organization').then(function(result) {
+                service.organizationsList = result.data.data;
+                service.selectedOrganization = service.organizationsList[0];
+            },
+            function(){
 
-        this.getOrganizations = function() {
-            var onSuccessCallback = function( data ){
-                if(data) {
-                    this.organizationsList = data.data;
-                    this.selectedOrganization = this.organizationsList[0];
+            }
+        );
+        var service = {
+            promise : promise,
+            selectedOrganization : selectedOrganization,
+            organizationsList : organizationsList,
+
+            setSelectedOrganization :  function( index ){
+                if(index >= 0 && index < this.organizationsList.length) {
+                    this.selectedOrganization = this.organizationsList[index];
+                    $rootScope.$broadcast('organizationChanged');
                 }
-            };
-            $http.get('/api/organization').success(onSuccessCallback.bind(this)).error(function () {
-                console.error("Error: unable to load organizations");
-            });
-        };
+            },
 
-        this.setSelectedOrganization = function( index ){
-            if(index >= 0 && index < this.organizationsList.length)
-                this.selectedOrganization = this.organizationsList[index];
-        };
-
-        this.removeOrganization = function( id ){
-            for(var i= 0; i< this.organizationsList.length; i++){
-                if(this.organizationsList[i].identifier == id){
-                    this.organizationsList.slice(i,1);
-                    break;
+            removeOrganization:  function( id ){
+                for(var i= 0; i< this.organizationsList.length; i++){
+                    if(this.organizationsList[i].identifier == id){
+                        this.organizationsList.slice(i,1);
+                        break;
+                    }
                 }
             }
         };
 
-        this.getOrganizations();
+        return service;
 	}
 ]);
