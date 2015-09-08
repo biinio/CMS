@@ -27,5 +27,52 @@
     "INFORMATION": "Acerca de",
     "MORE_INFO": "Información Adicional",
     "ORG_ID": "Identificador"
+  },
+  "TYPE":{
+    "TITLE":"Tipo de Elemento",
+    "SUB_TITLE": "Seleccione el tipo apropiado para el elemento.",
+    "INFO": "Informativo",
+    "BENEFIT": "Beneficio",
+    "SELECT": "Por favor seleccione el tipo de elemento para continuar",
+    "INFO1": "Elemento informativo",
+    "INFO_DESC": "Permite crear información relevante para los visitantes de su estableciemiento",
+    "BENEFIT1": "Producto o promoción",
+    "BENEFIT_DESC": "informa sobre productos, promociones o cupones",
+    "IDENTIFIER": "Identificador"
+  },
+  "GALLERY":{
+    "TITLE": "Galería de imagenes",
+    "SUB_TITLE": "Agregue y use las imagenes de su marca para darle identidad a su local",
+    "UPLOAD": "Subir"
+  },
+  "SUMMARY":{
+    "TITLE": "Información del elemento",
+    "SUB_TITLE": "Información básica y detalles  del elemento",
+    "NAME": "Información Básica",
+    "DESC": "Nombre y descripción breve, esta información se vera en la vista previa",
+    "NAME1": "Nombre",
+    "DESC1": "Descripción Breve",
+    "DESC2": "Un poco más de detalle de tu producto u oferta",
+    "NAMEDESCRIPTION": "El nombre o título de tu producto u oferta",
+    "DETAILS": "Detalles",
+    "DETAILS1": "Agrega mas detalles sobre el elemento por ejemplo, listas, Listas de Precios, acotaciones.",
+    "DTITLE": "Un título",
+    "PARAGRAPH": "Párrafo",
+    "QUOTE": "Anotación",
+    "LIST": "Lista",
+    "PRICE_LIST": "Lista Precios",
+    "PRICE_LIST_CURRENCY": "Moneda",
+    "PRICE_LIST_DESCRIPTION": "Descripción",
+    "PRICE_LIST_DESCRIPTION_PLACEHOLDER": "Ej. Menú Ejecutivo",
+    "PRICE_LIST_VALUE": "Valor",
+    "PRICE_LIST_VALUE_PLACEHOLDER": "Ej. 100",
+    "LINK": "Enlace",
+    "HIGHTLIGHT": "Recomendados",
+    "HIGHTLIGHTDESCRIPTION": "Selecciona esta opción para que el elemento aparezca en la pantalla de recomendados en Biin"
+  },
+  "GENERIC":{
+    "SEARCH_TAGS": "Etiquetas de búsqueda",
+    "SEARCH_TAGS_DESC": "Las etiquetas ayudan a que su información sea encontrada mas fácilmente.",
+    "ADD": "Añadir"
   }
 }

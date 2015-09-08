@@ -40,7 +40,13 @@ module.exports = {
 				'public/lib/jquery.browser/dist/jquery.browser.js',
 				'public/lib/angularjs-toaster/toaster.js',
 				'public/lib/node-uuid/uuid.js',
-				'public/lib/animo.js/animo.js'
+				'public/lib/animo.js/animo.js',
+				'public/lib/textAngular/dist/textAngular.min.js',
+				'public/lib/textAngular/dist/textAngular-rangy.min.js',
+				'public/lib/textAngular/dist/textAngular-sanitize.min.js',
+                'public/lib/underscore/underscore.js',
+                'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.js',
+                'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput-angular.js'
 				// 'public/lib/jquery/dist/jquery.js',
 				// 'public/lib/angular/angular.js',
 				// 'public/lib/angular-resource/angular-resource.js',
@@ -57,7 +63,9 @@ module.exports = {
 			// 'public/modules/**/css/*.css'
 			'public/dist/application.min.css',
 			'public/lib/angularjs-toaster/toaster.css',
-			'public/lib/animo.js/animate+animo.css'
+			'public/lib/animo.js/animate+animo.css',
+            'public/lib/textAngular/dist/textAngular.css',
+            'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.css'
 		],
 		js: [
 			'public/config.js',
