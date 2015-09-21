@@ -1,0 +1,68 @@
+/* ========================================================================
+Component: elements.less
+ ========================================================================== */
+
+@gallery-image-width:             100px;
+@gallery-image-height:            100px;
+@padding-image-container:         15px;
+
+.imagegallery{
+  height: @gallery-image-height;
+  width: @gallery-image-width;
+}
+
+.ownedGalleryWrapper{
+  display: inline-block;
+  padding-left: @padding-image-container;
+  padding-right: @padding-image-container;
+}
+
+.img-add-block{
+  display: inline-block;
+  vertical-align: top;
+}
+
+.img-block{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.img-add-block-wrapper{
+  height: 100px;
+  width: 100px;
+  line-height: 100px;
+  text-align: center;
+}
+
+.btn-browse {
+  /* text-align: center; */
+  display: inline-block;
+  line-height: normal;
+  vertical-align: middle;
+}
+.img-block-buttons{
+  position: relative;
+
+  .btnDelete{
+    display: none;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    opacity: 0.7;
+    > i{
+      font-size: 2.3em;
+      margin-left: 3px;
+      margin-top: -1px;
+    }
+  }
+}
+
+.img-block-buttons:hover{
+  .btnDelete{
+    display: block;
+  }
+}
+
