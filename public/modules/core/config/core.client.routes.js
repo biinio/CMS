@@ -34,6 +34,11 @@
                     }
                 }
             })
+            .state('appleftbar', {
+                abstract: true,
+                templateUrl: 'modules/core/views/coreleftbar.client.view.html',
+                resolve: helper.resolveFor('modernizr', 'icons', 'filestyle')
+            })
             /*.state('app.biinUsers', {
                 url: '/login',
                 templateUrl: 'modules/biinUsers/views/login.client.view.html',

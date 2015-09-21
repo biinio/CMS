@@ -43,10 +43,12 @@ module.exports = {
 				'public/lib/animo.js/animo.js',
 				'public/lib/textAngular/dist/textAngular.min.js',
 				'public/lib/textAngular/dist/textAngular-rangy.min.js',
+				'public/lib/textAngular/dist/textAngularSetup.js',
 				'public/lib/textAngular/dist/textAngular-sanitize.min.js',
                 'public/lib/underscore/underscore.js',
                 'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.js',
-                'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput-angular.js'
+                'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput-angular.js',
+				'public/lib/angular-bind-html-compile/angular-bind-html-compile.js'
 				// 'public/lib/jquery/dist/jquery.js',
 				// 'public/lib/angular/angular.js',
 				// 'public/lib/angular-resource/angular-resource.js',

@@ -8,7 +8,7 @@ angular.module('biins').config(['$stateProvider',
     function($stateProvider) {
         // Users state routing
         $stateProvider.
-            state('app.biins', {
+            state('appleftbar.biins', {
                 url: '/biins',
                 templateUrl: 'modules/biins/views/biins.client.view.html'
             });

@@ -1,43 +1,6 @@
 <div ng-controller="BiinsController as biinsCtrl" class="">
     <div id="wrapperContent" class="container-fluid">
-        <div class="left-section-content col-md-3 nopadding">
-            <div class="container-fluid main-views-list">
-                <div class="hideButton">
-                    <div class="unretracted icon-arrow-37"></div>
-                    <div class="retracted icon-arrow-38"></div>
-                </div>
-                <div class="row">
-                    <div scrollbar="scrollbarOptionsStandard" class="scroll-vertical-container scrollbar-inner">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 searchBoxList">
-                            <div class="col-md-2">
-                                <button ng-click="create()" class="btn btnAdd">&#43;</button>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="searchBox-wrapper">
-                                    <input type="text" placeholder="filter" ng-model="query" autofocus="autofocus" class="form-control"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div ng-repeat="item in sites | orderBy : '+title1' | filter: query" ng-click="edit(sites.indexOf(item))" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
-                            <div ng-class="{active: sites.indexOf(item) == selectedSite}" class="moduleWrapperList contentHideButtons">
-                                <div class="col-md-3 thumbListImage"><img ng-if="item.media.length == 0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+" alt=""/><img ng-if="item.media.length&gt;0" ng-src="{{item.media[0].imgUrl}}" pending-indicator="pending-indicator"/></div>
-                                <div class="col-md-9">
-                                    <label class="moduleTitle">{{item.title1}}</label><br/>
-                                    <label class="moduleSubTitle">{{item.title2}}</label>
-                                    <div ng-click="openConfirmation('sm',sites.indexOf(item))" class="btnDelete icon-round-control btn-on-hover">
-                                        <div class="icon icon-bin-2"></div>
-                                    </div>
-                                    <div class="btnShowcasePreview icon-round-control btn-on-hover">
-                                        <div class="icon icon-arrange-1"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="right-section-content col-md-9">
+        <div class="right-section-content">
             <h4>Biins</h4>
             <div ng-if="selectedSite!=null"></div>
         </div>

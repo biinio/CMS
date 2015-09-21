@@ -8,7 +8,7 @@ angular.module('showcases').config(['$stateProvider',
     function($stateProvider) {
         // Users state routing
         $stateProvider.
-            state('app.showcases', {
+            state('appleftbar.showcases', {
                 url: '/showcases',
                 templateUrl: 'modules/showcases/views/showcases.client.view.html'
             });
