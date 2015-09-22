@@ -95,7 +95,7 @@
                     </div>
                 </section>
                 <!-- Categories Section -->
-                <section>
+                <!--<section>
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <legend>Categories</legend>
@@ -131,7 +131,7 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </section>-->
                 <!-- Highlights Section -->
                 <section>
                     <div class="panel panel-default">
@@ -247,7 +247,7 @@
                                             </div>
                                             <input type="datetime" date-time="date-time"
                                                    ng-model="objectsSidebarService.selectedObject.initialDate"
-                                                   ng-disabled="!hasTimmingBool" placeholder="Initial Date**"
+                                                   ng-disabled="!objectsSidebarService.selectedObject.hasTimming" placeholder="Initial Date**"
                                                    ng-blur="validate()" required="required" readonly="readonly"
                                                    class="highlightInput"/>
                                             <span class="help-block">Fecha de inicio de la promoción</span>
@@ -264,7 +264,7 @@
                                             </div>
                                             <input type="datetime" date-time="date-time"
                                                    ng-model="objectsSidebarService.selectedObject.expirationDate"
-                                                   ng-disabled="!hasTimmingBool" placeholder="Expiration Date**"
+                                                   ng-disabled="!objectsSidebarService.selectedObject.hasTimming" placeholder="Expiration Date**"
                                                    ng-blur="validate()" required="required" readonly="readonly"
                                                    class="highlightInput"/>
                                             <span class="help-block">Fecha final de la promoción</span>

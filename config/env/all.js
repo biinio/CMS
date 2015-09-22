@@ -48,7 +48,9 @@ module.exports = {
                 'public/lib/underscore/underscore.js',
                 'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.js',
                 'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput-angular.js',
-				'public/lib/angular-bind-html-compile/angular-bind-html-compile.js'
+				'public/lib/angular-bind-html-compile/angular-bind-html-compile.js',
+                'public/lib/angular-moment/angular-moment.js',
+                'public/lib/angular-datepicker/dist/angular-datepicker.js'
 				// 'public/lib/jquery/dist/jquery.js',
 				// 'public/lib/angular/angular.js',
 				// 'public/lib/angular-resource/angular-resource.js',
@@ -67,8 +69,9 @@ module.exports = {
 			'public/lib/angularjs-toaster/toaster.css',
 			'public/lib/animo.js/animate+animo.css',
             'public/lib/textAngular/dist/textAngular.css',
-            'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.css'
-		],
+            'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.css',
+            'public/lib/angular-datepicker/dist/angular-datepicker.css'
+        ],
 		js: [
 			'public/config.js',
 			'public/application.js',

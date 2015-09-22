@@ -25,6 +25,7 @@
     "angular-bootstrap": "0.12.1",
     "angular-bootstrap-checkbox": "~0.3.1",
     "angular-cookies": "1.4.2",
+    "angular-datepicker": "~1.0.16",
     "angular-loading-bar": "0.7.0",
     "angular-mocks": "1.4.2",
     "angular-resource": "1.4.2",
