@@ -47,6 +47,12 @@
             }
             $scope.isHidden = !$scope.isHidden;
         };
+
+        $scope.deleteItem = function(index , $event){
+            console.warn("Delete clicked " + index);
+            $event.stopPropagation();
+            $rootScope.$broadcast("Biin: On Object Deleted",index);
+        };
     }
 })();
 

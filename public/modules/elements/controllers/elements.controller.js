@@ -10,25 +10,25 @@
         .module('elements')
         .controller('ElementsController', ElementsController);
 
-    ElementsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar'];
+    ElementsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery'];
 
-    function ElementsController($http, $state, $scope, Authentication, Organization,Categories, ObjectsSidebar) {
-        var vm = this;
+    function ElementsController($http, $state, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery) {
         activate();
 
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.sidebarTemplate =
             "<div class='col-md-3 thumbListImage'>" +
                 "<img ng-if='item.media.length == 0' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
-                "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}' pending-indicator='pending-indicator'/></div>"+
-            "<div class='col-md-9'>"+
+                "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}' pending-indicator='pending-indicator'/>"+
+            "</div>"+
+            "<div class='col-md-9 leftInformationArea'>"+
                 "<label class='moduleTitle'>{{item.title}}</label>"+
-                "<div ng-click=\"openConfirmation('sm',elements.indexOf(item))\" class='btnDelete icon-round-control btn-on-hover'>"+
-                    "<div class='icon icon-bin-2'></div>"+
-                "</div>"+
                 "<div class='btnShowcasePreview icon-round-control btn-on-hover'>"+
                     "<div class='icon icon-arrange-1'></div>"+
                 "</div>"+
+            "</div>"+
+            "<div ng-click=\"deleteItem(objectsSidebarService.objects.indexOf(item),$event)\" class=\"icon-round-control btnDelete  btn-danger btn-on-hover\">"+
+                "<i class=\"fa fa-close\"></i>"+
             "</div>";
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
@@ -59,14 +59,23 @@
         $scope.hasPriceBool=false;
         $scope.hasFromPriceBool=false;
         $scope.isHighlightBool=false;
+        $scope.galleries = [];
+
+
+        $scope.$on('$stateChangeStart', function(){
+                $scope.objectsSidebarService.reset();
+            });
 
         $scope.$on('organizationChanged',function(){
-           console.warn("organization changed");
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Get the List of Objects
             $http.get('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
                 $scope.elements = data.data.elements;
                 $scope.objectsSidebarService.setObjects($scope.elements);
+            });
+
+            Gallery.getList($scope.organizationId).then(function(promise){
+                $scope.galleries = promise.data.data;
             });
         });
 
@@ -76,14 +85,20 @@
             for(var i=0;i< $scope.objectsSidebarService.selectedObject.searchTags.length;i++){
                 elemSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
             }
-
-            console.log("Biin: On Object Clicked" + objectClicked);
         });
 
         $scope.$on("Biin: On Object Created", function(){
-            console.log("Biin: On Object Created");
             $scope.create();
         });
+
+        $scope.$on("Biin: On Object Deleted", function(f,index){
+            $scope.removeElementAt(index);
+        });
+
+
+
+
+
         //Get the List of Objects
         $http.get('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
             $scope.elements = data.data.elements;
@@ -119,13 +134,12 @@
 
         //Remove element at specific position
         $scope.removeElementAt = function(index){
-            if($scope.objectsSidebarService.selectedObject==index){
-                $scope.objectsSidebarService.selectedObject =null;
+            if($scope.objectsSidebarService.selectedObject==$scope.objectsSidebarService.objects[index]){
+                $scope.objectsSidebarService.selectedObject = null;
             }
-
-            var elementId = $scope.objectsSidebarService.selectedObject.elementIdentifier;
-            $scope.objectsSidebarService.selectedObject.splice(index,1);
+            var elementId = $scope.objectsSidebarService.objects[index].elementIdentifier;
             $http.delete('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationId+'/elements/'+elementId).success(function(data){
+                    $scope.objectsSidebarService.objects.splice(index,1);
                 }
             );
         };
@@ -207,9 +221,9 @@
         };
 
         //Get the list of the gallery
-        /*gallerySrv.getList($scope.organizationId).then(function(promise){
+        Gallery.getList($scope.organizationId).then(function(promise){
             $scope.galleries = promise.data.data;
-        });*/
+        });
 
         //On gallery change method
         $scope.onGalleryChange= function(obj,autoInsert){
@@ -277,145 +291,5 @@
                 $scope.$digest();
             }
         };
-
-        //Confirmation Modal of Remove
-        /*$scope.openConfirmation = function (size, selectedIndex) {
-
-            var modalInstance = $modal.open({
-                templateUrl: 'partials/removeConfirmationModal',
-                controller: 'responseInstanceCtrl',
-                size: size,
-                resolve: {
-                    selectedElement: function () {
-                        return {name:$scope.elements[selectedIndex].title,index:selectedIndex};
-                    }
-                }
-            });
-
-            modalInstance.result.then(function (itemIndex) {
-                $scope.removeElementAt(itemIndex)
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
-            });
-        };
-        $scope.showImageModal = function ( )
-        {
-            var mapInstance = $modal.open({
-                templateUrl: '/_partials/galleryWidget',
-                controller: 'galleryCtrl',
-                size:'lg',
-                resolve:{
-                    loadingImages : function(){ return $scope.loadingImages},
-                    galleries : function(){ return $scope.galleries},
-                    organizationId : function(){ return $scope.organizationId}
-                }
-            });
-            mapInstance.result.then(function ( modalInfo ) {
-
-                for (var i = 0; i < modalInfo.selectedImages.length; i++) {
-                    var newObj = {};
-                    newObj.identifier = modalInfo.selectedImages[i].identifier;
-                    newObj.url = modalInfo.selectedImages[i].url;
-                    newObj.mainColor = modalInfo.selectedImages[i].mainColor;
-                    $scope.objectsSidebarService.selectedObject.media.push(newObj);
-                }
-                $scope.galleries=modalInfo.galleries;
-            }, function (modalInfo) {
-                $scope.galleries=modalInfo.galleries;
-            });
-        }*/
-
     }
 })();
-/*
-//Change of image directive
-    biinAppObjects.directive('inputChange',function(){
-        return{
-            restrict:'A',
-            link:function(scope,element){
-                $el = $(element);
-                $el.on('change',function(e){
-                    var index =scope.selectedElement;
-                    scope.elements[index].imageUrl= $el.val();
-                    scope.$digest();
-                    scope.$apply();
-                });
-            }
-        }
-    });
-
-    biinAppObjects.directive('selectPicker',function(){
-        return{
-            restrict:'A',
-            link:function(scope,element){
-                $el = $(element).selectpicker({width:'50px'});
-            }
-        }
-    });
-
-    biinAppObjects.controller('responseInstanceCtrl', function ($scope, $modalInstance, selectedElement) {
-
-        $scope.objectName = selectedElement.name;
-        $scope.objectIndex = selectedElement.index;
-
-
-        $scope.ok = function () {
-            $modalInstance.close($scope.objectIndex);
-        };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-    });
-
-    biinAppObjects.controller('galleryCtrl', function ($scope, $modalInstance,loadingImages, galleries,organizationId) {
-        $scope.render = true;
-        $scope.loadingImages =loadingImages;
-        $scope.galleries = galleries;
-        $scope.organizationId = organizationId;
-
-
-        $scope.loadingImagesChange=function(state){
-            $scope.loadingImages = state;
-            $scope.$digest();
-        }
-
-        $scope.onGalleryChange= function(obj,autoInsert){
-
-            //Do a callback logic by caller
-            $scope.galleries = $scope.galleries.concat(obj);
-            $scope.$digest();
-
-            //Insert the images to the preview
-            if(autoInsert){
-                var cantToInsert= obj.length;
-                if(maxMedia>0)
-                    cantToInsert=$scope.maxMedia- $scope.sites[$scope.selectedSite].media.length;
-
-                for(var i=0; i< cantToInsert; i++){
-                    $scope.insertGalleryItem($scope.galleries.indexOf(obj[i]));
-                }
-            }
-        }
-
-        $scope.apply = function(){
-            var selectedImages = [];
-            $(".galleryImageWrapper").each(function(index, element){
-                if($(element).hasClass("selected"))
-                {
-                    selectedImages.push($scope.galleries[index]);
-                }
-            })
-            var modalInfo = {};
-            modalInfo.selectedImages = selectedImages;
-            modalInfo.galleries = $scope.galleries;
-            $modalInstance.close(modalInfo);
-        }
-
-        $scope.close = function () {
-            var modalInfo = {};
-            modalInfo.galleries = $scope.galleries;
-            $modalInstance.dismiss(modalInfo);
-        };
-    }
-*/
