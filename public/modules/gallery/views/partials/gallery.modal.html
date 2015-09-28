@@ -1,18 +1,21 @@
-<div class="mapModal">
+<div class="biinModal">
     <div class="modal-body">
-        <div class="row">
+        <div class="">
             <div class="galleryWrapper">
                 <div id="gallery" ng-if="loadingImages==false">
-                    <div class="galleryControls row">
-                        <input type="text" ng-model="queryGallery" placeholder="Search" autofocus="autofocus"/>
-                        <button upload-files="#uploadGallery" class="btn btn-default">UPLOAD</button>
+                    <div class="galleryControls">
+                        <input type="text" ng-model="queryGallery" placeholder="Search" autofocus="autofocus" class="col-md-10"/>
+                        <button upload-files="#uploadGallery" class="btn btn-default col-md-2">UPLOAD</button>
                         <input id="uploadGallery" type="file" name="mediaFiles" accept="image/*" multiple="true" class="hidden"/>
                     </div>
                     <div class="galleryContainer row">
                         <div scrollbar="scrollbarOptionsStandard" class="scrollbar-inner">
                             <div class="col-md-12 nopadding gallery">
-                                <div ng-repeat="galleItem in galleries | filter: queryGallery | orderBy: +originalName " drag="galleries" element-index="galleries.indexOf(galleItem)" style="background-color:RGB({{galleItem.mainColor}})" image-checkbox="image-checkbox" ng-class="{selected: isSelected}" class="col-md-1 galleryImageWrapper">
-                                    <div class="galleryImageWrapperContent contentHideButtons"><img ng-src="{{galleItem.url}}" pending-indicator="pending-indicator" class="galleryImage"/>
+                                <div ng-repeat="galleItem in galleries | filter: queryGallery | orderBy: +originalName " drag="galleries" element-index="galleries.indexOf(galleItem)"
+                                     style="background-color:RGB({{galleItem.mainColor}})"
+                                     image-checkbox="image-checkbox" ng-class="{selected: isSelected}" image-checkbox="image-checkbox" class="col-md-2 galleryImageWrapper">
+                                    <div class="galleryImageWrapperContent contentHideButtons">
+                                        <img ng-src="{{galleItem.url}}" pending-indicator="pending-indicator" class="galleryImage img-responsive"/>
                                         <div class="moduleTitle"><span>{{galleItem.originalName}}</span></div>
                                     </div>
                                 </div>

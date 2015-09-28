@@ -9,7 +9,7 @@
     function ObjectsSidebar() {
         var service = {
             objects : [],
-            selectedObject : {},
+            selectedObject : null,
             template : "",
             setObjects : function ( objects ){
                 this.objects = objects;
@@ -22,6 +22,11 @@
             },
             getSelectedObject : function (){
                 return this.selectedObject;
+            },
+            reset : function(){
+                this.objects = [];
+                this.selectedObject = null;
+                this.template = "";
             }
         };
         return service;

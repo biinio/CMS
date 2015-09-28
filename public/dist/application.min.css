@@ -12976,6 +12976,28 @@ Component: sidemenu.less
 .list-items-side-menu {
   width: 100%;
   height: 70px;
+  position: relative;
+}
+.list-items-side-menu .btnDelete {
+  position: absolute;
+  border-radius: 10px;
+  width: 20px;
+  height: 20px;
+  right: 0px;
+  bottom: 0px;
+  opacity: 0.7;
+  display: none;
+}
+.list-items-side-menu .btnDelete > i {
+  font-size: 1.3em;
+  margin-left: 3px;
+  margin-top: 1px;
+}
+.list-items-side-menu:hover {
+  background: #23b7e5;
+}
+.list-items-side-menu:hover .btnDelete {
+  display: block;
 }
 .list-items-side-menu.active {
   width: 100%;
@@ -13089,6 +13111,20 @@ Component: elements.less
 }
 .img-block-buttons:hover .btnDelete {
   display: block;
+}
+.moduleTitle {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #000011;
+}
+.galleryImageWrapper {
+  padding: 1px 1px 1px 1px;
+}
+.galleryImageWrapper.selected {
+  border-color: #23b7e5;
+  border-style: solid;
+  border-width: 2px;
 }
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');
