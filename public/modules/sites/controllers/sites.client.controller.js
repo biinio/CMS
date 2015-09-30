@@ -31,7 +31,7 @@
         $scope.sidebarTemplate =
             "<div class='col-md-3 thumbListImage'>" +
             "<img ng-if='item.media.length == 0' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
-            "<img ng-if='item.media.length>0' ng-src='{{item.media[0].imgUrl}}' pending-indicator='pending-indicator'/>"+
+            "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}' pending-indicator='pending-indicator'/>"+
             "</div>"+
             "<div class='col-md-9 leftInformationArea'>"+
             "<label class='moduleTitle'>{{item.title1}}</label>"+
@@ -111,7 +111,7 @@
          *
          =============================================================================================================*/
 
-        //Get the List of Showcases
+        //Get the List of Sites
         $http.get('https://qa-biinapp.herokuapp.com/api/organizations/'+ $scope.organizationService.selectedOrganization.identifier +'/sites').success(function(data){
             if(data.data)
                 $scope.sites = data.data.sites;
@@ -218,7 +218,7 @@
             };
             sentence = sentence.trim();
             $scope.sites[$scope.selectedSite].nutshell = sentence;
-        }
+        };
 
         //Location Methods
         $scope.changeLocation=function(lat,lng){
@@ -247,11 +247,10 @@
             }
 
             if(index>=0)
-                $scope.objectsSidebarService.selectedObject.categories.splice(index,1)
+                $scope.objectsSidebarService.selectedObject.categories.splice(index,1);
             else
                 $scope.objectsSidebarService.selectedObject.categories.push(category);
 
-            $scope.validate();
             if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
                 $scope.$apply();
                 $scope.$digest();
@@ -263,7 +262,7 @@
             if(($scope.sites[$scope.selectedSite].media.length < $scope.maxMedia &&  index < $scope.galleries.length && $scope.galleries[index])||$scope.maxMedia==0){
                 var newObj = {};
                 newObj.identifier = $scope.galleries[index].identifier;
-                newObj.imgUrl = $scope.galleries[index].url;
+                newObj.url = $scope.galleries[index].url;
                 newObj.mainColor = $scope.galleries[index].mainColor;
                 newObj.vibrantColor = $scope.galleries[index].vibrantColor;
                 newObj.vibrantDarkColor = $scope.galleries[index].vibrantDarkColor;
@@ -271,7 +270,7 @@
 
                 $scope.sites[$scope.selectedSite].media.push(newObj);
 
-                $scope.wizard2IsValid= typeof($scope.sites[$scope.selectedSite].media)!='undefined'&& $scope.sites[$scope.selectedSite].media.length>0
+                $scope.wizard2IsValid= typeof($scope.sites[$scope.selectedSite].media)!='undefined'&& $scope.sites[$scope.selectedSite].media.length>0;
                 //Apply the changes
                 $scope.$digest();
                 $scope.$apply();
@@ -282,21 +281,6 @@
         $scope.removeMediaAt=function(index){
             if($scope.sites[$scope.selectedSite].media.length>=index)
                 $scope.sites[$scope.selectedSite].media.splice(index,1)
-        };
-
-        $scope.showMapModal = function ( ) {
-            var mapInstance = $modal.open({
-                templateUrl: 'site/mapComponent',
-                controller: 'mapCtrl',
-                size:'lg'
-            });
-            mapInstance.result.then(function ( position ) {
-                if(position){
-                    $scope.sites[$scope.selectedSite].lng = position.lng;
-                    $scope.sites[$scope.selectedSite].lat = position.lat;
-                }
-            }, function () {
-            });
         };
 
         //On gallery change method

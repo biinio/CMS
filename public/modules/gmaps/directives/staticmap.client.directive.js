@@ -10,8 +10,8 @@
         .module('gmaps')
         .directive('staticmap', StaticMap);
 
-    StaticMap.$inject = ['ObjectsSidebar'];
-    function StaticMap (ObjectsSidebar) {
+    StaticMap.$inject = ['ObjectsSidebar','$modal'];
+    function StaticMap (ObjectsSidebar,$modal) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
@@ -25,6 +25,21 @@
                         element[0].innerHTML = "Geolocation is not supported by this browser.";
                     }
                 }
+
+                scope.showMapModal = function ( ) {
+                    var mapInstance = $modal.open({
+                        templateUrl: '/modules/gmaps/views/partials/gmap.modal.client.partial.view.html',
+                        controller: 'GmapController',
+                        size:'lg'
+                    });
+                    mapInstance.result.then(function ( position ) {
+                        if(position){
+                            ObjectsSidebar.selectedObject.lng = position.lng;
+                            ObjectsSidebar.selectedObject.lat = position.lat;
+                        }
+                    }, function () {
+                    });
+                };
 
                 //Show the position in the map
                 function showPosition(position, otherZoom) {

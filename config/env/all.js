@@ -58,7 +58,8 @@ module.exports = {
                 'public/lib/blueimp-file-upload/js/jquery.iframe-transport.js',
                 'public/lib/blueimp-file-upload/js/jquery.fileupload.js',
                 'public/lib/blueimp-file-upload/js/jquery.fileupload-process.js',
-                'public/lib/blueimp-file-upload/js/jquery.fileupload-angular.js'
+                'public/lib/blueimp-file-upload/js/jquery.fileupload-angular.js',
+                '//maps.googleapis.com/maps/api/js'
                 // 'public/lib/jquery/dist/jquery.js',
                 // 'public/lib/angular/angular.js',
                 // 'public/lib/angular-resource/angular-resource.js',
