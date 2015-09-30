@@ -74,5 +74,46 @@
     "SEARCH_TAGS": "Etiquetas de búsqueda",
     "SEARCH_TAGS_DESC": "Las etiquetas ayudan a que su información sea encontrada mas fácilmente.",
     "ADD": "Añadir"
+  },
+  "SITES":{
+    "GENERIC.UPLOAD_IMAGE": "Actualizar Imagen",
+    "GENERIC.IDENTIFIER": "Identificador",
+    "GENERIC.SEARCH_TAGS": "Etiquetas para busqueda",
+    "GENERIC.SEARCH_TAGS_DESC": "Las etiquetas ayudan a que su información sea encontrada mas fácilmente.",
+    "GENERIC.ADD": "Añadir",
+    "MENU.DETAILS": "1.Detalles",
+    "MENU.IMAGES": "2.Imagenes",
+    "MENU.DESIGN": "3.Diseño",
+    "MENU.LOCATION": "4.Ubicación",
+    "MENU.BEACONS": "4.Beacons",
+    "MENU.CATEGORIES": "6.Categorías",
+
+    "TITLE": "Detalles del Local",
+    "SUB_TITLE": "Aquí puede actualizar la informacón de su local",
+    "TITLE1": "Nombre y Lugar",
+    "NAME": "Nombre",
+    "AT": "Está en",
+    "EMAIL": "Correo Electrónico",
+    "NUTSHELL": "Mini Descripción",
+
+    "GALLERY.TITLE": "Galería de imagenes",
+    "GALLERY.SUB_TITLE": "Agregue y use las imagenes de su marca para darle identidad a su local",
+    "GALLERY.UPLOAD": "Subir",
+
+    "LOCATION":{
+      "TITLE": "Ubicación del Local",
+      "SUB_TITLE": "Agregue la informacón sobre la Ubicación de su local para ayudar a sus clientes a encontrarlo mas fácilmente",
+      "COUNTRY": "País",
+      "CITY": "Ciudad",
+      "STATE": "Estado/Provincia",
+      "ZIP": "Código Postal",
+      "ADRESS": "Dirección",
+      "PHONE": "Teléfono",
+      "DETAIL_LOC": "Ubicación Detallada",
+      "MAP_LOCATION": "Ubicación en el Mapa",
+      "MAP_LOCATION_SUB": "Ubique su Local en el Mapa para determinar la Latitud y Longitud",
+      "LATITUDE": "Latitud",
+      "LONGITUDE": "Longitud"
+    }
   }
 }

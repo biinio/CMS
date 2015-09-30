@@ -13026,6 +13026,8 @@ Component: sidemenu.less
   height: 100%;
 }
 .objects-left-bar {
+  overflow-x: hidden;
+  overflow-y: scroll;
   min-height: 100%;
 }
 .objects-sidebar {
@@ -13035,9 +13037,9 @@ Component: sidemenu.less
   height: 1px;
   background-color: #ffffff;
   z-index: 116;
-  -webkit-transition: width 1s;
+  -webkit-transition: width 0.3s;
   /* For Safari 3.1 to 6.0 */
-  transition: width 1s;
+  transition: width 0.3s;
 }
 .objects-sidebar.contracted {
   width: 0;
@@ -13051,9 +13053,9 @@ Component: sidemenu.less
 }
 .right-section-content {
   padding-left: 220px;
-  -webkit-transition: 1s;
+  -webkit-transition: 0.3s;
   /* For Safari 3.1 to 6.0 */
-  transition: 1s;
+  transition: 0.3s;
 }
 .hide-button {
   float: right;
