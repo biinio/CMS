@@ -91,9 +91,6 @@
          =============================================================================================================*/
 
         //Init the the sites
-        $scope.selectedSite = null;
-        $scope.selectedBiin = null;
-        $scope.currentModelId = null;
         $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
 
         $scope.newTagField=[];
@@ -107,7 +104,7 @@
 
 
         /**=============================================================================================================
-         * Functions
+         * Self called functions
          *
          =============================================================================================================*/
 
@@ -119,12 +116,6 @@
                 $scope.sites=[];
 
             $scope.objectsSidebarService.setObjects($scope.sites);
-
-            //$scope.sitePrototype = data.data.prototypeObj;
-            /*if($scope.selectedSite == null && $scope.sites && $scope.sites.length>0){
-                //Select the first element
-                $scope.edit(0);
-            }*/
         });
 
         //Get the List of Categories
@@ -132,26 +123,32 @@
             $scope.categories = promise.data.data;
         });
 
-        //Return the categories of the sites
-        $scope.ownCategories=function(){
-            return $scope.sites[$scope.selectedSite].categories;
-        };
-
         //Get the list of the gallery
-        Gallery.getList($scope.organizationId).then(function(promise){
+        Gallery.getList($scope.organizationService.selectedOrganization.identifier).then(function(promise){
             $scope.galleries= promise.data.data;
         });
+
+        /**=============================================================================================================
+         *  Functions
+         =============================================================================================================*/
+
+        //Return the categories of the sites
+        $scope.ownCategories=function(){
+            return $scope.objectsSidebarService.selectedObject.categories;
+        };
 
         //Create a new Site
         $scope.create = function(){
             //Get the Mayor from server
-            $http.post('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationId+"/sites").success(function(site,status){
+            $http.post('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/sites").success(function(site,status){
                 if(status==201){
                     var siteSearchTag =$('#siteSearchTag');
                     siteSearchTag.tagsinput("removeAll");
-                    $scope.sites.push(site);
-                    $scope.objectsSidebarService.setObjects($scope.elements);
-                    $scope.objectsSidebarService.setSelectedObject(element);
+
+                    var sites = $scope.objectsSidebarService.getObjects();
+                    sites.push(site);
+                    $scope.objectsSidebarService.setObjects(sites);
+                    $scope.objectsSidebarService.setSelectedObject(site);
                 }
                 else
                 {
@@ -160,43 +157,35 @@
             });
         };
 
-        //Edit an site
-        $scope.edit = function(index){
-            $scope.selectedSite = index;
-            $scope.activeTab=tabDetails;
-            $scope.currentModelId = $scope.sites[index].identifier;
-            $scope.clearValidations();
-            $scope.wizardPosition=1;
-            $scope.validate(true);
-        };
-
         //Remove site at specific position
         $scope.removeSiteAt = function(index){
-            if($scope.selectedSite==index){
-                $scope.selectedSite =null;
-                $scope.currentModelId =null;
-            }
-            if('isNew' in $scope.sites[index] ){
-                $scope.sites.splice(index,1);
-            }else//If the element is new is not in the data base
-            {
-                var siteId = $scope.sites[index].identifier;
-                $scope.sites.splice(index,1);
-                $http.delete('api/organizations/'+$scope.organizationId+'/sites/'+siteId).success(function(data){
-                        if(data.state=="success"){
-                            //Todo: implement a pull of messages
+
+            var sites = $scope.objectsSidebarService.getObjects();
+            var siteIdToDelete = sites[index].identifier;
+            var deleteSelectedObject = siteIdToDelete == $scope.objectsSidebarService.selectedObject.identifier;
+
+            $http.delete('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationId+'/sites/'+siteIdToDelete).success(
+                function(data){
+                    if(data.state=="success"){
+                        sites.splice(index,1);
+                        if(deleteSelectedObject){
+                            $scope.objectsSidebarService.selectedObject = null;
                         }
+                        $scope.objectsSidebarService.setObjects(sites);
+
+                    }else{
+                        console.error("Couldn't delete site");
                     }
-                );
-            }
+                }
+            );
+
         };
 
         //Save detail model object
         $scope.save= function(){
-            console.log("save");
-            $http.put('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationId+'/sites/'+$scope.currentModelId,{model:$scope.sites[$scope.selectedSite]}).success(function(data,status){
+            $http.put('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites/'+$scope.objectsSidebarService.selectedObject.identifier,{model:$scope.objectsSidebarService.selectedObject}).success(function(data,status){
                 if("replaceModel" in data){
-                    $scope.sites[$scope.selectedSite] = data.replaceModel;
+                    $scope.objectsSidebarService.selectedObject = data.replaceModel;
                 }
                 if(data.state=="success")
                     $scope.succesSaveShow=true;
@@ -204,8 +193,9 @@
 
         };
 
+        // Function that limits in nutshell how many words can it be
         $scope.limitNutshell = function(){
-            var value = $scope.sites[$scope.selectedSite].nutshell ;
+            var value = $scope.objectsSidebarService.selectedObject.nutshell ;
             if(value == null)
                 value = "";
             value = value.trim();
@@ -215,15 +205,15 @@
             var sentence = "";
             for (var i = 0; i < words.length; i++) {
                 sentence += words[i] + " ";
-            };
+            }
             sentence = sentence.trim();
-            $scope.sites[$scope.selectedSite].nutshell = sentence;
+            $scope.objectsSidebarService.selectedObject.nutshell = sentence;
         };
 
         //Location Methods
         $scope.changeLocation=function(lat,lng){
-            $scope.sites[$scope.selectedSite].lat=lat;
-            $scope.sites[$scope.selectedSite].lng=lng;
+            $scope.objectsSidebarService.selectedObject.lat=lat;
+            $scope.objectsSidebarService.selectedObject.lng=lng;
 
             //Apply the changes
             $scope.$digest();
@@ -257,81 +247,10 @@
             }
         };
 
-        //Insert a gallery item to site
-        $scope.insertGalleryItem = function(index){
-            if(($scope.sites[$scope.selectedSite].media.length < $scope.maxMedia &&  index < $scope.galleries.length && $scope.galleries[index])||$scope.maxMedia==0){
-                var newObj = {};
-                newObj.identifier = $scope.galleries[index].identifier;
-                newObj.url = $scope.galleries[index].url;
-                newObj.mainColor = $scope.galleries[index].mainColor;
-                newObj.vibrantColor = $scope.galleries[index].vibrantColor;
-                newObj.vibrantDarkColor = $scope.galleries[index].vibrantDarkColor;
-                newObj.vibrantLightColor = $scope.galleries[index].vibrantLightColor;
-
-                $scope.sites[$scope.selectedSite].media.push(newObj);
-
-                $scope.wizard2IsValid= typeof($scope.sites[$scope.selectedSite].media)!='undefined'&& $scope.sites[$scope.selectedSite].media.length>0;
-                //Apply the changes
-                $scope.$digest();
-                $scope.$apply();
-            }
-        };
-
         //Remove the media object at specific index
         $scope.removeMediaAt=function(index){
-            if($scope.sites[$scope.selectedSite].media.length>=index)
-                $scope.sites[$scope.selectedSite].media.splice(index,1)
+            if($scope.objectsSidebarService.selectedObject.media.length>=index)
+                $scope.objectsSidebarService.selectedObject.media.splice(index,1)
         };
-
-        //On gallery change method
-        $scope.onGalleryChange= function(obj,autoInsert){
-
-            //Do a callback logic by caller
-            $scope.galleries = $scope.galleries.concat(obj);
-            $scope.$digest();
-
-            //Insert the images to the preview
-            if(autoInsert){
-                var cantToInsert= obj.length;
-                if(maxMedia>0)
-                    cantToInsert=$scope.maxMedia- $scope.sites[$scope.selectedSite].media.length;
-
-                for(var i=0; i< cantToInsert; i++){
-                    $scope.insertGalleryItem($scope.galleries.indexOf(obj[i]));
-                }
-            }
-        };
-
-        //Set the gallery index when start draggin
-        $scope.setDragGallery=function(scopeIndex){
-            $scope.dragGalleryIndex= scopeIndex;
-        };
-
-        $scope.loadingImagesChange=function(state){
-            $scope.loadingImages = state;
-            $scope.$digest();
-        };
-
-        //Confirmation Modal of Remove
-        $scope.openConfirmation = function (size, selectedIndex) {
-
-            var modalInstance = $modal.open({
-                templateUrl: 'partials/removeConfirmationModal',
-                controller: 'responseInstanceCtrl',
-                size: size,
-                resolve: {
-                    selectedElement: function () {
-                        return {name:$scope.sites[selectedIndex].title1,index:selectedIndex};
-                    }
-                }
-            });
-
-            modalInstance.result.then(function (itemIndex) {
-                $scope.removeSiteAt(itemIndex)
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
-            });
-        };
-
     }
 })();
