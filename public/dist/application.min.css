@@ -13128,6 +13128,10 @@ Component: elements.less
   border-style: solid;
   border-width: 2px;
 }
+.staticmap img {
+  margin-left: auto;
+  margin-right: auto;
+}
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');
 }

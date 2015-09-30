@@ -96,9 +96,6 @@
         });
 
 
-
-
-
         //Get the List of Objects
         $http.get('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
             $scope.elements = data.data.elements;

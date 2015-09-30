@@ -1,7 +1,7 @@
 <div ng-controller="SitesController as sites" class="">
-    <div id="wrapperContent" class="container-fluid">
+    <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
         <div class="right-section-content">
-            <div><!-- ng-if="selectedSite!=null">
+            <div ng-if="objectsSidebarService.selectedObject!=null">
                 <!-- NutShell Section -->
                 <section>
                     <div class="panel panel-default">
@@ -42,7 +42,7 @@
                             <legend translate="GENERIC.SEARCH_TAGS"></legend>
                         </div>
                         <div class="panel-body">
-                            <input id="sitesSearchTag" type="text" tagsinput="tagsinput" ng-model="temptags" class="form-control"/>
+                            <input id="siteSearchTag" type="text" tagsinput="tagsinput" ng-model="temptags" class="form-control"/>
                             <span class="help-block" translate="GENERIC.SEARCH_TAGS_DESC"></span>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                                     </div>
                                 </div>
                                 <div class="section">
-                                    <h2 translate="SITES.LOCATION.MAP_LOCATION"></h2>
+                                    <h4 translate="SITES.LOCATION.MAP_LOCATION"></h4>
                                     <p translate="SITES.LOCATION.MAP_LOCATION_SUB"></p>
                                     <div class="form-group">
                                         <label for="latText" translate="SITES.LOCATION.LATITUDE" class="col-sm-2 control-label"></label>
@@ -114,7 +114,7 @@
                                         </div>
                                     </div>
                                     <div class="mapWrapper">
-                                        <div zoom="17" lat="{{objectsSidebarService.selectedObject.lat}}" lng="{{objectsSidebarService.selectedObject.lng}}" staticmap="staticmap" ng-click="showMapModal()" style="width: 10em;" class="staticmap"></div>
+                                        <div zoom="17" lat="{{objectsSidebarService.selectedObject.lat}}" lng="{{objectsSidebarService.selectedObject.lng}}" staticmap="staticmap" ng-click="showMapModal()" class="staticmap"></div>
                                     </div>
                                 </div>
                             </form>
