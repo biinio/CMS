@@ -13,8 +13,8 @@
         .module('sites')
         .controller('SitesController', SitesController);
 
-    SitesController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery'];
-    function SitesController($http, $state, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery) {
+    SitesController.$inject = ['$http', '$state','$timeout' ,'$scope', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery'];
+    function SitesController($http, $state, $timeout, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery) {
         var vm = this;
         activate();
 
@@ -60,8 +60,10 @@
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Get the List of Objects
             $http.get('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites').success(function(data){
-                $scope.sites = data.data.sites;
-                $scope.objectsSidebarService.setObjects($scope.sites);
+                var sites = data.data.sites;
+                $scope.objectsSidebarService.setObjects(sites);
+                if(sites.length > 0)
+                    selectFirstSite(sites);
             });
 
             Gallery.getList($scope.organizationId).then(function(promise){
@@ -70,11 +72,17 @@
         });
 
         $scope.$on("Biin: On Object Clicked", function(event,objectClicked){
-            var siteSearchTag =$('#siteSearchTag');
-            siteSearchTag.tagsinput("removeAll");
-            for(var i=0;i< $scope.objectsSidebarService.selectedObject.searchTags.length;i++){
-                siteSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
-            }
+            //I know it's ugly and I don't like this approach, it should be other way to  validate if the tag field is
+            // rendered to call this code
+            //TODO: Change this implementation for another safer way!!!
+            $timeout(function(){
+                var siteSearchTag = $('#siteSearchTag');
+                siteSearchTag.tagsinput("removeAll");
+                for(var i=0;i< $scope.objectsSidebarService.selectedObject.searchTags.length;i++){
+                    siteSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
+                }
+            },100);
+
         });
 
         $scope.$on("Biin: On Object Created", function(){
@@ -110,12 +118,12 @@
 
         //Get the List of Sites
         $http.get('https://qa-biinapp.herokuapp.com/api/organizations/'+ $scope.organizationService.selectedOrganization.identifier +'/sites').success(function(data){
-            if(data.data)
-                $scope.sites = data.data.sites;
-            else
-                $scope.sites=[];
-
-            $scope.objectsSidebarService.setObjects($scope.sites);
+            if(data.data) {
+                $scope.objectsSidebarService.setObjects(data.data.sites);
+                if(data.data.sites.length>0){
+                    selectFirstSite(data.data.sites);
+                }
+            }
         });
 
         //Get the List of Categories
@@ -131,6 +139,19 @@
         /**=============================================================================================================
          *  Functions
          =============================================================================================================*/
+
+        var selectFirstSite = function( sites ) {
+            $scope.objectsSidebarService.selectedObject = sites[0];
+            //I know it's ugly and I don't like this approach, it should be other way to  validate if the tag field is
+            // rendered to call this code
+            //TODO: Change this implementation for another safer way!!!
+            $timeout(function(){
+                var siteSearchTag = $('#siteSearchTag');
+                for(var i=0;i< $scope.objectsSidebarService.selectedObject.searchTags.length;i++){
+                    siteSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
+                }
+            },100);
+        };
 
         //Return the categories of the sites
         $scope.ownCategories=function(){

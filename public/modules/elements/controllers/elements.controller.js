@@ -10,9 +10,9 @@
         .module('elements')
         .controller('ElementsController', ElementsController);
 
-    ElementsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery'];
+    ElementsController.$inject = ['$http', '$state','$timeout','$scope', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery'];
 
-    function ElementsController($http, $state, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery) {
+    function ElementsController($http, $state, $timeout, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery) {
         activate();
 
         $scope.objectsSidebarService = ObjectsSidebar;
@@ -80,11 +80,17 @@
         });
 
         $scope.$on("Biin: On Object Clicked", function(f,objectClicked){
-            var elemSearchTag =$('#elemSearchTag');
-            elemSearchTag.tagsinput("removeAll");
-            for(var i=0;i< $scope.objectsSidebarService.selectedObject.searchTags.length;i++){
-                elemSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
-            }
+
+            //I know it's ugly and I don't like this approach, it should be other way to  validate if the tag field is
+            // rendered to call this code
+            //TODO: Change this implementation for another safer way!!!
+            $timeout(function(){
+                var elemSearchTag =$('#elemSearchTag');
+                elemSearchTag.tagsinput("removeAll");
+                for(var i=0;i< $scope.objectsSidebarService.selectedObject.searchTags.length;i++){
+                    elemSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
+                }
+            },100);
         });
 
         $scope.$on("Biin: On Object Created", function(){
