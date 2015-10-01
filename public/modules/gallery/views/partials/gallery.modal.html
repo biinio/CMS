@@ -13,7 +13,7 @@
                             <div class="col-md-12 nopadding gallery">
                                 <div ng-repeat="galleItem in galleries | filter: queryGallery | orderBy: +originalName " drag="galleries" element-index="galleries.indexOf(galleItem)"
                                      style="background-color:RGB({{galleItem.mainColor}})"
-                                     image-checkbox="image-checkbox" ng-class="{selected: isSelected}" image-checkbox="image-checkbox" class="col-md-2 galleryImageWrapper">
+                                     image-checkbox="image-checkbox" ng-class="{selected: isSelected}" image-checkbox="image-checkbox" class="col-md-1 galleryImageWrapper">
                                     <div class="galleryImageWrapperContent contentHideButtons">
                                         <img ng-src="{{galleItem.url}}" pending-indicator="pending-indicator" class="galleryImage img-responsive"/>
                                         <div class="moduleTitle"><span>{{galleItem.originalName}}</span></div>

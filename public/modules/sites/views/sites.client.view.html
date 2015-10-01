@@ -1,43 +1,49 @@
 <div ng-controller="SitesController as sites" class="">
-    <div id="wrapperContent" class="container-fluid">
+    <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
         <div class="right-section-content">
-            <h4>Sites</h4>
-            <div><!-- ng-if="selectedSite!=null">
+            <div ng-if="objectsSidebarService.selectedObject!=null">
                 <!-- NutShell Section -->
                 <section>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <legend translate="SUMMARY.TITLE"></legend>
+                            <legend translate="SITES.TITLE"></legend>
+                            <p translate="SITES.SUB_TITLE"></p>
+                            <h5 translate="SITES.TITLE1"></h5>
                         </div>
                         <div class="panel-body">
                             <form role="form" class="novalidate">
                                 <div class="section">
                                     <div class="form-group">
-                                        <label for="title1" translate="SUMMARY.NAME1" class="control-label"></label>
-                                        <input id="title1" ng-model="objectsSidebarService.selectedObject.title" name="title"
-                                               type="text" placeholder="Title **" ng-blur="validate()"
-                                               required="required" class="form-control title-value"/>
-                                        <span class="help-block" translate="SUMMARY.NAMEDESCRIPTION"></span>
+                                        <label for="title1" translate="SITES.NAME" class="control-label"></label>
+                                        <input id="title1" ng-model="objectsSidebarService.selectedObject.title1" name="title1" type="text" placeholder="Tittle **" ng-blur="validate()" required="required" class="form-control title-value"/>
                                     </div>
                                     <div class="form-group">
-                                        <span class= "checkbox-inline c-checkbox">
-                                            <label>
-                                                <input type="checkbox" ng-model="objectsSidebarService.selectedObject.isHighlight" ng-true-value="'1'" ng-false-value="'0'"/>
-                                                <span class="fa fa-times"/>
-                                            </label>
-                                        </span>
-                                        <span translate="SUMMARY.HIGHTLIGHT"></span>
-                                        <span class="help-block" translate="SUMMARY.HIGHTLIGHTDESCRIPTION">Turn on Hightlight to presents this element in the Hightlight section of the mobile app</span>
+                                        <label for="title2" translate="SITES.AT" class="control-label"></label>
+                                        <input id="title2" ng-model="objectsSidebarService.selectedObject.title2" name="title1" type="text" placeholder="Subtittle **" ng-blur="validate()" required="required" class="form-control title-value"/>
                                     </div>
-                                    <div div class="form-group">
-                                        <label for="title2" translate="SUMMARY.DESC1" class="control-label"></label>
-                                        <input id="title2" ng-model="objectsSidebarService.selectedObject.subTitle" name="subTitle"
-                                               type="text" placeholder="Subtitle" ng-blur="validate()"
-                                               required="required" class="form-control title-value"/>
-                                        <span class="help-block" translate="SUMMARY.DESC2"></span>
+                                    <div class="form-group">
+                                        <label for="email" translate="SITES.EMAIL" class=control-label"></label>
+                                        <input id="email" ng-model="objectsSidebarService.selectedObject.email" name="email" type="text" placeholder="email@email.com **" ng-blur="validate()" required="required" class="form-control title-value"/>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="nutshell" translate="SITES.NUTSHELL" class="control-label"></label>
+                                        <input id="nutshell" ng-model="objectsSidebarService.selectedObject.nutshell" name="nutshell" type="text" placeholder="Mini Description **" ng-blur="validate()" ng-change="limitNutshell()" required="required" class="form-control title-value"/>
+                                    </div>
+                                    <code>{{'GENERIC.IDENTIFIER' | translate}} : {{objectsSidebarService.selectedObject.identifier }}</code>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </section>
+                <!-- Search Tags Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <legend translate="GENERIC.SEARCH_TAGS"></legend>
+                        </div>
+                        <div class="panel-body">
+                            <input id="siteSearchTag" type="text" tagsinput="tagsinput" ng-model="temptags" class="form-control"/>
+                            <span class="help-block" translate="GENERIC.SEARCH_TAGS_DESC"></span>
                         </div>
                     </div>
                 </section>
@@ -53,32 +59,70 @@
                         </div>
                     </div>
                 </section>
-                <!-- Summary Section -->
+                <!-- Location Section -->
                 <section>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <legend translate="SUMMARY.DETAILS"></legend>
-                            <p translate="SUMMARY.DETAILS1"></p>
+                            <legend translate="SITES.LOCATION.TITLE"></legend>
+                            <p translate="SITES.LOCATION.SUB_TITLE"></p>
                         </div>
                         <div class="panel-body">
-                            <text-angular ng-model="htmlVariable"></text-angular>
-                        </div>
-                    </div>
-                </section>
-                <!-- Search Tags Section -->
-                <section>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <legend translate="GENERIC.SEARCH_TAGS"></legend>
-                        </div>
-                        <div class="panel-body">
-                            <input id="elemSearchTag" type="text" tagsinput="tagsinput" ng-model="temptags" class="form-control"/>
-                            <span class="help-block" translate="GENERIC.SEARCH_TAGS_DESC"></span>
+                            <form role="form" class="novalidate">
+                                <div class="section">
+                                    <div class="form-group">
+                                        <label for="countryText" translate="SITES.LOCATION.COUNTRY" class="control-label"></label>
+                                        <input id="countryText" ng-model="objectsSidebarService.selectedObject.country" name="country" type="text" placeholder="Country **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="stateText" translate="SITES.LOCATION.STATE" class="control-label"></label>
+                                        <input id="stateText" ng-model="objectsSidebarService.selectedObject.state" name="state" type="text" placeholder="State **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cityText" translate="SITES.LOCATION.CITY" class="control-label"></label>
+                                        <input id="cityText" ng-model="objectsSidebarService.selectedObject.city" name="city" type="text" placeholder="City **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zipText" translate="SITES.LOCATION.ZIP" class="control-label"></label>
+                                        <input id="zipText" ng-model="objectsSidebarService.selectedObject.zipCode" name="zipCode" type="text" placeholder="Zip Code **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="stAddresText" translate="SITES.LOCATION.ADRESS" class="control-label"></label>
+                                        <input id="stAddresText" ng-model="objectsSidebarService.selectedObject.streetAddres" name="streetAddres" type="text" placeholder="Street Address **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ubicationText" translate="SITES.LOCATION.DETAIL_LOC" class="control-label"></label>
+                                        <input id="ubicationText" ng-model="objectsSidebarService.selectedObject.ubication" name="ubication" type="text" placeholder="Ubication **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phoneNumText" translate="SITES.LOCATION.PHONE" class="control-label"></label>
+                                        <input id="phoneNumText" ng-model="objectsSidebarService.selectedObject.phoneNumber" name="phoneNumber" type="text" placeholder="Phone number **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                    </div>
+                                </div>
+                                <div class="section">
+                                    <h4 translate="SITES.LOCATION.MAP_LOCATION"></h4>
+                                    <p translate="SITES.LOCATION.MAP_LOCATION_SUB"></p>
+                                    <div class="form-group">
+                                        <label for="latText" translate="SITES.LOCATION.LATITUDE" class="col-sm-2 control-label"></label>
+                                        <div class="col-sm-10">
+                                            <input id="latText" type="text" ng-model="objectsSidebarService.selectedObject.lat" placeholder="Latitude" required="required" class="form-control title-value"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lngText" translate="SITES.LOCATION.LONGITUDE" class="col-sm-2 control-label"></label>
+                                        <div class="col-sm-10">
+                                            <input id="lngText" type="text" ng-model="objectsSidebarService.selectedObject.lng" placeholder="Longitude" required="required" class="form-control title-value"/>
+                                        </div>
+                                    </div>
+                                    <div class="mapWrapper">
+                                        <div zoom="17" lat="{{objectsSidebarService.selectedObject.lat}}" lng="{{objectsSidebarService.selectedObject.lng}}" staticmap="staticmap" ng-click="showMapModal()" class="staticmap"></div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </section>
                 <!-- Categories Section -->
-                <!--<section>
+                <section>
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <legend>Categories</legend>
@@ -110,165 +154,6 @@
                                     <p>Categories allow your site and products to be visible on searches, select the
                                         ones you think need to asociate with your site and products form the list
                                         below.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>-->
-                <!-- Highlights Section -->
-                <section>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <legend>Highlight</legend>
-                        </div>
-                        <div class="panel-body">
-                            <div class="section">
-                                <div class="row">
-                                    <form class="form-inline novalidate">
-                                        <div class="form-group col-md-4">
-                                            <label>Precio</label>
-                                            <input type="number" ng-model="objectsSidebarService.selectedObject.price"
-                                                   placeholder="0.00" ng-blur="validate()" required="required"
-                                                   ng-paste="validate()" step="0.01"
-                                                   ng-pattern="/^[0-9]+(.[0-9]{1,2})?$/"
-                                                   class="title-value highlightInput"/>
-                                            <span class="help-block">Precio de lista</span>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label>Moneda</label>
-                                            <select title="Currency" name="Currency"
-                                                    ng-model="objectsSidebarService.selectedObject.currencyType" data-size="4"
-                                                    class="form-control bootstrap-select">
-                                                <option value="1">&#36;</option>
-                                                <option value="2">&#162;</option>
-                                                <option value="3">&#8359;</option>
-                                                <option value="4">&#128;</option>
-                                            </select>
-                                            <span class="help-block">Seleccione la moneda</span>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <div class="checkbox c-checkbox">
-                                                <label>
-                                                    <input type="checkbox" id="chkFromPrice" ng-model="objectsSidebarService.selectedObject.hasFromPrice"
-                                                           ng-true-value="'1'" ng-false-value="'0'">
-                                                    <span class="fa fa-times"></span>
-                                                    Utilizar precio Desde
-                                                </label>
-                                            </div>
-                                            <span class="help-block">Se marca para especificar que el precio empieza en este monto ver ejemplo</span>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="section">
-                                <div class="row">
-                                    <form class="form-inline novalidate">
-                                        <div class="form-group col-md-4">
-                                            <div class="checkbox c-checkbox">
-                                                <label>
-                                                    <input type="checkbox" id="chkDiscount"
-                                                           ng-model="objectsSidebarService.selectedObject.hasDiscount"
-                                                           ng-true-value="'1'" ng-false-value="'0'"/>
-                                                    <span class="fa fa-times"></span>
-                                                    Porcentaje
-                                                </label>
-                                            </div>
-                                            <input type="text" ng-model="objectsSidebarService.selectedObject.discount"
-                                                   ng-disabled="!hasDiscountBool" placeholder="Discount"
-                                                   ng-blur="validate()" required="required" is-number="is-number"
-                                                   class="title-value highlightInput"/>
-                                            <span class="help-block">Digite el porcentaje de descuento </span>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <div class="checkbox c-checkbox">
-                                                <label>
-                                                    <input type="checkbox" id="chkSaving"
-                                                           ng-model="objectsSidebarService.selectedObject.hasSaving"
-                                                           ng-true-value="'1'" ng-false-value="'0'"/>
-                                                    <span class="fa fa-times"></span>
-                                                    Monto del descuento
-                                                </label>
-                                            </div>
-                                            <input type="text" ng-model="objectsSidebarService.selectedObject.savings"
-                                                   placeholder="0 %" ng-blur="validate()"
-                                                   ng-disabled="!hasSavingBool" required="required"
-                                                   is-number="is-number" class="title-value highlightInput"/>
-
-                                            <span class="help-block">Digite manualmente el monto</span>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <div class="checkbox c-checkbox">
-                                                <label>
-                                                    <input type="checkbox" id="chkPrice"
-                                                           ng-model="objectsSidebarService.selectedObject.hasListPrice"
-                                                           ng-true-value="'1'" ng-false-value="'0'"/>
-                                                    <span class="fa fa-times"></span>
-                                                    Precio Final
-                                                </label>
-                                            </div>
-                                            <input type="text" ng-model="objectsSidebarService.selectedObject.listPrice"
-                                                   placeholder="Final Price" ng-blur="validate()"
-                                                   ng-disabled="!hasListPriceBool" required="required"
-                                                   is-number="is-number" class="title-value highlightInput"/>
-                                            <span class="help-block">El precio final de la promoción</span>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="section">
-                                <div class="row">
-                                    <form class="form-inline novalidate">
-                                        <div class="form-group col-md-4">
-                                            <div class="checkbox c-checkbox">
-                                                <label>
-                                                    <input type="checkbox"
-                                                           ng-model="objectsSidebarService.selectedObject.hasTimming"
-                                                           ng-true-value="'1'" ng-false-value="'0'"/>
-                                                    <span class="fa fa-times"></span>
-                                                    Valido Desde
-                                                </label>
-                                            </div>
-                                            <input type="datetime" date-time="date-time"
-                                                   ng-model="objectsSidebarService.selectedObject.initialDate"
-                                                   ng-disabled="!objectsSidebarService.selectedObject.hasTimming" placeholder="Initial Date**"
-                                                   ng-blur="validate()" required="required" readonly="readonly"
-                                                   class="highlightInput"/>
-                                            <span class="help-block">Fecha de inicio de la promoción</span>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <div class="checkbox c-checkbox">
-                                                <label>
-                                                    <input type="checkbox"
-                                                           ng-model="objectsSidebarService.selectedObject.hasTimming"
-                                                           ng-true-value="'1'" ng-false-value="'0'"/>
-                                                    <span class="fa fa-times"></span>
-                                                    Valido Hasta
-                                                </label>
-                                            </div>
-                                            <input type="datetime" date-time="date-time"
-                                                   ng-model="objectsSidebarService.selectedObject.expirationDate"
-                                                   ng-disabled="!objectsSidebarService.selectedObject.hasTimming" placeholder="Expiration Date**"
-                                                   ng-blur="validate()" required="required" readonly="readonly"
-                                                   class="highlightInput"/>
-                                            <span class="help-block">Fecha final de la promoción</span>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <div class="checkbox c-checkbox">
-                                                <label>
-                                                    <input type="checkbox"
-                                                           ng-model="objectsSidebarService.selectedObject.hasQuantity"
-                                                           ng-true-value="'1'" ng-false-value="'0'"/>
-                                                    <span class="fa fa-times"></span>
-                                                    Cantidad Limitada
-                                                </label>
-                                            </div>
-                                            <input type="text" ng-model="objectsSidebarService.selectedObject.quantity"
-                                                   ng-disabled="!hasQuantityBool" placeholder="Quantity **"
-                                                   ng-blur="validate()" required="required" is-number="is-number"
-                                                   class="highlightInput"/>
-                                            <span class="help-block">Permita hacer promociones con cantidades limitadas.</span>
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>
