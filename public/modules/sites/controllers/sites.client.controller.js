@@ -204,6 +204,11 @@
 
         //Save detail model object
         $scope.save= function(){
+            var tags = $("#siteSearchTag").tagsinput('items');
+            $scope.objectsSidebarService.selectedObject.searchTags = [];
+            for(var i = 0; i < tags.length; i++){
+                $scope.objectsSidebarService.selectedObject.searchTags.push(tags[i]);
+            }
             $http.put('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites/'+$scope.objectsSidebarService.selectedObject.identifier,{model:$scope.objectsSidebarService.selectedObject}).success(function(data,status){
                 if("replaceModel" in data){
                     $scope.objectsSidebarService.selectedObject = data.replaceModel;
