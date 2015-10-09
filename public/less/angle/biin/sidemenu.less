@@ -29,6 +29,7 @@ Component: sidemenu.less
   height: 100%;
   padding-top: 20px;
   padding-bottom: 20px;
+  background-color: @sidebar-bg;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -135,17 +136,24 @@ Component: sidemenu.less
   }
 }
 
-.right-section-content.extended {
-  padding-left: 0;
-}
-
-.right-section-content{
-  padding-left: @sidebar-wd;
-  -webkit-transition: 0.3s; /* For Safari 3.1 to 6.0 */
-  transition: 0.3s;
-}
+    // labels in menu items
+    .nav {
+      .label {
+        position: absolute;
+        top: 10px;
+        right: 5px;
+        text-indent: 0;
+      }
+    }
+  } // .sidebar
+} // .aside-collapsed
 
 .hide-button{
   float: right;
   padding-right: 5px;
+}
+
+
+.objectSidebar-container{
+  height: 100%;
 }

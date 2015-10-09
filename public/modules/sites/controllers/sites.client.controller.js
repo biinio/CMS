@@ -141,6 +141,7 @@
          =============================================================================================================*/
 
         var selectFirstSite = function( sites ) {
+
             $scope.objectsSidebarService.selectedObject = sites[0];
             //I know it's ugly and I don't like this approach, it should be other way to  validate if the tag field is
             // rendered to call this code
@@ -151,6 +152,7 @@
                     siteSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
                 }
             },100);
+
         };
 
         //Return the categories of the sites
@@ -163,6 +165,7 @@
             //Get the Mayor from server
             $http.post('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/sites").success(function(site,status){
                 if(status==201){
+
                     var siteSearchTag =$('#siteSearchTag');
                     siteSearchTag.tagsinput("removeAll");
 
@@ -204,11 +207,15 @@
 
         //Save detail model object
         $scope.save= function(){
+
             var tags = $("#siteSearchTag").tagsinput('items');
+
             $scope.objectsSidebarService.selectedObject.searchTags = [];
+
             for(var i = 0; i < tags.length; i++){
                 $scope.objectsSidebarService.selectedObject.searchTags.push(tags[i]);
             }
+
             $http.put('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites/'+$scope.objectsSidebarService.selectedObject.identifier,{model:$scope.objectsSidebarService.selectedObject}).success(function(data,status){
                 if("replaceModel" in data){
                     $scope.objectsSidebarService.selectedObject = data.replaceModel;
@@ -221,17 +228,22 @@
 
         // Function that limits in nutshell how many words can it be
         $scope.limitNutshell = function(){
-            var value = $scope.objectsSidebarService.selectedObject.nutshell ;
+            var value = $scope.objectsSidebarService.selectedObject.nutshell;
+
             if(value == null)
                 value = "";
+
             value = value.trim();
             var words = value.split(" ");
+
             if(words.length > 8)
                 words.splice(8, words.length-8);
             var sentence = "";
+
             for (var i = 0; i < words.length; i++) {
                 sentence += words[i] + " ";
             }
+
             sentence = sentence.trim();
             $scope.objectsSidebarService.selectedObject.nutshell = sentence;
         };
