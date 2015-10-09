@@ -135,7 +135,8 @@
                     $scope.showBiinsPerOrganization($scope.objectsSidebarService.selectedObject);
                     if(mode == "create" ){
                         $scope.objectsSidebarService.selectedObject.sites[beacon.siteIndex].minorCounter = $scope.objectsSidebarService.selectedObject.sites[beacon.siteIndex].minorCounter ? $scope.objectsSidebarService.selectedObject.sites[beacon.siteIndex].minorCounter+1 : 1;
-                        $scope.objectsSidebarService.selectedObject.biinsAssignedCounter = $scope.objectsSidebarService.selectedObject.biinsAssignedCounter ? $scope.objectsSidebarService.selectedObject.biinsAssignedCounter+1 : 1;
+                        $scope.objectsSidebarService.selectedObject.assignedBeacons = $scope.objectsSidebarService.selectedObject.assignedBeacons ? $scope.objectsSidebarService.selectedObject.assignedBeacons+1 : 1;
+
                     }
                     else{
                         if(beacon.minorHasChanged && beacon.biinType != "1"){

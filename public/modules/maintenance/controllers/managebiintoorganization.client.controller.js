@@ -105,7 +105,7 @@
         $scope.save = function () {
             $scope.beacon.major = $scope.selectedSite.major;
             $scope.beacon.siteIdentifier = $scope.selectedSite.identifier;
-            $scope.beacon.siteIndex = $scope.selectedSite;
+            $scope.beacon.siteIndex = $scope.sites.indexOf($scope.selectedSite);
             $scope.beacon.isAssigned = true;
             $scope.beacon.organizationIdentifier = $scope.selectedOrganization.identifier;
             $scope.beacon.accountIdentifier = $scope.selectedOrganization.accountIdentifier;
