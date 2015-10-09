@@ -1,6 +1,6 @@
 <div ng-controller="SitesController as sites" class="">
-    <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
-        <div class="right-section-content">
+    <div id="wrapperContent" class="container-fluid">
+        <div class="left-section-content col-md-3 nopadding">
             <div ng-if="objectsSidebarService.selectedObject!=null">
                 <!-- NutShell Section -->
                 <section>
@@ -139,7 +139,7 @@
                                                         <label>
                                                             <input ng-if="containsCategory(cat) == 'active'" input type="checkbox" checked=""/>
                                                             <input ng-if="containsCategory(cat) != 'active'" input type="checkbox"/>
-                                                            <span class="fa fa-times"></span>
+                                                            <span class="fa fa-check"></span>
                                                             {{cat.displayName}}
                                                         </label>
                                                     </div>
@@ -156,6 +156,12 @@
                                         below.</p>
                                 </div>
                             </div>
+                            <div class="section">
+                                <div class="paragraph">
+                                    <p>Categories allow your site and products to be visible on searches, select the
+                                        ones you think need to asociate with your site and products form the list
+                                        below.</p>
+                    </div>
                         </div>
                     </div>
                 </section>
