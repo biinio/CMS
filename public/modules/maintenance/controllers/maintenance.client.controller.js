@@ -32,6 +32,8 @@
             "<br/>" +
             "</div>";
 
+        $scope.objectsSidebarService.enableAddButton = false;
+
         /**=============================================================================================================
          * Events Listeners
          *

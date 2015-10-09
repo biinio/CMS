@@ -4,7 +4,7 @@
     </div>
     <div class="container-fluid sidemenu">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-2" ng-hide="!objectSidebarService.enableAddButton">
                 <button ng-click="create()" class="btn btnAdd">&#43;</button>
             </div>
             <div class="col-md-10">
