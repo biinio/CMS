@@ -13132,6 +13132,13 @@ Component: elements.less
   margin-left: auto;
   margin-right: auto;
 }
+.enlarge-icon {
+  font-size: 21px !important;
+}
+.sidebar-padding {
+  padding-left: 20px;
+  padding-top: 2px;
+}
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');
 }
