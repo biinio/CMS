@@ -46,36 +46,51 @@ module.exports = {
 				'public/lib/textAngular/dist/textAngular-sanitize.min.js',
                 'public/lib/underscore/underscore.js',
                 'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.js',
-                'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput-angular.js'
-				// 'public/lib/jquery/dist/jquery.js',
-				// 'public/lib/angular/angular.js',
-				// 'public/lib/angular-resource/angular-resource.js',
-				// 'public/lib/angular-cookies/angular-cookies.js',
-				// 'public/lib/angular-animate/angular-animate.js',
-				// 'public/lib/angular-touch/angular-touch.js',
-				// 'public/lib/angular-sanitize/angular-sanitize.js',
-				// 'public/lib/angular-ui-router/release/angular-ui-router.js',
-				// 'public/lib/angular-ui-utils/ui-utils.js',
-				// 'public/lib/angular-bootstrap/ui-bootstrap-tpls.js'
-			]
-		},
-		css: [
-			// 'public/modules/**/css/*.css'
-			'public/dist/application.min.css',
-			'public/lib/angularjs-toaster/toaster.css',
-			'public/lib/animo.js/animate+animo.css',
+                'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput-angular.js',
+                'public/lib/angular-bind-html-compile/angular-bind-html-compile.js',
+                'public/lib/angular-moment/angular-moment.js',
+                'public/lib/angular-datepicker/dist/angular-datepicker.js',
+                'public/lib/blueimp-canvas-to-blob/js/canvas-to-blob.min.js',
+                'public/lib/blueimp-tmpl/js/tmpl.min.js',
+                'public/lib/blueimp-load-image/js/load-image.all.min.js',
+                'public/lib/blueimp-file-upload/js/vendor/jquery.ui.widget.js',
+                'public/lib/blueimp-file-upload/js/jquery.iframe-transport.js',
+                'public/lib/blueimp-file-upload/js/jquery.fileupload.js',
+                'public/lib/blueimp-file-upload/js/jquery.fileupload-process.js',
+                'public/lib/blueimp-file-upload/js/jquery.fileupload-angular.js',
+                'public/lib/loaders.css/loaders.css.js',
+                '//maps.googleapis.com/maps/api/js'
+                // 'public/lib/jquery/dist/jquery.js',
+                // 'public/lib/angular/angular.js',
+                // 'public/lib/angular-resource/angular-resource.js',
+                // 'public/lib/angular-cookies/angular-cookies.js',
+                // 'public/lib/angular-animate/angular-animate.js',
+                // 'public/lib/angular-touch/angular-touch.js',
+                // 'public/lib/angular-sanitize/angular-sanitize.js',
+                // 'public/lib/angular-ui-router/release/angular-ui-router.js',
+                // 'public/lib/angular-ui-utils/ui-utils.js',
+                // 'public/lib/angular-bootstrap/ui-bootstrap-tpls.js'
+            ]
+        },
+        css: [
+            // 'public/modules/**/css/*.css'
+            'public/dist/application.min.css',
+            'public/lib/angularjs-toaster/toaster.css',
+            'public/lib/animo.js/animate+animo.css',
             'public/lib/textAngular/dist/textAngular.css',
-            'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.css'
-		],
-		js: [
-			'public/config.js',
-			'public/application.js',
-			'public/modules/*/*.js',
-			'public/modules/*/*[!tests]*/*.js'
-		],
-		tests: [
-			'public/lib/angular-mocks/angular-mocks.js',
-			'public/modules/*/tests/*.js'
-		]
-	}
+            'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.css',
+            'public/lib/angular-datepicker/dist/angular-datepicker.css',
+            'public/lib/loaders.css/loaders.css'
+        ],
+        js: [
+            'public/config.js',
+            'public/application.js',
+            'public/modules/*/*.js',
+            'public/modules/*/*[!tests]*/*.js'
+        ],
+        tests: [
+            'public/lib/angular-mocks/angular-mocks.js',
+            'public/modules/*/tests/*.js'
+        ]
+    }
 };

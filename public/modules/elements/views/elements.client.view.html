@@ -1,6 +1,6 @@
 <div ng-controller="ElementsController as elementCtrl" class="block-center">
-    <div id="wrapperContent" class="container-fluid">
-        <div class="left-section-content col-md-3 container-fluid">
+    <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
+        <div class="right-section-content">
             <div class="container-fluid sidemenu">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 searchBoxList">
@@ -62,8 +62,8 @@
                                     <div class="form-group">
                                         <span class= "checkbox-inline c-checkbox">
                                             <label>
-                                                <input type="checkbox" ng-model="elements[selectedElement].isHighlight" ng-true-value="1" ng-false-value="0"/>
-                                                <span class="fa fa-times"/>
+                                                <input type="checkbox" ng-model="objectsSidebarService.selectedObject.isHighlight" ng-true-value="'1'" ng-false-value="'0'"/>
+                                                <span class="fa fa-check"></span>
                                             </label>
                                         </span>
                                         <span translate="SUMMARY.HIGHTLIGHT"></span>
@@ -158,8 +158,9 @@
                                                    class="col-md-3 catModule">
                                                     <div class="checkbox c-checkbox">
                                                         <label>
-                                                            <input type="checkbox">
-                                                            <span class="fa fa-times"></span>
+                                                            <input ng-if="containsCategory(cat) == 'active'" input type="checkbox" checked=""/>
+                                                            <input ng-if="containsCategory(cat) != 'active'" input type="checkbox"/>
+                                                            <span class="fa fa-check"></span>
                                                             {{cat.displayName}}
                                                         </label>
                                                     </div>
@@ -214,9 +215,9 @@
                                         <div class="form-group col-md-4">
                                             <div class="checkbox c-checkbox">
                                                 <label>
-                                                    <input type="checkbox" id="chkFromPrice" ng-model="hasFromPriceBool"
-                                                           ng-change="changeBoolStateHighlights('hasFromPrice', hasFromPriceBool)">
-                                                    <span class="fa fa-times"></span>
+                                                    <input type="checkbox" id="chkFromPrice" ng-model="objectsSidebarService.selectedObject.hasFromPrice"
+                                                           ng-true-value="'1'" ng-false-value="'0'">
+                                                    <span class="fa fa-check"></span>
                                                     Utilizar precio Desde
                                                 </label>
                                             </div>
@@ -231,9 +232,10 @@
                                         <div class="form-group col-md-4">
                                             <div class="checkbox c-checkbox">
                                                 <label>
-                                                    <input type="checkbox" id="chkDiscount" ng-model="hasDiscountBool"
-                                                           ng-change="changeBoolStateHighlights('hasDiscount', hasDiscountBool)"/>
-                                                    <span class="fa fa-times"></span>
+                                                    <input type="checkbox" id="chkDiscount"
+                                                           ng-model="objectsSidebarService.selectedObject.hasDiscount"
+                                                           ng-true-value="'1'" ng-false-value="'0'"/>
+                                                    <span class="fa fa-check"></span>
                                                     Porcentaje
                                                 </label>
                                             </div>
@@ -246,9 +248,10 @@
                                         <div class="form-group col-md-4">
                                                 <div class="checkbox c-checkbox">
                                                     <label>
-                                                        <input type="checkbox" id="chkSaving" ng-model="hasSavingBool"
-                                                               ng-change="changeBoolStateHighlights('hasSaving', hasSavingBool)"/>
-                                                        <span class="fa fa-times"></span>
+                                                        <input type="checkbox" id="chkSaving"
+                                                               ng-model="objectsSidebarService.selectedObject.hasSaving"
+                                                               ng-true-value="'1'" ng-false-value="'0'"/>
+                                                        <span class="fa fa-check"></span>
                                                         Monto del descuento
                                                     </label>
                                                 </div>
@@ -262,9 +265,10 @@
                                         <div class="form-group col-md-4">
                                             <div class="checkbox c-checkbox">
                                                 <label>
-                                                    <input type="checkbox" id="chkPrice" ng-model="hasListPriceBool"
-                                                           ng-change="changeBoolStateHighlights('hasListPrice', hasListPriceBool)"/>
-                                                    <span class="fa fa-times"></span>
+                                                    <input type="checkbox" id="chkPrice"
+                                                           ng-model="objectsSidebarService.selectedObject.hasListPrice"
+                                                           ng-true-value="'1'" ng-false-value="'0'"/>
+                                                    <span class="fa fa-check"></span>
                                                     Precio Final
                                                 </label>
                                             </div>
@@ -283,9 +287,10 @@
                                         <div class="form-group col-md-4">
                                             <div class="checkbox c-checkbox">
                                                 <label>
-                                                    <input type="checkbox" ng-model="hasTimmingBool"
-                                                           ng-change="changeBoolStateHighlights('hasTimming', hasTimmingBool)"/>
-                                                    <span class="fa fa-times"></span>
+                                                    <input type="checkbox"
+                                                           ng-model="objectsSidebarService.selectedObject.hasTimming"
+                                                           ng-true-value="'1'" ng-false-value="'0'"/>
+                                                    <span class="fa fa-check"></span>
                                                     Valido Desde
                                                 </label>
                                             </div>
@@ -299,9 +304,10 @@
                                         <div class="form-group col-md-4">
                                             <div class="checkbox c-checkbox">
                                                 <label>
-                                                    <input type="checkbox" ng-model="hasTimmingBool"
-                                                           ng-change="changeBoolStateHighlights('hasTimming', hasTimmingBool)"/>
-                                                    <span class="fa fa-times"></span>
+                                                    <input type="checkbox"
+                                                           ng-model="objectsSidebarService.selectedObject.hasTimming"
+                                                           ng-true-value="'1'" ng-false-value="'0'"/>
+                                                    <span class="fa fa-check"></span>
                                                     Valido Hasta
                                                 </label>
                                             </div>
@@ -315,9 +321,10 @@
                                         <div class="form-group col-md-4">
                                             <div class="checkbox c-checkbox">
                                                 <label>
-                                                    <input type="checkbox" ng-model="hasQuantityBool"
-                                                           ng-change="changeBoolStateHighlights('hasQuantity', hasQuantityBool)"/>
-                                                    <span class="fa fa-times"></span>
+                                                    <input type="checkbox"
+                                                           ng-model="objectsSidebarService.selectedObject.hasQuantity"
+                                                           ng-true-value="'1'" ng-false-value="'0'"/>
+                                                    <span class="fa fa-check"></span>
                                                     Cantidad Limitada
                                                 </label>
                                             </div>

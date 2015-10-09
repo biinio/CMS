@@ -31,7 +31,44 @@
                                         <div class="icon icon-arrange-1"></div>
                                     </div>
                                 </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+                <!-- Categories Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <legend>Categories</legend>
+                        </div>
+                        <div class="panel-body">
+                            <div class="section">
+                                <div id="categories">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div ng-repeat="cat in categories" ng-click="switchCategoryState(cat)"
+                                                   class="col-md-3 catModule">
+                                                    <div class="checkbox c-checkbox">
+                                                        <label>
+                                                            <input ng-if="containsCategory(cat) == 'active'" input type="checkbox" checked=""/>
+                                                            <input ng-if="containsCategory(cat) != 'active'" input type="checkbox"/>
+                                                            <span class="fa fa-check"></span>
+                                                            {{cat.displayName}}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="section">
+                                <div class="paragraph">
+                                    <p>Categories allow your site and products to be visible on searches, select the
+                                        ones you think need to asociate with your site and products form the list
+                                        below.</p>
+                                </div>
                         </div>
                     </div>
                 </div>

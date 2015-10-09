@@ -1,0 +1,29 @@
+<div class="objects-left-bar">
+    <div class="hide-button" ng-click="hideObjectsMenu()">
+        <em class="fa fa-navicon"></em>
+    </div>
+    <div class="container-fluid sidemenu">
+        <div class="row">
+            <div class="col-md-2">
+                <button ng-click="create()" class="btn btnAdd">&#43;</button>
+            </div>
+            <div class="col-md-10">
+                <div class="searchBox-wrapper">
+                    <input type="text" placeholder="filter" ng-model="query" autofocus="autofocus"
+                           class="form-control"/>
+                </div>
+            </div>
+        </div>
+        <div class="objectSidebar-container">
+            <div class="row">
+                <div ng-repeat="item in objectsSidebarService.getObjects() | orderBy: '+title' | filter: query"
+                     ng-click="onObjectClick(objectsSidebarService.objects.indexOf(item))">
+                    <div ng-class="{active: item == objectsSidebarService.getSelectedObject()}"
+                         class="list-items-side-menu">
+                        <div bind-html-compile="objectsSidebarService.template"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

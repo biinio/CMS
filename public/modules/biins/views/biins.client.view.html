@@ -1,45 +1,121 @@
 <div ng-controller="BiinsController as biinsCtrl" class="">
     <div id="wrapperContent" class="container-fluid">
-        <div class="left-section-content col-md-3 nopadding">
-            <div class="container-fluid main-views-list">
-                <div class="hideButton">
-                    <div class="unretracted icon-arrow-37"></div>
-                    <div class="retracted icon-arrow-38"></div>
-                </div>
-                <div class="row">
-                    <div scrollbar="scrollbarOptionsStandard" class="scroll-vertical-container scrollbar-inner">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 searchBoxList">
-                            <div class="col-md-2">
-                                <button ng-click="create()" class="btn btnAdd">&#43;</button>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="searchBox-wrapper">
-                                    <input type="text" placeholder="filter" ng-model="query" autofocus="autofocus" class="form-control"/>
-                                </div>
-                            </div>
+        <div class="right-section-content">
+            <div ng-if="objectsSidebarService.selectedObject!=null">
+                <!-- NutShell Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <legend>Informaci&oacute;n  y Ubicaci&oacute;n</legend>
                         </div>
-                        <div ng-repeat="item in sites | orderBy : '+title1' | filter: query" ng-click="edit(sites.indexOf(item))" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
-                            <div ng-class="{active: sites.indexOf(item) == selectedSite}" class="moduleWrapperList contentHideButtons">
-                                <div class="col-md-3 thumbListImage"><img ng-if="item.media.length == 0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+" alt=""/><img ng-if="item.media.length&gt;0" ng-src="{{item.media[0].imgUrl}}" pending-indicator="pending-indicator"/></div>
-                                <div class="col-md-9">
-                                    <label class="moduleTitle">{{item.title1}}</label><br/>
-                                    <label class="moduleSubTitle">{{item.title2}}</label>
-                                    <div ng-click="openConfirmation('sm',sites.indexOf(item))" class="btnDelete icon-round-control btn-on-hover">
-                                        <div class="icon icon-bin-2"></div>
-                                    </div>
-                                    <div class="btnShowcasePreview icon-round-control btn-on-hover">
-                                        <div class="icon icon-arrange-1"></div>
+                        <div class="panel-body">
+                            <form class="novalidate">
+                                <div class="section">
+                                    <div class="container-fluid">
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label>{{getSiteName(objectsSidebarService.selectedObject.siteIdentifier)}}</label>
+                                                </div>
+                                                <label>Identificador:</label>
+                                                <label>{{objectsSidebarService.selectedObject.brandIdentifier}}</label>
+                                                <div>
+                                                    <label>Tipo:</label>
+                                                    <label>Exterior</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label>Nombre</label>
+                                                    <input ng-model="objectsSidebarService.selectedObject.name" ng-value="objectsSidebarService.selectedObject.name" class="form-control"/>
+                                                </div>
+                                                <div>
+                                                    <label>Venue</label>
+                                                    <input type="text" ng-model="objectsSidebarService.selectedObject.venue" ng-value="objectsSidebarService.selectedObject.venue" typeahead="venue.name for venue in getVenues($viewValue)" class="form-control"/>
+                                                </div>
+                                                <div>
+                                                    <label>Posicion</label>
+                                                    <input ng-model="objectsSidebarService.selectedObject.position" ng-value="objectsSidebarService.selectedObject.position" class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
-                </div>
+                </section>
+                <!-- Actions Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <legend>Detalles</legend>
+                        </div>
+                        <div class="panel-body">
+                            <form class="novalidate">
+                                <div class="section">
+                                    <div id="biinsDetailsWrapper">
+                                        <h3>{{objectsSidebarService.selectedObject.name}}			</h3>
+                                    </div>
+                                </div>
+                                <div class="section">
+                                    <table class="table table-condensed table-hover">
+                                        <tr>
+                                            <th>
+                                                <p>N&uacute;mero</p>
+                                            </th>
+                                            <th>
+                                                <p>Identifier</p>
+                                            </th>
+                                            <th>
+                                                <p>Tipo</p>
+                                            </th>
+                                            <th>
+                                                <p>Nombre</p>
+                                            </th>
+                                            <th>
+                                                <p>Actividad</p>
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                        <tr ng-repeat="obj in objectsSidebarService.selectedObject.objects">
+                                            <td>
+                                                <p>{{$index+1}}</p>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <p>{{obj.identifier}}</p>
+                                            </td>
+                                            <td>
+                                                <p ng-if="obj.objectType=='1'">Element</p>
+                                                <p ng-if="obj.objectType=='2'">Showcase					</p>
+                                            </td>
+                                            <td>
+                                                <p>{{getObjectName(obj.identifier,obj.objectType)}}</p>
+                                            </td>
+                                            <td>
+                                                <p>{{obj.startTime | date:'HH:mm'}} - {{obj.endTime | date:'HH:mm'}}</p>
+                                                <p><span ng-if="obj.onMonday==='1'">L</span><span ng-if="obj.onTuesday==='1'">K</span><span ng-if="obj.onWednesday==='1'">M</span><span ng-if="obj.onThursday==='1'">J</span><span ng-if="obj.onFriday==='1'">V</span><span ng-if="obj.onSaturday==='1'">S</span><span ng-if="obj.onSunday==='1'">D</span></p>
+                                            </td>
+                                            <td>
+                                                <div ng-click="biinObject('lg','edit',obj)" class="btn">
+                                                    <p>Editar</p>
+                                                </div>
+                                                <div ng-click="removeObject(biins[selectedBiin].objects.indexOf(obj))" class="btn">
+                                                    <p>Eliminar</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="row">
+                                        <div ng-click="biinObject('lg','create',0)" class="btn btn-success pull-right"><strong>Agregar</strong></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
             </div>
-        </div>
-        <div class="right-section-content col-md-9">
-            <h4>Biins</h4>
-            <div ng-if="selectedSite!=null"></div>
         </div>
     </div>
 </div>
