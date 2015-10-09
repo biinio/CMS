@@ -35,7 +35,7 @@
                                     </th>
                                     <th>Edit</th>
                                 </tr>
-                                <tr ng-repeat="biin in organizations[selectedOrganization].biins">
+                                <tr ng-repeat="biin in objectsSidebarService.selectedObject.biins">
                                     <td class="biinInOrganizationId">{{biin.brandIdentifier}}</td>
                                     <td class="biinInOrganizationAlias">{{biin.name}}</td>
                                     <td class="biinInOrganizationUUID">{{biin.proximityUUID}}</td>
@@ -45,14 +45,14 @@
                                     <td class="biinInOrganizationMinor">{{biin.minor}}</td>
                                     <td class="biinInOrganizationState">{{biin.status}}</td>
                                     <td>
-                                        <div ng-click="showAddBiintoOrganizationModal('edit',biin)" class="icon icon-pencil-2"></div>
+                                        <div ng-click="showAddBiintoOrganizationModal('edit',biin)" class="icon icon-pencil"></div>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="addBiinToOrganization">
-                            <div ng-click="showAddBiintoOrganizationModal('create')" class="icon icon-add-4"></div>
+                            <div ng-click="showAddBiintoOrganizationModal('create')" class="enlarge-icon pull-right fa fa-plus-square-o"></div>
                         </div>
                     </div>
                 </div>
