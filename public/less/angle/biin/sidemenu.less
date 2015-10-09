@@ -87,7 +87,7 @@ Component: sidemenu.less
 @media @tablet-landscape {
   .sidebar {
     margin-right: -@scrollbar-wd;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 }
 
@@ -111,8 +111,8 @@ Component: sidemenu.less
 .objects-left-bar{
   //box-sizing: border-box;
   overflow-x: hidden;
-  overflow-y: scroll;
-  min-height: 100%;
+  //overflow-y: auto;
+  height: 100%;
 }
 
 .objects-sidebar{
@@ -128,32 +128,66 @@ Component: sidemenu.less
 
 .objects-sidebar.contracted {
   width: 0;
-  > .objects-left-bar{
+  //> .objects-left-bar{
     > .hide-button{
       position: absolute;
       margin-left: 5px;
     }
+    >.sidebar-filter {
+      display: none;
+      //overflow-x: hidden;
+    }
+
+  //}
+}
+
+
+
+// labels in menu items
+.nav {
+  .label {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    text-indent: 0;
   }
 }
 
-    // labels in menu items
-    .nav {
-      .label {
-        position: absolute;
-        top: 10px;
-        right: 5px;
-        text-indent: 0;
-      }
-    }
-  } // .sidebar
-} // .aside-collapsed
+.right-section-content.extended {
+  padding-left: 0;
+}
+
+.right-section-content{
+  padding-left: @sidebar-wd;
+  -webkit-transition: 0.3s; /* For Safari 3.1 to 6.0 */
+  transition: 0.3s;
+}
 
 .hide-button{
   float: right;
-  padding-right: 5px;
+  position: absolute;
+  margin-left: 225px;
 }
 
-
-.objectSidebar-container{
+.container-scroll {
   height: 100%;
+  overflow-y: auto;
 }
+
+/*.sidebar-filter {
+  margin-left: 5px;
+  margin-top: 5px;
+}*/
+
+.col-center-block {
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btnAdd {
+  height: 35px;
+  padding: 6px 14px
+
+}
+
