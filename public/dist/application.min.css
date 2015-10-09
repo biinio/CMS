@@ -13112,6 +13112,7 @@ Component: sidemenu.less
   height: 100%;
   padding-top: 20px;
   padding-bottom: 20px;
+  background-color: #ffffff;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -13161,7 +13162,7 @@ Component: sidemenu.less
 @media only screen and (min-width: 1025px) {
   .sidebar {
     margin-right: -17px;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 }
 .thumbListImage {
@@ -13181,8 +13182,7 @@ Component: sidemenu.less
 }
 .objects-left-bar {
   overflow-x: hidden;
-  overflow-y: scroll;
-  min-height: 100%;
+  height: 100%;
 }
 .objects-sidebar {
   width: 220px;
@@ -13198,9 +13198,18 @@ Component: sidemenu.less
 .objects-sidebar.contracted {
   width: 0;
 }
-.objects-sidebar.contracted > .objects-left-bar > .hide-button {
+.objects-sidebar.contracted > .hide-button {
   position: absolute;
   margin-left: 5px;
+}
+.objects-sidebar.contracted > .sidebar-filter {
+  display: none;
+}
+.nav .label {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  text-indent: 0;
 }
 .right-section-content.extended {
   padding-left: 0;
@@ -13213,7 +13222,25 @@ Component: sidemenu.less
 }
 .hide-button {
   float: right;
-  padding-right: 5px;
+  position: absolute;
+  margin-left: 225px;
+}
+.container-scroll {
+  height: 100%;
+  overflow-y: auto;
+}
+/*.sidebar-filter {
+  margin-left: 5px;
+  margin-top: 5px;
+}*/
+.col-center-block {
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.btnAdd {
+  height: 35px;
+  padding: 6px 14px;
 }
 /* ========================================================================
 Component: elements.less
@@ -13292,13 +13319,6 @@ Component: elements.less
 .sidebar-padding {
   padding-left: 20px;
   padding-top: 2px;
-}
-.hide-button {
-  float: right;
-  padding-right: 5px;
-}
-.objectSidebar-container {
-  height: 100%;
 }
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');
