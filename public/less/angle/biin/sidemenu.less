@@ -87,7 +87,7 @@ Component: sidemenu.less
 @media @tablet-landscape {
   .sidebar {
     margin-right: -@scrollbar-wd;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 }
 
@@ -108,58 +108,85 @@ Component: sidemenu.less
   }
 }
 
-// Collapsed state styles
-.aside-collapsed {
+.objects-left-bar{
+  //box-sizing: border-box;
+  overflow-x: hidden;
+  //overflow-y: auto;
+  height: 100%;
+}
 
-  .sidebar {
-    overflow-x: hidden;
-    // Applies to first level items
-    > .nav {
+.objects-sidebar{
+  width: @sidebar-wd;
+  min-height: 100%;
+  position: fixed;
+  height: 1px;
+  background-color: @sidebar-bg;
+  z-index: @z-index-main-section + 5;
+  -webkit-transition: width 0.3s; /* For Safari 3.1 to 6.0 */
+  transition: width 0.3s;
+}
 
-      .nav,
-      > .nav-heading,
-      > li > a > span {
-        display: none !important;
-      }
-
-      > li {
-        width: @aside-wd-collapsed - 2;
-        > a, > .nav-item {
-          text-indent: -@sidebar-item-border-wd;
-          padding: 20px 0;
-          text-align: center;
-          > em {
-            font-size: 1.6em; // increase icons size
-            width: auto;
-          }
-          &:focus { // accessibility
-            background-color: transparent;
-            > em {
-              color: inherit;
-            }
-          }
-        }
-      }
+.objects-sidebar.contracted {
+  width: 0;
+  //> .objects-left-bar{
+    > .hide-button{
+      position: absolute;
+      margin-left: 5px;
+    }
+    >.sidebar-filter {
+      display: none;
+      //overflow-x: hidden;
     }
 
-    // labels in menu items
-    .nav {
-      .label {
-        position: absolute;
-        top: 10px;
-        right: 5px;
-        text-indent: 0;
-      }
-    }
-  } // .sidebar
-} // .aside-collapsed
-
-.hide-button{
-  float: right;
-  padding-right: 5px;
+  //}
 }
 
 
-.objectSidebar-container{
+
+// labels in menu items
+.nav {
+  .label {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    text-indent: 0;
+  }
+}
+
+.right-section-content.extended {
+  padding-left: 0;
+}
+
+.right-section-content{
+  padding-left: @sidebar-wd;
+  -webkit-transition: 0.3s; /* For Safari 3.1 to 6.0 */
+  transition: 0.3s;
+}
+
+.hide-button{
+  float: right;
+  position: absolute;
+  margin-left: 225px;
+}
+
+.container-scroll {
   height: 100%;
+  overflow-y: auto;
+}
+
+/*.sidebar-filter {
+  margin-left: 5px;
+  margin-top: 5px;
+}*/
+
+.col-center-block {
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btnAdd {
+  height: 35px;
+  padding: 6px 14px
+
 }

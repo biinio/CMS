@@ -1,34 +1,120 @@
 <div ng-controller="SitesController as sites" class="">
     <div id="wrapperContent" class="container-fluid">
-        <div class="left-section-content col-md-3 nopadding">
-            <div class="container-fluid main-views-list">
-                <div class="hideButton">
-                    <div class="unretracted icon-arrow-37"></div>
-                    <div class="retracted icon-arrow-38"></div>
-                </div>
-                <div class="row">
-                    <div scrollbar="scrollbarOptionsStandard" class="scroll-vertical-container scrollbar-inner">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 searchBoxList">
-                            <div class="col-md-2">
-                                <button ng-click="create()" class="btn btnAdd">&#43;</button>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="searchBox-wrapper">
-                                    <input type="text" placeholder="filter" ng-model="query" autofocus="autofocus" class="form-control"/>
-                                </div>
-                            </div>
+        <div class="right-section-content nopadding">
+            <div ng-if="objectsSidebarService.selectedObject!=null">
+                <!-- NutShell Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <legend translate="SITES.TITLE"></legend>
+                            <p translate="SITES.SUB_TITLE"></p>
+                            <h5 translate="SITES.TITLE1"></h5>
                         </div>
-                        <div ng-repeat="item in sites | orderBy : '+title1' | filter: query" ng-click="edit(sites.indexOf(item))" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
-                            <div ng-class="{active: sites.indexOf(item) == selectedSite}" class="moduleWrapperList contentHideButtons">
-                                <div class="col-md-3 thumbListImage"><img ng-if="item.media.length == 0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+" alt=""/><img ng-if="item.media.length&gt;0" ng-src="{{item.media[0].imgUrl}}" pending-indicator="pending-indicator"/></div>
-                                <div class="col-md-9">
-                                    <label class="moduleTitle">{{item.title1}}</label><br/>
-                                    <label class="moduleSubTitle">{{item.title2}}</label>
-                                    <div ng-click="openConfirmation('sm',sites.indexOf(item))" class="btnDelete icon-round-control btn-on-hover">
-                                        <div class="icon icon-bin-2"></div>
+                        <div class="panel-body">
+                            <form role="form" class="novalidate">
+                                <div class="section">
+                                    <div class="form-group">
+                                        <label for="title1" translate="SITES.NAME" class="control-label"></label>
+                                        <input id="title1" ng-model="objectsSidebarService.selectedObject.title1" name="title1" type="text" placeholder="Tittle **" ng-blur="validate()" required="required" class="form-control title-value"/>
                                     </div>
-                                    <div class="btnShowcasePreview icon-round-control btn-on-hover">
-                                        <div class="icon icon-arrange-1"></div>
+                                    <div class="form-group">
+                                        <label for="title2" translate="SITES.AT" class="control-label"></label>
+                                        <input id="title2" ng-model="objectsSidebarService.selectedObject.title2" name="title1" type="text" placeholder="Subtittle **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" translate="SITES.EMAIL" class=control-label"></label>
+                                        <input id="email" ng-model="objectsSidebarService.selectedObject.email" name="email" type="text" placeholder="email@email.com **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nutshell" translate="SITES.NUTSHELL" class="control-label"></label>
+                                        <input id="nutshell" ng-model="objectsSidebarService.selectedObject.nutshell" name="nutshell" type="text" placeholder="Mini Description **" ng-blur="validate()" ng-change="limitNutshell()" required="required" class="form-control title-value"/>
+                                    </div>
+                                    <code>{{'GENERIC.IDENTIFIER' | translate}} : {{objectsSidebarService.selectedObject.identifier }}</code>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+                <!-- Search Tags Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <legend translate="GENERIC.SEARCH_TAGS"></legend>
+                        </div>
+                        <div class="panel-body">
+                            <input id="siteSearchTag" type="text" tagsinput="tagsinput" ng-model="temptags" class="form-control"/>
+                            <span class="help-block" translate="GENERIC.SEARCH_TAGS_DESC"></span>
+                        </div>
+                    </div>
+                </section>
+                <!-- Gallery Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <legend translate="GALLERY.TITLE"></legend>
+                            <p translate="GALLERY.SUB_TITLE"></p>
+                        </div>
+                        <div class="panel-body">
+                            <gallery ng-model="objectsSidebarService.selectedObject.media" gallery="galleries"></gallery>
+                        </div>
+                    </div>
+                </section>
+                <!-- Location Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <legend translate="SITES.LOCATION.TITLE"></legend>
+                            <p translate="SITES.LOCATION.SUB_TITLE"></p>
+                        </div>
+                        <div class="panel-body">
+                            <form role="form" class="novalidate">
+                                <div class="section">
+                                    <div class="form-group">
+                                        <label for="countryText" translate="SITES.LOCATION.COUNTRY" class="control-label"></label>
+                                        <input id="countryText" ng-model="objectsSidebarService.selectedObject.country" name="country" type="text" placeholder="Country **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="stateText" translate="SITES.LOCATION.STATE" class="control-label"></label>
+                                        <input id="stateText" ng-model="objectsSidebarService.selectedObject.state" name="state" type="text" placeholder="State **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cityText" translate="SITES.LOCATION.CITY" class="control-label"></label>
+                                        <input id="cityText" ng-model="objectsSidebarService.selectedObject.city" name="city" type="text" placeholder="City **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zipText" translate="SITES.LOCATION.ZIP" class="control-label"></label>
+                                        <input id="zipText" ng-model="objectsSidebarService.selectedObject.zipCode" name="zipCode" type="text" placeholder="Zip Code **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="stAddresText" translate="SITES.LOCATION.ADRESS" class="control-label"></label>
+                                        <input id="stAddresText" ng-model="objectsSidebarService.selectedObject.streetAddres" name="streetAddres" type="text" placeholder="Street Address **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ubicationText" translate="SITES.LOCATION.DETAIL_LOC" class="control-label"></label>
+                                        <input id="ubicationText" ng-model="objectsSidebarService.selectedObject.ubication" name="ubication" type="text" placeholder="Ubication **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phoneNumText" translate="SITES.LOCATION.PHONE" class="control-label"></label>
+                                        <input id="phoneNumText" ng-model="objectsSidebarService.selectedObject.phoneNumber" name="phoneNumber" type="text" placeholder="Phone number **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                    </div>
+                                </div>
+                                <div class="section">
+                                    <h4 translate="SITES.LOCATION.MAP_LOCATION"></h4>
+                                    <p translate="SITES.LOCATION.MAP_LOCATION_SUB"></p>
+                                    <div class="form-group">
+                                        <label for="latText" translate="SITES.LOCATION.LATITUDE" class="col-sm-2 control-label"></label>
+                                        <div class="col-sm-10">
+                                            <input id="latText" type="text" ng-model="objectsSidebarService.selectedObject.lat" placeholder="Latitude" required="required" class="form-control title-value"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lngText" translate="SITES.LOCATION.LONGITUDE" class="col-sm-2 control-label"></label>
+                                        <div class="col-sm-10">
+                                            <input id="lngText" type="text" ng-model="objectsSidebarService.selectedObject.lng" placeholder="Longitude" required="required" class="form-control title-value"/>
+                                        </div>
+                                    </div>
+                                    <div class="mapWrapper">
+                                        <div zoom="17" lat="{{objectsSidebarService.selectedObject.lat}}" lng="{{objectsSidebarService.selectedObject.lng}}" staticmap="staticmap" ng-click="showMapModal()" class="staticmap"></div>
                                     </div>
                                 </div>
                             </form>
@@ -69,14 +155,17 @@
                                         ones you think need to asociate with your site and products form the list
                                         below.</p>
                                 </div>
+                            </div>
+                            <div class="section">
+                                <div class="paragraph">
+                                    <p>Categories allow your site and products to be visible on searches, select the
+                                        ones you think need to asociate with your site and products form the list
+                                        below.</p>
+                    </div>
                         </div>
                     </div>
-                </div>
+                </section>
             </div>
-        </div>
-        <div class="right-section-content col-md-9">
-            <h4>Sites</h4>
-            <div ng-if="selectedSite!=null"></div>
         </div>
     </div>
 </div>

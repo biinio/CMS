@@ -8,7 +8,7 @@ angular.module('sites').config(['$stateProvider',
     function($stateProvider) {
         // Users state routing
         $stateProvider.
-            state('app.sites', {
+            state('appleftbar.sites', {
                 url: '/sites',
                 templateUrl: 'modules/sites/views/sites.client.view.html'
             });

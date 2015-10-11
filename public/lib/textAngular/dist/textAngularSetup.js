@@ -44,6 +44,7 @@ angular.module('textAngularSetup', [])
 	keyMappings : [],
 	toolbar: [
 		['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
+		['insertPriceList'],
 		['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
 		['justifyLeft','justifyCenter','justifyRight','justifyFull','indent','outdent'],
 		['html', 'insertImage', 'insertLink', 'insertVideo', 'wordcount', 'charcount']
@@ -412,6 +413,14 @@ angular.module('textAngularSetup', [])
 			action: headerAction,
 			activeState: _retActiveStateFunction(h.toLowerCase())
 		});
+	});
+	taRegisterTool('insertPriceList', {
+		buttontext: 'PriceList',
+		tooltiptext: taTranslations.p.tooltip,
+		action: function(){
+			return this.$editor().wrapSelection("formatBlock", "<priceList>");
+		},
+		activeState: function(){ return this.$editor().queryFormatBlockState('priceList'); }
 	});
 	taRegisterTool('p', {
 		buttontext: 'P',
