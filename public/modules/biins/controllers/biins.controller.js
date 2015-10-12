@@ -50,26 +50,18 @@
 
         //Save The Biin Objects Changes
         $scope.save = function () {
-            if ($scope.wizardPosition == "1") {
-                $http.put('https://qa-biinapp.herokuapp.com/api/venues/create', null, {
-                    headers: {
-                        name: $scope.objectsSidebarService.selectedObject.venue,
-                        orgidentifier: $scope.organizationId
-                    }
-                }).success(function () {
-                    $http.post('https://qa-biinapp.herokuapp.com/api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.biins[$scope.selectedBiin]).success(function () {
-                        console.log("success")
-                    }).error(function (err) {
-                        console.log(err);
-                    });
-                });
-            } else {
+            $http.put('https://qa-biinapp.herokuapp.com/api/venues/create', null, {
+                headers: {
+                    name: $scope.objectsSidebarService.selectedObject.venue,
+                    orgidentifier: $scope.organizationId
+                }
+            }).success(function () {
                 $http.post('https://qa-biinapp.herokuapp.com/api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.biins[$scope.selectedBiin]).success(function () {
                     console.log("success")
                 }).error(function (err) {
                     console.log(err);
                 });
-            }
+            });
         };
 
         Organization.promise.then(function () {
