@@ -1,5 +1,5 @@
 <div ng-controller="BiinsController as biinsCtrl" class="">
-    <div id="wrapperContent" class="container-fluid">
+    <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
         <div class="right-section-content">
             <div ng-if="objectsSidebarService.selectedObject!=null">
                 <!-- NutShell Section -->
@@ -15,13 +15,15 @@
                                         <div class="col-md-12">
                                             <div class="col-md-6">
                                                 <div>
-                                                    <label>{{getSiteName(objectsSidebarService.selectedObject.siteIdentifier)}}</label>
+                                                    <p>{{getSiteName(objectsSidebarService.selectedObject.siteIdentifier)}}</p>
                                                 </div>
-                                                <label>Identificador:</label>
-                                                <label>{{objectsSidebarService.selectedObject.brandIdentifier}}</label>
+                                                <p>Identificador:</p>
+                                                <strong>{{objectsSidebarService.selectedObject.brandIdentifier}}</strong>
                                                 <div>
-                                                    <label>Tipo:</label>
-                                                    <label>Exterior</label>
+                                                    <p>Tipo:</p>
+                                                    <strong ng-if="objectsSidebarService.selectedObject.biinType=='1'">Exterior</strong>
+                                                    <strong ng-if="objectsSidebarService.selectedObject.biinType=='2'">Interior</strong>
+                                                    <strong ng-if="objectsSidebarService.selectedObject.biinType=='3'">Producto</strong>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -49,15 +51,10 @@
                 <section>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <legend>Detalles</legend>
+                            <legend>{{objectsSidebarService.selectedObject.name}}</legend>
                         </div>
                         <div class="panel-body">
                             <form class="novalidate">
-                                <div class="section">
-                                    <div id="biinsDetailsWrapper">
-                                        <h3>{{objectsSidebarService.selectedObject.name}}			</h3>
-                                    </div>
-                                </div>
                                 <div class="section">
                                     <table class="table table-condensed table-hover">
                                         <tr>
@@ -107,7 +104,7 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    <div class="row">
+                                    <div>
                                         <div ng-click="biinObject('lg','create',0)" class="btn btn-success pull-right"><strong>Agregar</strong></div>
                                     </div>
                                 </div>

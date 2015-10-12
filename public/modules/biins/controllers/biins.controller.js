@@ -10,30 +10,13 @@
         .module('biins')
         .controller('BiinsController', BiinsController);
 
-    BiinsController.$inject = ['$http', '$state', '$scope', 'Authentication', 'Organization', 'ObjectsSidebar'];
-    function BiinsController($http, $state, $scope, Authentication, Organization, ObjectsSidebar) {
+    BiinsController.$inject = ['$http', '$state', '$scope','$modal', 'Authentication', 'Organization', 'ObjectsSidebar'];
+    function BiinsController($http, $state, $scope,$modal, Authentication, Organization, ObjectsSidebar) {
 
 
         /**=============================================================================================================
          *  Functions
          =============================================================================================================*/
-
-            //Save detail model object
-        $scope.save = function () {
-
-            $http.put('https://qa-biinapp.herokuapp.com/api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/sites/' + $scope.objectsSidebarService.selectedObject.identifier, {model: $scope.objectsSidebarService.selectedObject}).success(function (data) {
-                if ("replaceModel" in data) {
-                    $scope.objectsSidebarService.selectedObject = data.replaceModel;
-                }
-                if (data.state == "success")
-                    $scope.succesSaveShow = true;
-            });
-        };
-
-        //Edit a specific biin
-        $scope.edit = function (index) {
-            $scope.selectedBiin = index;
-        };
 
         $scope.getSiteName = function (identifier) {
             var site = _.findWhere($scope.sites, {identifier: identifier});
@@ -61,7 +44,8 @@
         };
 
         $scope.removeObject = function (index) {
-            $scope.biins[$scope.selectedBiin].objects.splice(index, 1);
+            $scope.objectsSidebarService.selectedObject.objects.splice(index, 1);
+            $scope.biins = $scope.objectsSidebarService.getObjects();
         };
 
         //Save The Biin Objects Changes
@@ -69,18 +53,18 @@
             if ($scope.wizardPosition == "1") {
                 $http.put('https://qa-biinapp.herokuapp.com/api/venues/create', null, {
                     headers: {
-                        name: $scope.biins[$scope.selectedBiin].venue,
+                        name: $scope.objectsSidebarService.selectedObject.venue,
                         orgidentifier: $scope.organizationId
                     }
                 }).success(function () {
-                    $http.post('https://qa-biinapp.herokuapp.com/api/biins/' + $scope.biins[$scope.selectedBiin].identifier + '/update', $scope.biins[$scope.selectedBiin]).success(function () {
+                    $http.post('https://qa-biinapp.herokuapp.com/api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.biins[$scope.selectedBiin]).success(function () {
                         console.log("success")
                     }).error(function (err) {
                         console.log(err);
                     });
                 });
             } else {
-                $http.post('https://qa-biinapp.herokuapp.com/api/biins/' + $scope.biins[$scope.selectedBiin].identifier + '/update', $scope.biins[$scope.selectedBiin]).success(function () {
+                $http.post('https://qa-biinapp.herokuapp.com/api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.biins[$scope.selectedBiin]).success(function () {
                     console.log("success")
                 }).error(function (err) {
                     console.log(err);
@@ -107,9 +91,11 @@
             $scope.objectsSidebarService = ObjectsSidebar;
             $scope.sidebarTemplate =
                 "<div class='col-md-12 leftInformationArea'>" +
-                "<label class='moduleTitle'>{{item.name}}</label>" +
-                "<localization></localization>"+
-                "<p>{{item.status}}</p>" +
+                    "<label class='title-sidebar-object'>{{item.name}}</label>" +
+                    "<div class='body-sidebar-object'>"+
+                        "<localization style='display: block'></localization>"+
+                        "<p>{{item.status}}</p>" +
+                    "</div>"+
                 "</div>";
 
 
@@ -185,7 +171,8 @@
             if (obj)
                 if ('isNew' in obj) {
                     delete obj.isNew;
-                    $scope.biins[$scope.selectedBiin].objects.push(obj);
+                    $scope.objectsSidebarService.selectedObject.objects.push(obj);
+                    $scope.biins = $scope.objectsSidebarService.getObjects();
                 }
                 else {
                 }
@@ -194,7 +181,7 @@
         };
 
         $scope.getVenues = function (val) {
-            return $http.get('api/venues/search', {
+            return $http.get(ApplicationConfiguration.applicationBackendURL +'api/venues/search', {
                 headers: {
                     regex: val,
                     orgidentifier: $scope.organizationId
@@ -208,8 +195,8 @@
         $scope.biinObject = function (size, type, obj) {
 
             var modalInstance = $modal.open({
-                templateUrl: 'partials/biinObjectModal',
-                controller: 'objectController',
+                templateUrl: '/modules/biins/views/partials/biin.client.modal.view.html',
+                controller: 'biinsModalController',
                 size: size,
                 resolve: {
                     selectedObj: function () {
