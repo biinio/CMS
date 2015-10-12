@@ -5,20 +5,29 @@
         .module('biins')
         .directive('localization', organizationDropDown);
 
-    organizationDropDown.$inject = [];
-    function organizationDropDown () {
+    organizationDropDown.$inject = ['$http','Organization'];
+    function organizationDropDown ($http,Organization) {
         var directive = {
             link: link,
             restrict: 'E',
-            template: "<label>{{getSiteName(item.siteIdentifier)}}</label>",
-            transclude: true
+            template: "<text>{{getSiteName(item.siteIdentifier)}}</text>",
+            transclude: false
         };
         return directive;
 
         function link(scope, element, attrs) {
-            scope.getSiteName = function ( hola){
-                return "HOLA";
-            }
+            scope.organzationService = Organization;
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + scope.organzationService.selectedOrganization.identifier + '/sites/').success(function (data) {
+                scope.sites = data.data.sites;
+                scope.getSiteName = function (identifier) {
+                    var site = _.findWhere(scope.sites, {identifier: identifier});
+                    if (site) {
+                        return site.title1 + " " + site.title2;
+                    } else {
+                        return "//";
+                    }
+                };
+            });
         }
 
     }

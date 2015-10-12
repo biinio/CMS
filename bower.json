@@ -48,6 +48,7 @@
     "jquery.browser": "master",
     "loaders.css": "~0.1.1",
     "modernizr": "2.8.3",
+    "moment": "~2.10.6",
     "ngstorage": "0.3.0",
     "node-uuid": "~1.4.3",
     "oclazyload": "0.6.3",

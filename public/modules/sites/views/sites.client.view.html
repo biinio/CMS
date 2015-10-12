@@ -1,5 +1,5 @@
 <div ng-controller="SitesController as sites" class="">
-    <div id="wrapperContent" class="container-fluid">
+    <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
         <div class="right-section-content nopadding">
             <div ng-if="objectsSidebarService.selectedObject!=null">
                 <!-- NutShell Section -->

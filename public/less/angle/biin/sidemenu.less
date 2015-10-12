@@ -50,8 +50,9 @@ Component: sidemenu.less
 
 .list-items-side-menu{
     width: 100%;
-    height: 70px;
+    height: 80px;
     position: relative;
+
   .btnDelete{
     position: absolute;
     border-radius: 10px;
@@ -78,7 +79,7 @@ Component: sidemenu.less
 
 .list-items-side-menu.active{
   width: 100%;
-  height: 70px;
+  height: 80px;
   background: @sidebar-icon-color-active;
 }
 
@@ -99,7 +100,7 @@ Component: sidemenu.less
   position: relative;
   max-height: 100%;
   min-height: 100%;
-  height: 70px;
+  height: 80px;
 
   img{
     width: auto;
@@ -188,5 +189,16 @@ Component: sidemenu.less
 .btnAdd {
   height: 35px;
   padding: 6px 14px
+}
 
+.title-sidebar-object{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #000011;
+  display: block;
+  margin-bottom: 0px;
+}
+.body-sidebar-object{
+  display: block;
 }
