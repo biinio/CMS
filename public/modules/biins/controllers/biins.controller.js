@@ -40,7 +40,7 @@
                         return sh.name;
                 }
             }
-            return "name not available"
+            return "name not available";
         };
 
         $scope.removeObject = function (index) {
@@ -50,14 +50,14 @@
 
         //Save The Biin Objects Changes
         $scope.save = function () {
-            $http.put('https://qa-biinapp.herokuapp.com/api/venues/create', null, {
+            $http.put(ApplicationConfiguration.applicationBackendURL + 'api/venues/create', null, {
                 headers: {
                     name: $scope.objectsSidebarService.selectedObject.venue,
                     orgidentifier: $scope.organizationId
                 }
             }).success(function () {
-                $http.post('https://qa-biinapp.herokuapp.com/api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.biins[$scope.selectedBiin]).success(function () {
-                    console.log("success")
+                $http.post(ApplicationConfiguration.applicationBackendURL + 'api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.biins[$scope.selectedBiin]).success(function () {
+                    console.log("success");
                 }).error(function (err) {
                     console.log(err);
                 });
@@ -165,8 +165,6 @@
                     delete obj.isNew;
                     $scope.objectsSidebarService.selectedObject.objects.push(obj);
                     $scope.biins = $scope.objectsSidebarService.getObjects();
-                }
-                else {
                 }
             //$scope.biins.push(obj);
             //Todo Do the method to save the save the data

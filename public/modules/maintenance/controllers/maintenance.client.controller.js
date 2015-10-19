@@ -61,7 +61,7 @@
          *  Functions
          =============================================================================================================*/
 
-        $http.get('https://qa-biinapp.herokuapp.com/maintenance/organizations').success(function(data){
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'maintenance/organizations').success(function(data){
             $scope.objectsSidebarService.setObjects(data);
             console.log($scope.objectsSidebarService.getObjects());
 
@@ -93,7 +93,7 @@
 
             $scope.showBiinsPerOrganization = function(selectedObject)
             {
-                $http.get('https://qa-biinapp.herokuapp.com/maintenance/getBiinsOrganizationInformation/'+$scope.objectsSidebarService.selectedObject.identifier).success(function(data){
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'maintenance/getBiinsOrganizationInformation/'+$scope.objectsSidebarService.selectedObject.identifier).success(function(data){
                     $scope.objectsSidebarService.selectedObject.biins = data.biins;
                     $scope.defaultUUID = data.defaultUUID;
                     $scope.biinsXOrganization = $scope.objectsSidebarService.selectedObject.biins;

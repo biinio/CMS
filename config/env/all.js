@@ -61,7 +61,11 @@ module.exports = {
                 'public/lib/blueimp-file-upload/js/jquery.fileupload-angular.js',
                 'public/lib/loaders.css/loaders.css.js',
                 '//maps.googleapis.com/maps/api/js',
-                'public/lib/moment/min/moment.min.js'
+                'public/lib/moment/min/moment.min.js',
+                'public/lib/angular-bootstrap-slider/slider.js',
+                'public/lib/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js',
+                'public/lib/angular-dragdrop/src/angular-dragdrop.min.js',
+                'public/lib/jquery-ui/jquery-ui.js'
                 // 'public/lib/jquery/dist/jquery.js',
                 // 'public/lib/angular/angular.js',
                 // 'public/lib/angular-resource/angular-resource.js',
@@ -82,7 +86,8 @@ module.exports = {
             'public/lib/textAngular/dist/textAngular.css',
             'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.css',
             'public/lib/angular-datepicker/dist/angular-datepicker.css',
-            'public/lib/loaders.css/loaders.css'
+            'public/lib/loaders.css/loaders.css',
+            'public/lib/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css'
         ],
         js: [
             'public/config.js',
