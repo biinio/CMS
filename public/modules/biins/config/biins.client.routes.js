@@ -10,7 +10,12 @@ angular.module('biins').config(['$stateProvider',
         $stateProvider.
             state('appleftbar.biins', {
                 url: '/biins',
-                templateUrl: 'modules/biins/views/biins.client.view.html'
+                templateUrl: 'modules/biins/views/biins.client.view.html',
+                resolve: {
+                    organization:function( Organization ){
+                        return Organization.promise;
+                    }
+                }
             });
     }
 ]);

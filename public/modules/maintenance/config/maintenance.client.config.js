@@ -10,7 +10,12 @@ angular.module('maintenance').config(['$stateProvider',
         $stateProvider.
             state('appleftbar.maintenance', {
                 url: '/maintenance',
-                templateUrl: 'modules/maintenance/views/maintenance.client.view.html'
+                templateUrl: 'modules/maintenance/views/maintenance.client.view.html',
+                resolve: {
+                    organization:function( Organization ){
+                        return Organization.promise;
+                    }
+                }
             });
     }
 ]);

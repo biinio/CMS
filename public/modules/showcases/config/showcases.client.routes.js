@@ -10,7 +10,12 @@ angular.module('showcases').config(['$stateProvider',
         $stateProvider.
             state('appleftbar.showcases', {
                 url: '/showcases',
-                templateUrl: 'modules/showcases/views/showcases.client.view.html'
+                templateUrl: 'modules/showcases/views/showcases.client.view.html',
+                resolve: {
+                    organization:function( Organization ){
+                        return Organization.promise;
+                    }
+                }
             });
     }
 ]);

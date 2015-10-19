@@ -3,7 +3,7 @@
 angular.module('app.core').service('Categories', ['$http', function (async) {
     return {
         getList: function () {
-            var promise = async({method:'GET', url:'https://qa-biinapp.herokuapp.com/api/categories'})
+            var promise = async({method:'GET', url:ApplicationConfiguration.applicationBackendURL + 'api/categories'})
                 .success(function (data, status, headers, config) {
                     return data;
                 })
