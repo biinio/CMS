@@ -41,7 +41,7 @@ module.exports = {
                 'public/lib/angularjs-toaster/toaster.js',
                 'public/lib/node-uuid/uuid.js',
                 'public/lib/animo.js/animo.js',
-                'public/lib/textAngular/dist/textAngular.min.js',
+                'public/lib/textAngular/dist/textAngular.js',
                 'public/lib/textAngular/dist/textAngular-rangy.min.js',
                 'public/lib/textAngular/dist/textAngularSetup.js',
                 'public/lib/textAngular/dist/textAngular-sanitize.min.js',
