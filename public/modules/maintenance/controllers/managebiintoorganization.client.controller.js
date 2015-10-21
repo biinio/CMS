@@ -114,7 +114,7 @@
 
             if ($scope.mode == "create") {
                 $scope.beacon.mode = "create";
-                $http.put('https://qa-biinapp.herokuapp.com/maintenance/insertBiin', $scope.beacon).success(function (data, status) {
+                $http.put(ApplicationConfiguration.applicationBackendURL + 'maintenance/insertBiin', $scope.beacon).success(function (data, status) {
                     $modalInstance.close($scope.beacon);
                 }).error(function (data, status) {
                     $scope.message = data.message;
@@ -124,7 +124,7 @@
             }
             else {
                 $scope.beacon.mode = "edit";
-                $http.post('https://qa-biinapp.herokuapp.com/maintenance/insertBiin', $scope.beacon).success(function (data, status) {
+                $http.post(ApplicationConfiguration.applicationBackendURL + 'maintenance/insertBiin', $scope.beacon).success(function (data, status) {
                     console.log("success");
                     $scope.beacon.minorHasChanged = $scope.minorHasChanged;
                     $modalInstance.close($scope.beacon);

@@ -17,7 +17,7 @@
                     // now post a new XHR request
                     var xhr = new XMLHttpRequest();
 
-                    xhr.open('POST', 'https://qa-biinapp.herokuapp.com/api/organizations/'+organizationService.selectedOrganization.identifier+'/gallery');
+                    xhr.open('POST', ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+organizationService.selectedOrganization.identifier+'/gallery');
                     xhr.onload = function (data) {
                         if (xhr.status === 200) {
                             var obj= $.parseJSON(xhr.response);

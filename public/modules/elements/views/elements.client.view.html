@@ -1,7 +1,7 @@
 <div ng-controller="ElementsController as elementCtrl" class="block-center">
     <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
         <div class="right-section-content">
-            <div> <!-- ng-if="selectedSite!=null">-->
+            <div ng-if="objectsSidebarService.selectedObject!=null && objectsSidebarService.selectedObject != {}">
                 <!-- NutShell Section -->
                 <section>
                     <div class="panel panel-default">
@@ -77,7 +77,7 @@
                     </div>
                 </section>
                 <!-- Categories Section -->
-                <!--<section>
+                <section>
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <legend>Categories</legend>
@@ -89,11 +89,10 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div ng-repeat="cat in categories" ng-click="switchCategoryState(cat)"
-                                                   class="col-md-3 catModule">
+                                                   class="col-md-4 catModule">
                                                     <div class="checkbox c-checkbox">
                                                         <label>
-                                                            <input ng-if="containsCategory(cat) == 'active'" input type="checkbox" checked=""/>
-                                                            <input ng-if="containsCategory(cat) != 'active'" input type="checkbox"/>
+                                                            <input input type="checkbox" checked="{{containsCategory(cat)}}"/>
                                                             <span class="fa fa-check"></span>
                                                             {{cat.displayName}}
                                                         </label>
@@ -113,7 +112,7 @@
                             </div>
                         </div>
                     </div>
-                </section>-->
+                </section>
                 <!-- Highlights Section -->
                 <section>
                     <div class="panel panel-default">

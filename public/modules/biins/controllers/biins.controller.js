@@ -10,37 +10,20 @@
         .module('biins')
         .controller('BiinsController', BiinsController);
 
-    BiinsController.$inject = ['$http', '$state', '$scope', 'Authentication', 'Organization', 'ObjectsSidebar'];
-    function BiinsController($http, $state, $scope, Authentication, Organization, ObjectsSidebar) {
+    BiinsController.$inject = ['$http', '$state', '$scope','$modal', 'Authentication', 'Organization', 'ObjectsSidebar'];
+    function BiinsController($http, $state, $scope,$modal, Authentication, Organization, ObjectsSidebar) {
 
 
         /**=============================================================================================================
          *  Functions
          =============================================================================================================*/
 
-            //Save detail model object
-        $scope.save = function () {
-
-            $http.put('https://qa-biinapp.herokuapp.com/api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/sites/' + $scope.objectsSidebarService.selectedObject.identifier, {model: $scope.objectsSidebarService.selectedObject}).success(function (data) {
-                if ("replaceModel" in data) {
-                    $scope.objectsSidebarService.selectedObject = data.replaceModel;
-                }
-                if (data.state == "success")
-                    $scope.succesSaveShow = true;
-            });
-        };
-
-        //Edit a specific biin
-        $scope.edit = function (index) {
-            $scope.selectedBiin = index;
-        };
-
         $scope.getSiteName = function (identifier) {
             var site = _.findWhere($scope.sites, {identifier: identifier});
             if (site) {
                 return site.title1 + " " + site.title2;
             } else {
-                return "//";
+                return "";
             }
         };
 
@@ -57,102 +40,72 @@
                         return sh.name;
                 }
             }
-            return "name not available"
+            return "name not available";
         };
 
         $scope.removeObject = function (index) {
-            $scope.biins[$scope.selectedBiin].objects.splice(index, 1);
+            $scope.objectsSidebarService.selectedObject.objects.splice(index, 1);
+            $scope.biins = $scope.objectsSidebarService.getObjects();
         };
 
         //Save The Biin Objects Changes
         $scope.save = function () {
-            if ($scope.wizardPosition == "1") {
-                $http.put('https://qa-biinapp.herokuapp.com/api/venues/create', null, {
-                    headers: {
-                        name: $scope.biins[$scope.selectedBiin].venue,
-                        orgidentifier: $scope.organizationId
-                    }
-                }).success(function () {
-                    $http.post('https://qa-biinapp.herokuapp.com/api/biins/' + $scope.biins[$scope.selectedBiin].identifier + '/update', $scope.biins[$scope.selectedBiin]).success(function () {
-                        console.log("success")
-                    }).error(function (err) {
-                        console.log(err);
-                    });
-                });
-            } else {
-                $http.post('https://qa-biinapp.herokuapp.com/api/biins/' + $scope.biins[$scope.selectedBiin].identifier + '/update', $scope.biins[$scope.selectedBiin]).success(function () {
-                    console.log("success")
+            $http.put(ApplicationConfiguration.applicationBackendURL + 'api/venues/create', null, {
+                headers: {
+                    name: $scope.objectsSidebarService.selectedObject.venue,
+                    orgidentifier: $scope.organizationId
+                }
+            }).success(function () {
+                $http.post(ApplicationConfiguration.applicationBackendURL + 'api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.biins[$scope.selectedBiin]).success(function () {
+                    console.log("success");
                 }).error(function (err) {
                     console.log(err);
                 });
-            }
+            });
         };
 
-        Organization.promise.then(function () {
+        var vm = this;
+        activate();
 
-            var vm = this;
-            activate();
+        ////////////////
 
-            ////////////////
+        function activate() {
+            $scope.authentication = Authentication;
+            $scope.organizationService = Organization;
+        }
 
-            function activate() {
-                $scope.authentication = Authentication;
-                $scope.organizationService = Organization;
-            }
-
-            /**=============================================================================================================
-             * ObjectsSidebar Configuration
-             *
-             =============================================================================================================*/
-            $scope.objectsSidebarService = ObjectsSidebar;
-            $scope.sidebarTemplate =
-                "<div class='col-md-12 leftInformationArea'>" +
-                "<label class='moduleTitle'>{{item.name}}</label>" +
-                "<localization></localization>"+
-                "<p>{{item.status}}</p>" +
-                "</div>";
+        /**=============================================================================================================
+         * ObjectsSidebar Configuration
+         *
+         =============================================================================================================*/
+        $scope.objectsSidebarService = ObjectsSidebar;
+        $scope.sidebarTemplate =
+            "<div class='col-md-12 leftInformationArea'>" +
+            "<label class='title-sidebar-object'>{{item.name}}</label>" +
+            "<div class='body-sidebar-object'>" +
+            "<localization style='display: block'></localization>" +
+            "<p>{{item.status}}</p>" +
+            "</div>" +
+            "</div>";
 
 
-            $scope.objectsSidebarService.template = $scope.sidebarTemplate;
+        $scope.objectsSidebarService.template = $scope.sidebarTemplate;
 
-            /**=============================================================================================================
-             * Events Listeners
-             *
-             =============================================================================================================*/
+        /**=============================================================================================================
+         * Events Listeners
+         *
+         =============================================================================================================*/
 
-            $scope.$on('$stateChangeStart', function () {
-                $scope.objectsSidebarService.reset();
-            });
+        $scope.$on('$stateChangeStart', function () {
+            $scope.objectsSidebarService.reset();
+        });
 
-            $scope.$on('organizationChanged', function () {
-                $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
-                    $scope.biins = data.data;
-                    $scope.objectsSidebarService.setObjects(data.data);
-                }).error(function (err) {
-                    console.log(err);
-                });
-                //Get the List of Objects
-            });
+        $scope.$on('organizationChanged', function () {
+            $scope.objectsSidebarService.selectedObject = null;
+            $scope.objectsSidebarService.objects = [];
 
-            $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
-
-            });
-
-            /**=============================================================================================================
-             * Variables
-             *
-             =============================================================================================================*/
-
-                //Init the the sites
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-
-            /**=============================================================================================================
-             * Self called functions
-             *
-             =============================================================================================================*/
-
-                //Get the Sites Information
+            //Get the Sites Information
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/').success(function (data) {
                 $scope.sites = data.data.sites;
                 //Get the elements
@@ -176,7 +129,48 @@
             }).error(function (err) {
                 console.log(err);
             });
+        });
 
+        $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
+
+        });
+
+        /**=============================================================================================================
+         * Variables
+         *
+         =============================================================================================================*/
+
+            //Init the the sites
+        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+
+        /**=============================================================================================================
+         * Self called functions
+         *
+         =============================================================================================================*/
+
+            //Get the Sites Information
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/').success(function (data) {
+            $scope.sites = data.data.sites;
+            //Get the elements
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/elements/').success(function (data) {
+                $scope.elements = data.data.elements;
+                //Get the showcases
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/showcases/').success(function (data) {
+                    $scope.showcases = data.data;
+                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
+                        $scope.biins = data.data;
+                        $scope.objectsSidebarService.setObjects(data.data);
+                    }).error(function (err) {
+                        console.log(err);
+                    });
+                }).error(function (err) {
+                    console.log(err);
+                });
+            }).error(function (err) {
+                console.log(err);
+            });
+        }).error(function (err) {
+            console.log(err);
         });
 
 
@@ -185,16 +179,15 @@
             if (obj)
                 if ('isNew' in obj) {
                     delete obj.isNew;
-                    $scope.biins[$scope.selectedBiin].objects.push(obj);
-                }
-                else {
+                    $scope.objectsSidebarService.selectedObject.objects.push(obj);
+                    $scope.biins = $scope.objectsSidebarService.getObjects();
                 }
             //$scope.biins.push(obj);
             //Todo Do the method to save the save the data
         };
 
         $scope.getVenues = function (val) {
-            return $http.get('api/venues/search', {
+            return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/venues/search', {
                 headers: {
                     regex: val,
                     orgidentifier: $scope.organizationId
@@ -208,8 +201,8 @@
         $scope.biinObject = function (size, type, obj) {
 
             var modalInstance = $modal.open({
-                templateUrl: 'partials/biinObjectModal',
-                controller: 'objectController',
+                templateUrl: '/modules/biins/views/partials/biin.client.modal.view.html',
+                controller: 'biinsModalController',
                 size: size,
                 resolve: {
                     selectedObj: function () {
@@ -233,7 +226,6 @@
                 //$log.info('Modal dismissed at: ' + new Date());
             });
         };
-
     }
 
 })();

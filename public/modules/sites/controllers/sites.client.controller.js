@@ -59,7 +59,7 @@
         $scope.$on('organizationChanged',function(){
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Get the List of Objects
-            $http.get('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites').success(function(data){
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites').success(function(data){
                 var sites = data.data.sites;
                 $scope.objectsSidebarService.setObjects(sites);
                 if(sites.length > 0)
@@ -117,7 +117,7 @@
          =============================================================================================================*/
 
         //Get the List of Sites
-        $http.get('https://qa-biinapp.herokuapp.com/api/organizations/'+ $scope.organizationService.selectedOrganization.identifier +'/sites').success(function(data){
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationService.selectedOrganization.identifier +'/sites').success(function(data){
             if(data.data) {
                 $scope.objectsSidebarService.setObjects(data.data.sites);
                 if(data.data.sites.length>0){
@@ -163,7 +163,7 @@
         //Create a new Site
         $scope.create = function(){
             //Get the Mayor from server
-            $http.post('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/sites").success(function(site,status){
+            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/sites").success(function(site,status){
                 if(status==201){
 
                     var siteSearchTag =$('#siteSearchTag');
@@ -188,7 +188,7 @@
             var siteIdToDelete = sites[index].identifier;
             var deleteSelectedObject = siteIdToDelete == $scope.objectsSidebarService.selectedObject.identifier;
 
-            $http.delete('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationId+'/sites/'+siteIdToDelete).success(
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationId+'/sites/'+siteIdToDelete).success(
                 function(data){
                     if(data.state=="success"){
                         sites.splice(index,1);
@@ -216,7 +216,7 @@
                 $scope.objectsSidebarService.selectedObject.searchTags.push(tags[i]);
             }
 
-            $http.put('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites/'+$scope.objectsSidebarService.selectedObject.identifier,{model:$scope.objectsSidebarService.selectedObject}).success(function(data,status){
+            $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites/'+$scope.objectsSidebarService.selectedObject.identifier,{model:$scope.objectsSidebarService.selectedObject}).success(function(data,status){
                 if("replaceModel" in data){
                     $scope.objectsSidebarService.selectedObject = data.replaceModel;
                 }
