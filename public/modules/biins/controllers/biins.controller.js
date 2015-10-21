@@ -23,7 +23,7 @@
             if (site) {
                 return site.title1 + " " + site.title2;
             } else {
-                return "//";
+                return "";
             }
         };
 
@@ -64,73 +64,48 @@
             });
         };
 
-        Organization.promise.then(function () {
+        var vm = this;
+        activate();
 
-            var vm = this;
-            activate();
+        ////////////////
 
-            ////////////////
+        function activate() {
+            $scope.authentication = Authentication;
+            $scope.organizationService = Organization;
+        }
 
-            function activate() {
-                $scope.authentication = Authentication;
-                $scope.organizationService = Organization;
-            }
-
-            /**=============================================================================================================
-             * ObjectsSidebar Configuration
-             *
-             =============================================================================================================*/
-            $scope.objectsSidebarService = ObjectsSidebar;
-            $scope.sidebarTemplate =
-                "<div class='col-md-12 leftInformationArea'>" +
-                    "<label class='title-sidebar-object'>{{item.name}}</label>" +
-                    "<div class='body-sidebar-object'>"+
-                        "<localization style='display: block'></localization>"+
-                        "<p>{{item.status}}</p>" +
-                    "</div>"+
-                "</div>";
+        /**=============================================================================================================
+         * ObjectsSidebar Configuration
+         *
+         =============================================================================================================*/
+        $scope.objectsSidebarService = ObjectsSidebar;
+        $scope.sidebarTemplate =
+            "<div class='col-md-12 leftInformationArea'>" +
+            "<label class='title-sidebar-object'>{{item.name}}</label>" +
+            "<div class='body-sidebar-object'>" +
+            "<localization style='display: block'></localization>" +
+            "<p>{{item.status}}</p>" +
+            "</div>" +
+            "</div>";
 
 
-            $scope.objectsSidebarService.template = $scope.sidebarTemplate;
+        $scope.objectsSidebarService.template = $scope.sidebarTemplate;
 
-            /**=============================================================================================================
-             * Events Listeners
-             *
-             =============================================================================================================*/
+        /**=============================================================================================================
+         * Events Listeners
+         *
+         =============================================================================================================*/
 
-            $scope.$on('$stateChangeStart', function () {
-                $scope.objectsSidebarService.reset();
-            });
+        $scope.$on('$stateChangeStart', function () {
+            $scope.objectsSidebarService.reset();
+        });
 
-            $scope.$on('organizationChanged', function () {
-                $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
-                    $scope.biins = data.data;
-                    $scope.objectsSidebarService.setObjects(data.data);
-                }).error(function (err) {
-                    console.log(err);
-                });
-                //Get the List of Objects
-            });
+        $scope.$on('organizationChanged', function () {
+            $scope.objectsSidebarService.selectedObject = null;
+            $scope.objectsSidebarService.objects = [];
 
-            $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
-
-            });
-
-            /**=============================================================================================================
-             * Variables
-             *
-             =============================================================================================================*/
-
-                //Init the the sites
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-
-            /**=============================================================================================================
-             * Self called functions
-             *
-             =============================================================================================================*/
-
-                //Get the Sites Information
+            //Get the Sites Information
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/').success(function (data) {
                 $scope.sites = data.data.sites;
                 //Get the elements
@@ -154,7 +129,48 @@
             }).error(function (err) {
                 console.log(err);
             });
+        });
 
+        $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
+
+        });
+
+        /**=============================================================================================================
+         * Variables
+         *
+         =============================================================================================================*/
+
+            //Init the the sites
+        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+
+        /**=============================================================================================================
+         * Self called functions
+         *
+         =============================================================================================================*/
+
+            //Get the Sites Information
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/').success(function (data) {
+            $scope.sites = data.data.sites;
+            //Get the elements
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/elements/').success(function (data) {
+                $scope.elements = data.data.elements;
+                //Get the showcases
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/showcases/').success(function (data) {
+                    $scope.showcases = data.data;
+                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
+                        $scope.biins = data.data;
+                        $scope.objectsSidebarService.setObjects(data.data);
+                    }).error(function (err) {
+                        console.log(err);
+                    });
+                }).error(function (err) {
+                    console.log(err);
+                });
+            }).error(function (err) {
+                console.log(err);
+            });
+        }).error(function (err) {
+            console.log(err);
         });
 
 
@@ -171,7 +187,7 @@
         };
 
         $scope.getVenues = function (val) {
-            return $http.get(ApplicationConfiguration.applicationBackendURL +'api/venues/search', {
+            return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/venues/search', {
                 headers: {
                     regex: val,
                     orgidentifier: $scope.organizationId
@@ -210,7 +226,6 @@
                 //$log.info('Modal dismissed at: ' + new Date());
             });
         };
-
     }
 
 })();

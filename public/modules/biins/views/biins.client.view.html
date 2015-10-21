@@ -1,7 +1,7 @@
 <div ng-controller="BiinsController as biinsCtrl" class="">
     <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
         <div class="right-section-content">
-            <div ng-if="objectsSidebarService.selectedObject!=null">
+            <div ng-if="objectsSidebarService.selectedObject!=null && objectsSidebarService.selectedObject != {}">
                 <!-- NutShell Section -->
                 <section>
                     <div class="panel panel-default">

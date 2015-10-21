@@ -115,5 +115,13 @@
       "LATITUDE": "Latitud",
       "LONGITUDE": "Longitud"
     }
+  },
+  "PRICELIST": {
+    "INSERT": "Inserte lista de precios",
+    "ADD": " Agregar item",
+    "CURRENCY": "Moneda",
+    "NAME": "Nombre",
+    "DESCRIPTION" : "Descripción",
+    "PRICE": "Precio"
   }
 }

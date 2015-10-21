@@ -71,7 +71,7 @@ if(_browserDetect.webkit) {
 	});
 }
 
-// Gloabl to textAngular REGEXP vars for block and list elements.
+// Global to textAngular REGEXP vars for block and list elements.
 
 var BLOCKELEMENTS = /^(address|article|aside|audio|blockquote|canvas|dd|div|dl|fieldset|figcaption|figure|footer|form|h1|h2|h3|h4|h5|h6|header|hgroup|hr|noscript|ol|output|p|pre|section|table|tfoot|ul|video)$/i;
 var LISTELEMENTS = /^(ul|li|ol)$/i;
@@ -467,6 +467,7 @@ angular.module('textAngular.DOM', ['textAngular.factories'])
 		listElement.remove();
 		selectLi($target.find('li')[0]);
 	};
+
 	return function(taDefaultWrap, topNode){
 		taDefaultWrap = taBrowserTag(taDefaultWrap);
 		return function(command, showUI, options, defaultTagAttributes){
@@ -657,6 +658,14 @@ angular.module('textAngular.DOM', ['textAngular.factories'])
 				}else if(command.toLowerCase() === 'inserthtml'){
 					taSelection.insertHtml(options, topNode);
 					return;
+				}
+				/***
+				 * TODO: START PRICELIST ADDITION
+				 */
+				else if(command.toLowerCase() === 'insertpricelist') {
+					taSelection.insertHtml(options, topNode);
+					return;
+
 				}
 			}
 			try{

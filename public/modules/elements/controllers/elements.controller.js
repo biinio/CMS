@@ -150,7 +150,11 @@
 
         //Save detail model object
         $scope.save= function(){
-            $scope.objectsSidebarService.selectedObject.hasPrice=$scope.objectsSidebarService.selectedObject.price > 0?'1':'0';
+
+            //TODO: Delete following line, and uncomment the next one.
+            $scope.objectsSidebarService.selectedObject.hasPrice = 0;
+            //$scope.objectsSidebarService.selectedObject.hasPrice=$scope.objectsSidebarService.selectedObject.price > 0?'1':'0';
+
             var tags = $("#elemSearchTag").tagsinput('items');
             $scope.objectsSidebarService.selectedObject.searchTags = [];
             for(var i = 0; i < tags.length; i++){

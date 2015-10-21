@@ -5,7 +5,7 @@
     <!-- START panel-->
     <div class="panel panel-default">
         <div class="panel-body">
-            <form form-wizard="" steps="3" novalidate="">
+            <form form-wizard="" steps="2" novalidate="">
                 <div class="form-wizard wizard-horizontal">
                     <!-- START wizard steps indicator-->
                     <ol class="row">
@@ -14,10 +14,6 @@
                             <small class="text-muted">Duis volutpat nunc at ligula tincidunt non aliquam.</small>
                         </li>
                         <li ng-class="{'active':wizard.active(2)}" ng-click="wizard.go(2)" class="col-md-4">
-                            <h4>Billing</h4>
-                            <small class="text-muted">Nulla pharetra imperdiet sapien ac faucibus.</small>
-                        </li>
-                        <li ng-class="{'active':wizard.active(3)}" ng-click="wizard.go(3)" class="col-md-4">
                             <h4>Organizations</h4>
                             <small class="text-muted">Sed elementum lorem dolor, id fermentum metus.</small>
                         </li>
@@ -71,38 +67,6 @@
                     <!-- END Wizard Step inputs -->
                     <!-- START Wizard Step inputs -->
                     <div ng-show="wizard.active(2)">
-                        <fieldset>
-                            <legend>Personal</legend>
-                            <!-- START row -->
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>First Name</label>
-                                        <input type="text" name="first-name" placeholder="John" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Last Name</label>
-                                        <input type="text" name="last-name" placeholder="Snow" class="form-control" />
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END row -->
-                        </fieldset>
-                        <ul class="pager">
-                            <li class="previous">
-                                <a href="#" ng-click="wizard.go(1)">
-                                    <span>&larr; Previous</span>
-                                </a>
-                            </li>
-                            <li class="next"><a href="#" ng-click="wizard.go(3)">Next <span>&rarr;</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- END Wizard Step inputs -->
-                    <!-- START Wizard Step inputs -->
-                    <div ng-show="wizard.active(3)">
                         <div>
                             <legend>Organizations</legend>
                             <!-- START row -->

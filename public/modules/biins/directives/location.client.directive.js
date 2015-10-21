@@ -24,10 +24,16 @@
                     if (site) {
                         return site.title1 + " " + site.title2;
                     } else {
-                        return "//";
+                        return "";
                     }
                 };
+                scope.$on('organizationChanged', function () {
+                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + scope.organzationService.selectedOrganization.identifier + '/sites/').success(function (data) {
+                        scope.sites = data.data.sites;
+                    });
+                });
             });
+
         }
 
     }

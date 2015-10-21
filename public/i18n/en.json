@@ -17,5 +17,13 @@
     "EMAIL": "Email",
     "PHONE":"Phone",
     "UPLOAD_IMAGE":"Upload image"
+  },
+  "PRICELIST": {
+    "INSERT": "Insert price list",
+    "ADD": " Add Item",
+    "CURRENCY": "Currency",
+    "NAME": "Name",
+    "DESCRIPTION": "Description",
+    "PRICE": "Price"
   }
 }

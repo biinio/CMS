@@ -29,3 +29,150 @@
   border-width: thin;
   border-radius: 4px;
 }
+
+
+#wizardShowcasePublishWrapper{
+  position: relative;
+  background-color: #EEEEEE;
+  max-width:70vw;
+  border-radius: 4px;
+
+  overflow-x: scroll;
+  overflow-y: hidden;
+  /*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+  @media (min-width: 768px) {
+    max-height: 60vh;
+    width: auto;
+  }
+
+  /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+  @media (min-width: 1200px) {
+    max-height: 64vh;
+    height: 80vh;
+    width: auto;
+  }
+
+  .siteModule{
+    position: relative;
+    float: left;
+    display: inline-block;
+    min-width: 200px;
+    width: 250px;
+    height: 100%;
+    overflow: scroll;
+
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    padding-bottom: 90px;
+
+    background-color:#c0c0c0;
+    margin-left: 15px;
+
+    .imgSite{
+      position:relative;
+      background-color: #5c5c5c;
+      padding: 7px 7px 7px 7px;
+      img{
+        width: 100%;
+      }
+
+      p{
+        position: absolute;
+      }
+      height:30px;
+    }
+
+
+    .showcase{
+      width: 100%;
+      min-height: 40px;
+      margin-top: 15px;
+      background-color: #4a4a4a;
+      padding: 3px 3px 3px 3px;
+
+      img{
+        position:relative;
+        clear: left;
+        height: 50px;
+        width: 50px;
+        display: block;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .isDefault{
+        text-align: right;
+        margin-right: auto;
+        color: #FFAB00 !important;
+        font-size: 30px;
+      }
+      .showcaseContainer{
+        background-color: #FFF;
+        padding: 7px 7px 7px 7px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        .showcaseLabel
+        {
+          float: left;
+        }
+      }
+      .showcaseOptionsContainer{
+        position: absolute;
+        right: 4%;
+        display: block;
+        overflow:hidden;
+        z-index: 1;
+
+        .showcaseOptions {
+          float: right;
+          margin-right: 15px;
+          .upButton{
+            width: 20px;
+          }
+          .downButton{
+            width: 20px;
+          }
+        }
+      }
+      .showcaseContainer:hover{
+        background-color: #01bec5;
+      }
+    }
+
+    .showcase.active{
+      background-color: #39CD2C;
+
+      .fa{
+        color: #39CD2C;
+      }
+    }
+
+    .showcaseWrapper{
+      height: 100%;
+      width: 100%;
+      background-color: #c0c0c0;
+      text-align: center;
+      cursor: pointer;
+      overflow-x: hidden;
+      border-radius: 4px;
+    }
+  }
+
+  .showcaseWrapperContainer{
+    margin-top: 15px;
+    position: relative;
+    height: 100% - 7px;
+    width: 1000%;
+    max-width:100%;
+
+    float: left;
+
+    display: inline-flex;
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+}
