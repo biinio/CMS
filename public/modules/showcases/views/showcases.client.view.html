@@ -22,7 +22,7 @@
                                             <input id="desctText" ng-model="objectsSidebarService.selectedObject.description" name="description" type="text" placeholder="Description **" ng-blur="validate()" class="form-control title-value"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <!--<div class="col-md-12">
                                         <h4>Activation time</h4>
                                         <div class="col-md-3">
                                             <timepicker ng-model="objectsSidebarService.selectedObject.startTime" hour-step="1" minute-step="30" show-meridian="false" ng-change="updateShowcaseInBiins(objectsSidebarService.selectedObject)"></timepicker>
@@ -33,36 +33,27 @@
                                             <h5>End Time</h5>
                                         </div>
                                     </div>
+                                    <h4>Segmentation</h4>
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <h4>Genero</h4>
+                                            <label>Mujer</label>
+                                            <label class="pull-right">Hombre</label>
+                                            <slider ng-model="objectsSidebarService.selectedObject.segregation.gender" min="0" max="100" value="" slider-tooltip="hide" class="bs-slider"></slider>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4>Edad</h4>
+                                            <label>0</label>
+                                            <label class="pull-right">65+</label>
+                                            <slider ng-model="objectsSidebarService.selectedObject.segregation.age" min="0" max="65" value="[25,65]" range="true" class="bs-slider"></slider>
+                                        </div>
+                                    </div>-->
                                     <div class="col-md-12">
                                         <label>Identifier:</label>
                                         <code>{{objectsSidebarService.selectedObject.identifier}}</code>
                                     </div>
                                 </div>
                             </form>
-                        </div>
-                    </div>
-                </section>
-                <!-- Segregation Section -->
-                <section>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <legend>Segregation</legend>
-                        </div>
-                        <div class="panel-body">
-                            <div class="col-md-12">
-                                <div class="col-md-6">
-                                    <h4>Genero</h4>
-                                    <label>Mujer</label>
-                                    <label class="pull-right">Hombre</label>
-                                    <slider ng-model="objectsSidebarService.selectedObject.segregation.gender" min="0" max="100" value="" slider-tooltip="hide" class="bs-slider"></slider>
-                                </div>
-                                <div class="col-md-6">
-                                    <h4>Edad</h4>
-                                    <label>0</label>
-                                    <label class="pull-right">65+</label>
-                                    <slider ng-model="objectsSidebarService.selectedObject.segregation.age" min="0" max="65" value="[25,65]" range="true" class="bs-slider"></slider>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </section>
@@ -123,14 +114,30 @@
                         </div>
                         <div class="panel-body">
                             <div class="section">
-                                <div>
-                                    <div ng-repeat="site in sites" class="col-md-4">
-                                        <div class="checkbox c-checkbox">
-                                            <label>
-                                                <input ng-model="sitesBooleanArray[$index]" input type="checkbox"/>
-                                                <span class="fa fa-check"></span>
-                                                {{site.title1}}-{{site.title2}}
-                                            </label>
+                                <div id="wizardShowcasePublishWrapper">
+                                    <div scrollbar="scrollbarOptionsStandard" class="showcaseWrapperContainer scrollbar-inner">
+                                        <div ng-repeat="site in sites" class="siteModule">
+                                            <div class="site">
+                                                <div class="siteTitle1">
+                                                    <label>{{site.title1}}</label>
+                                                </div>
+                                                <div class="siteTitle2">
+                                                    <label>{{site.title2}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="showcaseWrapper">
+                                                <div ng-repeat="showcase in objectsSidebarService.objects | orderBy:sortShowcases(site)" ng-class="isShowcaseAssigned(site, showcase)" class="showcase">
+                                                    <div class="showcaseOptionsContainer">
+                                                        <div class="showcaseOptions">
+                                                            <div ng-click="moveShowcaseUp(site,showcase)" class="upButton"><em class="fa fa-arrow-up"></em></div>
+                                                            <div ng-click="moveShowcaseDown(site,showcase)" class="downButton"><em class="fa fa-arrow-down"></em></div>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-click="setShowcaseAssigned(site, showcase)" class="showcaseContainer">
+                                                        <label class="showcaseLabel">{{showcase.name}}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
