@@ -255,6 +255,7 @@
                 return "active";
             }
             return "";
+
         };
 
         $scope.sortShowcases = function(site ,showcase){
