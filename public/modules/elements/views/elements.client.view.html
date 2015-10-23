@@ -5,10 +5,8 @@
                 <!-- NutShell Section -->
                 <section>
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <legend translate="SUMMARY.TITLE"></legend>
-                        </div>
                         <div class="panel-body">
+                            <legend translate="SUMMARY.TITLE"></legend>
                             <form role="form" class="novalidate">
                                 <div class="section">
                                     <div class="form-group">
@@ -25,10 +23,10 @@
                                                 <span class="fa fa-check"></span>
                                             </label>
                                         </span>
-                                        <span translate="SUMMARY.HIGHTLIGHT"></span>
-                                        <span class="help-block" translate="SUMMARY.HIGHTLIGHTDESCRIPTION">Turn on Hightlight to presents this element in the Hightlight section of the mobile app</span>
+                                        <span translate="SUMMARY.HIGHLIGHT"></span>
+                                        <span class="help-block" translate="SUMMARY.HIGHLIGHTDESCRIPTION">Turn on Hightlight to presents this element in the Hightlight section of the mobile app</span>
                                     </div>
-                                    <div div class="form-group">
+                                    <div class="form-group">
                                         <label for="title2" translate="SUMMARY.DESC1" class="control-label"></label>
                                         <input id="title2" ng-model="objectsSidebarService.selectedObject.subTitle" name="subTitle"
                                                type="text" placeholder="Subtitle" ng-blur="validate()"
@@ -36,53 +34,22 @@
                                         <span class="help-block" translate="SUMMARY.DESC2"></span>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="elemSearchTag" translate="GENERIC.SEARCH_TAGS"></label>
+                                    <input id="elemSearchTag" type="text" tagsinput="tagsinput" ng-model="temptags" class="form-control"/>
+                                    <span class="help-block" translate="GENERIC.SEARCH_TAGS_DESC"></span>
+                                </div>
                             </form>
                         </div>
                     </div>
                 </section>
-                <!-- Gallery Section -->
-                <section>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <legend translate="GALLERY.TITLE"></legend>
-                            <p translate="GALLERY.SUB_TITLE"></p>
-                        </div>
-                        <div class="panel-body">
-                            <gallery ng-model="objectsSidebarService.selectedObject.media" gallery="galleries"></gallery>
-                        </div>
-                    </div>
-                </section>
-                <!-- Summary Section -->
-                <section>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <legend translate="SUMMARY.DETAILS"></legend>
-                            <p translate="SUMMARY.DETAILS1"></p>
-                        </div>
-                        <div class="panel-body">
-                            <text-angular ng-model="htmlVariable"></text-angular>
-                        </div>
-                    </div>
-                </section>
-                <!-- Search Tags Section -->
-                <section>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <legend translate="GENERIC.SEARCH_TAGS"></legend>
-                        </div>
-                        <div class="panel-body">
-                            <input id="elemSearchTag" type="text" tagsinput="tagsinput" ng-model="temptags" class="form-control"/>
-                            <span class="help-block" translate="GENERIC.SEARCH_TAGS_DESC"></span>
-                        </div>
-                    </div>
-                </section>
+
                 <!-- Categories Section -->
                 <section>
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <legend>Categories</legend>
-                        </div>
                         <div class="panel-body">
+                            <legend translate="GENERIC.CATEGORIES"></legend>
+                            <p translate="CATEGORY.CATEGORIES_DESCRIPTION"></p>
                             <div class="section">
                                 <div id="categories">
                                     <div class="container-fluid">
@@ -103,21 +70,35 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="section">
-                                <div class="paragraph">
-                                    <p translate="CATEGORY.CATEGORIES_DESCRIPTION"></p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </section>
+
+                <!-- Gallery Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <legend translate="GALLERY.TITLE"></legend>
+                            <p translate="GALLERY.SUB_TITLE"></p>
+                            <gallery ng-model="objectsSidebarService.selectedObject.media" gallery="galleries"></gallery>
+                        </div>
+                    </div>
+                </section>
+                <!-- Summary Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <legend translate="SUMMARY.DETAILS"></legend>
+                            <p translate="SUMMARY.DETAILS1"></p>
+                            <text-angular ng-model="htmlVariable"></text-angular>
+                        </div>
+                    </div>
+
                 <!-- Highlights Section -->
                 <section>
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <legend>Highlight</legend>
-                        </div>
                         <div class="panel-body">
+                            <legend translate="GENERIC.HIGHLIGHT"></legend>
                             <div class="section">
                                 <div class="row">
                                     <form class="form-inline novalidate">
