@@ -52,20 +52,20 @@
         </ul>  -->
         <!-- END Left navbar-->
         <!-- START Right Navbar-->
-        <ul class="nav navbar-nav navbar-right ml0">
+        <!--<ul class="nav navbar-nav navbar-right ml0">
             <!-- Search icon-->
-            <li>
-                <a search-open="">
-                    <em class="icon-magnifier"></em>
-                </a>
-            </li>
-            <!-- START Offsidebar button-->
-            <li>
-                <a href="" ng-click="app.offsidebarOpen = !app.offsidebarOpen">
-                    <em class="icon-notebook"></em>
-                </a>
-            </li>
-            <!-- END Offsidebar menu-->
+        <!--<li>
+            <a search-open="">
+                <em class="icon-magnifier"></em>
+            </a>
+        </li>
+        <!-- START Offsidebar button-->
+        <!--<li>
+            <a href="" ng-click="app.offsidebarOpen = !app.offsidebarOpen">
+                <em class="icon-notebook"></em>
+            </a>
+        </li>
+        <!-- END Offsidebar menu-->
         </ul>
         <ul class="nav navbar-nav" data-ng-show="authentication.user">
             <li class="dropdown" dropdown>
@@ -89,6 +89,8 @@
                     </li>
                 </ul>
             </li>
+        </ul>
+        <ul class="nav navbar-nav" data-ng-show="authentication.user">
             <li class="dropdown" dropdown organization-dropdown="">
                 <a href class="dropdown-toggle" dropdown-toggle>
                     <span ng-bind="organizationService.selectedOrganization.name"></span>
@@ -114,14 +116,14 @@
     </div>
     <!-- END Nav wrapper-->
     <!-- START Search form-->
-    <form role="search" action="search.html" class="navbar-form">
+    <!--<form role="search" action="search.html" class="navbar-form">
         <div class="form-group has-feedback">
             <input type="text" placeholder="{{ 'topbar.search.PLACEHOLDER' | translate }}" class="form-control"/>
 
             <div search-dismiss="search-dismiss" class="fa fa-times form-control-feedback"></div>
         </div>
         <button type="submit" class="hidden btn btn-default">Submit</button>
-    </form>
+    </form>-->
     <!-- END Search form-->
 </nav>
 <!-- END Top Navbar-->
