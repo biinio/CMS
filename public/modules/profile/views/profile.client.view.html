@@ -5,130 +5,56 @@
     <!-- START panel-->
     <div class="panel panel-default">
         <div class="panel-body">
-            <form form-wizard="" steps="2" novalidate="">
-                <div class="form-wizard wizard-horizontal">
-                    <!-- START wizard steps indicator-->
-                    <ol class="row">
-                        <li ng-class="{'active':wizard.active(1)}" ng-click="wizard.go(1)" class="col-md-4">
-                            <h4>Information</h4>
-                            <small class="text-muted">Duis volutpat nunc at ligula tincidunt non aliquam.</small>
-                        </li>
-                        <li ng-class="{'active':wizard.active(2)}" ng-click="wizard.go(2)" class="col-md-4">
-                            <h4>Organizations</h4>
-                            <small class="text-muted">Sed elementum lorem dolor, id fermentum metus.</small>
-                        </li>
-                    </ol>
-                    <!-- END wizard steps indicator-->
-                    <!-- START Wizard Step inputs -->
-                    <div ng-show="wizard.active(1)">
-                        <div ng-mouseleave="saveInformation()">
-                            <legend>Information</legend>
-                            <form role="form">
-                                <div class="form-group">
-                                    <img ng-if="profile.profilePhoto.length===0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+" alt=""/>
-                                    <img ng-if="profile.profilePhoto.length > 0" ng-src="{{profile.profilePhoto}}" pending-indicator="pending-indicator"/>
-                                </div>
-                                <div class="form-group">
-                                    <a upload-profile-image="#profileInput" translate="PROFILE.UPLOAD_IMAGE" class="btn btn-default"></a>
-                                    <input id="fileInput" filestyle="" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" class="form-control" />
-                                    <input id="profileInput" type="file" class="hidden"/>
-                                </div>
-                                <div class="form-group">
-                                    <label translate="PROFILE.FIRST_NAME"></label>
-                                    <input id="txtName" placeholder="Enter first name" ng-model="profile.displayName" class="form-control" />
-                                </div>
-                                <div class="form-group">
-                                    <label translate="PROFILE.LAST_NAME"></label>
-                                    <input id="txtlastName" placeholder="Enter last name" ng-model="profile.lastName" class="form-control" />
-                                </div>
-                                <div class="form-group">
-                                    <label translate="PROFILE.USER_NAME"></label>
-                                    <input id="txtusrName" placeholder="Enter username" ng-model="profile.name" class="form-control" />
-                                    <span class="help-block">Note: Changing this value will logout your user</span>
-                                </div>
-                                <div class="form-group">
-                                    <label translate="PROFILE.EMAIL"></label>
-                                    <input id="txtMail" placeholder="Enter email" ng-model="profile.emails[0]" class="form-control" />
-                                </div>
-                                <div class="form-group">
-                                    <label translate="PROFILE.PHONE"></label>
-                                    <input  ng-model="profile.phoneNumber" type="text" masked="" data-inputmask="'mask': '(999) 999-9999'" placeholder="Phone number" class="form-control" />
-                                    <!--<span class="help-block">data-inputmask="'mask': '(999) 999-9999"'</span>-->
-                                </div>
-
-                                <label class="organizationId">Identificador: {{profile.accountIdentifier}}</label>
-                            </form>
+            <div ng-mouseleave="saveInformation()">
+                <legend>Information</legend>
+                <form role="form">
+                    <div class="form-group">
+                        <div class="img-profile">
+                            <img ng-if="profile.profilePhoto.length===0"
+                                 src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"
+                                 class="img-responsive"/>
+                            <img ng-if="profile.profilePhoto.length > 0" ng-src="{{profile.profilePhoto}}" class="img-responsive"/>
                         </div>
-                        <ul class="pager">
-                            <li class="next"><a href="#" ng-click="wizard.go(2)">Next <span>&rarr;</span></a>
-                            </li>
-                        </ul>
                     </div>
-                    <!-- END Wizard Step inputs -->
-                    <!-- START Wizard Step inputs -->
-                    <div ng-show="wizard.active(2)">
-                        <div>
-                            <legend>Organizations</legend>
-                            <!-- START row -->
-                            <div class="row">
-                                <div id="organizationListWrapper" scrollbar="scrollbarOptionsStandard" class="scrollbar-inner">
-                                    <div class="col-md-2">
-                                        <div class="panel panel-default" ng-click="createOrganization()">
-                                            <div class="panel-heading" translate="ORGANIZATION.ADD_NEW">
-                                                <paneltool tool-dismiss="tool-dismiss"></paneltool>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div ng-repeat="item in organizationService.organizationsList" ng-click="editOrganization($index)" ng-class="{'active':item.identifier===currentModelId}" class="col-md-2">
-                                        <div id="{{item.identifier}}" class="panel panel-default">
-                                            <div class="panel-heading">{{item.name}}
-                                                <paneltool tool-dismiss="tool-dismiss"></paneltool>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END row -->
-                            <!-- START row -->
-                            <form ng-if="selectedOrganization!==''" ng-mouseleave="saveOrganization()" role="form">
-                                <div>
-                                    <img ng-if="organizations[selectedOrganization].media.length===0 || organizations[selectedOrganization].media[0].imgUrl.length===0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+" alt=""/><img ng-if="typeof(organizations[selectedOrganization].media)!=='undefined' &amp;&amp; organizations[selectedOrganization].media.length&gt;0 &amp;&amp; organizations[selectedOrganization].media[0].imgUrl.length &gt; 0" ng-src="{{organizations[selectedOrganization].media[0].imgUrl}}" pending-indicator="pending-indicator"/><a upload-organization-image="#organizationInput" translate="GENERIC.UPLOAD_IMAGE" class="btn btn-default"></a>
-                                    <input id="organizationInput" type="file" class="hidden"/>
-                                </div>
-
-                                <div class="form-group">
-                                    <label translate="ORGANIZATION.NAME"></label>
-                                    <input type="text" placeholder="Name **" ng-model="organizationService.organizationsList[selectedOrganization].name" class="form-control"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="brand" translate="ORGANIZATION.BRAND"></label>
-                                    <input id="brand" type="text" placeholder="Brand Name **" ng-model="organizationService.organizationsList[selectedOrganization].brand" class="form-control"/>
-                                </div>
-                                <div class="form-group">
-                                    <label translate="ORGANIZATION.INFORMATION"></label>
-                                    <textarea id="description" placeholder="Description **" ng-model="organizationService.organizationsList[selectedOrganization].description" class="form-control"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="extraInfo" translate="ORGANIZATION.MORE_INFO"></label>
-                                    <input id="extraInfo" type="text" placeholder="Extra Information **" ng-model="organizationService.organizationsList[selectedOrganization].extraInfo" class="form-control"/>
-                                </div>
-                                <label translate="ORGANIZATION.ORG_ID" class="organizationId">{{organizationService.organizationsList[selectedOrganization].identifier}}</label>
-
-                            </form>
-                            <!-- END row -->
-                        </div>
-                        <ul class="pager">
-                            <li class="previous">
-                                <a href="#" ng-click="wizard.go(2)">
-                                    <span>&larr; Previous</span>
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="form-group">
+                        <a upload-profile-image="#profileInput" translate="PROFILE.UPLOAD_IMAGE"
+                           class="btn btn-default"></a>
+                        <!--<input id="fileInput" filestyle="" type="file" data-class-button="btn btn-default"
+                               data-class-input="form-control" data-button-text="" class="form-control"/>-->
+                        <input id="profileInput" type="file" class="hidden"/>
                     </div>
-                    <!-- END Wizard Step inputs -->
+                    <div class="form-group">
+                        <label translate="PROFILE.FIRST_NAME"></label>
+                        <input id="txtName" placeholder="Enter first name" ng-model="profile.displayName"
+                               class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label translate="PROFILE.LAST_NAME"></label>
+                        <input id="txtlastName" placeholder="Enter last name" ng-model="profile.lastName"
+                               class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label translate="PROFILE.USER_NAME"></label>
+                        <input id="txtusrName" placeholder="Enter username" ng-model="profile.name"
+                               class="form-control"/>
+                        <span class="help-block">Note: Changing this value will logout your user</span>
+                    </div>
+                    <div class="form-group">
+                        <label translate="PROFILE.EMAIL"></label>
+                        <input id="txtMail" placeholder="Enter email" ng-model="profile.emails[0]"
+                               class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label translate="PROFILE.PHONE"></label>
+                        <input ng-model="profile.phoneNumber" type="text" masked=""
+                               data-inputmask="'mask': '(999) 999-9999'" placeholder="Phone number"
+                               class="form-control"/>
+                        <!--<span class="help-block">data-inputmask="'mask': '(999) 999-9999"'</span>-->
+                    </div>
 
-                </div>
-            </form>
+                    <label class="organizationId">Identificador: {{profile.accountIdentifier}}</label>
+                </form>
+            </div>
         </div>
     </div>
     <!-- END panel -->
