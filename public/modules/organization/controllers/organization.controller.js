@@ -26,7 +26,7 @@
         $scope.sidebarTemplate =
             "<div class='col-md-3 thumbListImage'>" +
             "<img ng-if='item.elements.length == 0  || item.elements[0].media.length == 0 ' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
-            "<img ng-if='item.elements[0].media.length>0' ng-src='{{item.elements[0].media[0].url}}'/>" +
+            "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}'/>" +
             "</div>" +
             "<div class='col-md-9 leftInformationArea'>" +
             "<label class='moduleTitle'>{{item.name}}</label>" +
@@ -81,7 +81,7 @@
                     $scope.prevSaveOrganization = jQuery.extend({}, currentOrganization);
                     $scope.isAnalazingOrg = false;
 
-                    $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organization/' + currentOrganization.identifier, {model: currentOrganization}).success(function (data, status) {
+                    $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization.identifier, {model: currentOrganization}).success(function (data, status) {
                         if (status === 200) {
                             $scope.succesSaveShow = true;
                         } else
@@ -100,10 +100,10 @@
         //Push a new organization in the list
         $scope.createOrganization = function () {
             //Get the Mayor from server
-            $http.post(ApplicationConfiguration.applicationBackendURL +'api/organization/').success(function (org, status) {
+            $http.post(ApplicationConfiguration.applicationBackendURL +'api/organizations').success(function (org, status) {
                 if (status == 201 || status == 200) {
                     $scope.organizationService.organizationsList.push(org);
-                    $scope.objectsSidebarService.objects.push(org);
+                    //$scope.objectsSidebarService.objects.push(org);
                     $scope.objectsSidebarService.selectedObject = org;
                 } else {
                     displayErrorMessage(org, "Organizations Creation", status);
@@ -114,10 +114,11 @@
         //Remove showcase at specific position
         $scope.removeOrganization = function (index) {
             var id = $scope.objectsSidebarService.objects[index].identifier;
-            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organization/' + id).success(function (data) {
-                if (data.state == "success") {
-                    $scope.organizationService.removeOrganization(id);
-                    $scope.objectsSidebarService.objects.splice(index,1);
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + id).success(function (data) {
+                $scope.organizationService.removeOrganization(id);
+                $scope.objectsSidebarService.objects.splice(index,1);
+                if($scope.objectsSidebarService.selectedObject.identifier == id){
+                    $scope.objectsSidebarService.selectedObject = null;
                 }
             });
         };
