@@ -261,9 +261,9 @@
         //Category return if contains a specific category
         $scope.containsCategory=function(category){
             if(typeof(_.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier}))!='undefined')
-                return 'active';
+                return true;
             else
-                return "";
+                return false;
         };
 
 

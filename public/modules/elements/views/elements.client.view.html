@@ -88,11 +88,11 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div ng-repeat="cat in categories" ng-click="switchCategoryState(cat)"
-                                                   class="col-md-4 catModule">
+                                                <div ng-repeat="cat in categories" class="col-md-4 catModule">
                                                     <div class="checkbox c-checkbox">
                                                         <label>
-                                                            <input input type="checkbox" checked="{{containsCategory(cat)}}"/>
+                                                            <!--input input type="checkbox" checked="{{containsCategory(cat)}}"/-->
+                                                            <input ng-click="updateSelectedCategories(cat)" ng-checked="containsCategory(cat) == true" type="checkbox"/>
                                                             <span class="fa fa-check"></span>
                                                             {{cat.displayName}}
                                                         </label>
