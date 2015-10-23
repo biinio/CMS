@@ -5,12 +5,8 @@
                 <!-- NutShell Section -->
                 <section>
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <legend translate="SITES.TITLE"></legend>
-                            <p translate="SITES.SUB_TITLE"></p>
-                            <h5 translate="SITES.TITLE1"></h5>
-                        </div>
                         <div class="panel-body">
+                            <legend translate="SITES.TITLE"></legend>
                             <form role="form" class="novalidate">
                                 <div class="section">
                                     <div class="form-group">
@@ -39,34 +35,23 @@
                                                ng-blur="validate()" ng-change="limitNutshell()" required="required"
                                                class="form-control title-value"/>
                                     </div>
-                                    <code>{{'GENERIC.IDENTIFIER' | translate}} :
-                                        {{objectsSidebarService.selectedObject.identifier }}</code>
+                                    <div class="form-group">
+                                        <label for="siteSearchTag" translate="GENERIC.SEARCH_TAGS" class="control-label"></label>
+                                        <input id="siteSearchTag" type="text" tagsinput="tagsinput" ng-model="temptags"
+                                               class="form-control"/>
+                                        <span class="help-block" translate="GENERIC.SEARCH_TAGS_DESC"></span>
+                                    </div>
                                 </div>
                             </form>
-                        </div>
-                    </div>
-                </section>
-                <!-- Search Tags Section -->
-                <section>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <legend translate="GENERIC.SEARCH_TAGS"></legend>
-                        </div>
-                        <div class="panel-body">
-                            <input id="siteSearchTag" type="text" tagsinput="tagsinput" ng-model="temptags"
-                                   class="form-control"/>
-                            <span class="help-block" translate="GENERIC.SEARCH_TAGS_DESC"></span>
                         </div>
                     </div>
                 </section>
                 <!-- Gallery Section -->
                 <section>
                     <div class="panel panel-default">
-                        <div class="panel-heading">
+                        <div class="panel-body">
                             <legend translate="GALLERY.TITLE"></legend>
                             <p translate="GALLERY.SUB_TITLE"></p>
-                        </div>
-                        <div class="panel-body">
                             <gallery ng-model="objectsSidebarService.selectedObject.media"
                                      gallery="galleries"></gallery>
                         </div>
@@ -75,11 +60,9 @@
                 <!-- Location Section -->
                 <section>
                     <div class="panel panel-default">
-                        <div class="panel-heading">
+                        <div class="panel-body">
                             <legend translate="SITES.LOCATION.TITLE"></legend>
                             <p translate="SITES.LOCATION.SUB_TITLE"></p>
-                        </div>
-                        <div class="panel-body">
                             <form role="form" class="novalidate">
                                 <div class="section">
                                     <div class="form-group">
@@ -111,7 +94,7 @@
                                                required="required" class="form-control title-value"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="stAddresText" translate="SITES.LOCATION.ADRESS"
+                                        <label for="stAddresText" translate="SITES.LOCATION.ADDRESS"
                                                class="control-label"></label>
                                         <input id="stAddresText"
                                                ng-model="objectsSidebarService.selectedObject.streetAddres"
@@ -148,10 +131,7 @@
                                                class="col-sm-2 control-label"></label>
 
                                         <div class="col-sm-10">
-                                            <input id="latText" type="text"
-                                                   ng-model="objectsSidebarService.selectedObject.lat"
-                                                   placeholder="Latitude" required="required"
-                                                   class="form-control title-value"/>
+                                            <label id="latText">{{ objectsSidebarService.selectedObject.lat }}</label>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -159,10 +139,7 @@
                                                class="col-sm-2 control-label"></label>
 
                                         <div class="col-sm-10">
-                                            <input id="lngText" type="text"
-                                                   ng-model="objectsSidebarService.selectedObject.lng"
-                                                   placeholder="Longitude" required="required"
-                                                   class="form-control title-value"/>
+                                            <label id="lngText">{{ objectsSidebarService.selectedObject.lng }}</label>
                                         </div>
                                     </div>
                                     <div class="mapWrapper">
@@ -178,14 +155,13 @@
                 <!-- Categories Section -->
                 <section>
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <legend>Categories</legend>
-                        </div>
                         <div class="panel-body">
+                            <legend>Categories</legend>
+                            <p translate="CATEGORY.CATEGORIES_DESCRIPTION"></p>
                             <div class="section">
                                 <div id="categories">
                                     <div class="container-fluid">
-                                        <div ng-repeat="cat in categories" class="col-md-3 catModule">
+                                        <div ng-repeat="cat in categories" class="col-md-4 catModule">
                                             <div class="checkbox c-checkbox">
                                                 <label>
                                                     <input ng-click="updateSelectedCategories(cat)" ng-checked="containsCategory(cat) == true" type="checkbox"/>
@@ -197,16 +173,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="section">
-                                <div class="paragraph">
-                                    <p>Categories allow your site and products to be visible on searches, select the
-                                        ones you think need to asociate with your site and products form the list
-                                        below.</p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </section>
+                <code ng-hide="true">{{'GENERIC.IDENTIFIER' | translate}} :
+                    {{objectsSidebarService.selectedObject.identifier }}</code>
             </div>
         </div>
     </div>

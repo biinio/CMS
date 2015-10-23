@@ -89,8 +89,6 @@
     "MENU.CATEGORIES": "6.Categorías",
 
     "TITLE": "Detalles del Local",
-    "SUB_TITLE": "Aquí puede actualizar la informacón de su local",
-    "TITLE1": "Nombre y Lugar",
     "NAME": "Nombre",
     "AT": "Está en",
     "EMAIL": "Correo Electrónico",
@@ -107,7 +105,7 @@
       "CITY": "Ciudad",
       "STATE": "Estado/Provincia",
       "ZIP": "Código Postal",
-      "ADRESS": "Dirección",
+      "ADDRESS": "Ubicación",
       "PHONE": "Teléfono",
       "DETAIL_LOC": "Ubicación Detallada",
       "MAP_LOCATION": "Ubicación en el Mapa",
@@ -123,5 +121,8 @@
     "NAME": "Nombre",
     "DESCRIPTION" : "Descripción",
     "PRICE": "Precio"
+  },
+  "CATEGORY": {
+    "CATEGORIES_DESCRIPTION": "Las categorías permiten que su sitio y sus productos aparezcan en las búsquedas. Seleccione las categorías que considere que deben ser asociados a su sitio y a sus productos."
   }
 }
