@@ -13360,11 +13360,25 @@ Component: elements.less
   width: 16.666667%;
   height: 50%;
   display: inline-block;
+  border: 2px solid white;
+}
+.element-showcase .btnDelete {
+  display: none;
+}
+.element-showcase:hover {
+  border: 2px solid #23b7e5;
+}
+.element-showcase:hover .btnDelete {
+  display: block;
 }
 .elements-available-item {
   width: 16.666667%;
   height: 50%;
   display: inline-block;
+  border: 2px solid white;
+}
+.elements-available-item:hover {
+  border: 2px solid #23b7e5;
 }
 .elementsAvailableList {
   height: 300px;
@@ -13515,6 +13529,23 @@ Component: elements.less
   white-space: nowrap;
   overflow-x: scroll;
   overflow-y: hidden;
+}
+.btnDelete {
+  color: white;
+  background: red;
+  border-radius: 20px;
+  width: 20px;
+  text-align: center;
+  position: absolute;
+  bottom: 32px;
+  right: 17px;
+}
+.searchBox-wrapper-elements {
+  width: 100%;
+}
+.img-organization {
+  height: 150px;
+  width: 150px;
 }
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');

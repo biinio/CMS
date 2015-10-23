@@ -1,0 +1,44 @@
+<div ng-controller="OrganizationController as organization" class="block-center">
+<div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
+    <div class="right-section-content">
+        <div ng-if="objectsSidebarService.selectedObject!=null && objectsSidebarService.selectedObject != {}">
+                <!-- START panel-->
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <legend>Organizations</legend>
+                        <!-- START row -->
+                        <form ng-if="selectedOrganization!==''" ng-mouseleave="saveOrganization()" role="form">
+                            <div class="img-organization">
+                                <img ng-if="objectsSidebarService.selectedObject.media.length===0 || !objectsSidebarService.selectedObject.media[0].url" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+" alt=""/>
+                                <img ng-if="typeof(objectsSidebarService.selectedObject.media)!=='undefined' && objectsSidebarService.selectedObject.media.length>0 && objectsSidebarService.selectedObject.media[0].url" ng-src="{{objectsSidebarService.selectedObject.media[0].url}}" class="img-responsive"/>
+                                <a upload-organization-image="#organizationInput" translate="GENERIC.UPLOAD_IMAGE" class="btn btn-default"></a>
+                                <input id="organizationInput" type="file" class="hidden"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label translate="ORGANIZATION.NAME"></label>
+                                <input type="text" placeholder="Name **" ng-model="objectsSidebarService.selectedObject.name" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="brand" translate="ORGANIZATION.BRAND"></label>
+                                <input id="brand" type="text" placeholder="Brand Name **" ng-model="objectsSidebarService.selectedObject.brand" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label translate="ORGANIZATION.INFORMATION"></label>
+                                <textarea id="description" placeholder="Description **" ng-model="objectsSidebarService.selectedObject.description" class="form-control"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="extraInfo" translate="ORGANIZATION.MORE_INFO"></label>
+                                <input id="extraInfo" type="text" placeholder="Extra Information **" ng-model="objectsSidebarService.selectedObject.extraInfo" class="form-control"/>
+                            </div>
+                            <label translate="ORGANIZATION.ORG_ID" class="organizationId">{{objectsSidebarService.selectedObject.identifier}}</label>
+
+                        </form>
+                        <!-- END row -->
+                    </div>
+                </div>
+                <!-- END panel -->
+            </div>
+        </div>
+    </div>
+</div>

@@ -72,23 +72,26 @@
                                     <div id="showcaseElements">
                                         <div class="elementInShowcaseList" data-drop="true" data-jqyoui-options jqyoui-droppable  ng-model="objectsSidebarService.selectedObject.elements">
                                             <div ng-repeat="el in objectsSidebarService.selectedObject.elements | orderBy:natural('position')"
-                                                 class="element-showcase col-md-2">
+                                                 class="element-showcase col-md-2"
+                                                 data-drop="true"  jqyoui-droppable="{index:{{$index}}}"
+                                                 data-drag="true" data-jqyoui-options="{revert: 'invalid',zIndex: 100}"
+                                                 jqyoui-draggable="{insertInline:true, index:{{$index}}}" ng-model="objectsSidebarService.selectedObject.elements"
+                                                    >
                                                 <div class="moduleTitle">
                                                     <span>{{el.title}}</span>
                                                 </div>
                                                 <img ng-src="{{el.media[0].url}}" class="img-responsive"/>
-                                                <div ng-click="removeElementAt(objectsSidebarService.selectedObject.indexOf(el))"
+                                                <div ng-click="removeElementAt(objectsSidebarService.selectedObject.elements.indexOf(el))"
                                                      class="btnDelete icon-round-control btn-on-hover">
-                                                    <div class="icon icon-bin-2"></div>
+                                                    <em class="fa fa-trash"></em>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="elementsAvailableList">
-                                            <div ng-repeat="avEl in elements| filter:query"
-                                                 element-index="{{elements.indexOf(avEl)}}"
+                                            <div ng-repeat="avEl in elements| filter:filteredElements"
                                                  class="elements-available-item col-md-2"
-                                                 data-drag="true" data-jqyoui-options="{revert: true}"
-                                                 jqyoui-draggable="{deepCopy:true}" ng-model="avEl">
+                                                 data-drag="true" data-jqyoui-options="{revert: true,revertDuration:0, appendTo:'body',helper: 'clone', zIndex: 100}"
+                                                 jqyoui-draggable="{placeholder:'keep'}" ng-model="avEl">
                                                 <div class="moduleWrapper contentHideButtons">
                                                     <div class="moduleTitle">
                                                         <span>{{avEl.title}}</span>
@@ -98,7 +101,7 @@
                                             </div>
                                         </div>
                                         <div class="container-fluid searchBox">
-                                            <div class="searchBox-wrapper">
+                                            <div class="searchBox-wrapper-elements">
                                                 <input type="text" placeholder="search" ng-model="query"
                                                        autofocus="autofocus" class="form-control"/>
                                             </div>
