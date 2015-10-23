@@ -127,5 +127,13 @@
   },
   "CATEGORY": {
     "CATEGORIES_DESCRIPTION": "Las categorías permiten que su sitio y sus productos aparezcan en las búsquedas. Seleccione las categorías que considere que deben ser asociados a su sitio y a sus productos."
+  },
+  "TEXTANGULAR" : {
+    "QUOTE_BUTTON": "Anotación",
+    "TITLE_BUTTON": "Título",
+    "SUBTITLE_BUTTON": "Subtítulo",
+    "TEXT_BUTTON": "Texto",
+    "FOOTNOTE_BUTTON": "Nota pequeña",
+    "PRICELIST_BUTTON": "Lista de precios"
   }
 }
