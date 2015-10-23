@@ -188,7 +188,7 @@
                                         <div ng-repeat="cat in categories" class="col-md-3 catModule">
                                             <div class="checkbox c-checkbox">
                                                 <label>
-                                                    <input ng-click="updateSelectedCategories(cat)" ng-checked="containsCategory(cat) == 'active'" input type="checkbox"/>
+                                                    <input ng-click="updateSelectedCategories(cat)" ng-checked="containsCategory(cat) == true" type="checkbox"/>
                                                     <span class="fa fa-check"></span>
                                                     {{cat.displayName}}
                                                 </label>

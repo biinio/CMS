@@ -257,13 +257,13 @@
         //Category return if contains a specific category
         $scope.containsCategory=function(category){
             if(typeof(_.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier}))!='undefined')
-                return 'true';
+                return true;
             else
-                return "false";
+                return false;
         };
 
         //Change the state of the category relation with the Site
-        $scope.switchCategoryState =function(category){
+        $scope.updateSelectedCategories =function(category){
             var index =-1;
             var cat = _.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier});
             if(typeof(cat)!='undefined'){
@@ -275,11 +275,12 @@
             else
                 $scope.objectsSidebarService.selectedObject.categories.push(category);
 
-            $scope.validate();
-            if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+            //$scope.validate();
+
+            /**if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
                 $scope.$apply();
                 $scope.$digest();
-            }
+            }**/
         };
     }
 })();
