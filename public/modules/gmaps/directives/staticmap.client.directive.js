@@ -38,6 +38,7 @@
                             ObjectsSidebar.selectedObject.lat = position.lat;
                         }
                     }, function () {
+
                     });
                 };
 
@@ -62,6 +63,7 @@
                     showPosition({coords: coords}, 1);
                     console.warn('ERROR(' + err.code + '): ' + err.message);
                 }
+
 
                 var local_lat = 0;
                 var local_lng = 0;

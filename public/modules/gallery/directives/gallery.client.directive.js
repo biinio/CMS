@@ -35,8 +35,8 @@
                         '</div>'+
                     '</div>'+
                     '<div class="img-add-block">'+
-                        '<div  ng-click="showImageModal()" class="btn-default img-add-block-wrapper">'+
-                            '<span  class="btn-browse">Browse</span>'+
+                        '<div  ng-click="showImageModal()" class="btn-default img-add-block-wrapper dottedBorder">'+
+                            '<span translate="GENERIC.ADD_IMAGE" class="btn-browse"></span>'+
                         '</div>'+
                     '</div>'+
                 '</div>'+

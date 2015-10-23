@@ -261,13 +261,14 @@
         //Category return if contains a specific category
         $scope.containsCategory=function(category){
             if(typeof(_.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier}))!='undefined')
-                return 'active';
+                return true;
             else
-                return "";
+                return false;
         };
 
+
         //Change the state of the category relation with the Site
-        $scope.switchCategoryState =function(category){
+        $scope.updateSelectedCategories =function(category){
             var index =-1;
             var cat = _.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier});
             if(typeof(cat)!='undefined'){
@@ -279,10 +280,6 @@
             else
                 $scope.objectsSidebarService.selectedObject.categories.push(category);
 
-            if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
-                $scope.$apply();
-                $scope.$digest();
-            }
         };
 
         //Remove the media object at specific index

@@ -43,6 +43,7 @@ angular.module('textAngularSetup', [])
         //
         keyMappings: [],
         toolbar: [
+            //['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
             ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
             ['insertPriceList'],
             ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
@@ -451,7 +452,7 @@ angular.module('textAngularSetup', [])
                         $rootScope.getPriceListHtml = function () {
 
                             //TODO: Obtain appropriate translation for headers
-                            var priceListTableHeaders = "<thead><tr><th>Moneda</th><th>Nombre</th><th>Descripcion</th><th>Precio</th></tr></thead>";
+                            var priceListTableHeaders = "<thead><tr><th>Moneda</th><th>Nombre</th><th>Descripción</th><th>Precio</th></tr></thead>";
 
                             var pricedItemsList = priceListTableHeaders.concat("<tbody>");
 
