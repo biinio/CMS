@@ -11,9 +11,9 @@
                             <div class="img-organization">
                                 <img ng-if="objectsSidebarService.selectedObject.media.length===0 || !objectsSidebarService.selectedObject.media[0].url" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+" alt=""/>
                                 <img ng-if="typeof(objectsSidebarService.selectedObject.media)!=='undefined' && objectsSidebarService.selectedObject.media.length>0 && objectsSidebarService.selectedObject.media[0].url" ng-src="{{objectsSidebarService.selectedObject.media[0].url}}" class="img-responsive"/>
-                                <a upload-organization-image="#organizationInput" translate="GENERIC.UPLOAD_IMAGE" class="btn btn-default"></a>
-                                <input id="organizationInput" type="file" class="hidden"/>
                             </div>
+                            <a upload-organization-image="#organizationInput" translate="GENERIC.UPLOAD_IMAGE" class="btn btn-default"></a>
+                            <input id="organizationInput" type="file" class="hidden"/>
 
                             <div class="form-group">
                                 <label translate="ORGANIZATION.NAME"></label>
