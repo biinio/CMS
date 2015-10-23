@@ -67,13 +67,16 @@
     "PRICE_LIST_VALUE": "Valor",
     "PRICE_LIST_VALUE_PLACEHOLDER": "Ej. 100",
     "LINK": "Enlace",
-    "HIGHTLIGHT": "Recomendados",
-    "HIGHTLIGHTDESCRIPTION": "Selecciona esta opción para que el elemento aparezca en la pantalla de recomendados en Biin"
+    "HIGHLIGHT": "Recomendado",
+    "HIGHLIGHTDESCRIPTION": "Selecciona esta opción para que el elemento aparezca en la pantalla de recomendados en Biin"
   },
   "GENERIC":{
     "SEARCH_TAGS": "Etiquetas de búsqueda",
     "SEARCH_TAGS_DESC": "Las etiquetas ayudan a que su información sea encontrada mas fácilmente.",
-    "ADD": "Añadir"
+    "ADD": "Añadir",
+    "ADD_IMAGE": "Añadir foto",
+    "HIGHLIGHT": "Ofertas",
+    "CATEGORIES": "Categorías"
   },
   "SITES":{
     "GENERIC.UPLOAD_IMAGE": "Actualizar Imagen",
