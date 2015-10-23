@@ -23,7 +23,7 @@
         Menus.addMenuItem('sidebar', 'Administration', 'profile', 'dropdown', null, false, null, null,'icon-feed');
         //this.addSubMenu   (menuId, rootMenuItemURL, menuItemTitle, menuItemURL, menuItemUIRoute, isPublic, roles, position) {
         Menus.addSubMenuItem('sidebar', 'profile', 'Profile','profile',null, false, null, null);
-        Menus.addSubMenuItem('sidebar', 'profile', 'Organizaciones','organzations',null, false, null, null);
+        Menus.addSubMenuItem('sidebar', 'profile', 'Organizaciones','organization',null, false, null, null);
         Menus.addMenuItem('sidebar', 'Maintenance', 'maintenance', null, '/maintenance', false, null, null,'icon-settings',null);
     }
 

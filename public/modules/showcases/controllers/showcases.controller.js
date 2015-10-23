@@ -189,12 +189,21 @@
             });
         };
 
+
+        $scope.filteredElements = function ( element ) {
+            var index = -1;
+            for(var i = 0; i < $scope.objectsSidebarService.selectedObject.elements.length; i++){
+                if($scope.objectsSidebarService.selectedObject.elements[i]._id == element._id){
+                    index = i;
+                    break;
+                }
+            }
+            return  index == -1;
+        };
+
         //Remove an element of a Showcase
         $scope.removeElementAt = function (index) {
-            var position = $scope.showcases[$scope.selectedShowcase].elements[index].position;
-            $scope.showcases[$scope.selectedShowcase].elements.splice(index, 1);
-
-            $scope.validate();
+            $scope.objectsSidebarService.selectedObject.elements.splice(index, 1);
         };
 
         //Add element to a showcase
@@ -249,12 +258,12 @@
                     break;
                 }
             }
-
             if( index > -1)
             {
                 return "active";
             }
             return "";
+
         };
 
         $scope.sortShowcases = function(site ,showcase){
