@@ -451,7 +451,7 @@ angular.module('textAngularSetup', [])
                         $rootScope.getPriceListHtml = function () {
 
                             //TODO: Obtain appropriate translation for headers
-                            var priceListTableHeaders = "<thead><tr><th>Moneda</th><th>Nombre</th><th>Descripcion</th><th>Precio</th></tr></thead>";
+                            var priceListTableHeaders = "<thead><tr><th>Moneda</th><th>Nombre</th><th>Descripción</th><th>Precio</th></tr></thead>";
 
                             var pricedItemsList = priceListTableHeaders.concat("<tbody>");
 
