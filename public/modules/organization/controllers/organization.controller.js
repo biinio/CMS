@@ -40,8 +40,34 @@
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
         $scope.objectsSidebarService.setObjects($scope.organizationService.organizationsList);
 
-        $scope.$on('changeOrganizationImage',function(vara,varb){
-            $scope.objectsSidebarService.selectedObject.media[0]=varb;
+        /**=============================================================================================================
+         * Events Listeners
+         *
+         =============================================================================================================*/
+
+
+        $scope.$on('$stateChangeStart', function () {
+            $scope.objectsSidebarService.reset();
+        });
+
+        $scope.$on('organizationChanged', function () {
+
+        });
+
+        $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
+            $scope.editOrganization();
+        });
+
+        $scope.$on("Biin: On Object Created", function () {
+            $scope.createOrganization();
+        });
+
+        $scope.$on("Biin: On Object Deleted", function (event, index) {
+            $scope.removeOrganization(index);
+        });
+
+        $scope.$on('changeOrganizationImage',function(scope,newPicture){
+            $scope.objectsSidebarService.selectedObject.media[0]=newPicture;
         });
 
         if (!Authentication.user) {
@@ -49,9 +75,9 @@
         }
 
         $scope.saveOrganization = function () {
-            if ($scope.selectedOrganization >= 0 && !$scope.isAnalazingOrg) {
+            if (!$scope.isAnalazingOrg) {
                 if (isOrganizationDirty()) {
-                    var currentOrganization = $scope.organizationService.organizationsList[$scope.selectedOrganization];
+                    var currentOrganization = $scope.objectsSidebarService.selectedObject;
                     $scope.prevSaveOrganization = jQuery.extend({}, currentOrganization);
                     $scope.isAnalazingOrg = false;
 
@@ -67,13 +93,8 @@
         };
 
         //Edit an site
-        $scope.editOrganization = function (index) {
-            $scope.selectedOrganization = index;
-            $scope.prevSaveOrganization = jQuery.extend({}, $scope.organizationService.organizationsList[index]);
-            //changeOrganizationToDefault();
-            //$scope.clearValidations();
-            //$scope.wizardPosition=1;
-            //$scope.validate(true);
+        $scope.editOrganization = function () {
+            $scope.prevSaveOrganization = jQuery.extend({}, $scope.objectsSidebarService.selectedObject);
         };
 
         //Push a new organization in the list
@@ -82,7 +103,8 @@
             $http.post(ApplicationConfiguration.applicationBackendURL +'api/organization/').success(function (org, status) {
                 if (status == 201 || status == 200) {
                     $scope.organizationService.organizationsList.push(org);
-                    $scope.editOrganization($scope.organizationService.organizationsList.indexOf(org));
+                    $scope.objectsSidebarService.objects.push(org);
+                    $scope.objectsSidebarService.selectedObject = org;
                 } else {
                     displayErrorMessage(org, "Organizations Creation", status);
                 }
@@ -90,14 +112,14 @@
         };
 
         //Remove showcase at specific position
-        $scope.removeOrganization = function (id, deferred) {
+        $scope.removeOrganization = function (index) {
+            var id = $scope.objectsSidebarService.objects[index].identifier;
             $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organization/' + id).success(function (data) {
-                    if (data.state == "success") {
-                        $scope.organizationService.removeOrganization(id);
-                        deferred.resolve();
-                    }
+                if (data.state == "success") {
+                    $scope.organizationService.removeOrganization(id);
+                    $scope.objectsSidebarService.objects.splice(index,1);
                 }
-            );
+            });
         };
 
 
@@ -108,11 +130,10 @@
             var foundChange = false;
             if ($scope.prevSaveOrganization !== null) {
                 for (var i = 0; i < propertiesToCheck.length && !foundChange; i++) {
-                    foundChange = $scope.organizationService.organizationsList[$scope.selectedOrganization][propertiesToCheck[i]] !== $scope.prevSaveOrganization[propertiesToCheck[i]];
+                    foundChange = $scope.objectsSidebarService.selectedObject[propertiesToCheck[i]] !== $scope.prevSaveOrganization[propertiesToCheck[i]];
                 }
             }
             return foundChange;
-
         };
 
         activate();
