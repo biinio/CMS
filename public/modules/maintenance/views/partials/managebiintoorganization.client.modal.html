@@ -1,0 +1,76 @@
+<div class="maintenanceModal">
+    <div class="modal-header">
+        <button ng-click="cancel()" type="button" class="close">x</button>
+        <h3>Crear o Modificar un Beacon</h3>
+    </div>
+    <div class="modal-body">
+        <div class="section">
+            <h4 class="text-center"><span class="label label-warning">{{message}}</span></h4>
+        </div>
+        <div class="section container-fluid">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Site</label>
+                        <select ng-model="selectedSite" ng-change="selectSite(selectedSite)" ng-disabled="{{lockValues}}" ng-options="site.title2 for site in sites" class="form-control">
+                            <!--option ng-repeat="site in sites" value="{{sites.indexOf(site)}}">{{site.title2}}</option-->
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Mayor</label>
+                        <input ng-value="selectedSite.major" disabled="true" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Status</label>
+                        <select ng-model="beacon.status" ng-change="selectState(beacon.status)" class="form-control bootstrap-select">
+                            <option value="No Programmed">No Programmed</option>
+                            <option value="Programmed">Programmed</option>
+                            <option value="Installed">Installed </option>
+                            <option value="Damaged">Damaged</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Minor</label>
+                        <input disabled="true" value="{{minor}}" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Biin ID</label>
+                        <input ng-model="beacon.brandIdentifier" ng-disabled="{{lockValues}}" class="form-control"/>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Alias</label>
+                        <input ng-model="beacon.name" ng-disabled="{{lockValues}}" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Tipo</label>
+                        <select ng-model="beacon.biinType" ng-disabled="{{lockValues}}" ng-change="onTypeChange(beacon.biinType)" class="form-control bootstrap-select">
+                            <option value="1">Exterior</option>
+                            <option value="2">Interior</option>
+                            <option value="3">Producto </option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label>UU-ID</label>
+                        <input ng-model="beacon.proximityUUID" disabled="true" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button ng-click="save()" class="btn btn-theme btn-sm">Apply</button>
+        <button ng-click="cancel()" class="btn btn-theme btn-sm">Cancel</button>
+    </div>
+</div>

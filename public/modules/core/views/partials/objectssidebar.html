@@ -1,24 +1,25 @@
-<div class="objects-left-bar">
-    <div class="hide-button" ng-click="hideObjectsMenu()">
-        <em class="fa fa-navicon"></em>
+<div class="hide-button" ng-click="hideObjectsMenu()">
+    <em class="fa fa-chevron-left"></em>
+    <em class="fa fa-chevron-right"></em>
+</div>
+
+<div class="row sidebar-filter col-center-block">
+    <div class="btn-add" ng-hide="!objectsSidebarService.enableAddButton">
+        <button ng-click="create()" class="btn btnAdd">&#43;</button>
     </div>
-    <div class="container-fluid sidemenu">
-        <div class="row">
-            <div class="col-md-2">
-                <button ng-click="create()" class="btn btnAdd">&#43;</button>
-            </div>
-            <div class="col-md-10">
-                <div class="searchBox-wrapper">
-                    <input type="text" placeholder="filter" ng-model="query" autofocus="autofocus"
-                           class="form-control"/>
-                </div>
-            </div>
-        </div>
-        <div class="row">
+    <div class="searchBox-wrapper">
+        <input type="text" placeholder="filter" ng-model="query" autofocus="autofocus"
+               class="form-control"/>
+    </div>
+</div>
+<div class="objects-left-bar">
+    <div class="container-fluid sidemenu-object">
+
+        <div class="row container-scroll">
             <div ng-repeat="item in objectsSidebarService.getObjects() | orderBy: '+title' | filter: query"
-                 ng-click="onObjectClick(objectsSidebarService.objects.indexOf(item))">
-                <div ng-class="{active: item == objectsSidebarService.getSelectedObject()}"
-                     class="list-items-side-menu">
+                 ng-click="onObjectClick(objectsSidebarService.objects.indexOf(item))" class="object-item"
+                 ng-class="{active: item == objectsSidebarService.getSelectedObject()}">
+                <div class="list-items-side-menu">
                     <div bind-html-compile="objectsSidebarService.template"></div>
                 </div>
             </div>

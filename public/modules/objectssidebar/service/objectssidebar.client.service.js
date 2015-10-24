@@ -8,25 +8,29 @@
     ObjectsSidebar.$inject = [];
     function ObjectsSidebar() {
         var service = {
-            objects : [],
-            selectedObject : null,
-            template : "",
-            setObjects : function ( objects ){
+            objects: [],
+            selectedObject: null,
+            template: "",
+
+            enableAddButton: true,
+
+            setObjects: function (objects) {
                 this.objects = objects;
             },
-            getObjects : function () {
+            getObjects: function () {
                 return this.objects;
             },
-            setSelectedObject : function( selectedObject){
+            setSelectedObject: function (selectedObject) {
                 this.selectedObject = selectedObject;
             },
-            getSelectedObject : function (){
+            getSelectedObject: function () {
                 return this.selectedObject;
             },
-            reset : function(){
+            reset: function () {
                 this.objects = [];
                 this.selectedObject = null;
                 this.template = "";
+                this.enableAddButton = true;
             }
         };
         return service;

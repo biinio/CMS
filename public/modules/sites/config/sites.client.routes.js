@@ -10,7 +10,12 @@ angular.module('sites').config(['$stateProvider',
         $stateProvider.
             state('appleftbar.sites', {
                 url: '/sites',
-                templateUrl: 'modules/sites/views/sites.client.view.html'
+                templateUrl: 'modules/sites/views/sites.client.view.html',
+                resolve: {
+                    organization:function( Organization ){
+                        return Organization.promise;
+                    }
+                }
             });
     }
 ]);

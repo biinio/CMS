@@ -1,8 +1,156 @@
 <div ng-controller="ShowcasesController as showcasesCtrl" class="">
-    <div id="wrapperContent" class="container-fluid">
+    <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
         <div class="right-section-content">
-            <h4>Showcases</h4>
-            <div ng-if="selectedSite!=null"></div>
+            <div ng-if="objectsSidebarService.selectedObject!=null && objectsSidebarService.selectedObject != {}">
+                <!-- NutShell Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <legend>Showcase Details</legend>
+                            <p>Add information about the showcases here.</p>
+                        </div>
+                        <div class="panel-body">
+                            <form class="novalidate">
+                                <div class="section form-horizontal">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="title1" class="control-label">Tittle</label>
+                                            <input id="title1" ng-model="objectsSidebarService.selectedObject.name" name="name" type="text" placeholder="Name **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="desctText" class="control-label">Description</label>
+                                            <input id="desctText" ng-model="objectsSidebarService.selectedObject.description" name="description" type="text" placeholder="Description **" ng-blur="validate()" class="form-control title-value"/>
+                                        </div>
+                                    </div>
+                                    <!--<div class="col-md-12">
+                                        <h4>Activation time</h4>
+                                        <div class="col-md-3">
+                                            <timepicker ng-model="objectsSidebarService.selectedObject.startTime" hour-step="1" minute-step="30" show-meridian="false" ng-change="updateShowcaseInBiins(objectsSidebarService.selectedObject)"></timepicker>
+                                            <h5>Start Time</h5>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <timepicker ng-model="objectsSidebarService.selectedObject.endTime" hour-step="1" minute-step="30" show-meridian="false" ng-change="updateShowcaseInBiins(objectsSidebarService.selectedObject)"></timepicker>
+                                            <h5>End Time</h5>
+                                        </div>
+                                    </div>
+                                    <h4>Segmentation</h4>
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <h4>Genero</h4>
+                                            <label>Mujer</label>
+                                            <label class="pull-right">Hombre</label>
+                                            <slider ng-model="objectsSidebarService.selectedObject.segregation.gender" min="0" max="100" value="" slider-tooltip="hide" class="bs-slider"></slider>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4>Edad</h4>
+                                            <label>0</label>
+                                            <label class="pull-right">65+</label>
+                                            <slider ng-model="objectsSidebarService.selectedObject.segregation.age" min="0" max="65" value="[25,65]" range="true" class="bs-slider"></slider>
+                                        </div>
+                                    </div>-->
+                                    <div class="col-md-12">
+                                        <label>Identifier:</label>
+                                        <code>{{objectsSidebarService.selectedObject.identifier}}</code>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+                <!-- Elements Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <legend>Showcase Elements</legend>
+                            <p>Add elements to your showcase</p>
+                        </div>
+                        <div class="panel-body">
+                            <form class="novalidate">
+                                <div class="section">
+                                </div>
+                                <div class="section">
+                                    <div id="showcaseElements">
+                                        <div class="elementInShowcaseList" data-drop="true" data-jqyoui-options jqyoui-droppable  ng-model="objectsSidebarService.selectedObject.elements">
+                                            <div ng-repeat="el in objectsSidebarService.selectedObject.elements | orderBy:natural('position')"
+                                                 class="element-showcase col-md-2"
+                                                 data-drop="true"  jqyoui-droppable="{index:{{$index}}}"
+                                                 data-drag="true" data-jqyoui-options="{revert: 'invalid',zIndex: 100}"
+                                                 jqyoui-draggable="{insertInline:true, index:{{$index}}}" ng-model="objectsSidebarService.selectedObject.elements"
+                                                    >
+                                                <div class="moduleTitle">
+                                                    <span>{{el.title}}</span>
+                                                </div>
+                                                <img ng-src="{{el.media[0].url}}" class="img-responsive"/>
+                                                <div ng-click="removeElementAt(objectsSidebarService.selectedObject.elements.indexOf(el))"
+                                                     class="btnDelete icon-round-control btn-on-hover">
+                                                    <em class="fa fa-trash"></em>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="elementsAvailableList">
+                                            <div ng-repeat="avEl in elements| filter:filteredElements"
+                                                 class="elements-available-item col-md-2"
+                                                 data-drag="true" data-jqyoui-options="{revert: true,revertDuration:0, appendTo:'body',helper: 'clone', zIndex: 100}"
+                                                 jqyoui-draggable="{placeholder:'keep'}" ng-model="avEl">
+                                                <div class="moduleWrapper contentHideButtons">
+                                                    <div class="moduleTitle">
+                                                        <span>{{avEl.title}}</span>
+                                                    </div>
+                                                    <img ng-src="{{avEl.media[0].url}}" class="img-responsive"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="container-fluid searchBox">
+                                            <div class="searchBox-wrapper-elements">
+                                                <input type="text" placeholder="search" ng-model="query"
+                                                       autofocus="autofocus" class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="panel-heading">
+                            <legend>Showcase Assignment</legend>
+                            <p>Please select the sites that the showcase is going to be enabled</p>
+                        </div>
+                        <div class="panel-body">
+                            <div class="section">
+                                <div id="wizardShowcasePublishWrapper">
+                                    <div scrollbar="scrollbarOptionsStandard" class="showcaseWrapperContainer scrollbar-inner">
+                                        <div ng-repeat="site in sites" class="siteModule">
+                                            <div class="site">
+                                                <div class="siteTitle1">
+                                                    <label>{{site.title1}}</label>
+                                                </div>
+                                                <div class="siteTitle2">
+                                                    <label>{{site.title2}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="showcaseWrapper">
+                                                <div ng-repeat="showcase in objectsSidebarService.objects | orderBy:sortShowcases(site)" ng-class="isShowcaseAssigned(site, showcase)" class="showcase">
+                                                    <div class="showcaseOptionsContainer">
+                                                        <div class="showcaseOptions">
+                                                            <div ng-click="moveShowcaseUp(site,showcase)" class="upButton"><em class="fa fa-arrow-up"></em></div>
+                                                            <div ng-click="moveShowcaseDown(site,showcase)" class="downButton"><em class="fa fa-arrow-down"></em></div>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-click="setShowcaseAssigned(site, showcase)" class="showcaseContainer">
+                                                        <label class="showcaseLabel">{{showcase.name}}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+            </div>
         </div>
     </div>
 </div>

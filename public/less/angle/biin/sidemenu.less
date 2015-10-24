@@ -2,33 +2,34 @@
 Component: sidemenu.less
  ========================================================================== */
 
-@sidebar-bg:                      @aside-bg;
-@sidebar-wd:                      220px;
-@sidebar-wd-collapsed:            70px;
+@sidebar-object-bg:               #CCCCCC;
+@sidebar-object-wd:               220px;
+@sidebar-object-wd-collapsed:     70px;
 
-@content-bg:                      @body-bg;
+@content-object-bg:               @body-bg;
 
-@sidebar-item-color:              #515253;
-@sidebar-item-color-active:       @nav-top-bg;
-@sidebar-item-bg-active:          darken(@sidebar-bg, 6%);
+@sidebar-object-item-color:              #FFFFFF;
+@sidebar-object-item-color-active:       @nav-top-bg;
+@sidebar-object-item-bg-active:          darken(@sidebar-object-bg, 6%);
 
-@sidebar-icon-color:              inherits;
-@sidebar-icon-color-active:       @nav-top-bg;
+@sidebar-object-icon-color:              inherits;
+@sidebar-object-icon-color-active:       @nav-top-bg;
 
-@sidebar-bullet-color:            rgba(0,0,0,.25);
-@sidebar-bullet-color-active:     @sidebar-icon-color-active;
+@sidebar-object-bullet-color:            rgba(0,0,0,.25);
+@sidebar-object-bullet-color-active:     @sidebar-object-icon-color-active;
 
-@sidebar-heading-color:           #919DA8;
-@sidebar-label-color:             @sidebar-item-color;
+@sidebar-object-heading-color:           #919DA8;
+@sidebar-object-label-color:             @sidebar-object-item-color;
 
-@submenu-header-hg:               40px;   // Submenu header when hover collapse sidebar
-@sidebar-item-border-wd:          3px;
-@scrollbar-wd:                    17px;
+@submenu-object-header-hg:               40px;   // Submenu header when hover collapse sidebar
+@sidebar-object-item-border-wd:          3px;
+@scrollbar-object-wd:                    17px;
 
-.sidemenu {
+.sidemenu-object {
   height: 100%;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: @sidebar-object-bg;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -49,8 +50,9 @@ Component: sidemenu.less
 
 .list-items-side-menu{
     width: 100%;
-    height: 70px;
+    height: 60px;
     position: relative;
+
   .btnDelete{
     position: absolute;
     border-radius: 10px;
@@ -69,24 +71,18 @@ Component: sidemenu.less
 }
 
 .list-items-side-menu:hover{
-  background: @sidebar-icon-color-active;
+  background: @sidebar-object-icon-color-active;
   .btnDelete{
     display: block;
   }
 }
 
-.list-items-side-menu.active{
-  width: 100%;
-  height: 70px;
-  background: @sidebar-icon-color-active;
-}
-
 // Hides the scrollbar only on desktops
 @tablet-landscape: ~"only screen and (min-width: 1025px)";
 @media @tablet-landscape {
-  .sidebar {
-    margin-right: -@scrollbar-wd;
-    overflow-y: scroll;
+  .sidebar-object {
+    margin-right: -@scrollbar-object-wd;
+    overflow-y: auto;
   }
 }
 
@@ -98,7 +94,7 @@ Component: sidemenu.less
   position: relative;
   max-height: 100%;
   min-height: 100%;
-  height: 70px;
+  height: 60px;
 
   img{
     width: auto;
@@ -110,28 +106,59 @@ Component: sidemenu.less
 .objects-left-bar{
   //box-sizing: border-box;
   overflow-x: hidden;
-  overflow-y: scroll;
-  min-height: 100%;
+  //overflow-y: auto;
+  height: 100%;
 }
 
 .objects-sidebar{
-  width: @sidebar-wd;
+  width: @sidebar-object-wd;
   min-height: 100%;
   position: fixed;
   height: 1px;
-  background-color: @sidebar-bg;
+  background-color: @sidebar-object-bg;
   z-index: @z-index-main-section + 5;
   -webkit-transition: width 0.3s; /* For Safari 3.1 to 6.0 */
   transition: width 0.3s;
+  > .hide-button{
+    > .fa-chevron-right{
+      display : none;
+    }
+    > .fa-chevron-left{
+
+    }
+  }
 }
 
 .objects-sidebar.contracted {
   width: 0;
-  > .objects-left-bar{
+  //> .objects-left-bar{
     > .hide-button{
       position: absolute;
       margin-left: 5px;
+      > .fa-chevron-right{
+        display: block;
+      }
+      > .fa-chevron-left{
+        display : none;
+      }
     }
+    >.sidebar-filter {
+      display: none;
+      //overflow-x: hidden;
+    }
+
+  //}
+}
+
+
+
+// labels in menu items
+.nav {
+  .label {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    text-indent: 0;
   }
 }
 
@@ -140,12 +167,68 @@ Component: sidemenu.less
 }
 
 .right-section-content{
-  padding-left: @sidebar-wd;
+  padding-left: @sidebar-object-wd;
   -webkit-transition: 0.3s; /* For Safari 3.1 to 6.0 */
   transition: 0.3s;
 }
 
 .hide-button{
   float: right;
-  padding-right: 5px;
+  position: absolute;
+  margin-left: 225px;
+}
+
+.container-scroll {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+/*.sidebar-filter {
+  margin-left: 5px;
+  margin-top: 5px;
+}*/
+
+.col-center-block {
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btnAdd {
+  height: 35px;
+  padding: 6px 14px
+}
+
+.title-sidebar-object{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #000011;
+  display: block;
+  margin-bottom: 0;
+}
+.body-sidebar-object{
+  display: block;
+}
+.object-item{
+  background-color: @content-object-bg;
+  margin-bottom: 5px;
+  border: 5px solid @content-object-bg;
+}
+
+.object-item:hover{
+  background: @sidebar-object-icon-color-active;
+}
+
+.object-item.active{
+  border: 5px solid @sidebar-object-icon-color-active;
+}
+
+.btn-add{
+  margin-left: 7px;
+  display: inline-block;
+}
+
+.searchBox-wrapper{
+  display: inline-block;
 }

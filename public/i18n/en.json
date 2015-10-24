@@ -17,5 +17,24 @@
     "EMAIL": "Email",
     "PHONE":"Phone",
     "UPLOAD_IMAGE":"Upload image"
+  },
+  "PRICELIST": {
+    "INSERT": "Insert price list",
+    "ADD": " Add Item",
+    "CURRENCY": "Currency",
+    "NAME": "Name",
+    "DESCRIPTION": "Description",
+    "PRICE": "Price"
+  },
+  "CATEGORY": {
+    "CATEGORIES_DESCRIPTION": "Categories allow your site and products to be visible on searches. Select the ones you think need to be associated with your site and products."
+  },
+  "TEXTANGULAR" : {
+    "QUOTE_BUTTON": "Annotation",
+    "TITLE_BUTTON": "Title",
+    "SUBTITLE_BUTTON": "Subtitle",
+    "TEXT_BUTTON": "Text",
+    "FOOTNOTE_BUTTON": "Small text",
+    "PRICELIST_BUTTON": "Price list"
   }
 }

@@ -1,8 +1,118 @@
 <div ng-controller="BiinsController as biinsCtrl" class="">
-    <div id="wrapperContent" class="container-fluid">
+    <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
         <div class="right-section-content">
-            <h4>Biins</h4>
-            <div ng-if="selectedSite!=null"></div>
+            <div ng-if="objectsSidebarService.selectedObject!=null && objectsSidebarService.selectedObject != {}">
+                <!-- NutShell Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <legend>Informaci&oacute;n  y Ubicaci&oacute;n</legend>
+                        </div>
+                        <div class="panel-body">
+                            <form class="novalidate">
+                                <div class="section">
+                                    <div class="container-fluid">
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <p>{{getSiteName(objectsSidebarService.selectedObject.siteIdentifier)}}</p>
+                                                </div>
+                                                <p>Identificador:</p>
+                                                <strong>{{objectsSidebarService.selectedObject.brandIdentifier}}</strong>
+                                                <div>
+                                                    <p>Tipo:</p>
+                                                    <strong ng-if="objectsSidebarService.selectedObject.biinType=='1'">Exterior</strong>
+                                                    <strong ng-if="objectsSidebarService.selectedObject.biinType=='2'">Interior</strong>
+                                                    <strong ng-if="objectsSidebarService.selectedObject.biinType=='3'">Producto</strong>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label>Nombre</label>
+                                                    <input ng-model="objectsSidebarService.selectedObject.name" ng-value="objectsSidebarService.selectedObject.name" class="form-control"/>
+                                                </div>
+                                                <div>
+                                                    <label>Venue</label>
+                                                    <input type="text" ng-model="objectsSidebarService.selectedObject.venue" ng-value="objectsSidebarService.selectedObject.venue" typeahead="venue.name for venue in getVenues($viewValue)" class="form-control"/>
+                                                </div>
+                                                <div>
+                                                    <label>Posicion</label>
+                                                    <input ng-model="objectsSidebarService.selectedObject.position" ng-value="objectsSidebarService.selectedObject.position" class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+                <!-- Actions Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <legend>{{objectsSidebarService.selectedObject.name}}</legend>
+                        </div>
+                        <div class="panel-body">
+                            <form class="novalidate">
+                                <div class="section">
+                                    <table class="table table-condensed table-hover">
+                                        <tr>
+                                            <th>
+                                                <p>N&uacute;mero</p>
+                                            </th>
+                                            <th>
+                                                <p>Identifier</p>
+                                            </th>
+                                            <th>
+                                                <p>Tipo</p>
+                                            </th>
+                                            <th>
+                                                <p>Nombre</p>
+                                            </th>
+                                            <th>
+                                                <p>Actividad</p>
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                        <tr ng-repeat="obj in objectsSidebarService.selectedObject.objects">
+                                            <td>
+                                                <p>{{$index+1}}</p>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <p>{{obj.identifier}}</p>
+                                            </td>
+                                            <td>
+                                                <p ng-if="obj.objectType=='1'">Element</p>
+                                                <p ng-if="obj.objectType=='2'">Showcase					</p>
+                                            </td>
+                                            <td>
+                                                <p>{{getObjectName(obj.identifier,obj.objectType)}}</p>
+                                            </td>
+                                            <td>
+                                                <p>{{obj.startTime | date:'HH:mm'}} - {{obj.endTime | date:'HH:mm'}}</p>
+                                                <p><span ng-if="obj.onMonday==='1'">L</span><span ng-if="obj.onTuesday==='1'">K</span><span ng-if="obj.onWednesday==='1'">M</span><span ng-if="obj.onThursday==='1'">J</span><span ng-if="obj.onFriday==='1'">V</span><span ng-if="obj.onSaturday==='1'">S</span><span ng-if="obj.onSunday==='1'">D</span></p>
+                                            </td>
+                                            <td>
+                                                <div ng-click="biinObject('lg','edit',obj)" class="btn">
+                                                    <p>Editar</p>
+                                                </div>
+                                                <div ng-click="removeObject(biins[selectedBiin].objects.indexOf(obj))" class="btn">
+                                                    <p>Eliminar</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div>
+                                        <div ng-click="biinObject('lg','create',0)" class="btn btn-success pull-right"><strong>Agregar</strong></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
 </div>

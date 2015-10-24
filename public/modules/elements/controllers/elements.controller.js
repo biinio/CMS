@@ -62,6 +62,7 @@
         $scope.galleries = [];
 
 
+
         $scope.$on('$stateChangeStart', function(){
                 $scope.objectsSidebarService.reset();
             });
@@ -69,7 +70,7 @@
         $scope.$on('organizationChanged',function(){
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Get the List of Objects
-            $http.get('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
                 $scope.elements = data.data.elements;
                 $scope.objectsSidebarService.setObjects($scope.elements);
             });
@@ -103,7 +104,7 @@
 
 
         //Get the List of Objects
-        $http.get('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
             $scope.elements = data.data.elements;
             $scope.objectsSidebarService.setObjects($scope.elements);
         });
@@ -112,7 +113,7 @@
 
         //Push a new showcase in the list
         $scope.create = function(){
-            $http.post('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/elements").success(function(element,status){
+            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/elements").success(function(element,status){
                 if(status==201){
                     var elemSearchTag =$('#elemSearchTag');
                     elemSearchTag.tagsinput("removeAll");
@@ -141,7 +142,7 @@
                 $scope.objectsSidebarService.selectedObject = null;
             }
             var elementId = $scope.objectsSidebarService.objects[index].elementIdentifier;
-            $http.delete('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationId+'/elements/'+elementId).success(function(data){
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationId+'/elements/'+elementId).success(function(data){
                     $scope.objectsSidebarService.objects.splice(index,1);
                 }
             );
@@ -149,14 +150,18 @@
 
         //Save detail model object
         $scope.save= function(){
-            $scope.objectsSidebarService.selectedObject.hasPrice=$scope.objectsSidebarService.selectedObject.price > 0?'1':'0';
+
+            //TODO: Delete following line, and uncomment the next one.
+            $scope.objectsSidebarService.selectedObject.hasPrice = 0;
+            //$scope.objectsSidebarService.selectedObject.hasPrice=$scope.objectsSidebarService.selectedObject.price > 0?'1':'0';
+
             var tags = $("#elemSearchTag").tagsinput('items');
             $scope.objectsSidebarService.selectedObject.searchTags = [];
             for(var i = 0; i < tags.length; i++){
                 $scope.objectsSidebarService.selectedObject.searchTags.push(tags[i]);
             }
 
-            $http.put('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationId+'/elements/'+$scope.objectsSidebarService.selectedObject.elementIdentifier,{model:$scope.objectsSidebarService.selectedObject}).success(function(data,status){
+            $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationId+'/elements/'+$scope.objectsSidebarService.selectedObject.elementIdentifier,{model:$scope.objectsSidebarService.selectedObject}).success(function(data,status){
                 if("replaceModel" in data){
                     $scope.objectsSidebarService.selectedObject = data.replaceModel;
                     $scope.elementPrototype =  $.extend(true, {}, $scope.elementPrototypeBkp);
@@ -249,34 +254,16 @@
             $scope.$digest();
         };
 
-        //Element Details Methods
-        $scope.insertDetail =function(elementType){
-            if(typeof($scope.objectsSidebarService.selectedObject.details)==='undefined')
-                $scope.objectsSidebarService.selectedObject.details=[];
-
-            var newDetail ={elementDetailType:elementType, text:"", body:[]};
-            $scope.objectsSidebarService.selectedObject.details.push(newDetail);
-
-
-            //Detail Type List
-            if(elementType=='4')
-                $scope.addListItem($scope.objectsSidebarService.selectedObject.details.indexOf(newDetail));
-
-            //Detail Type Price List
-            if(elementType =='6')
-                $scope.addListPriceItem($scope.objectsSidebarService.selectedObject.details.indexOf(newDetail));
-        };
-
-        //Category return if contains a specific categoru
+        //Category return if contains a specific category
         $scope.containsCategory=function(category){
             if(typeof(_.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier}))!='undefined')
-                return 'active';
+                return true;
             else
-                return "";
+                return false;
         };
 
         //Change the state of the category relation with the Site
-        $scope.switchCategoryState =function(category){
+        $scope.updateSelectedCategories =function(category){
             var index =-1;
             var cat = _.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier});
             if(typeof(cat)!='undefined'){
@@ -288,11 +275,12 @@
             else
                 $scope.objectsSidebarService.selectedObject.categories.push(category);
 
-            $scope.validate();
-            if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+            //$scope.validate();
+
+            /**if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
                 $scope.$apply();
                 $scope.$digest();
-            }
+            }**/
         };
     }
 })();

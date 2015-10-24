@@ -41,7 +41,7 @@ module.exports = {
                 'public/lib/angularjs-toaster/toaster.js',
                 'public/lib/node-uuid/uuid.js',
                 'public/lib/animo.js/animo.js',
-                'public/lib/textAngular/dist/textAngular.min.js',
+                'public/lib/textAngular/dist/textAngular.js',
                 'public/lib/textAngular/dist/textAngular-rangy.min.js',
                 'public/lib/textAngular/dist/textAngularSetup.js',
                 'public/lib/textAngular/dist/textAngular-sanitize.min.js',
@@ -59,7 +59,13 @@ module.exports = {
                 'public/lib/blueimp-file-upload/js/jquery.fileupload.js',
                 'public/lib/blueimp-file-upload/js/jquery.fileupload-process.js',
                 'public/lib/blueimp-file-upload/js/jquery.fileupload-angular.js',
-                '//maps.googleapis.com/maps/api/js'
+                'public/lib/loaders.css/loaders.css.js',
+                '//maps.googleapis.com/maps/api/js',
+                'public/lib/moment/min/moment.min.js',
+                'public/lib/angular-bootstrap-slider/slider.js',
+                'public/lib/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js',
+                'public/lib/angular-dragdrop/src/angular-dragdrop.min.js',
+                'public/lib/jquery-ui/jquery-ui.js'
                 // 'public/lib/jquery/dist/jquery.js',
                 // 'public/lib/angular/angular.js',
                 // 'public/lib/angular-resource/angular-resource.js',
@@ -79,7 +85,9 @@ module.exports = {
             'public/lib/animo.js/animate+animo.css',
             'public/lib/textAngular/dist/textAngular.css',
             'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.css',
-            'public/lib/angular-datepicker/dist/angular-datepicker.css'
+            'public/lib/angular-datepicker/dist/angular-datepicker.css',
+            'public/lib/loaders.css/loaders.css',
+            'public/lib/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css'
         ],
         js: [
             'public/config.js',

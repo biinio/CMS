@@ -59,7 +59,7 @@
         $scope.$on('organizationChanged',function(){
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Get the List of Objects
-            $http.get('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites').success(function(data){
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites').success(function(data){
                 var sites = data.data.sites;
                 $scope.objectsSidebarService.setObjects(sites);
                 if(sites.length > 0)
@@ -117,7 +117,7 @@
          =============================================================================================================*/
 
         //Get the List of Sites
-        $http.get('https://qa-biinapp.herokuapp.com/api/organizations/'+ $scope.organizationService.selectedOrganization.identifier +'/sites').success(function(data){
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationService.selectedOrganization.identifier +'/sites').success(function(data){
             if(data.data) {
                 $scope.objectsSidebarService.setObjects(data.data.sites);
                 if(data.data.sites.length>0){
@@ -141,6 +141,7 @@
          =============================================================================================================*/
 
         var selectFirstSite = function( sites ) {
+
             $scope.objectsSidebarService.selectedObject = sites[0];
             //I know it's ugly and I don't like this approach, it should be other way to  validate if the tag field is
             // rendered to call this code
@@ -151,6 +152,7 @@
                     siteSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
                 }
             },100);
+
         };
 
         //Return the categories of the sites
@@ -161,8 +163,9 @@
         //Create a new Site
         $scope.create = function(){
             //Get the Mayor from server
-            $http.post('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/sites").success(function(site,status){
+            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/sites").success(function(site,status){
                 if(status==201){
+
                     var siteSearchTag =$('#siteSearchTag');
                     siteSearchTag.tagsinput("removeAll");
 
@@ -185,7 +188,7 @@
             var siteIdToDelete = sites[index].identifier;
             var deleteSelectedObject = siteIdToDelete == $scope.objectsSidebarService.selectedObject.identifier;
 
-            $http.delete('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationId+'/sites/'+siteIdToDelete).success(
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationId+'/sites/'+siteIdToDelete).success(
                 function(data){
                     if(data.state=="success"){
                         sites.splice(index,1);
@@ -204,7 +207,16 @@
 
         //Save detail model object
         $scope.save= function(){
-            $http.put('https://qa-biinapp.herokuapp.com/api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites/'+$scope.objectsSidebarService.selectedObject.identifier,{model:$scope.objectsSidebarService.selectedObject}).success(function(data,status){
+
+            var tags = $("#siteSearchTag").tagsinput('items');
+
+            $scope.objectsSidebarService.selectedObject.searchTags = [];
+
+            for(var i = 0; i < tags.length; i++){
+                $scope.objectsSidebarService.selectedObject.searchTags.push(tags[i]);
+            }
+
+            $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites/'+$scope.objectsSidebarService.selectedObject.identifier,{model:$scope.objectsSidebarService.selectedObject}).success(function(data,status){
                 if("replaceModel" in data){
                     $scope.objectsSidebarService.selectedObject = data.replaceModel;
                 }
@@ -216,17 +228,22 @@
 
         // Function that limits in nutshell how many words can it be
         $scope.limitNutshell = function(){
-            var value = $scope.objectsSidebarService.selectedObject.nutshell ;
+            var value = $scope.objectsSidebarService.selectedObject.nutshell;
+
             if(value == null)
                 value = "";
+
             value = value.trim();
             var words = value.split(" ");
+
             if(words.length > 8)
                 words.splice(8, words.length-8);
             var sentence = "";
+
             for (var i = 0; i < words.length; i++) {
                 sentence += words[i] + " ";
             }
+
             sentence = sentence.trim();
             $scope.objectsSidebarService.selectedObject.nutshell = sentence;
         };
@@ -244,13 +261,14 @@
         //Category return if contains a specific category
         $scope.containsCategory=function(category){
             if(typeof(_.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier}))!='undefined')
-                return 'active';
+                return true;
             else
-                return "";
+                return false;
         };
 
+
         //Change the state of the category relation with the Site
-        $scope.switchCategoryState =function(category){
+        $scope.updateSelectedCategories =function(category){
             var index =-1;
             var cat = _.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier});
             if(typeof(cat)!='undefined'){
@@ -262,10 +280,6 @@
             else
                 $scope.objectsSidebarService.selectedObject.categories.push(category);
 
-            if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
-                $scope.$apply();
-                $scope.$digest();
-            }
         };
 
         //Remove the media object at specific index

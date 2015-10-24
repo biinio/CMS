@@ -12,7 +12,7 @@
     function Gallery($http) {
         var service = {
             getList: function (organization) {
-                var promise = $http.get('https://qa-biinapp.herokuapp.com/api/organizations/'+organization+'/gallery')
+                var promise = $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+organization+'/gallery')
                     .success(function (data) {
                         return data.data;
                     })
