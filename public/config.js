@@ -5,7 +5,7 @@ var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'BiinCMSApp';
 
-	var applicationBackendURL = 'https://qa-biinapp.herokuapp.com/';
+	var applicationBackendURL =  process.env.BACK_END_URL || 'https://qa-biinapp.herokuapp.com/';
 
 	var applicationModuleVendorDependencies = ['ngRoute', 'ngAnimate', 'ngStorage', 'ngTouch', 'ngCookies',
         'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize',
