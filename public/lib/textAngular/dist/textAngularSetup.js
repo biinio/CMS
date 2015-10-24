@@ -44,11 +44,14 @@ angular.module('textAngularSetup', [])
         keyMappings: [],
         toolbar: [
             //['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
-            ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
+            ['h1', 'h2', 'h6', 'p', 'quote'],
             ['insertPriceList'],
-            ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
-            ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', 'indent', 'outdent'],
-            ['html', 'insertImage', 'insertLink', 'insertVideo', 'wordcount', 'charcount']
+            //['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
+            ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo'],
+            //['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', 'indent', 'outdent'],
+            ['indent', 'outdent'],
+            //['html', 'insertImage', 'insertLink', 'insertVideo', 'wordcount', 'charcount']
+            ['insertLink', 'wordcount', 'charcount']
         ],
         classes: {
             focussed: "focussed",
@@ -129,8 +132,21 @@ angular.module('textAngularSetup', [])
         heading: {
             tooltip: 'Heading '
         },
+        h1: {
+            tooltip: 'Title',
+            text: "{{ 'TEXTANGULAR.TITLE_BUTTON' | translate }}"
+        },
+        h2: {
+            tooltip: 'Subtitle',
+            text: "{{ 'TEXTANGULAR.SUBTITLE_BUTTON' | translate }}"
+        },
+        h6: {
+            tooltip: 'Footnote',
+            text: "{{ 'TEXTANGULAR.FOOTNOTE_BUTTON' | translate }}"
+        },
         p: {
-            tooltip: 'Paragraph'
+            tooltip: 'Paragraph',
+            text: "{{ 'TEXTANGULAR.TEXT_BUTTON' | translate }}"
         },
         pre: {
             tooltip: 'Preformatted text'
@@ -142,7 +158,9 @@ angular.module('textAngularSetup', [])
             tooltip: 'Ordered List'
         },
         quote: {
-            tooltip: 'Quote/unquote selection or paragraph'
+            tooltip: 'Quote/unquote selection or paragraph',
+            text: "{{ 'TEXTANGULAR.QUOTE_BUTTON' | translate }}"
+
         },
         undo: {
             tooltip: 'Undo'
@@ -214,7 +232,8 @@ angular.module('textAngularSetup', [])
             tooltip: 'Display characters Count'
         },
         priceList: {
-            tooltip: 'Add price list'
+            tooltip: 'Add price list',
+            text: "{{ 'TEXTANGULAR.PRICELIST_BUTTON' | translate }}"
         }
     })
     .factory('taToolFunctions', ['$window', 'taTranslations', function ($window, taTranslations) {
@@ -415,6 +434,8 @@ angular.module('textAngularSetup', [])
         var headerAction = function () {
             return this.$editor().wrapSelection("formatBlock", "<" + this.name.toUpperCase() + ">");
         };
+
+        /*
         angular.forEach(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], function (h) {
             taRegisterTool(h.toLowerCase(), {
                 buttontext: h.toUpperCase(),
@@ -422,10 +443,34 @@ angular.module('textAngularSetup', [])
                 action: headerAction,
                 activeState: _retActiveStateFunction(h.toLowerCase())
             });
+        });*/
+
+        // TODO: Only register required headings
+        taRegisterTool('h1', {
+            buttontext: taTranslations.h1.text,
+            tooltiptext: taTranslations.h1.tooltip,
+            action: headerAction,
+            activeState: _retActiveStateFunction('h1')
         });
+
+        taRegisterTool('h2', {
+            buttontext: taTranslations.h2.text,
+            tooltiptext: taTranslations.h2.tooltip,
+            action: headerAction,
+            activeState: _retActiveStateFunction('h2')
+        });
+
+        taRegisterTool('h6', {
+            buttontext: taTranslations.h6.text,
+            tooltiptext: taTranslations.h6.tooltip,
+            action: headerAction,
+            activeState: _retActiveStateFunction('h6')
+        });
+
+
         //TODO: EDIT PRICELIST
         taRegisterTool('insertPriceList', {
-            buttontext: 'Price List',
+            buttontext: taTranslations.priceList.text,
             tooltiptext: taTranslations.priceList.tooltip,
             action: function(promise, restoreSelection){
                 var that=this;
@@ -541,7 +586,7 @@ angular.module('textAngularSetup', [])
         });
 
         taRegisterTool('p', {
-            buttontext: 'P',
+            buttontext: taTranslations.p.text,
             tooltiptext: taTranslations.p.tooltip,
             action: function () {
                 return this.$editor().wrapSelection("formatBlock", "<P>");
@@ -582,7 +627,8 @@ angular.module('textAngularSetup', [])
             }
         });
         taRegisterTool('quote', {
-            iconclass: 'fa fa-quote-right',
+            //iconclass: 'fa fa-quote-right',
+            buttontext: taTranslations.quote.text,
             tooltiptext: taTranslations.quote.tooltip,
             action: function () {
                 return this.$editor().wrapSelection("formatBlock", "<BLOCKQUOTE>");
