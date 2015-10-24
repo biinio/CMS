@@ -1,0 +1,17 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <b translate="PRICELIST.INSERT"></b>
+    </div>
+    <div class="modal-body">
+        <form name="tableForm">
+            <button class="btn btn-default" ng-click="addPricedItem()" translate="PRICELIST.ADD"></button>
+            <div ng-repeat="pricedItem in pricedItems" ng-include="'/lib/textAngular/dist/priceditem.html'">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+                <button type="submit" class="btn btn-primary" ng-click="ok()">Send</button>
+            </div>
+        </form>
+    </div>
+</div>

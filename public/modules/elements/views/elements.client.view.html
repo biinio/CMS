@@ -1,0 +1,257 @@
+<div ng-controller="ElementsController as elementCtrl" class="block-center">
+    <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
+        <div class="right-section-content">
+            <div ng-if="objectsSidebarService.selectedObject!=null && objectsSidebarService.selectedObject != {}">
+                <!-- NutShell Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <legend translate="SUMMARY.TITLE"></legend>
+                            <form role="form" class="novalidate">
+                                <div class="section">
+                                    <div class="form-group">
+                                        <label for="title1" translate="SUMMARY.NAME1" class="control-label"></label>
+                                        <input id="title1" ng-model="objectsSidebarService.selectedObject.title" name="title"
+                                               type="text" placeholder="Title **" ng-blur="validate()"
+                                               required="required" class="form-control title-value"/>
+                                        <span class="help-block" translate="SUMMARY.NAMEDESCRIPTION"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <span class= "checkbox-inline c-checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-model="objectsSidebarService.selectedObject.isHighlight" ng-true-value="'1'" ng-false-value="'0'"/>
+                                                <span class="fa fa-check"></span>
+                                            </label>
+                                        </span>
+                                        <span translate="SUMMARY.HIGHLIGHT"></span>
+                                        <span class="help-block" translate="SUMMARY.HIGHLIGHTDESCRIPTION">Turn on Hightlight to presents this element in the Hightlight section of the mobile app</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="title2" translate="SUMMARY.DESC1" class="control-label"></label>
+                                        <input id="title2" ng-model="objectsSidebarService.selectedObject.subTitle" name="subTitle"
+                                               type="text" placeholder="Subtitle" ng-blur="validate()"
+                                               required="required" class="form-control title-value"/>
+                                        <span class="help-block" translate="SUMMARY.DESC2"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="elemSearchTag" translate="GENERIC.SEARCH_TAGS"></label>
+                                    <input id="elemSearchTag" type="text" tagsinput="tagsinput" ng-model="temptags" class="form-control"/>
+                                    <span class="help-block" translate="GENERIC.SEARCH_TAGS_DESC"></span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Categories Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <legend translate="GENERIC.CATEGORIES"></legend>
+                            <p translate="CATEGORY.CATEGORIES_DESCRIPTION"></p>
+                            <div class="section">
+                                <div id="categories">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div ng-repeat="cat in categories" class="col-md-4 catModule">
+                                                    <div class="checkbox c-checkbox">
+                                                        <label>
+                                                            <!--input input type="checkbox" checked="{{containsCategory(cat)}}"/-->
+                                                            <input ng-click="updateSelectedCategories(cat)" ng-checked="containsCategory(cat) == true" type="checkbox"/>
+                                                            <span class="fa fa-check"></span>
+                                                            {{cat.displayName}}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Gallery Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <legend translate="GALLERY.TITLE"></legend>
+                            <p translate="GALLERY.SUB_TITLE"></p>
+                            <gallery ng-model="objectsSidebarService.selectedObject.media" gallery="galleries"></gallery>
+                        </div>
+                    </div>
+                </section>
+                <!-- Summary Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <legend translate="SUMMARY.DETAILS"></legend>
+                            <p translate="SUMMARY.DETAILS1"></p>
+                            <text-angular ng-model="objectsSidebarService.selectedObject.detailsHtml"></text-angular>
+                        </div>
+                    </div>
+                 </section>
+                <!-- Highlights Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <legend translate="GENERIC.HIGHLIGHT"></legend>
+                            <div class="section">
+                                <div class="row">
+                                    <form class="form-inline novalidate">
+                                        <div class="form-group col-md-4">
+                                            <label>Precio</label>
+                                            <input type="number" ng-model="objectsSidebarService.selectedObject.price"
+                                                   placeholder="0.00" ng-blur="validate()" required="required"
+                                                   ng-paste="validate()" step="0.01"
+                                                   ng-pattern="/^[0-9]+(.[0-9]{1,2})?$/"
+                                                   class="title-value highlightInput"/>
+                                            <span class="help-block">Precio de lista</span>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Moneda</label>
+                                            <select title="Currency" name="Currency"
+                                                    ng-model="objectsSidebarService.selectedObject.currencyType" data-size="4"
+                                                    class="form-control bootstrap-select">
+                                                <option value="1">&#36;</option>
+                                                <option value="2">&#162;</option>
+                                                <option value="3">&#8359;</option>
+                                                <option value="4">&#128;</option>
+                                            </select>
+                                            <span class="help-block">Seleccione la moneda</span>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <div class="checkbox c-checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="chkFromPrice" ng-model="objectsSidebarService.selectedObject.hasFromPrice"
+                                                           ng-true-value="'1'" ng-false-value="'0'">
+                                                    <span class="fa fa-check"></span>
+                                                    Utilizar precio Desde
+                                                </label>
+                                            </div>
+                                            <span class="help-block">Se marca para especificar que el precio empieza en este monto ver ejemplo</span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="section">
+                                <div class="row">
+                                    <form class="form-inline novalidate">
+                                        <div class="form-group col-md-4">
+                                            <div class="checkbox c-checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="chkDiscount"
+                                                           ng-model="objectsSidebarService.selectedObject.hasDiscount"
+                                                           ng-true-value="'1'" ng-false-value="'0'"/>
+                                                    <span class="fa fa-check"></span>
+                                                    Porcentaje
+                                                </label>
+                                            </div>
+                                            <input type="text" ng-model="objectsSidebarService.selectedObject.discount"
+                                                   ng-disabled="!hasDiscountBool" placeholder="Discount"
+                                                   ng-blur="validate()" required="required" is-number="is-number"
+                                                   class="title-value highlightInput"/>
+                                            <span class="help-block">Digite el porcentaje de descuento </span>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                                <div class="checkbox c-checkbox">
+                                                    <label>
+                                                        <input type="checkbox" id="chkSaving"
+                                                               ng-model="objectsSidebarService.selectedObject.hasSaving"
+                                                               ng-true-value="'1'" ng-false-value="'0'"/>
+                                                        <span class="fa fa-check"></span>
+                                                        Monto del descuento
+                                                    </label>
+                                                </div>
+                                                <input type="text" ng-model="objectsSidebarService.selectedObject.savings"
+                                                       placeholder="0 %" ng-blur="validate()"
+                                                       ng-disabled="!hasSavingBool" required="required"
+                                                       is-number="is-number" class="title-value highlightInput"/>
+
+                                                <span class="help-block">Digite manualmente el monto</span>
+                                            </div>
+                                        <div class="form-group col-md-4">
+                                            <div class="checkbox c-checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="chkPrice"
+                                                           ng-model="objectsSidebarService.selectedObject.hasListPrice"
+                                                           ng-true-value="'1'" ng-false-value="'0'"/>
+                                                    <span class="fa fa-check"></span>
+                                                    Precio Final
+                                                </label>
+                                            </div>
+                                            <input type="text" ng-model="objectsSidebarService.selectedObject.listPrice"
+                                                   placeholder="Final Price" ng-blur="validate()"
+                                                   ng-disabled="!hasListPriceBool" required="required"
+                                                   is-number="is-number" class="title-value highlightInput"/>
+                                            <span class="help-block">El precio final de la promoción</span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="section">
+                                <div class="row">
+                                    <form class="form-inline novalidate">
+                                        <div class="form-group col-md-4">
+                                            <div class="checkbox c-checkbox">
+                                                <label>
+                                                    <input type="checkbox"
+                                                           ng-model="objectsSidebarService.selectedObject.hasTimming"
+                                                           ng-true-value="'1'" ng-false-value="'0'"/>
+                                                    <span class="fa fa-check"></span>
+                                                    Valido Desde
+                                                </label>
+                                            </div>
+                                            <input type="datetime" date-time="date-time"
+                                                   ng-model="objectsSidebarService.selectedObject.initialDate"
+                                                   ng-disabled="!objectsSidebarService.selectedObject.hasTimming" placeholder="Initial Date**"
+                                                   ng-blur="validate()" required="required" readonly="readonly"
+                                                   class="highlightInput"/>
+                                            <span class="help-block">Fecha de inicio de la promoción</span>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <div class="checkbox c-checkbox">
+                                                <label>
+                                                    <input type="checkbox"
+                                                           ng-model="objectsSidebarService.selectedObject.hasTimming"
+                                                           ng-true-value="'1'" ng-false-value="'0'"/>
+                                                    <span class="fa fa-check"></span>
+                                                    Valido Hasta
+                                                </label>
+                                            </div>
+                                            <input type="datetime" date-time="date-time"
+                                                   ng-model="objectsSidebarService.selectedObject.expirationDate"
+                                                   ng-disabled="!objectsSidebarService.selectedObject.hasTimming" placeholder="Expiration Date**"
+                                                   ng-blur="validate()" required="required" readonly="readonly"
+                                                   class="highlightInput"/>
+                                            <span class="help-block">Fecha final de la promoción</span>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <div class="checkbox c-checkbox">
+                                                <label>
+                                                    <input type="checkbox"
+                                                           ng-model="objectsSidebarService.selectedObject.hasQuantity"
+                                                           ng-true-value="'1'" ng-false-value="'0'"/>
+                                                    <span class="fa fa-check"></span>
+                                                    Cantidad Limitada
+                                                </label>
+                                            </div>
+                                            <input type="text" ng-model="objectsSidebarService.selectedObject.quantity"
+                                                   ng-disabled="!hasQuantityBool" placeholder="Quantity **"
+                                                   ng-blur="validate()" required="required" is-number="is-number"
+                                                   class="highlightInput"/>
+                                            <span class="help-block">Permita hacer promociones con cantidades limitadas.</span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

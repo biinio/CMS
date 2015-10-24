@@ -9,7 +9,7 @@
   <ul ng-if="item.items.length" 
       collapse="isCollapse(pIndex)" 
       ng-init="addCollapse(pIndex, item)" 
-      ng-click="$event.stopPropagation();" 
+      ng-click="$event.stopPropagation();"
       class="nav sidebar-subnav">
         <li class="sidebar-subnav-header">{{(item.translate | translate) || item.title}}</li>
         <li ng-repeat="item in item.items | orderBy: 'position'" 

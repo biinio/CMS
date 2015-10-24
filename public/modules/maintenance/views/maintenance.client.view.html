@@ -1,0 +1,62 @@
+<div ng-controller="MaintenanceController as maintenance" class="">
+    <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
+        <div class="right-section-content">
+            <div > <!--ng-if="objectsSidebarService.selectedObject!=null">-->
+                <div>
+                    <div class="section">
+                        <h2>{{organizations[selectedOrganization].name}}</h2>
+                        <div class="listBiinsInOrganization">
+                            <table class="table table-condensed table-hover tableListBiinsInOrganization">
+                                <tbody>
+                                <tr>
+                                    <th>
+                                        Id
+                                    </th>
+                                    <th>
+                                        Alias
+                                    </th>
+                                    <th>
+                                        UU-ID
+                                    </th>
+                                    <th>
+                                        Site
+                                    </th>
+                                    <th>
+                                        Type
+                                    </th>
+                                    <th>
+                                        Major
+                                    </th>
+                                    <th>
+                                        Minor
+                                    </th>
+                                    <th>
+                                        State
+                                    </th>
+                                    <th>Edit</th>
+                                </tr>
+                                <tr ng-repeat="biin in objectsSidebarService.selectedObject.biins">
+                                    <td class="biinInOrganizationId">{{biin.brandIdentifier}}</td>
+                                    <td class="biinInOrganizationAlias">{{biin.name}}</td>
+                                    <td class="biinInOrganizationUUID">{{biin.proximityUUID}}</td>
+                                    <td class="biinInOrganizationSite">{{biin.siteName}}</td>
+                                    <td class="biinInOrganizationType">{{getTypeName(biin.biinType)}}</td>
+                                    <td class="biinInOrganizationMajor">{{biin.major}}</td>
+                                    <td class="biinInOrganizationMinor">{{biin.minor}}</td>
+                                    <td class="biinInOrganizationState">{{biin.status}}</td>
+                                    <td>
+                                        <div ng-click="showAddBiintoOrganizationModal('edit',biin)" class="icon icon-pencil"></div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="addBiinToOrganization">
+                            <div ng-click="showAddBiintoOrganizationModal('create')" class="enlarge-icon pull-right fa fa-plus-square-o"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

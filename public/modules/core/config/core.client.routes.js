@@ -23,11 +23,21 @@
                 // url: '/',
                 abstract: true,
                 templateUrl: 'modules/core/views/core.client.view.html',
-                resolve: helper.resolveFor('modernizr', 'icons')
+                resolve: helper.resolveFor('modernizr', 'icons', 'filestyle')
             })
             .state('app.home', {
                 url: '/home',
-                templateUrl: 'modules/core/views/home.client.view.html'
+                templateUrl: 'modules/core/views/home.client.view.html',
+                resolve: {
+                    organization:function( Organization ){
+                        return Organization.promise;
+                    }
+                }
+            })
+            .state('appleftbar', {
+                abstract: true,
+                templateUrl: 'modules/core/views/coreleftbar.client.view.html',
+                resolve: helper.resolveFor('modernizr', 'icons', 'filestyle')
             })
             /*.state('app.biinUsers', {
                 url: '/login',
