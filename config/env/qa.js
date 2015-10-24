@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db: process.env.MONGOLAB_URL || 'mongodb://biinapp:ludusydb1@ds051738.mongolab.com:51738/dev',
+	db: process.env.MONGOLAB_URL || 'mongodb://biinapp:ludusydb1@ds051738.mongolab.com:51738/qa',
 	app: {
 		title: 'Biin'
 	},
