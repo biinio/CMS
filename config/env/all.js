@@ -65,7 +65,10 @@ module.exports = {
                 'public/lib/angular-bootstrap-slider/slider.js',
                 'public/lib/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js',
                 'public/lib/angular-dragdrop/src/angular-dragdrop.min.js',
-                'public/lib/jquery-ui/jquery-ui.js'
+                'public/lib/jquery-ui/jquery-ui.js',
+                'public/lib/d3/d3.js',
+                'public/lib/nvd3/build/nv.d3.js',
+                'public/lib/angular-nvd3/dist/angular-nvd3.js'
                 // 'public/lib/jquery/dist/jquery.js',
                 // 'public/lib/angular/angular.js',
                 // 'public/lib/angular-resource/angular-resource.js',
@@ -87,7 +90,8 @@ module.exports = {
             'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.css',
             'public/lib/angular-datepicker/dist/angular-datepicker.css',
             'public/lib/loaders.css/loaders.css',
-            'public/lib/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css'
+            'public/lib/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css',
+            'public/lib/nvd3/build/nv.d3.css'
         ],
         js: [
             'public/config.js',
