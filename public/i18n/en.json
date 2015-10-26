@@ -22,10 +22,12 @@
     "INSERT": "Insert price list",
     "ADD": " Add Item",
     "CURRENCY": "Currency",
-    "NAME": "Name",
+    "NAME": "Name"
+    "NAME_PLACEHOLDER": "Enter product name",
     "TITLE": "Title",
-    "TITLEPLACEHOLDER": "Enter price list title",
+    "TITLE_PLACEHOLDER": "Enter price list title",
     "DESCRIPTION": "Description",
+    "DESCRIPTION_PLACEHOLDER": "Enter product details",
     "PRICE": "Price"
   },
   "CATEGORY": {

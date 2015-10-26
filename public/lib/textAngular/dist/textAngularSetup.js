@@ -494,7 +494,7 @@ angular.module('textAngularSetup', [])
 
                         $rootScope.highlightTitle = "";
                         $rootScope.highlightText = "";
-                        $rootScope.highlightSubText = "";
+                        $rootScope.highlightSubtext = "";
 
                         $rootScope.editHighlightTitle = function(newTitle) {
                             $rootScope.highlightTitle = newTitle;
@@ -586,12 +586,19 @@ angular.module('textAngularSetup', [])
                         $rootScope.getPriceListHtml = function () {
 
                             //TODO: Obtain appropriate translation for headers
-                            console.log($rootScope.priceListTitle);
-                            var priceListTableHeaders = "<h2>" + $rootScope.priceListTitle + "</h2><thead><tr><th>Moneda</th><th>Nombre</th><th>Descripción</th><th>Precio</th></tr></thead>";
 
-                            var pricedItemsList = priceListTableHeaders.concat("<tbody>");
+                            var priceListTableHeaders = $rootScope.priceListTitle;
+                            var pricedItemsList = "";
 
-                            var currency = '';
+                            if (priceListTableHeaders != undefined) {
+                                priceListTableHeaders = "<h2>" + $rootScope.priceListTitle + "</h2>";
+                                pricedItemsList = priceListTableHeaders.concat("<tbody>");
+                            }
+                            else {
+                                pricedItemsList = pricedItemsList.concat("tbody");
+                            }
+
+                            var currency = "";
 
                             for (var index = 0; index < $rootScope.pricedItems.length; index++) {
 

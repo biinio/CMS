@@ -103,33 +103,36 @@
                                 <div class="row">
                                     <form class="form-inline novalidate">
                                         <div class="form-group col-md-4">
-                                            <label>Precio</label>
+                                            <label title="{{ 'HIGHLIGHT.PRICE_TOOLTIP' | translate }}">Precio</label>
                                             <input type="number" ng-model="objectsSidebarService.selectedObject.price"
                                                    placeholder="0.00" ng-blur="validate()" required="required"
                                                    ng-paste="validate()" step="0.01"
                                                    ng-pattern="/^[0-9]+(.[0-9]{1,2})?$/"
                                                    class="title-value highlightInput"/>
+
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label>Moneda</label>
-                                            <select title="Currency" name="Currency"
+                                            <label title="{{ 'HIGHLIGHT.CURRENCY_TOOLTIP' | translate }}" translate="HIGHLIGHT.CURRENCY"></label>
+                                            <select name="Currency"
                                                     ng-model="objectsSidebarService.selectedObject.currencyType" data-size="4"
-                                                    class="form-control">
+                                                    class="form-control bootstrap-select">
                                                 <option value="1">&#36;</option>
                                                 <option value="2">&#162;</option>
                                                 <option value="3">&#8359;</option>
                                                 <option value="4">&#128;</option>
                                             </select>
+
                                         </div>
                                         <div class="form-group col-md-4">
                                             <div class="checkbox c-checkbox">
-                                                <label>
+                                                <label title="{{ 'HIGHLIGHT.PRICESTART_TOOLTIP' | translate }}">
                                                     <input type="checkbox" id="chkFromPrice" ng-model="objectsSidebarService.selectedObject.hasFromPrice"
                                                            ng-true-value="'1'" ng-false-value="'0'">
                                                     <span class="fa fa-check"></span>
-                                                    Utilizar precio Desde
+                                                    {{ 'HIGHLIGHT.PRICESTART' | translate }}
                                                 </label>
                                             </div>
+
                                         </div>
                                     </form>
                                 </div>
@@ -139,46 +142,46 @@
                                     <form class="form-inline novalidate">
                                         <div class="form-group col-md-4">
                                             <div class="checkbox c-checkbox">
-                                                <label>
+                                                <label title="{{ 'HIGHLIGHT.PERCENT_TOOLTIP' | translate }}">
                                                     <input type="checkbox" id="chkDiscount"
                                                            ng-model="objectsSidebarService.selectedObject.hasDiscount"
                                                            ng-true-value="'1'" ng-false-value="'0'"/>
                                                     <span class="fa fa-check"></span>
-                                                    Porcentaje
+                                                    {{ 'HIGHLIGHT.PERCENT' | translate }}
                                                 </label>
                                             </div>
                                             <input type="text" ng-model="objectsSidebarService.selectedObject.discount"
-                                                   ng-disabled="objectsSidebarService.selectedObject.hasDiscount=='0'" placeholder="Discount"
+                                                   ng-disabled="objectsSidebarService.selectedObject.hasDiscount=='0'" placeholder="0%"
                                                    required="required"
                                                    class="title-value highlightInput"/>
                                         </div>
                                         <div class="form-group col-md-4">
                                                 <div class="checkbox c-checkbox">
-                                                    <label>
+                                                    <label title="{{ 'HIGHLIGHT.DISCOUNT_TOOLTIP' | translate }}">
                                                         <input type="checkbox" id="chkSaving"
                                                                ng-model="objectsSidebarService.selectedObject.hasSaving"
                                                                ng-true-value="'1'" ng-false-value="'0'"/>
                                                         <span class="fa fa-check"></span>
-                                                        Monto del descuento
+                                                        {{ 'HIGHLIGHT.DISCOUNT' | translate }}
                                                     </label>
                                                 </div>
                                                 <input type="text" ng-model="objectsSidebarService.selectedObject.savings"
-                                                       placeholder="0 %" ng-blur="validate()"
+                                                       placeholder="{{ 'HIGHLIGHT.DISCOUNT_PLACEHOLDER' | translate }}" ng-blur="validate()"
                                                        ng-disabled="objectsSidebarService.selectedObject.hasSaving==0" required="required"
                                                        class="title-value highlightInput"/>
                                             </div>
                                         <div class="form-group col-md-4">
                                             <div class="checkbox c-checkbox">
-                                                <label>
+                                                <label title="{{ 'HIGHLIGHT.FINALPRICE_TOOLTIP' | translate }}">
                                                     <input type="checkbox" id="chkPrice"
                                                            ng-model="objectsSidebarService.selectedObject.hasListPrice"
                                                            ng-true-value="'1'" ng-false-value="'0'"/>
                                                     <span class="fa fa-check"></span>
-                                                    Precio Final
+                                                    {{ 'HIGHLIGHT.FINALPRICE' | translate }}
                                                 </label>
                                             </div>
                                             <input type="text" ng-model="objectsSidebarService.selectedObject.listPrice"
-                                                   placeholder="Final Price" ng-blur="validate()"
+                                                   placeholder="{{ 'HIGHLIGHT.FINALPRICE_PLACEHOLDER' | translate }}" ng-blur="validate()"
                                                    ng-disabled="objectsSidebarService.selectedObject.hasListPrice=='0'" required="required"
                                                    class="title-value highlightInput"/>
                                         </div>
@@ -190,49 +193,49 @@
                                     <form class="form-inline novalidate">
                                         <div class="form-group col-md-4">
                                             <div class="checkbox c-checkbox">
-                                                <label>
+                                                <label title="{{ 'HIGHLIGHT.VALIDSINCE_TOOLTIP' | translate }}">
                                                     <input type="checkbox"
                                                            ng-model="objectsSidebarService.selectedObject.hasTimming"
                                                            ng-true-value="'1'" ng-false-value="'0'"/>
                                                     <span class="fa fa-check"></span>
-                                                    Valido Desde
+                                                    {{ 'HIGHLIGHT.VALIDSINCE' | translate }}
                                                 </label>
                                             </div>
                                             <input type="datetime" date-time="date-time"
                                                    ng-model="objectsSidebarService.selectedObject.initialDate"
-                                                   ng-disabled="objectsSidebarService.selectedObject.hasTimming=='0'" placeholder="Initial Date**"
+                                                   ng-disabled="objectsSidebarService.selectedObject.hasTimming=='0'" placeholder="{{ 'HIGHLIGHT.VALIDSINCE_PLACEHOLDER' | translate }}"
                                                    ng-blur="validate()" required="required" readonly="readonly"
                                                    class="highlightInput"/>
-                                            <span class="help-block">Fecha de inicio de la promoción</span>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <div class="checkbox c-checkbox">
-                                                <label>
+                                                <label title="{{ 'HIGHLIGHT.VALIDUNTIL' | translate }}">
                                                     <input type="checkbox"
                                                            ng-model="objectsSidebarService.selectedObject.hasTimming"
                                                            ng-true-value="'1'" ng-false-value="'0'"/>
                                                     <span class="fa fa-check"></span>
-                                                    Valido Hasta
+                                                    {{ 'HIGHLIGHT.VALIDUNTIL' | translate }}
                                                 </label>
                                             </div>
                                             <input type="datetime" date-time="date-time"
                                                    ng-model="objectsSidebarService.selectedObject.expirationDate"
-                                                   ng-disabled="objectsSidebarService.selectedObject.hasTimming=='0'" placeholder="Expiration Date**"
+                                                   ng-disabled="objectsSidebarService.selectedObject.hasTimming=='0'" placeholder="{{ 'HIGHLIGHT.VALIDUNTIL_PLACEHOLDER' | translate }}"
                                                    ng-blur="validate()" required="required" readonly="readonly"
                                                    class="highlightInput"/>
+
                                         </div>
                                         <div class="form-group col-md-4">
                                             <div class="checkbox c-checkbox">
-                                                <label>
+                                                <label title="{{ 'HIGHLIGHT.LIMITEDQTY_TOOLTIP' | translate }}">
                                                     <input type="checkbox"
                                                            ng-model="objectsSidebarService.selectedObject.hasQuantity"
                                                            ng-true-value="'1'" ng-false-value="'0'"/>
                                                     <span class="fa fa-check"></span>
-                                                    Cantidad Limitada
+                                                    {{ 'HIGHLIGHT.LIMITEDQTY' | translate }}
                                                 </label>
                                             </div>
                                             <input type="text" ng-model="objectsSidebarService.selectedObject.quantity"
-                                                   ng-disabled="objectsSidebarService.selectedObject.hasQuantity=='0'" placeholder="Quantity **"
+                                                   ng-disabled="objectsSidebarService.selectedObject.hasQuantity=='0'" placeholder="{{ 'HIGHLIGHT.LIMITEDQTY_PLACEHOLDER' | translate }}"
                                                    ng-blur="validate()" required="required" is-number="is-number"
                                                    class="highlightInput"/>
                                         </div>
