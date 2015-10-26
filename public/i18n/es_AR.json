@@ -141,15 +141,40 @@
     "TEXT_BUTTON": "Texto",
     "FOOTNOTE_BUTTON": "Nota pequeña",
     "PRICELIST_BUTTON": "Lista de precios",
-    "HIGHLIGHT_BUTTON": "Oferta"
+    "HIGHLIGHT_BUTTON": "Texto grande"
   },
   "HIGHLIGHT": {
     "INSERT": "Inserte detalles de oferta",
     "TITLE": "Título",
     "TITLE_PLACEHOLDER": "Ingrese nombre de la oferta",
-    "TEXT": "Oferta",
+    "TEXT": "Texto grande",
     "TEXT_PLACEHOLDER": "Ingrese texto a resaltar",
     "SUBTEXT": "Subtexto",
-    "SUBTEXT_PLACEHOLDER": "Ingrese detalles sobre la oferta"
+    "SUBTEXT_PLACEHOLDER": "Ingrese detalles sobre la oferta",
+    "PRICE_TOOLTIP": "Precio de lista",
+    "CURRENCY": "Moneda",
+    "CURRENCY_TOOLTIP": "Seleccione la moneda",
+    "PRICESTART": "Utilizar precio 'Desde'",
+    "PRICESTART_TOOLTIP": "Se marca para especificar que el precio empieza en este monto",
+    "PERCENT": "Porcentaje",
+    "PERCENT_TOOLTIP": "Digite el porcentaje de descuento",
+    "PERCENT_PLACEHOLDER": "0%",
+    "DISCOUNT": " Monto del descuento",
+    "DISCOUNT_TOOLTIP": "Digite manualmente el monto",
+    "DISCOUNT_PLACEHOLDER": "Monto a reducir",
+    "FINALPRICE": "Precio Final",
+    "FINALPRICE_TOOLTIP": "El precio final de la promoción",
+    "FINALPRICE_PLACEHOLDER": "Precio final",
+    "VALIDSINCE": "Válido desde",
+    "VALIDSINCE_TOOLTIP": "Fecha de inicio de la promoción",
+    "VALIDSINCE_PLACEHOLDER": "Fecha de inicio **",
+    "VALIDUNTIL": "Válido hasta",
+    "VALIDUNTIL_TOOLTIP": "Fecha final de la promoción",
+    "VALIDUNTIL_PLACEHOLDER": "Fecha de expiración **",
+    "LIMITEDQTY": "Cantidad limitada",
+    "LIMITEDQTY_TOOLTIPT": "Permita hacer promociones con cantidades limitadas",
+    "LIMITEDQTY_PLACEHOLDER": "Cantidad **"
+
+
   }
 }
