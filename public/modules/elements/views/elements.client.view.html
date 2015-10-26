@@ -109,19 +109,17 @@
                                                    ng-paste="validate()" step="0.01"
                                                    ng-pattern="/^[0-9]+(.[0-9]{1,2})?$/"
                                                    class="title-value highlightInput"/>
-                                            <span class="help-block">Precio de lista</span>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Moneda</label>
                                             <select title="Currency" name="Currency"
                                                     ng-model="objectsSidebarService.selectedObject.currencyType" data-size="4"
-                                                    class="form-control bootstrap-select">
+                                                    class="form-control">
                                                 <option value="1">&#36;</option>
                                                 <option value="2">&#162;</option>
                                                 <option value="3">&#8359;</option>
                                                 <option value="4">&#128;</option>
                                             </select>
-                                            <span class="help-block">Seleccione la moneda</span>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <div class="checkbox c-checkbox">
@@ -132,7 +130,6 @@
                                                     Utilizar precio Desde
                                                 </label>
                                             </div>
-                                            <span class="help-block">Se marca para especificar que el precio empieza en este monto ver ejemplo</span>
                                         </div>
                                     </form>
                                 </div>
@@ -154,7 +151,6 @@
                                                    ng-disabled="!hasDiscountBool" placeholder="Discount"
                                                    ng-blur="validate()" required="required" is-number="is-number"
                                                    class="title-value highlightInput"/>
-                                            <span class="help-block">Digite el porcentaje de descuento </span>
                                         </div>
                                         <div class="form-group col-md-4">
                                                 <div class="checkbox c-checkbox">
@@ -169,9 +165,7 @@
                                                 <input type="text" ng-model="objectsSidebarService.selectedObject.savings"
                                                        placeholder="0 %" ng-blur="validate()"
                                                        ng-disabled="!hasSavingBool" required="required"
-                                                       is-number="is-number" class="title-value highlightInput"/>
-
-                                                <span class="help-block">Digite manualmente el monto</span>
+                                                       class="title-value highlightInput"/>
                                             </div>
                                         <div class="form-group col-md-4">
                                             <div class="checkbox c-checkbox">
@@ -186,8 +180,7 @@
                                             <input type="text" ng-model="objectsSidebarService.selectedObject.listPrice"
                                                    placeholder="Final Price" ng-blur="validate()"
                                                    ng-disabled="!hasListPriceBool" required="required"
-                                                   is-number="is-number" class="title-value highlightInput"/>
-                                            <span class="help-block">El precio final de la promoción</span>
+                                                   class="title-value highlightInput"/>
                                         </div>
                                     </form>
                                 </div>
@@ -227,7 +220,6 @@
                                                    ng-disabled="!objectsSidebarService.selectedObject.hasTimming" placeholder="Expiration Date**"
                                                    ng-blur="validate()" required="required" readonly="readonly"
                                                    class="highlightInput"/>
-                                            <span class="help-block">Fecha final de la promoción</span>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <div class="checkbox c-checkbox">
@@ -243,7 +235,6 @@
                                                    ng-disabled="!hasQuantityBool" placeholder="Quantity **"
                                                    ng-blur="validate()" required="required" is-number="is-number"
                                                    class="highlightInput"/>
-                                            <span class="help-block">Permita hacer promociones con cantidades limitadas.</span>
                                         </div>
                                     </form>
                                 </div>
