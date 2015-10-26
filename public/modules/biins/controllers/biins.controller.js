@@ -18,6 +18,9 @@
          *  Functions
          =============================================================================================================*/
 
+        $scope.objectsSidebarService = ObjectsSidebar;
+        $scope.objectsSidebarService.enableAddButton = false;
+
         $scope.getSiteName = function (identifier) {
             var site = _.findWhere($scope.sites, {identifier: identifier});
             if (site) {
