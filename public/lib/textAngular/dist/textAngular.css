@@ -294,12 +294,12 @@ h3 {
 	width: 100%;
 }
 
-.listPrice_Right {
+.listPrice_Left {
 	width: 80%;
 	float: left;
 }
 
-.listPrice_Righ_Top p{
+.listPrice_Left_Top p{
 	font-size: 17px;
 	font-weight:400;
 	text-align: left;
@@ -307,7 +307,7 @@ h3 {
 	margin-bottom: 0px;
 }
 
-.listPrice_Righ_Bottom p{
+.listPrice_Left_Bottom p{
 	font-size: 14px;
 	font-weight: 200;
 	text-align: left;
@@ -317,7 +317,7 @@ h3 {
 	margin-bottom: 10px;
 }
 
-.listPrice_Left p{
+.listPrice_Right p{
 	width: 20%;
 	float: right;
 	font-size: 17px;

@@ -622,9 +622,9 @@ angular.module('textAngularSetup', [])
                                         break;
                                 }
                                 pricedItemsList = pricedItemsList.concat("<div class='listPrice'>");
-                                pricedItemsList = pricedItemsList.concat("<div class='listPrice_Right'><div class='listPrice_Righ_Top'><p>" + $rootScope.pricedItems[index].name + "</p></div>");
-                                pricedItemsList = pricedItemsList.concat("<div class='listPrice_Righ_Bottom'><p>" + $rootScope.pricedItems[index].description + "</p></div></div>");
-                                pricedItemsList = pricedItemsList.concat("<div class='listPrice_Left'><p>" + currency + $rootScope.pricedItems[index].price + "</p></div>");
+                                pricedItemsList = pricedItemsList.concat("<div class='listPrice_Left'><div class='listPrice_Left_Top'><p>" + $rootScope.pricedItems[index].name + "</p></div>");
+                                pricedItemsList = pricedItemsList.concat("<div class='listPrice_Left_Bottom'><p>" + $rootScope.pricedItems[index].description + "</p></div></div>");
+                                pricedItemsList = pricedItemsList.concat("<div class='listPrice_Right'><p>" + currency + $rootScope.pricedItems[index].price + "</p></div>");
                                 pricedItemsList = pricedItemsList.concat("</div>");
                             }
                             // Add row of items into table
