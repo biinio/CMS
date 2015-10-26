@@ -45,7 +45,7 @@ angular.module('textAngularSetup', [])
         toolbar: [
             //['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
             ['h1', 'h2', 'h6', 'p', 'quote'],
-            ['insertPriceList'],
+            ['insertPriceList', 'insertHighlight'],
             //['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
             ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo'],
             //['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', 'indent', 'outdent'],
@@ -234,6 +234,10 @@ angular.module('textAngularSetup', [])
         priceList: {
             tooltip: 'Add price list',
             text: "{{ 'TEXTANGULAR.PRICELIST_BUTTON' | translate }}"
+        },
+        highlight: {
+            tooltip: 'Add highlight',
+            text: "{{ 'TEXTANGULAR.HIGHLIGHT_BUTTON' | translate }}"
         }
     })
     .factory('taToolFunctions', ['$window', 'taTranslations', function ($window, taTranslations) {
@@ -467,6 +471,86 @@ angular.module('textAngularSetup', [])
             activeState: _retActiveStateFunction('h6')
         });
 
+        //TODO: EDIT HIGHLIGHT
+        taRegisterTool('insertHighlight', {
+            buttontext: taTranslations.highlight.text,
+            tooltiptext: taTranslations.highlight.tooltip,
+            action: function(promise, restoreSelection){
+                var that=this;
+
+                var modalInstance=$modal.open({
+                    templateUrl: 'lib/textAngular/dist/highlight.html',
+                    controller :function ($rootScope, $modalInstance) {
+
+                        $rootScope.invitation = {};
+
+                        $rootScope.ok = function () {
+                            $modalInstance.close($rootScope.invitation);
+                        };
+
+                        $rootScope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+
+                        $rootScope.highlightTitle = "";
+                        $rootScope.highlightText = "";
+                        $rootScope.highlightSubText = "";
+
+                        $rootScope.editHighlightTitle = function(newTitle) {
+                            $rootScope.highlightTitle = newTitle;
+                        };
+
+                        $rootScope.editHighlightText = function(newText) {
+                            $rootScope.highlightText = newText;
+                        };
+
+                        $rootScope.editHighlightSubtext = function(newSubtext) {
+                            $rootScope.highlightSubtext = newSubtext;
+                        };
+
+                        $rootScope.getHighlightHtml = function () {
+
+                            var highlightHtml = "";
+
+                            if ($rootScope.highlightTitle != undefined)  {
+                                highlightHtml = highlightHtml.concat("<p class='highlight-title'>" + $rootScope.highlightTitle + "</p>");
+                            }
+                            if ($rootScope.highlightText != undefined) {
+                                highlightHtml = highlightHtml.concat("<p class='highlight-text'>" + $rootScope.highlightText + "</p>");
+                            }
+                            if ($rootScope.highlightSubtext != undefined) {
+                                highlightHtml = highlightHtml.concat("<p class='highlight-subtext'>" + $rootScope.highlightSubtext + "</p>");
+                            }
+
+                            if (highlightHtml != "") {
+                                return "<highlight>" + highlightHtml + "</highlight>";
+                            }
+                            else {
+                                return false;
+                            }
+                        };
+                    },
+
+                    size: 'lg'
+
+                });
+                //define result modal , when user complete result information
+                modalInstance.result.then(function(result){
+                    if (result) {
+                        restoreSelection();
+                        var highlightHtml = $rootScope.getHighlightHtml();
+                        promise.resolve();
+
+                        var savedSelection = rangy.saveSelection();
+                        rangy.restoreSelection(savedSelection);
+
+                        return that.$editor().wrapSelection('insertPriceList', highlightHtml);
+                    }
+                });
+                return false;
+            }
+
+        });
 
         //TODO: EDIT PRICELIST
         taRegisterTool('insertPriceList', {
@@ -482,7 +566,6 @@ angular.module('textAngularSetup', [])
                         $rootScope.invitation ={};
 
                         $rootScope.ok = function () {
-                            console.log($rootScope.invitation);
                             $modalInstance.close($rootScope.invitation);
                         };
 
@@ -494,10 +577,17 @@ angular.module('textAngularSetup', [])
 
                         $rootScope.pricedItems = [];
 
+                        $rootScope.priceListTitle = "";
+
+                        $rootScope.editTitle = function(newTitle) {
+                            $rootScope.priceListTitle = newTitle;
+                        };
+
                         $rootScope.getPriceListHtml = function () {
 
                             //TODO: Obtain appropriate translation for headers
-                            var priceListTableHeaders = "<thead><tr><th>Moneda</th><th>Nombre</th><th>Descripción</th><th>Precio</th></tr></thead>";
+                            console.log($rootScope.priceListTitle);
+                            var priceListTableHeaders = "<h2>" + $rootScope.priceListTitle + "</h2><thead><tr><th>Moneda</th><th>Nombre</th><th>Descripción</th><th>Precio</th></tr></thead>";
 
                             var pricedItemsList = priceListTableHeaders.concat("<tbody>");
 
@@ -521,8 +611,6 @@ angular.module('textAngularSetup', [])
                                     default:
                                         break;
                                 }
-
-                                //console.log("PRICED ITEM:" + $rootScope.pricedItems[index].name);
                                 pricedItemsList = pricedItemsList.concat("<tr>");
                                 pricedItemsList = pricedItemsList.concat("<td>" + currency + "</td>");
                                 pricedItemsList = pricedItemsList.concat("<td>" + $rootScope.pricedItems[index].name + "</td>");
@@ -540,7 +628,6 @@ angular.module('textAngularSetup', [])
                         $rootScope.removePricedItem = function(index) {
 
                             $rootScope.pricedItems.splice(index, 1);
-                            //console.log("textAngularSetup.PriceList: Removed priced item");
                         };
 
                         $rootScope.addPricedItem = function() {
@@ -555,8 +642,9 @@ angular.module('textAngularSetup', [])
 
                             $rootScope.pricedItems.push(newPricedItem);
                             $rootScope.count++;
-                            //console.log("textAngularSetup.PriceList: Added priced item");
                         };
+
+                        $rootScope.addPricedItem();
                     },
                     resolve: {
                         result: function () {
@@ -573,8 +661,8 @@ angular.module('textAngularSetup', [])
                         var priceListHtml = $rootScope.getPriceListHtml();
                         promise.resolve();
 
-                        //var savedSelection = rangy.saveSelection();
-                        //rangy.restoreSelection(savedSelection);
+                        var savedSelection = rangy.saveSelection();
+                        rangy.restoreSelection(savedSelection);
 
                         return that.$editor().wrapSelection('insertPriceList', priceListHtml);
 

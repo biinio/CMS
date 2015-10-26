@@ -5,7 +5,7 @@ var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'BiinCMSApp';
 
-	var applicationBackendURL = 'https://qa-biinapp.herokuapp.com/';
+	var applicationBackendURL =  process.env.BACK_END_URL || 'https://qa-biinapp.herokuapp.com/';
 
 	var applicationModuleVendorDependencies = ['ngRoute', 'ngAnimate', 'ngStorage', 'ngTouch', 'ngCookies',
         'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize',
@@ -147,6 +147,14 @@ ApplicationConfiguration.registerModule('maintenance');
 
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('objectssidebar');
+
+/**
+ * Created by Ivan on 8/19/15.
+ */
+'use strict';
+
+// Use Applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('organization',['app.translate']);
 
 'use strict';
 
@@ -964,7 +972,7 @@ angular.module('biins').config(['$stateProvider',
         Menus.addMenuItem('sidebar', 'Administration', 'profile', 'dropdown', null, false, null, null,'icon-feed');
         //this.addSubMenu   (menuId, rootMenuItemURL, menuItemTitle, menuItemURL, menuItemUIRoute, isPublic, roles, position) {
         Menus.addSubMenuItem('sidebar', 'profile', 'Profile','profile',null, false, null, null);
-        Menus.addSubMenuItem('sidebar', 'profile', 'Organizaciones','organzations',null, false, null, null);
+        Menus.addSubMenuItem('sidebar', 'profile', 'Organizaciones','organization',null, false, null, null);
         Menus.addMenuItem('sidebar', 'Maintenance', 'maintenance', null, '/maintenance', false, null, null,'icon-settings',null);
     }
 
@@ -1745,13 +1753,13 @@ angular.module('elements').config(['$stateProvider',
         //Category return if contains a specific category
         $scope.containsCategory=function(category){
             if(typeof(_.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier}))!='undefined')
-                return 'true';
+                return true;
             else
-                return "false";
+                return false;
         };
 
         //Change the state of the category relation with the Site
-        $scope.switchCategoryState =function(category){
+        $scope.updateSelectedCategories =function(category){
             var index =-1;
             var cat = _.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier});
             if(typeof(cat)!='undefined'){
@@ -1763,11 +1771,12 @@ angular.module('elements').config(['$stateProvider',
             else
                 $scope.objectsSidebarService.selectedObject.categories.push(category);
 
-            $scope.validate();
-            if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+            //$scope.validate();
+
+            /**if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
                 $scope.$apply();
                 $scope.$digest();
-            }
+            }**/
         };
     }
 })();
@@ -2799,8 +2808,8 @@ function GalleryController($scope, $modalInstance, galleries) {
                         '</div>'+
                     '</div>'+
                     '<div class="img-add-block">'+
-                        '<div  ng-click="showImageModal()" class="btn-default img-add-block-wrapper">'+
-                            '<span  class="btn-browse">Browse</span>'+
+                        '<div  ng-click="showImageModal()" class="btn-default img-add-block-wrapper dottedBorder">'+
+                            '<span translate="GENERIC.ADD_IMAGE" class="btn-browse"></span>'+
                         '</div>'+
                     '</div>'+
                 '</div>'+
@@ -3021,8 +3030,13 @@ function GmapController($scope, $modalInstance) {
         return{
             restrict:'A',
             link:function(scope, element, attrs){
+
+                var local_lat = ObjectsSidebar.selectedObject.lat;
+                var local_lng = ObjectsSidebar.selectedObject.lng;
+
                 var zoom = eval(attrs['zoom']);
-                var defPosition =new google.maps.LatLng(0 ,0);
+
+                var defPosition =new google.maps.LatLng(local_lat ,local_lng);
                 var defOptions = {
                     center: defPosition,
                     zoom: zoom
@@ -3063,11 +3077,13 @@ function GmapController($scope, $modalInstance) {
                         scope.changeLocation(newPosition.lat(),newPosition.lng());
                     });
 
-                    google.maps.event.addDomListener(window, 'resize', function(){
 
-                        //scope.changeLocation(newPosition.lat(),newPosition.lng());
+                    google.maps.event.addListenerOnce(map, 'idle', function() {
+                        var newPosition = marker.getPosition();
+                        google.maps.event.trigger(map, 'resize');
+                        map.setCenter(newPosition);
                     });
-                    google.maps.event.trigger(map, 'resize');
+
                 }
 
                 function errorCallback(err){
@@ -3075,20 +3091,12 @@ function GmapController($scope, $modalInstance) {
                     showPosition({coords:coords},1);
                     console.warn('ERROR(' + err.code + '): ' + err.message);
                 }
-                var local_lat =0;
-
-                var local_lng=0;
-
-                if(attrs['lat'] && attrs['lng']){
-                    local_lat = eval(attrs['lat']);
-                    local_lng = eval(attrs['lng']);
-                }
 
                 //Call get location
                 if(local_lat==0&& local_lng==0)
                     getLocation();
                 else{
-                    var coords ={latitude:local_lat,longitude: local_lng};
+                    var coords ={latitude:local_lat, longitude:local_lng};
                     showPosition({coords:coords});
                 }
             }
@@ -3137,6 +3145,7 @@ function GmapController($scope, $modalInstance) {
                             ObjectsSidebar.selectedObject.lat = position.lat;
                         }
                     }, function () {
+
                     });
                 };
 
@@ -3161,6 +3170,7 @@ function GmapController($scope, $modalInstance) {
                     showPosition({coords: coords}, 1);
                     console.warn('ERROR(' + err.code + '): ' + err.message);
                 }
+
 
                 var local_lat = 0;
                 var local_lng = 0;
@@ -3863,6 +3873,281 @@ angular.module('maintenance').config(['$stateProvider',
     }
 })();
 
+/**
+ * Created by Ivan on 8/19/15.
+ */
+'use strict';
+
+// Setting up route
+angular.module('organization').config(['$stateProvider',
+    function($stateProvider) {
+        // Users state routing
+        $stateProvider.
+            state('appleftbar.organization', {
+                url: '/organization',
+                templateUrl: 'modules/organization/views/organization.client.view.html',
+                resolve: {
+                    organization:function( Organization ){
+                        return Organization.promise;
+                    }
+                }
+            });
+        /*.
+         state('page.signup', {
+         url: '/signup',
+         templateUrl: 'modules/users/views/authentication/signup.client.view.html'
+         }).
+         state('page.forgot', {
+         url: '/password/forgot',
+         templateUrl: 'modules/users/views/password/forgot-password.client.view.html'
+         }).
+         state('page.reset-invalid', {
+         url: '/password/reset/invalid',
+         templateUrl: 'modules/users/views/password/reset-password-invalid.client.view.html'
+         }).
+         state('page.reset-success', {
+         url: '/password/reset/success',
+         templateUrl: 'modules/users/views/password/reset-password-success.client.view.html'
+         }).
+         state('page.reset', {
+         url: '/password/reset/:token',
+         templateUrl: 'modules/users/views/password/reset-password.client.view.html'
+         }).
+         state('app.password', {
+         url: '/settings/password',
+         templateUrl: 'modules/users/views/settings/change-password.client.view.html'
+         }).
+         state('app.profile', {
+         url: '/settings/profile',
+         templateUrl: 'modules/users/views/settings/edit-profile.client.view.html'
+         }).
+         state('app.accounts', {
+         url: '/settings/accounts',
+         templateUrl: 'modules/users/views/settings/social-accounts.client.view.html'
+         });*/
+    }
+]);
+
+/**
+ * Created by Ivan on 8/19/15.
+ */
+/**=========================================================
+ * Module: profile.js
+ * Profile management for biin
+ =========================================================*/
+
+(function () {
+    'use strict';
+
+    angular
+        .module('organization')
+        .controller('OrganizationController', OrganizationController);
+
+    OrganizationController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar'];
+    function OrganizationController($http, $state, $scope, Authentication, toaster, $location, Organization,ObjectsSidebar) {
+        var vm = this;
+        $scope.objectsSidebarService = ObjectsSidebar;
+        $scope.organizationService = Organization;
+
+        /**=============================================================================================================
+         * ObjectsSidebar Configuration
+         =============================================================================================================*/
+
+        $scope.sidebarTemplate =
+            "<div class='col-md-3 thumbListImage'>" +
+            "<img ng-if='item.elements.length == 0  || item.elements[0].media.length == 0 ' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
+            "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}'/>" +
+            "</div>" +
+            "<div class='col-md-9 leftInformationArea'>" +
+            "<label class='moduleTitle'>{{item.name}}</label>" +
+            "<div class='btnShowcasePreview icon-round-control btn-on-hover'>" +
+            "<div class='icon icon-arrange-1'></div>" +
+            "</div>" +
+            "</div>" +
+            "<div ng-click=\"deleteItem(objectsSidebarService.objects.indexOf(item),$event)\" class=\"icon-round-control btnDelete  btn-danger btn-on-hover\">" +
+            "<i class=\"fa fa-close\"></i>" +
+            "</div>";
+        $scope.objectsSidebarService.template = $scope.sidebarTemplate;
+        $scope.objectsSidebarService.setObjects($scope.organizationService.organizationsList);
+
+        /**=============================================================================================================
+         * Events Listeners
+         *
+         =============================================================================================================*/
+
+
+        $scope.$on('$stateChangeStart', function () {
+            $scope.objectsSidebarService.reset();
+        });
+
+        $scope.$on('organizationChanged', function () {
+
+        });
+
+        $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
+            $scope.editOrganization();
+        });
+
+        $scope.$on("Biin: On Object Created", function () {
+            $scope.createOrganization();
+        });
+
+        $scope.$on("Biin: On Object Deleted", function (event, index) {
+            $scope.removeOrganization(index);
+        });
+
+        $scope.$on('changeOrganizationImage',function(scope,newPicture){
+            $scope.objectsSidebarService.selectedObject.media[0]=newPicture;
+        });
+
+        if (!Authentication.user) {
+            $location.path('/');
+        }
+
+        $scope.saveOrganization = function () {
+            if (!$scope.isAnalazingOrg) {
+                if (isOrganizationDirty()) {
+                    var currentOrganization = $scope.objectsSidebarService.selectedObject;
+                    $scope.prevSaveOrganization = jQuery.extend({}, currentOrganization);
+                    $scope.isAnalazingOrg = false;
+
+                    $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization.identifier, {model: currentOrganization}).success(function (data, status) {
+                        if (status === 200) {
+                            $scope.succesSaveShow = true;
+                        } else
+                            $scope.errorSaveShow = true;
+                    });
+                }
+                $scope.isAnalazingOrg = false;
+            }
+        };
+
+        //Edit an site
+        $scope.editOrganization = function () {
+            $scope.prevSaveOrganization = jQuery.extend({}, $scope.objectsSidebarService.selectedObject);
+        };
+
+        //Push a new organization in the list
+        $scope.createOrganization = function () {
+            //Get the Mayor from server
+            $http.post(ApplicationConfiguration.applicationBackendURL +'api/organizations').success(function (org, status) {
+                if (status == 201 || status == 200) {
+                    $scope.organizationService.organizationsList.push(org);
+                    //$scope.objectsSidebarService.objects.push(org);
+                    $scope.objectsSidebarService.selectedObject = org;
+                } else {
+                    displayErrorMessage(org, "Organizations Creation", status);
+                }
+            });
+        };
+
+        //Remove showcase at specific position
+        $scope.removeOrganization = function (index) {
+            var id = $scope.objectsSidebarService.objects[index].identifier;
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + id).success(function (data) {
+                $scope.organizationService.removeOrganization(id);
+                $scope.objectsSidebarService.objects.splice(index,1);
+                if($scope.objectsSidebarService.selectedObject.identifier == id){
+                    $scope.objectsSidebarService.selectedObject = null;
+                }
+            });
+        };
+
+
+        //Indicate if an organization data is changed
+        var isOrganizationDirty = function () {
+            $scope.isAnalazingOrg = true;
+            var propertiesToCheck = ["name", "brand", "description", "extraInfo"];
+            var foundChange = false;
+            if ($scope.prevSaveOrganization !== null) {
+                for (var i = 0; i < propertiesToCheck.length && !foundChange; i++) {
+                    foundChange = $scope.objectsSidebarService.selectedObject[propertiesToCheck[i]] !== $scope.prevSaveOrganization[propertiesToCheck[i]];
+                }
+            }
+            return foundChange;
+        };
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+            $scope.authentication = Authentication;
+            $scope.editOrganization(0);
+        }
+    }
+})();
+
+/**
+ * Created by Ivan on 10/22/15.
+ */
+(function() {
+    'use strict';
+
+    angular
+        .module('organization')
+        .directive('uploadOrganizationImage', uploadOrganizationImage);
+        uploadOrganizationImage.$inject = ['$rootScope','Authentication','ObjectsSidebar'];
+    function uploadOrganizationImage($rootScope,Authentication,ObjectsSidebar){
+        return{
+            restrict:'A',
+            link:function(scope, element, attrs){
+                var $inputFileElement=$(attrs['uploadOrganizationImage']);
+
+                //Change event when an image is selected
+                $inputFileElement.on('change',function(){
+                    console.log("Change beginning the upload");
+
+                    var files = $inputFileElement[0].files;
+                    var formData = new FormData();
+                    for (var i = 0; i < files.length; i++) {
+                        var mediaFile = files[i];
+                        mediaFile.originalFilename=files[i].name;
+                        formData.append('file', mediaFile);
+                    }
+
+                    //Upload The media information
+
+                    //scope.loadingImagesChange(true);
+                    // now post a new XHR request
+                    var xhr = new XMLHttpRequest();
+
+                    var organization= ObjectsSidebar.selectedObject.identifier;
+
+                    xhr.open('POST', ApplicationConfiguration.applicationBackendURL +'api/organizations/'+organization+"/image");
+                    xhr.setRequestHeader('accountidentifier',Authentication.user.accountIdentifier);
+                    xhr.onload = function (data) {
+                        if (xhr.status === 200) {
+                            var obj= $.parseJSON(xhr.response);
+
+                            $rootScope.$broadcast("changeOrganizationImage",obj.data);
+
+                            console.log('all done: ' + xhr.status);
+                            //scope.loadingImagesChange(false);
+                        } else {
+                            console.log('Something went terribly wrong...');
+                        }
+                    };
+
+                    xhr.upload.onprogress = function (event) {
+                        if (event.lengthComputable) {
+                            var complete = (event.loaded / event.total * 100 | 0);
+                            //progress.value = progress.innerHTML = complete;
+                        }
+                    };
+
+                    xhr.send(formData);
+
+                })
+                //Click event of the style button
+                $(element[0]).on('click touch',function(e){
+                    $inputFileElement.trigger('click');
+                });
+            }
+        }
+    }
+})();
+
 'use strict';
 
 // Setting up route
@@ -4490,6 +4775,7 @@ angular.module('dashboard').config(['$stateProvider',
         if (!Authentication.user) {
             $location.path('/');
         }
+
         $scope.saveInformation = function () {
             if (typeof($scope.profile) !== 'undefined' && isProfileDirty()) {//If is Profile Dirty
                 $http.put('api/account', {model: $scope.profile}).success(function (data, status) {
@@ -4506,86 +4792,19 @@ angular.module('dashboard').config(['$stateProvider',
             }
         };
 
-        $scope.saveOrganization = function () {
-            if ($scope.selectedOrganization >= 0 && !$scope.isAnalazingOrg) {
-                if (isOrganizationDirty()) {
-                    var currentOrganization = $scope.organizationService.organizationsList[$scope.selectedOrganization];
-                    $scope.prevSaveOrganization = jQuery.extend({}, currentOrganization);
-                    $scope.isAnalazingOrg = false;
-
-                    $http.put('api/organization/' + currentOrganization.identifier, {model: currentOrganization}).success(function (data, status) {
-                        if (status === 200) {
-                            $scope.succesSaveShow = true;
-                        } else
-                            $scope.errorSaveShow = true;
-                    });
-                }
-                $scope.isAnalazingOrg = false;
-            }
-        };
-
-        //Edit an site
-        $scope.editOrganization = function (index) {
-            $scope.selectedOrganization = index;
-            $scope.prevSaveOrganization = jQuery.extend({}, $scope.organizationService.organizationsList[index]);
-            //changeOrganizationToDefault();
-            //$scope.clearValidations();
-            //$scope.wizardPosition=1;
-            //$scope.validate(true);
-        };
-
-        //Push a new organization in the list
-        $scope.createOrganization = function () {
-            //Get the Mayor from server
-            $http.post('api/organization/').success(function (org, status) {
-                if (status == 201 || status == 200) {
-                    $scope.organizationService.organizationsList.push(org);
-                    $scope.editOrganization($scope.organizationService.organizationsList.indexOf(org));
-                } else {
-                    displayErrorMessage(org, "Organizations Creation", status);
-                }
-            });
-        };
-
-        //Remove showcase at specific position
-        $scope.removeOrganization = function (id, deferred) {
-            $http.delete('api/organization/' + id).success(function (data) {
-                    if (data.state == "success") {
-                        $scope.organizationService.removeOrganization(id);
-                        deferred.resolve();
-                    }
-                }
-            );
-        };
-
-
-        //Indicate if an organization data is changed
-        var isOrganizationDirty = function () {
-            $scope.isAnalazingOrg = true;
-            var propertiesToCheck = ["name", "brand", "description", "extraInfo"];
-            var foundChange = false;
-            if ($scope.prevSaveOrganization !== null) {
-                for (var i = 0; i < propertiesToCheck.length && !foundChange; i++) {
-                    foundChange = $scope.organizationService.organizationsList[$scope.selectedOrganization][propertiesToCheck[i]] !== $scope.prevSaveOrganization[propertiesToCheck[i]];
-                }
-            }
-            return foundChange;
-
-        };
-
         var isProfileDirty = function () {
             var propertiesToCheck = ["displayName", "lastName", "name", "phoneNumber"];
             //emails[0]
             return true;
         };
 
-        $scope.$on('panel-remove', function (event, id, deferred) {
-            $scope.removeOrganization(id, deferred);
-        });
+        $scope.$on('changeProfileImage', function(scope,image){
+            $scope.profile.profilePhoto=image+ '?' + new Date().getTime();
 
-        var panelOrgDeleted = function () {
-            console.warn('org deleted');
-        };
+            //Apply the changes
+            $scope.$digest();
+            $scope.$apply();
+        });
 
         activate();
 
@@ -4596,8 +4815,73 @@ angular.module('dashboard').config(['$stateProvider',
             $http.get("/api/account").success(function (data) {
                 $scope.profile = data.data;
             });
-            $scope.editOrganization(0);
-            $scope.$on('panel-remove', panelOrgDeleted);
+        }
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('profile')
+        .directive('uploadProfileImage', uploadProfileImage);
+    uploadProfileImage.$inject = ['$rootScope','Authentication','ObjectsSidebar'];
+    function uploadProfileImage($rootScope,Authentication,ObjectsSidebar){
+        return{
+            restrict:'A',
+            link:function(scope, element, attrs){
+                var $inputFileElement=$(attrs['uploadProfileImage']);
+
+                //Change event when an image is selected
+                $inputFileElement.on('change',function(){
+                    console.log("Change beginning the upload");
+
+                    var files = $inputFileElement[0].files;
+                    var formData = new FormData();
+                    for (var i = 0; i < files.length; i++) {
+                        var mediaFile = files[i];
+                        mediaFile.originalFilename=files[i].name;
+                        formData.append('file', mediaFile);
+                    }
+
+                    //Upload The media information
+
+                    //scope.loadingImagesChange(true);
+                    // now post a new XHR request
+                    var xhr = new XMLHttpRequest();
+
+                    xhr.open('POST', ApplicationConfiguration.applicationBackendURL + 'api/imageProfile');
+                    xhr.setRequestHeader('accountidentifier', Authentication.user.accountIdentifier);
+                    xhr.setRequestHeader('name', Authentication.user.name);
+                    xhr.onload = function (data) {
+                        if (xhr.status === 200) {
+                            var obj= $.parseJSON(xhr.response);
+
+                            $rootScope.$broadcast("changeProfileImage",obj.data);
+                            //scope.changeProfileImage(obj.data);
+
+                            console.log('all done: ' + xhr.status);
+                            //scope.loadingImagesChange(false);
+                        } else {
+                            console.log('Something went terribly wrong...');
+                        }
+                    };
+
+                    xhr.upload.onprogress = function (event) {
+                        if (event.lengthComputable) {
+                            var complete = (event.loaded / event.total * 100 | 0);
+                            //progress.value = progress.innerHTML = complete;
+                        }
+                    };
+
+                    xhr.send(formData);
+
+                });
+                //Click event of the style button
+                $(element[0]).on('click touch',function(e){
+                    $inputFileElement.trigger('click');
+                });
+            }
         }
     }
 })();
@@ -4956,12 +5240,21 @@ angular.module('showcases').config(['$stateProvider',
             });
         };
 
+
+        $scope.filteredElements = function ( element ) {
+            var index = -1;
+            for(var i = 0; i < $scope.objectsSidebarService.selectedObject.elements.length; i++){
+                if($scope.objectsSidebarService.selectedObject.elements[i]._id == element._id){
+                    index = i;
+                    break;
+                }
+            }
+            return  index == -1;
+        };
+
         //Remove an element of a Showcase
         $scope.removeElementAt = function (index) {
-            var position = $scope.showcases[$scope.selectedShowcase].elements[index].position;
-            $scope.showcases[$scope.selectedShowcase].elements.splice(index, 1);
-
-            $scope.validate();
+            $scope.objectsSidebarService.selectedObject.elements.splice(index, 1);
         };
 
         //Add element to a showcase
@@ -5016,7 +5309,6 @@ angular.module('showcases').config(['$stateProvider',
                     break;
                 }
             }
-
             if( index > -1)
             {
                 return "active";
@@ -5794,13 +6086,14 @@ angular.module('sites').config(['$stateProvider',
         //Category return if contains a specific category
         $scope.containsCategory=function(category){
             if(typeof(_.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier}))!='undefined')
-                return 'active';
+                return true;
             else
-                return "";
+                return false;
         };
 
+
         //Change the state of the category relation with the Site
-        $scope.switchCategoryState =function(category){
+        $scope.updateSelectedCategories =function(category){
             var index =-1;
             var cat = _.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier});
             if(typeof(cat)!='undefined'){
@@ -5812,10 +6105,6 @@ angular.module('sites').config(['$stateProvider',
             else
                 $scope.objectsSidebarService.selectedObject.categories.push(category);
 
-            if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
-                $scope.$apply();
-                $scope.$digest();
-            }
         };
 
         //Remove the media object at specific index
