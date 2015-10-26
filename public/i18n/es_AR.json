@@ -122,9 +122,11 @@
     "ADD": " Agregar item",
     "CURRENCY": "Moneda",
     "TITLE": "Título",
-    "TITLEPLACEHOLDER": "Ingrese el título de la lista de precios",
+    "TITLE_PLACEHOLDER": "Ingrese el título de la lista de precios",
     "NAME": "Nombre",
+    "NAME_PLACEHOLDER": "Ingrese el nombre del producto",
     "DESCRIPTION" : "Descripción",
+    "DESCRIPTION_PLACEHOLDER": "Ingrese una descripción del producto",
     "PRICE": "Precio"
   },
   "CATEGORY": {
