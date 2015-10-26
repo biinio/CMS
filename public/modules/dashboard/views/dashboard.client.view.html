@@ -1,3 +1,94 @@
-<div ng-controller="DashboardController as dashboard" class="block-center mt-xl wd-xl">
-    <h1>Dashboard</h1>
+<div ng-controller="DashboardController as dashboard" class="block-center">
+    <div>
+        <h2 class="titleDashboard">Dashboard</h2>
+        <div class="visitsGraph">
+            <ng-include src="'modules/dashboard/views/partials/visits.graph.partial.client.view.html'"/>
+        </div>
+        <div class="mobileGraph">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="iconDashboard">
+                                <div class="iconDashboardContent">
+                                    <h4>Mobile</h4><i class="icon icon-mobile-phone"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ng-include src="'modules/dashboard/views/partials/mobile.session.counter.partial.client.view.html'"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <ng-include src="'modules/dashboard/views/partials/mobile.biined.counter.partial.client.view.html'"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ng-include src="'modules/dashboard/views/partials/mobile.newvisits.average.partial.client.view.html'"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <ng-include src="'modules/dashboard/views/partials/mobile.elementsvisited.average.partial.client.view.html'"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <ng-include src="'modules/dashboard/views/partials/mobile.visits.graph.partial.client.view.html'"/>
+                </div>
+            </div>
+        </div>
+        <div class="localGraph">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="iconDashboard">
+                                <div class="iconDashboardContent">
+                                    <h4>Local</h4><i class="icon icon-shop"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ng-include src="'modules/dashboard/views/partials/site.sessions.counter.partial.client.view.html'"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ng-include src="'modules/dashboard/views/partials/site.newvisits.average.partial.client.view.html'"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <ng-include src="'modules/dashboard/views/partials/site.fromvisits.graph.partial.client.view.html'"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <ng-include src="'modules/dashboard/views/partials/site.visits.graph.partial.client.view.html'"/>
+                </div>
+            </div>
+        </div>
+        <div class="localTable">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table dashboardTable">
+                        <thead>
+                        <tr>
+                            <th>Locales</th>
+                            <th>Visitas En Biin</th>
+                            <th>Visitas A Locales</th>
+                            <th>Biined</th>
+                            <th>Notificaciones</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
