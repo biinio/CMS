@@ -63,7 +63,7 @@
 
         $http.get(ApplicationConfiguration.applicationBackendURL + 'maintenance/organizations').success(function(data){
             $scope.objectsSidebarService.setObjects(data);
-            console.log($scope.objectsSidebarService.getObjects());
+            //console.log($scope.objectsSidebarService.getObjects());
 
             for (var i = 0; i < $scope.objectsSidebarService.objects.length ; i++) {
                 $scope.objectsSidebarService.objects[i].unassignedBeacons = $scope.objectsSidebarService.objects[i].biinsCounter - $scope.objectsSidebarService.objects[i].biinsAssignedCounter;

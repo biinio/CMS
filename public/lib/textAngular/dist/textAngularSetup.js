@@ -430,13 +430,20 @@ angular.module('textAngularSetup', [])
         });
         // add the Header tools
         // convenience functions so that the loop works correctly
+
+        //TODO: EDITED TO CUSTOMIZE OUR OWN HEADERS
         var _retActiveStateFunction = function (q) {
             return function () {
                 return this.$editor().queryFormatBlockState(q);
             };
         };
+
         var headerAction = function () {
             return this.$editor().wrapSelection("formatBlock", "<" + this.name.toUpperCase() + ">");
+        };
+
+        var customHeaderAction = function() {
+            return this.$editor().wrapSelection("formatBlock", "<div class='biin_" + this.name.toLowerCase() + "'>");
         };
 
         /*
@@ -453,21 +460,21 @@ angular.module('textAngularSetup', [])
         taRegisterTool('h1', {
             buttontext: taTranslations.h1.text,
             tooltiptext: taTranslations.h1.tooltip,
-            action: headerAction,
+            action: customHeaderAction,
             activeState: _retActiveStateFunction('h1')
         });
 
         taRegisterTool('h2', {
             buttontext: taTranslations.h2.text,
             tooltiptext: taTranslations.h2.tooltip,
-            action: headerAction,
+            action: customHeaderAction,
             activeState: _retActiveStateFunction('h2')
         });
 
         taRegisterTool('h6', {
             buttontext: taTranslations.h6.text,
             tooltiptext: taTranslations.h6.tooltip,
-            action: headerAction,
+            action: customHeaderAction,
             activeState: _retActiveStateFunction('h6')
         });
 
@@ -513,17 +520,17 @@ angular.module('textAngularSetup', [])
                             var highlightHtml = "";
 
                             if ($rootScope.highlightTitle != undefined)  {
-                                highlightHtml = highlightHtml.concat("<p class='highlight-title'>" + $rootScope.highlightTitle + "</p>");
+                                highlightHtml = highlightHtml.concat("<div class='highlight_title'><p>" + $rootScope.highlightTitle + "</p></div>");
                             }
                             if ($rootScope.highlightText != undefined) {
-                                highlightHtml = highlightHtml.concat("<p class='highlight-text'>" + $rootScope.highlightText + "</p>");
+                                highlightHtml = highlightHtml.concat("<div class='highlight_text'><p>" + $rootScope.highlightText + "</p></div>");
                             }
                             if ($rootScope.highlightSubtext != undefined) {
-                                highlightHtml = highlightHtml.concat("<p class='highlight-subtext'>" + $rootScope.highlightSubtext + "</p>");
+                                highlightHtml = highlightHtml.concat("<div class='highlight_subtext'><p>" + $rootScope.highlightSubtext + "</p></div>");
                             }
 
                             if (highlightHtml != "") {
-                                return "<highlight>" + highlightHtml + "</highlight>";
+                                return "<highlight><div class='highlight'>" + highlightHtml + "</div></highlight>";
                             }
                             else {
                                 return false;
@@ -591,11 +598,7 @@ angular.module('textAngularSetup', [])
                             var pricedItemsList = "";
 
                             if (priceListTableHeaders != undefined) {
-                                priceListTableHeaders = "<h2>" + $rootScope.priceListTitle + "</h2>";
-                                pricedItemsList = priceListTableHeaders.concat("<tbody>");
-                            }
-                            else {
-                                pricedItemsList = pricedItemsList.concat("tbody");
+                                pricedItemsList = "<div class='listPrice_Title'><h2>" + $rootScope.priceListTitle + "</h2></div>";
                             }
 
                             var currency = "";
@@ -618,18 +621,14 @@ angular.module('textAngularSetup', [])
                                     default:
                                         break;
                                 }
-                                pricedItemsList = pricedItemsList.concat("<tr>");
-                                pricedItemsList = pricedItemsList.concat("<td>" + currency + "</td>");
-                                pricedItemsList = pricedItemsList.concat("<td>" + $rootScope.pricedItems[index].name + "</td>");
-                                pricedItemsList = pricedItemsList.concat("<td>" + $rootScope.pricedItems[index].description + "</td>");
-                                pricedItemsList = pricedItemsList.concat("<td>" + $rootScope.pricedItems[index].price + "</td>");
-                                pricedItemsList = pricedItemsList.concat("</tr>");
+                                pricedItemsList = pricedItemsList.concat("<div class='listPrice'>");
+                                pricedItemsList = pricedItemsList.concat("<div class='listPrice_Right'><div class='listPrice_Righ_Top'><p>" + $rootScope.pricedItems[index].name + "</p></div>");
+                                pricedItemsList = pricedItemsList.concat("<div class='listPrice_Righ_Bottom'><p>" + $rootScope.pricedItems[index].description + "</p></div></div>");
+                                pricedItemsList = pricedItemsList.concat("<div class='listPrice_Left'><p>" + currency + $rootScope.pricedItems[index].price + "</p></div>");
+                                pricedItemsList = pricedItemsList.concat("</div>");
                             }
-                            pricedItemsList = pricedItemsList.concat("</tbody>");
-
                             // Add row of items into table
-                            return "<pricelist><table class='table table-bordered'>" + pricedItemsList + "</table></pricelist>";
-
+                            return "<pricelist><div class='listPrice_Table'>" + pricedItemsList + "</div></pricelist>";
                         };
 
                         $rootScope.removePricedItem = function(index) {
