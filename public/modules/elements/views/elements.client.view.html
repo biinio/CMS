@@ -148,11 +148,11 @@
                                                 </label>
                                             </div>
                                             <input type="text" ng-model="objectsSidebarService.selectedObject.discount"
-                                                   disabled="objectsSidebarService.selectedObject.hasDiscount=='0'" placeholder="Discount"
-                                                   ng-blur="validate()" required="required" is-number="is-number"
+                                                   ng-disabled="objectsSidebarService.selectedObject.hasDiscount=='0'" placeholder="Discount"
+                                                   required="required"
                                                    class="title-value highlightInput"/>
                                         </div>
-<!--                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-4">
                                                 <div class="checkbox c-checkbox">
                                                     <label>
                                                         <input type="checkbox" id="chkSaving"
@@ -164,7 +164,7 @@
                                                 </div>
                                                 <input type="text" ng-model="objectsSidebarService.selectedObject.savings"
                                                        placeholder="0 %" ng-blur="validate()"
-                                                       ng-disabled="!hasSavingBool" required="required"
+                                                       ng-disabled="objectsSidebarService.selectedObject.hasSaving==0" required="required"
                                                        class="title-value highlightInput"/>
                                             </div>
                                         <div class="form-group col-md-4">
@@ -179,9 +179,9 @@
                                             </div>
                                             <input type="text" ng-model="objectsSidebarService.selectedObject.listPrice"
                                                    placeholder="Final Price" ng-blur="validate()"
-                                                   ng-disabled="!hasListPriceBool" required="required"
+                                                   ng-disabled="objectsSidebarService.selectedObject.hasListPrice=='0'" required="required"
                                                    class="title-value highlightInput"/>
-                                        </div>-->
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -200,7 +200,7 @@
                                             </div>
                                             <input type="datetime" date-time="date-time"
                                                    ng-model="objectsSidebarService.selectedObject.initialDate"
-                                                   ng-disabled="!objectsSidebarService.selectedObject.hasTimming" placeholder="Initial Date**"
+                                                   ng-disabled="objectsSidebarService.selectedObject.hasTimming=='0'" placeholder="Initial Date**"
                                                    ng-blur="validate()" required="required" readonly="readonly"
                                                    class="highlightInput"/>
                                             <span class="help-block">Fecha de inicio de la promoción</span>
@@ -217,7 +217,7 @@
                                             </div>
                                             <input type="datetime" date-time="date-time"
                                                    ng-model="objectsSidebarService.selectedObject.expirationDate"
-                                                   ng-disabled="!objectsSidebarService.selectedObject.hasTimming" placeholder="Expiration Date**"
+                                                   ng-disabled="objectsSidebarService.selectedObject.hasTimming=='0'" placeholder="Expiration Date**"
                                                    ng-blur="validate()" required="required" readonly="readonly"
                                                    class="highlightInput"/>
                                         </div>
@@ -232,7 +232,7 @@
                                                 </label>
                                             </div>
                                             <input type="text" ng-model="objectsSidebarService.selectedObject.quantity"
-                                                   ng-disabled="!hasQuantityBool" placeholder="Quantity **"
+                                                   ng-disabled="objectsSidebarService.selectedObject.hasQuantity=='0'" placeholder="Quantity **"
                                                    ng-blur="validate()" required="required" is-number="is-number"
                                                    class="highlightInput"/>
                                         </div>
