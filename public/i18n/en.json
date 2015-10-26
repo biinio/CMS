@@ -23,6 +23,8 @@
     "ADD": " Add Item",
     "CURRENCY": "Currency",
     "NAME": "Name",
+    "TITLE": "Title",
+    "TITLEPLACEHOLDER": "Enter price list title",
     "DESCRIPTION": "Description",
     "PRICE": "Price"
   },
@@ -30,11 +32,23 @@
     "CATEGORIES_DESCRIPTION": "Categories allow your site and products to be visible on searches. Select the ones you think need to be associated with your site and products."
   },
   "TEXTANGULAR" : {
+    "INSERT_BUTTON": "Add",
+    "CANCEL_BUTTON": "Cancel",
     "QUOTE_BUTTON": "Annotation",
     "TITLE_BUTTON": "Title",
     "SUBTITLE_BUTTON": "Subtitle",
     "TEXT_BUTTON": "Text",
     "FOOTNOTE_BUTTON": "Small text",
-    "PRICELIST_BUTTON": "Price list"
+    "PRICELIST_BUTTON": "Price list",
+    "HIGHLIGHT_BUTTON": "Highlight"
+  },
+  "HIGHLIGHT": {
+    "INSERT": "Enter highlight details",
+    "TITLE": "Title",
+    "TITLE_PLACEHOLDER": "Enter a title for the product on sale",
+    "TEXT": "Highlight",
+    "TEXT_PLACEHOLDER": "Enter text to be highlighted",
+    "SUBTEXT": "Subtext",
+    "SUBTEXT_PLACEHOLDER": "Enter details of the highlighted product"
   }
 }

@@ -1,0 +1,41 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <b translate="HIGHLIGHT.INSERT"></b>
+    </div>
+    <div class="modal-body">
+        <form name="tableForm">
+            <div class="row ng-scope">
+                <div class="form-group col-md-12">
+                    <label translate="HIGHLIGHT.TITLE"></label><input type="text"
+                                                                      class="form-control ng-pristine ng-valid ng-touched"
+                                                                      placeholder="{{ 'HIGHLIGHT.TITLE_PLACEHOLDER' | translate }}"
+                                                                      ng-model="highlightTitle"
+                                                                      ng-change="editHighlightTitle(highlightTitle)"/>
+                </div>
+            </div>
+            <div class="row ng-scope">
+                <div class="form-group col-md-12">
+                    <label translate="HIGHLIGHT.TEXT"></label><input type="text"
+                                                                      class="form-control ng-pristine ng-valid ng-touched"
+                                                                      placeholder="{{ 'HIGHLIGHT.TEXT_PLACEHOLDER' | translate }}"
+                                                                      ng-model="highlightText"
+                                                                      ng-change="editHighlightText(highlightText)"/>
+                </div>
+            </div>
+            <div class="row ng-scope">
+                <div class="form-group col-md-12">
+                    <label translate="HIGHLIGHT.SUBTEXT"></label><input type="text"
+                                                                      class="form-control ng-pristine ng-valid ng-touched"
+                                                                      placeholder="{{ 'HIGHLIGHT.SUBTEXT_PLACEHOLDER' | translate }}"
+                                                                      ng-model="highlightSubtext"
+                                                                      ng-change="editHighlightSubtext(highlightSubtext)"/>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()" translate="TEXTANGULAR.CANCEL_BUTTON"></button>
+                <button type="submit" class="btn btn-primary" ng-click="ok()" translate="TEXTANGULAR.INSERT_BUTTON"></button>
+            </div>
+        </form>
+    </div>
+</div>

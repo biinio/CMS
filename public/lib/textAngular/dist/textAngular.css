@@ -11,6 +11,31 @@ See README.md or https://github.com/fraywing/textAngular/wiki for requirements a
 	font-size: 21px !important;;
 }
 
+.highlight-title {
+	font-size: 21px;
+	text-align: center;
+	margin-bottom: 0px;
+}
+
+.highlight-subtext {
+	font-size: 11px;
+	text-align: center;
+}
+
+.highlight-text {
+	font-size: 51px;
+	text-align: center;
+	margin-bottom: 0px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	margin: 0;
+}
+
 .ta-hidden-input {
 	width: 1px;
 	height: 1px;
