@@ -12,29 +12,45 @@
   },
   "PROFILE": {
     "FIRST_NAME": "First name",
-    "LAST_NAME" : "Last name",
-    "USER_NAME" : "Username",
+    "LAST_NAME": "Last name",
+    "USER_NAME": "Username",
     "EMAIL": "Email",
-    "PHONE":"Phone",
-    "UPLOAD_IMAGE":"Upload image"
+    "PHONE": "Phone",
+    "UPLOAD_IMAGE": "Upload image"
   },
   "PRICELIST": {
     "INSERT": "Insert price list",
     "ADD": " Add Item",
     "CURRENCY": "Currency",
     "NAME": "Name",
+    "NAME_PLACEHOLDER": "Enter product name",
+    "TITLE": "Title",
+    "TITLE_PLACEHOLDER": "Enter price list title",
     "DESCRIPTION": "Description",
+    "DESCRIPTION_PLACEHOLDER": "Enter product details",
     "PRICE": "Price"
   },
   "CATEGORY": {
     "CATEGORIES_DESCRIPTION": "Categories allow your site and products to be visible on searches. Select the ones you think need to be associated with your site and products."
   },
-  "TEXTANGULAR" : {
+  "TEXTANGULAR": {
+    "INSERT_BUTTON": "Add",
+    "CANCEL_BUTTON": "Cancel",
     "QUOTE_BUTTON": "Annotation",
     "TITLE_BUTTON": "Title",
     "SUBTITLE_BUTTON": "Subtitle",
     "TEXT_BUTTON": "Text",
     "FOOTNOTE_BUTTON": "Small text",
-    "PRICELIST_BUTTON": "Price list"
+    "PRICELIST_BUTTON": "Price list",
+    "HIGHLIGHT_BUTTON": "Highlight"
+  },
+  "HIGHLIGHT": {
+    "INSERT": "Enter highlight details",
+    "TITLE": "Title",
+    "TITLE_PLACEHOLDER": "Enter a title for the product on sale",
+    "TEXT": "Highlight",
+    "TEXT_PLACEHOLDER": "Enter text to be highlighted",
+    "SUBTEXT": "Subtext",
+    "SUBTEXT_PLACEHOLDER": "Enter details of the highlighted product"
   }
 }

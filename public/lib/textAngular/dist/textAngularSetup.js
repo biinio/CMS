@@ -45,7 +45,7 @@ angular.module('textAngularSetup', [])
         toolbar: [
             //['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
             ['h1', 'h2', 'h6', 'p', 'quote'],
-            ['insertPriceList'],
+            ['insertPriceList', 'insertHighlight'],
             //['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
             ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo'],
             //['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', 'indent', 'outdent'],
@@ -234,6 +234,10 @@ angular.module('textAngularSetup', [])
         priceList: {
             tooltip: 'Add price list',
             text: "{{ 'TEXTANGULAR.PRICELIST_BUTTON' | translate }}"
+        },
+        highlight: {
+            tooltip: 'Add highlight',
+            text: "{{ 'TEXTANGULAR.HIGHLIGHT_BUTTON' | translate }}"
         }
     })
     .factory('taToolFunctions', ['$window', 'taTranslations', function ($window, taTranslations) {
@@ -426,13 +430,20 @@ angular.module('textAngularSetup', [])
         });
         // add the Header tools
         // convenience functions so that the loop works correctly
+
+        //TODO: EDITED TO CUSTOMIZE OUR OWN HEADERS
         var _retActiveStateFunction = function (q) {
             return function () {
                 return this.$editor().queryFormatBlockState(q);
             };
         };
+
         var headerAction = function () {
             return this.$editor().wrapSelection("formatBlock", "<" + this.name.toUpperCase() + ">");
+        };
+
+        var customHeaderAction = function() {
+            return this.$editor().wrapSelection("formatBlock", "<div class='biin_" + this.name.toLowerCase() + "'>");
         };
 
         /*
@@ -449,24 +460,104 @@ angular.module('textAngularSetup', [])
         taRegisterTool('h1', {
             buttontext: taTranslations.h1.text,
             tooltiptext: taTranslations.h1.tooltip,
-            action: headerAction,
+            action: customHeaderAction,
             activeState: _retActiveStateFunction('h1')
         });
 
         taRegisterTool('h2', {
             buttontext: taTranslations.h2.text,
             tooltiptext: taTranslations.h2.tooltip,
-            action: headerAction,
+            action: customHeaderAction,
             activeState: _retActiveStateFunction('h2')
         });
 
         taRegisterTool('h6', {
             buttontext: taTranslations.h6.text,
             tooltiptext: taTranslations.h6.tooltip,
-            action: headerAction,
+            action: customHeaderAction,
             activeState: _retActiveStateFunction('h6')
         });
 
+        //TODO: EDIT HIGHLIGHT
+        taRegisterTool('insertHighlight', {
+            buttontext: taTranslations.highlight.text,
+            tooltiptext: taTranslations.highlight.tooltip,
+            action: function(promise, restoreSelection){
+                var that=this;
+
+                var modalInstance=$modal.open({
+                    templateUrl: 'lib/textAngular/dist/highlight.html',
+                    controller :function ($rootScope, $modalInstance) {
+
+                        $rootScope.invitation = {};
+
+                        $rootScope.ok = function () {
+                            $modalInstance.close($rootScope.invitation);
+                        };
+
+                        $rootScope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+
+                        $rootScope.highlightTitle = "";
+                        $rootScope.highlightText = "";
+                        $rootScope.highlightSubtext = "";
+
+                        $rootScope.editHighlightTitle = function(newTitle) {
+                            $rootScope.highlightTitle = newTitle;
+                        };
+
+                        $rootScope.editHighlightText = function(newText) {
+                            $rootScope.highlightText = newText;
+                        };
+
+                        $rootScope.editHighlightSubtext = function(newSubtext) {
+                            $rootScope.highlightSubtext = newSubtext;
+                        };
+
+                        $rootScope.getHighlightHtml = function () {
+
+                            var highlightHtml = "";
+
+                            if ($rootScope.highlightTitle != undefined)  {
+                                highlightHtml = highlightHtml.concat("<div class='highlight_title'><p>" + $rootScope.highlightTitle + "</p></div>");
+                            }
+                            if ($rootScope.highlightText != undefined) {
+                                highlightHtml = highlightHtml.concat("<div class='highlight_text'><p>" + $rootScope.highlightText + "</p></div>");
+                            }
+                            if ($rootScope.highlightSubtext != undefined) {
+                                highlightHtml = highlightHtml.concat("<div class='highlight_subtext'><p>" + $rootScope.highlightSubtext + "</p></div>");
+                            }
+
+                            if (highlightHtml != "") {
+                                return "<highlight><div class='highlight'>" + highlightHtml + "</div></highlight>";
+                            }
+                            else {
+                                return false;
+                            }
+                        };
+                    },
+
+                    size: 'lg'
+
+                });
+                //define result modal , when user complete result information
+                modalInstance.result.then(function(result){
+                    if (result) {
+                        restoreSelection();
+                        var highlightHtml = $rootScope.getHighlightHtml();
+                        promise.resolve();
+
+                        var savedSelection = rangy.saveSelection();
+                        rangy.restoreSelection(savedSelection);
+
+                        return that.$editor().wrapSelection('insertPriceList', highlightHtml);
+                    }
+                });
+                return false;
+            }
+
+        });
 
         //TODO: EDIT PRICELIST
         taRegisterTool('insertPriceList', {
@@ -482,7 +573,6 @@ angular.module('textAngularSetup', [])
                         $rootScope.invitation ={};
 
                         $rootScope.ok = function () {
-                            console.log($rootScope.invitation);
                             $modalInstance.close($rootScope.invitation);
                         };
 
@@ -494,14 +584,24 @@ angular.module('textAngularSetup', [])
 
                         $rootScope.pricedItems = [];
 
+                        $rootScope.priceListTitle = "";
+
+                        $rootScope.editTitle = function(newTitle) {
+                            $rootScope.priceListTitle = newTitle;
+                        };
+
                         $rootScope.getPriceListHtml = function () {
 
                             //TODO: Obtain appropriate translation for headers
-                            var priceListTableHeaders = "<thead><tr><th>Moneda</th><th>Nombre</th><th>Descripción</th><th>Precio</th></tr></thead>";
 
-                            var pricedItemsList = priceListTableHeaders.concat("<tbody>");
+                            var priceListTableHeaders = $rootScope.priceListTitle;
+                            var pricedItemsList = "";
 
-                            var currency = '';
+                            if (priceListTableHeaders != undefined) {
+                                pricedItemsList = "<div class='listPrice_Title'><h2>" + $rootScope.priceListTitle + "</h2></div>";
+                            }
+
+                            var currency = "";
 
                             for (var index = 0; index < $rootScope.pricedItems.length; index++) {
 
@@ -521,26 +621,19 @@ angular.module('textAngularSetup', [])
                                     default:
                                         break;
                                 }
-
-                                //console.log("PRICED ITEM:" + $rootScope.pricedItems[index].name);
-                                pricedItemsList = pricedItemsList.concat("<tr>");
-                                pricedItemsList = pricedItemsList.concat("<td>" + currency + "</td>");
-                                pricedItemsList = pricedItemsList.concat("<td>" + $rootScope.pricedItems[index].name + "</td>");
-                                pricedItemsList = pricedItemsList.concat("<td>" + $rootScope.pricedItems[index].description + "</td>");
-                                pricedItemsList = pricedItemsList.concat("<td>" + $rootScope.pricedItems[index].price + "</td>");
-                                pricedItemsList = pricedItemsList.concat("</tr>");
+                                pricedItemsList = pricedItemsList.concat("<div class='listPrice'>");
+                                pricedItemsList = pricedItemsList.concat("<div class='listPrice_Left'><div class='listPrice_Left_Top'><p>" + $rootScope.pricedItems[index].name + "</p></div>");
+                                pricedItemsList = pricedItemsList.concat("<div class='listPrice_Left_Bottom'><p>" + $rootScope.pricedItems[index].description + "</p></div></div>");
+                                pricedItemsList = pricedItemsList.concat("<div class='listPrice_Right'><p>" + currency + $rootScope.pricedItems[index].price + "</p></div>");
+                                pricedItemsList = pricedItemsList.concat("</div>");
                             }
-                            pricedItemsList = pricedItemsList.concat("</tbody>");
-
                             // Add row of items into table
-                            return "<pricelist><table class='table table-bordered'>" + pricedItemsList + "</table></pricelist>";
-
+                            return "<pricelist><div class='listPrice_Table'>" + pricedItemsList + "</div></pricelist>";
                         };
 
                         $rootScope.removePricedItem = function(index) {
 
                             $rootScope.pricedItems.splice(index, 1);
-                            //console.log("textAngularSetup.PriceList: Removed priced item");
                         };
 
                         $rootScope.addPricedItem = function() {
@@ -555,8 +648,9 @@ angular.module('textAngularSetup', [])
 
                             $rootScope.pricedItems.push(newPricedItem);
                             $rootScope.count++;
-                            //console.log("textAngularSetup.PriceList: Added priced item");
                         };
+
+                        $rootScope.addPricedItem();
                     },
                     resolve: {
                         result: function () {
@@ -573,8 +667,8 @@ angular.module('textAngularSetup', [])
                         var priceListHtml = $rootScope.getPriceListHtml();
                         promise.resolve();
 
-                        //var savedSelection = rangy.saveSelection();
-                        //rangy.restoreSelection(savedSelection);
+                        var savedSelection = rangy.saveSelection();
+                        rangy.restoreSelection(savedSelection);
 
                         return that.$editor().wrapSelection('insertPriceList', priceListHtml);
 

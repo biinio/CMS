@@ -5,15 +5,15 @@
     </div>
 
     <div class="form-group col-md-2">
-        <label translate="PRICELIST.NAME"></label><input type="text" class="form-control" placeholder="Enter product name" ng-model="pricedItem.name" />
+        <label translate="PRICELIST.NAME"></label><input type="text" class="form-control" placeholder="{{ 'PRICELIST.NAME_PLACEHOLDER' | translate }}" ng-model="pricedItem.name" />
     </div>
 
     <div class="form-group col-md-5">
-        <label translate="PRICELIST.DESCRIPTION"></label><input type="text" class="form-control" placeholder="Detail product description" ng-model="pricedItem.description" />
+        <label translate="PRICELIST.DESCRIPTION"></label><input type="text" class="form-control" placeholder="{{ 'PRICELIST.DESCRIPTION_PLACEHOLDER' | translate }}" ng-model="pricedItem.description" />
     </div>
 
     <div class="form-group col-md-2">
-        <label translate="PRICELIST.PRICE"></label><input type="number" class="form-control"  placeholder="Price value" ng-model="pricedItem.price" name="price" />
+        <label translate="PRICELIST.PRICE"></label><input type="number" class="form-control"  ng-model="pricedItem.price" name="price" />
     </div>
 
     <div class="form-group col-md-1">

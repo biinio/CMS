@@ -13177,7 +13177,7 @@ Component: sidemenu.less
 }
 .objects-left-bar {
   overflow-x: hidden;
-  height: 100%;
+  height: 75%;
 }
 .objects-sidebar {
   width: 220px;
@@ -13330,6 +13330,9 @@ Component: elements.less
 }
 .img-block-buttons:hover .btnDelete {
   display: block;
+}
+.section-margin {
+  margin-bottom: 20px;
 }
 .moduleTitle {
   overflow: hidden;
@@ -13553,6 +13556,12 @@ Component: elements.less
 .img-profile {
   height: 150px;
   width: 150px;
+}
+.column-margin {
+  margin: 20px;
+}
+.modal-size {
+  height: 600px;
 }
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');
