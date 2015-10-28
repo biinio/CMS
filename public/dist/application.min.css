@@ -13130,7 +13130,7 @@ Component: sidemenu.less
 }
 .list-items-side-menu {
   width: 100%;
-  height: 60px;
+  height: 70px;
   position: relative;
 }
 .list-items-side-menu .btnDelete {
