@@ -23,7 +23,8 @@
           horizontal: false,
           isFloat: false,
           asideHover: false,
-          theme: null
+          theme: 'themes/theme-e.css'
+            //theme: null
         },
         useFullLayout: false,
         hiddenFooter: false,
