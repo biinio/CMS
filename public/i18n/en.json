@@ -52,5 +52,17 @@
     "TEXT_PLACEHOLDER": "Enter text to be highlighted",
     "SUBTEXT": "Subtext",
     "SUBTEXT_PLACEHOLDER": "Enter details of the highlighted product"
+  },
+  "LOGIN": {
+    "SIGN_IN": "SIGN IN TO CONTINUE",
+    "EMAIL_PLACEHOLDER": "Enter your e-mail address",
+    "REQUIRED": "This field is required",
+    "VALID_EMAIL": "This field must be a valid email address",
+    "PASSWORD": "Password",
+    "REMEMBER_ME": "Remember Me",
+    "FORGOT_PASSWORD": "Forgot your password?",
+    "LOGIN_BUTTON": "Login",
+    "SIGN_UP": "Need to Signup?",
+    "REGISTER_NOW": "Register Now"
   }
 }
