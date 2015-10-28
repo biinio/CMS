@@ -174,6 +174,18 @@
     "LIMITEDQTY": "Cantidad limitada",
     "LIMITEDQTY_TOOLTIPT": "Permita hacer promociones con cantidades limitadas",
     "LIMITEDQTY_PLACEHOLDER": "Cantidad **"
+  },
+  "LOGIN": {
+    "SIGN_IN": "INICIA SESIÓN PARA CONTINUAR",
+    "EMAIL_PLACEHOLDER": "Introduzca su correo electrónico",
+    "REQUIRED": "Este campo es requerido",
+    "VALID_EMAIL": "Este campo requiere un correo electrónico válido",
+    "PASSWORD": "Contraseña",
+    "REMEMBER_ME": "No cerrar sesión",
+    "FORGOT_PASSWORD": "¿Has olvidado la contraseña?",
+    "LOGIN_BUTTON": "Iniciar sesión",
+    "SIGN_UP": "¿Necesita registrarse?",
+    "REGISTER_NOW": "Regístrese ahora"
 
 
   }
