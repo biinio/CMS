@@ -16,6 +16,8 @@
     mobileTotalBiinedController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization'];
     function mobileTotalBiinedController($http, $state, $scope, Authentication, Organization) {
         var vm = this;
+        $scope.value = 0;
+
         activate();
 
         ////////////////
@@ -28,6 +30,8 @@
         $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
         $scope.currentDays = 0;
 
-
+        $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/totalbiined').success(function(data) {
+            $scope.value = data.data;
+        });
     }
 })();

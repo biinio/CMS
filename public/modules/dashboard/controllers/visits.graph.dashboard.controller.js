@@ -25,12 +25,13 @@
             $scope.organizationService = Organization;
         }
 
-        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-        $scope.currentDays = 0;
-
-        $scope.$on('organizationsChanged', function(orgId) {
+        $scope.$on('organizationChanged',function(){
+            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             $scope.getChartData($scope.currentDays);
         });
+
+        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+        $scope.currentDays = 0;
 
         $scope.firstCriteria = "Visits";
         $scope.secondCriteria = "Notifications";

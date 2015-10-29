@@ -32,38 +32,40 @@
             $scope.getChartData($scope.currentDays);
         });
 
-        $scope.getChartData = function ( days )
-        {
-            $scope.options = {
-                chart: {
-                    type: 'pieChart',
-                    height: 250,
-                    x: function(d){return d.key;},
-                    y: function(d){return d.y;},
-                    showLabels: true,
-                    transitionDuration: 500,
-                    labelThreshold: 0.01,
-                    legend: {
-                        margin: {
-                            top: 5,
-                            right: 35,
-                            bottom: 5,
-                            left: 0
-                        }
+        $scope.options = {
+            chart: {
+                type: 'pieChart',
+                x: function(d){return d.key;},
+                y: function(d){return d.y;},
+                showLabels: true,
+                transitionDuration: 500,
+                labelThreshold: 0.01,
+                legend: {
+                    margin: {
+                        top: 5,
+                        right: 35,
+                        bottom: 5,
+                        left: 0
                     }
                 }
-            };
+            }
+        };
 
-            $scope.data = [
-                {
-                    key: "New Visits",
-                    y: 2
-                },
-                {
-                    key: "Frecuent Client",
-                    y: 6
-                }
-            ];
+        $scope.getChartData = function ( days )
+        {
+            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/newsvsreturning').success(function(data) {
+                var information  = data.data;
+                $scope.data = [
+                    {
+                        key: "New Visits",
+                        y: information.news
+                    },
+                    {
+                        key: "Frecuent Client",
+                        y: information.returning
+                    }
+                ];
+            });
         };
 
         $scope.changeChartRange = function( days ){
