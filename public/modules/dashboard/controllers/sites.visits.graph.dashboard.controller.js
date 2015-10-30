@@ -27,11 +27,6 @@
 
         $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
         $scope.currentDays = 0;
-
-        $scope.$on('organizationsChanged', function(orgId) {
-            $scope.getChartData($scope.currentDays);
-        });
-
         $scope.options = {
             chart: {
                 type: 'pieChart',
@@ -50,6 +45,16 @@
                 }
             }
         };
+
+
+        $scope.$on('organizationChanged',function(){
+            $scope.getChartData($scope.currentDays);
+        });
+
+        $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
+            $scope.changeChartRange($scope.currentDays);
+        });
+
 
         $scope.getChartData = function ( days )
         {

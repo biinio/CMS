@@ -26,11 +26,13 @@
         }
 
         $scope.$on('organizationChanged',function(){
-            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             $scope.getChartData($scope.currentDays);
         });
 
-        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+        $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
+            $scope.changeChartRange($scope.currentDays);
+        });
+
         $scope.currentDays = 0;
 
         $scope.firstCriteria = "Visits";
@@ -45,8 +47,6 @@
         {
             $scope.getChartData($scope.currentDays);
         };
-
-
 
         function getDateString(date) {
             var dd = date.getDate();
@@ -73,7 +73,7 @@
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/notifications', {
                 headers: {
-                    organizationid: $scope.organizationId,
+                    organizationid: $scope.organizationService.selectedOrganization.identifier,
                     endDate: getDateString(today),
                     startDate: getDateString(previusDate)
                 }
@@ -81,7 +81,7 @@
 
                 $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/visits', {
                     headers: {
-                        organizationid: $scope.organizationId,
+                        organizationid: $scope.organizationService.selectedOrganization.identifier,
                         endDate: getDateString(today),
                         startDate: getDateString(previusDate)
                     }

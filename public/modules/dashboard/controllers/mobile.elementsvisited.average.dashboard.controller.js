@@ -18,22 +18,37 @@
         var vm = this;
         $scope.value = 0;
 
+        $scope.currentDays = 0;
+
         activate();
 
         ////////////////
-
         function activate() {
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
         }
 
-        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-        $scope.currentDays = 0;
 
-        $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/visitedelements').success(function(data) {
-            $scope.value = data.data;
+        $scope.$on('organizationChanged',function(){
+            $scope.getChartData($scope.currentDays);
         });
 
 
+        $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
+            $scope.changeChartRange($scope.currentDays);
+        });
+        $scope.getChartData = function ( days )
+        {
+            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/visitedelements').success(function(data) {
+                $scope.value = data.data;
+            });
+        };
+
+        $scope.changeChartRange = function( days ){
+            $scope.getChartData(days);
+            $scope.currentDays = days;
+        };
+
+        $scope.changeChartRange(30);
     }
 })();

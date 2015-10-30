@@ -23,7 +23,8 @@
         }
 
         $scope.changeChartRange = function (numberDays) {
-            $scope.$broadcast('Biin: Days Range Changed')
+            if(Number.isInteger(numberDays))
+            $scope.$broadcast('Biin: Days Range Changed', numberDays);
         }
     }
 })();
