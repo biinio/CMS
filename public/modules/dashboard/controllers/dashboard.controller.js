@@ -21,5 +21,10 @@
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
         }
+
+        $scope.changeChartRange = function (numberDays) {
+            if(Number.isInteger(numberDays))
+                $scope.$broadcast('Biin: Days Range Changed', numberDays);
+        }
     }
 })();

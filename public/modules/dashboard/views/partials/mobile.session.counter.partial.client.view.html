@@ -1,7 +1,11 @@
-<div ng-controller="mobileSessionsController" class="panel bg-info-light pt b0 widget">
-    <div class="ph"><em class="icon-cloud-upload fa-lg pull-right"></em>
-        <div class="h2 mt0">0</div>
-        <div class="text-uppercase">Mobile Sessions</div>
+<div ng-controller="mobileSessionsController" class="panel widget bg-primary">
+    <div class="row row-table">
+        <div class="col-xs-4 text-center bg-primary-dark pv-lg">
+            <em class="icon-cloud-upload fa-3x"></em>
+        </div>
+        <div class="col-xs-8 pv-lg">
+            <div class="h2 mt0">{{value}}</div>
+            <div class="text-uppercase">Mobile Sessions</div>
+        </div>
     </div>
-    <div sparkline="" data-type="line" data-width="100%" data-height="75px" data-line-color="{{colorByName('info')}}" data-chart-range-min="0" data-fill-color="{{colorByName('info')}}" data-spot-color="{{colorByName('info')}}" data-min-spot-color="{{colorByName('info')}}" data-max-spot-color="{{colorByName('info')}}" data-highlight-spot-color="{{colorByName('info')}}" data-highlight-line-color="{{colorByName('info')}}" values="2,5,3,7,4,5" style="margin-bottom: -2px" data-resize="true"></div>
 </div>
