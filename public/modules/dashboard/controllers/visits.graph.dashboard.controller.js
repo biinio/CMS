@@ -30,7 +30,7 @@
         });
 
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
-            $scope.changeChartRange($scope.currentDays);
+            $scope.changeChartRange(numberdays);
         });
 
         $scope.currentDays = 0;

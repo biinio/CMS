@@ -34,8 +34,9 @@
 
 
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
-            $scope.changeChartRange($scope.currentDays);
+            $scope.changeChartRange(numberdays);
         });
+
         $scope.getChartData = function ( days )
         {
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/sessions').success(function(data) {
