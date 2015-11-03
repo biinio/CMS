@@ -49,7 +49,7 @@ angular.module('textAngularSetup', [])
             //['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
             ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo'],
             //['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', 'indent', 'outdent'],
-            ['indent', 'outdent'],
+            //['indent', 'outdent'],
             //['html', 'insertImage', 'insertLink', 'insertVideo', 'wordcount', 'charcount']
             ['insertLink', 'wordcount', 'charcount']
         ],

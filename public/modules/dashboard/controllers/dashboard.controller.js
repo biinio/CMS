@@ -10,16 +10,22 @@
         .module('dashboard')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization'];
-    function DashboardController($http, $state, $scope, Authentication, Organization) {
+    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
+    function DashboardController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
         var vm = this;
+        $scope.authentication = Authentication;
+        $scope.organizationService = Organization;
+        $scope.globalFilters = GlobalFilters;
         activate();
 
         ////////////////
 
         function activate() {
-            $scope.authentication = Authentication;
-            $scope.organizationService = Organization;
+
+        }
+
+        $scope.changeChartRange = function (numberDays) {
+            $scope.globalFilters.changeDateRange(numberDays);
         }
     }
 })();

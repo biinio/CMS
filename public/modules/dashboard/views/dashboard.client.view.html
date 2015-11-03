@@ -1,57 +1,84 @@
+<h3>
+    <!-- START Language list-->
+    <div class="pull-right">
+        <div dropdown="" is-open="language.listIsOpen" class="btn-group">
+            <button type="button" dropdown-toggle="" class="btn btn-default">{{language.selected}}<span class="caret"></span></button>
+            <ul role="menu" class="dropdown-menu dropdown-menu-right animated fadeInUpShort">
+                <li ng-repeat="(localeId, langName) in language.available">
+                    <a ng-click="language.set(localeId, $event)" href="#">{{langName}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- END Language list    -->
+    Dashboard
+    <small>{{ 'dashboard.WELCOME' | translate:{ appName: app.name } }} !</small>
+</h3>
 <div ng-controller="DashboardController as dashboard" class="block-center">
     <div>
-        <h2 class="titleDashboard">Dashboard</h2>
+        <div class="panel panel-default">
+            <div class="panel-wrapper">
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        Filters
+                        <label>Sites:</label>
+                        <select ng-model="filterSite">
+                            <option ng-repeat="site in organizationService.selectedOrganization.sites" ng-value="site.identifier">{{site.title1}}</option>
+                        </select>
+                        <div>{{filterSite}}</div>
+                        <!--<div dropdown="" is-open="language.listIsOpen" class="btn-group">
+                            <button type="button" dropdown-toggle="" class="btn btn-default">{{language.selected}}<span class="caret"></span></button>
+                            <ul role="menu" class="dropdown-menu dropdown-menu-right animated fadeInUpShort">
+                                <li ng-repeat="(localeId, langName) in language.available">
+                                    <a ng-click="language.set(localeId, $event)" href="#">{{langName}}</a>
+                                </li>
+                            </ul>
+                        </div>-->
+
+                        <buttons class="pull-right">
+                            <button ng-click="changeChartRange(7)" class="btn-default">7 Days</button>
+                            <button ng-click="changeChartRange(30)" class="btn-default">30 Days	</button>
+                            <button ng-click="changeChartRange(180)" class="btn-default">6 months</button>
+                        </buttons>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="visitsGraph">
             <ng-include src="'modules/dashboard/views/partials/visits.graph.partial.client.view.html'"/>
         </div>
         <div class="mobileGraph">
+            Mobile
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="row">
-                        <div class="col-md-2">
-                            <div class="iconDashboard">
-                                <div class="iconDashboardContent">
-                                    <h4>Mobile</h4><i class="icon icon-mobile-phone"></i>
-                                </div>
-                            </div>
+                        <div class="col-md-6">
+                            <ng-include src="'modules/dashboard/views/partials/mobile.session.counter.partial.client.view.html'"/>
                         </div>
-                        <div class="col-md-10">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <ng-include src="'modules/dashboard/views/partials/mobile.session.counter.partial.client.view.html'"/>
-                                </div>
-                                <div class="col-md-6">
-                                    <ng-include src="'modules/dashboard/views/partials/mobile.biined.counter.partial.client.view.html'"/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <ng-include src="'modules/dashboard/views/partials/mobile.newvisits.average.partial.client.view.html'"/>
-                                </div>
-                                <div class="col-md-6">
-                                    <ng-include src="'modules/dashboard/views/partials/mobile.elementsvisited.average.partial.client.view.html'"/>
-                                </div>
-                            </div>
+                        <div class="col-md-6">
+                            <ng-include src="'modules/dashboard/views/partials/mobile.biined.counter.partial.client.view.html'"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ng-include src="'modules/dashboard/views/partials/mobile.newvisits.average.partial.client.view.html'"/>
+                        </div>
+                        <div class="col-md-6">
+                            <ng-include src="'modules/dashboard/views/partials/mobile.elementsvisited.average.partial.client.view.html'"/>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <ng-include src="'modules/dashboard/views/partials/mobile.visits.graph.partial.client.view.html'"/>
                 </div>
             </div>
         </div>
         <div class="localGraph">
+            Local
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="row">
-                        <div class="col-md-2">
-                            <div class="iconDashboard">
-                                <div class="iconDashboardContent">
-                                    <h4>Local</h4><i class="icon icon-shop"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <div class="row">
                                 <div class="col-md-12">
                                     <ng-include src="'modules/dashboard/views/partials/site.sessions.counter.partial.client.view.html'"/>
@@ -63,12 +90,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <ng-include src="'modules/dashboard/views/partials/site.fromvisits.graph.partial.client.view.html'"/>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <ng-include src="'modules/dashboard/views/partials/site.visits.graph.partial.client.view.html'"/>
                 </div>
             </div>

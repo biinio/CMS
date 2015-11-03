@@ -27,43 +27,50 @@
 
         $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
         $scope.currentDays = 0;
+        $scope.options = {
+            chart: {
+                type: 'pieChart',
+                x: function(d){return d.key;},
+                y: function(d){return d.y;},
+                showLabels: true,
+                transitionDuration: 500,
+                labelThreshold: 0.01,
+                legend: {
+                    margin: {
+                        top: 5,
+                        right: 35,
+                        bottom: 5,
+                        left: 0
+                    }
+                }
+            }
+        };
 
-        $scope.$on('organizationsChanged', function(orgId) {
+
+        $scope.$on('organizationChanged',function(){
             $scope.getChartData($scope.currentDays);
         });
 
+        $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
+            $scope.changeChartRange(numberdays);
+        });
+
+
         $scope.getChartData = function ( days )
         {
-            $scope.options = {
-                chart: {
-                    type: 'pieChart',
-                    height: 250,
-                    x: function(d){return d.key;},
-                    y: function(d){return d.y;},
-                    showLabels: true,
-                    transitionDuration: 500,
-                    labelThreshold: 0.01,
-                    legend: {
-                        margin: {
-                            top: 5,
-                            right: 35,
-                            bottom: 5,
-                            left: 0
-                        }
+            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/newsvsreturning').success(function(data) {
+                var information  = data.data;
+                $scope.data = [
+                    {
+                        key: "New Visits",
+                        y: information.news
+                    },
+                    {
+                        key: "Frecuent Client",
+                        y: information.returning
                     }
-                }
-            };
-
-            $scope.data = [
-                {
-                    key: "New Visits",
-                    y: 2
-                },
-                {
-                    key: "Frecuent Client",
-                    y: 6
-                }
-            ];
+                ];
+            });
         };
 
         $scope.changeChartRange = function( days ){
