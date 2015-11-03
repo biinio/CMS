@@ -7,8 +7,8 @@ var ApplicationConfiguration = (function() {
 
 	var applicationBackendURL = window.location.href.indexOf('angle-biin') > -1 ? 'https://qa-biinapp.herokuapp.com/' :
 		window.location.href.indexOf('dev') > -1 ? 'https://dev-biin-backend.herokuapp.com/' :
-			window.location.href.indexOf('qa') > -1 ?'https://qa-biinapp.herokuapp.com/' :
-				window.location.href.indexOf('demo') > -1 ? 'https://demo-biinapp.herokuapp.com/' :
+			window.location.href.indexOf('qa') > -1 ?'https://qa-biin-backend.herokuapp.com/' :
+				window.location.href.indexOf('demo') > -1 ? 'https://demo-biin-backend.herokuapp.com/' :
 					window.location.href.indexOf('production') > -1 ? 'https://biin.io/' :
 						window.location.href.indexOf('biin.io') > -1 ? 'https://biin.io/' :
 							window.location.href.indexOf('localhost') > -1 ? 'https://dev-biin-backend.herokuapp.com/' : '';
