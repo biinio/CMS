@@ -13,15 +13,15 @@
         .module('app.core')
         .directive('organizationDropdown', organizationDropDown);
 
-    organizationDropDown.$inject = ['$rootScope', '$window', '$http'];
-    function organizationDropDown ($rootScope, $window, $http) {
+    organizationDropDown.$inject = ['$rootScope', '$window', '$http', 'Authentication'];
+    function organizationDropDown ($rootScope, $window, $http, Authentication) {
         var $win = angular.element($window);
         var directive = {
             // bindToController: true,
             // controller: Controller,
             // controllerAs: 'vm',
             link: link,
-            restrict: 'EA',
+            restrict: 'EA'
             //template: '<nav class="orgDropdown" ng-transclude></nav>',
             //transclude: true
             // scope: {}
@@ -48,7 +48,9 @@
                 });
             };
 
-            scope.getOrganizations();
+            if (Authentication.user != "") {
+                scope.getOrganizations();
+            }
 
         }
 
