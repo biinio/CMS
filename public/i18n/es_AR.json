@@ -3,6 +3,10 @@
     "WELCOME": "Bienvenido a {{appName}}"
   },
   "topbar": {
+    "EDIT_PROFILE": "Editar perfil",
+    "EDIT_SOCIALMEDIA": "Manejar redes sociales",
+    "EDIT_PASSWORD": "Cambiar contraseña",
+    "SIGN_OUT": "Cerrar sesión",
     "search": {
       "PLACEHOLDER": "Escribe y presiona enter.."
     }
