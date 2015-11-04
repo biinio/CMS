@@ -1404,6 +1404,7 @@ angular.module('textAngular.taBind', ['textAngular.factories', 'textAngular.DOM'
 					/* istanbul ignore next: phantom js cannot test this for some reason */
 					var processpaste = function(text) {
 
+						 console.log(text);
 						//TODO: Clean out all html not related to BIIN
 						//console.log(text);
 						// Remove all html attributes
@@ -1559,7 +1560,7 @@ angular.module('textAngular.taBind', ['textAngular.factories', 'textAngular.DOM'
 
 							text = taSanitize(text, '', _disableSanitizer);
 
-							 console.log("Final html: " + text);
+							 //console.log("Final html: " + text);
 
 							taSelection.insertHtml(text, element[0]);
 							$timeout(function(){
