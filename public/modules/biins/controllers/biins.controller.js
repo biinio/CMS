@@ -59,7 +59,7 @@
                     orgidentifier: $scope.organizationId
                 }
             }).success(function () {
-                $http.post(ApplicationConfiguration.applicationBackendURL + 'api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.biins[$scope.selectedBiin]).success(function () {
+                $http.post(ApplicationConfiguration.applicationBackendURL + 'api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.objectsSidebarService.selectedObject).success(function () {
                     console.log("success");
                 }).error(function (err) {
                     console.log(err);

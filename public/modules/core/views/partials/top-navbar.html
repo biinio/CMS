@@ -91,12 +91,12 @@
             </li>
         </ul>
         <ul class="nav navbar-nav" data-ng-show="authentication.user">
-            <li class="dropdown" dropdown organization-dropdown="">
+            <li class="dropdown" dropdown>
                 <a href class="dropdown-toggle" dropdown-toggle>
                     <span ng-bind="organizationService.selectedOrganization.name"></span>
                     <b class="caret"></b>
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu organization-dropdown-scroll">
                     <li ng-repeat="organization in organizationService.organizationsList" ng-click="organizationService.setSelectedOrganization($index)">
                         <a>{{organization.name}}</a>
                     </li>
