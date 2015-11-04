@@ -5,8 +5,8 @@ module.exports = {
 	assets: {
 		lib: {
 			css: [
-				// 'public/lib/bootstrap/dist/css/bootstrap.min.css',
-				// 'public/lib/bootstrap/dist/css/bootstrap-theme.min.css',
+				// 'public/lib/bootstrap/dist/css/bootstrap.css',
+				// 'public/lib/bootstrap/dist/css/bootstrap-theme.css',
 			],
 			js: [
 				'public/lib/jquery/dist/jquery.js',
@@ -28,10 +28,51 @@ module.exports = {
 				'public/lib/oclazyload/dist/ocLazyLoad.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
 				'public/lib/angular-loading-bar/build/loading-bar.js',
-				'public/lib/jquery.browser/dist/jquery.browser.min.js'
+				'public/lib/jquery.browser/dist/jquery.browser.js',
+				'public/lib/angularjs-toaster/toaster.js',
+				'public/lib/node-uuid/uuid.js',
+				'public/lib/animo.js/animo.js',
+				'public/lib/textAngular/dist/textAngular.js',
+				'public/lib/textAngular/dist/textAngular-rangy.min.js',
+				'public/lib/textAngular/dist/textAngularSetup.js',
+				'public/lib/textAngular/dist/textAngular-sanitize.js',
+				'public/lib/underscore/underscore.js',
+				'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.js',
+				'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput-angular.js',
+				'public/lib/angular-bind-html-compile/angular-bind-html-compile.js',
+				'public/lib/angular-moment/angular-moment.js',
+				'public/lib/angular-datepicker/dist/angular-datepicker.js',
+				'public/lib/blueimp-canvas-to-blob/js/canvas-to-blob.min.js',
+				'public/lib/blueimp-tmpl/js/tmpl.min.js',
+				'public/lib/blueimp-load-image/js/load-image.all.min.js',
+				'public/lib/blueimp-file-upload/js/vendor/jquery.ui.widget.js',
+				'public/lib/blueimp-file-upload/js/jquery.iframe-transport.js',
+				'public/lib/blueimp-file-upload/js/jquery.fileupload.js',
+				'public/lib/blueimp-file-upload/js/jquery.fileupload-process.js',
+				'public/lib/blueimp-file-upload/js/jquery.fileupload-angular.js',
+				'public/lib/loaders.css/loaders.css.js',
+				'//maps.googleapis.com/maps/api/js',
+				'public/lib/moment/min/moment.min.js',
+				'public/lib/angular-bootstrap-slider/slider.js',
+				'public/lib/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js',
+				'public/lib/angular-dragdrop/src/angular-dragdrop.min.js',
+				'public/lib/jquery-ui/jquery-ui.js',
+				'public/lib/d3/d3.js',
+				'public/lib/nvd3/build/nv.d3.js',
+				'public/lib/angular-nvd3/dist/angular-nvd3.js'
 			]
 		},
-		css: 'public/dist/application.min.css',
+		css: [
+			'public/dist/application.min.css',
+			'public/lib/angularjs-toaster/toaster.css',
+			'public/lib/animo.js/animate+animo.css',
+			'public/lib/textAngular/dist/textAngular.css',
+			'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.css',
+			'public/lib/angular-datepicker/dist/angular-datepicker.css',
+			'public/lib/loaders.css/loaders.css',
+			'public/lib/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css',
+			'public/lib/nvd3/build/nv.d3.css'
+		],
 		js: 'public/dist/application.min.js'
 	},
 	facebook: {
