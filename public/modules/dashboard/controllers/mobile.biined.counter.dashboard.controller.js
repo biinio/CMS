@@ -13,42 +13,45 @@
         .module('dashboard')
         .controller('mobileTotalBiinedController', mobileTotalBiinedController);
 
-    mobileTotalBiinedController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization'];
-    function mobileTotalBiinedController($http, $state, $scope, Authentication, Organization) {
+    mobileTotalBiinedController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
+    function mobileTotalBiinedController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
         var vm = this;
         $scope.value = 0;
 
-        $scope.currentDays = 0;
-
         activate();
 
-        ////////////////
+
         function activate() {
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
+            $scope.globalFilters = GlobalFilters;
         }
 
-
         $scope.$on('organizationChanged',function(){
-            $scope.getChartData($scope.currentDays);
+            $scope.getChartData($scope.globalFilters.dateRange);
         });
-
 
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
-            $scope.changeChartRange($scope.currentDays);
+            $scope.changeChartRange($scope.globalFilters.dateRange);
         });
+
         $scope.getChartData = function ( days )
         {
-            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/totalbiined').success(function(data) {
-                $scope.value = data.data;
-            });
+            var filters = {};
+            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            filters.dateRange = $scope.globalFilters.dateRange;
+
+            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/totalbiined',
+                { headers:{
+                    filters : JSON.stringify(filters) } } ).success(function(data) {
+                    $scope.value = data.data;
+                });
         };
 
         $scope.changeChartRange = function( days ){
             $scope.getChartData(days);
-            $scope.currentDays = days;
         };
 
-        $scope.changeChartRange(30);
+        $scope.changeChartRange($scope.globalFilters.dateRange);
     }
 })();

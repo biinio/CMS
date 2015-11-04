@@ -49,7 +49,8 @@ exports.organizationList = function (req, res) {
         brand: 1,
         description: 1,
         extraInfo: 1,
-        media: 1
+        media: 1,
+        sites:1
     }, function (err, data) {
         res.json({data: data});
     });
