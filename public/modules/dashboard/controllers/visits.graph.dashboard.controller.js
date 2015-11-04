@@ -13,8 +13,8 @@
         .module('dashboard')
         .controller('VisitsGraphController', VisitsGraphController);
 
-    VisitsGraphController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization'];
-    function VisitsGraphController($http, $state, $scope, Authentication, Organization) {
+    VisitsGraphController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
+    function VisitsGraphController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
         var vm = this;
         activate();
 
@@ -23,6 +23,7 @@
         function activate() {
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
+            $scope.globalFilters = GlobalFilters;
         }
 
         $scope.$on('organizationChanged',function(){
