@@ -1,18 +1,31 @@
 'use strict';
 
-angular.module('app.core').service('Organization', ['$http','$rootScope',
+angular.module('app.core').service('Organization', ['$http','$rootScope', 'Authentication',
 
-	function($http, $rootScope) {
+
+	function($http, $rootScope, Authentication) {
         var selectedOrganization = {};
         var organizationsList = [];
-        var promise = $http.get('/api/organization').then(function(result) {
+
+        var promise = 'undefined';
+        if (Authentication.user != "")  {
+            promise = $http.get('/api/organization').then(function(result) {
+                    service.organizationsList = result.data.data;
+                    service.selectedOrganization = service.organizationsList[0];
+                },
+                function(){
+
+                }
+            );
+        }
+        /*var promise = $http.get('/api/organization').then(function(result) {
                 service.organizationsList = result.data.data;
                 service.selectedOrganization = service.organizationsList[0];
             },
             function(){
 
             }
-        );
+        );*/
         var service = {
             promise : promise,
             selectedOrganization : selectedOrganization,
