@@ -298,11 +298,17 @@ input[type=number]::-webkit-outer-spin-button {
     display: table;
 }
 
+.biin_p {
+    font-size: 14px;
+    font-weight: 300 !important;
+}
+
 .listPrice_Table {
-    display: table;
-    margin: 0 auto;
+    display:table;
+    margin:0 auto;
     width: 95%;
 }
+
 
 .listPrice_Title h2 {
     font-size: 25px;
@@ -331,7 +337,6 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 14px;
     font-weight: 200;
     text-align: left;
-    color: #707070;
     text-overflow: ellipsis;
     margin-top: 0px;
     margin-bottom: 10px;

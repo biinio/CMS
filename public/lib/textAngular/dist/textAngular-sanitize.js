@@ -178,7 +178,7 @@ var START_TAG_REGEXP =
 // Good source of info about elements and attributes
 // http://dev.w3.org/html5/spec/Overview.html#semantics
 // http://simon.html5.org/html-elements
-
+/*
 // Safe Void Elements - HTML5
 // http://dev.w3.org/html5/spec/Overview.html#void-elements
 var voidElements = makeMap("area,br,col,hr,img,wbr,input");
@@ -250,6 +250,73 @@ var validAttrs = angular.extend({},
                                 uriAttrs,
                                 svgAttrs,
                                 htmlAttrs);
+
+*/
+
+// Safe Void Elements - HTML5
+// http://dev.w3.org/html5/spec/Overview.html#void-elements
+    var voidElements = makeMap("br,img");
+
+// Elements that you can, intentionally, leave open (and which close themselves)
+// http://dev.w3.org/html5/spec/Overview.html#optional-tags
+    var optionalEndTagBlockElements = makeMap("li,p"),
+        optionalEndTagInlineElements = makeMap("rp,rt"),
+        optionalEndTagElements = angular.extend({},
+            optionalEndTagInlineElements,
+            optionalEndTagBlockElements);
+
+// Safe Block Elements - HTML5
+    var blockElements = angular.extend({}, optionalEndTagBlockElements, makeMap("" +
+        "blockquote,div,h1,h2,h6,ol,ul"));
+
+// Inline Elements - HTML5
+    var inlineElements = angular.extend({}, optionalEndTagInlineElements, makeMap("a,b," +
+        "br,i,img,s,strike,strong,u"));
+
+
+// Special Elements (can contain anything)
+    var specialElements = makeMap("");
+
+    var validElements = angular.extend({},
+        voidElements,
+        blockElements,
+        inlineElements,
+        optionalEndTagElements);
+
+//Attributes that have href and hence need to be sanitized
+    var uriAttrs = makeMap("href,src");
+
+    var htmlAttrs = makeMap('class');
+
+    var biinClasses = makeMap('biin_h1,biin_h2,biin_h6,highlight_subtext,highlight_text,' +
+        'highlight_title,highlight,listPrice_Right,listPrice_Left_Bottom,listPrice_Left_Top,'+
+        'listPrice_Left,listPrice,listPrice_Title,biin_html');
+
+    var validBiinClass = angular.extend({},biinClasses);
+
+// SVG attributes (without "id" and "name" attributes)
+// https://wiki.whatwg.org/wiki/Sanitization_rules#svg_Attributes
+    var svgAttrs = makeMap('accent-height,accumulate,additive,alphabetic,arabic-form,ascent,' +
+        'attributeName,attributeType,baseProfile,bbox,begin,by,calcMode,cap-height,class,color,' +
+        'color-rendering,content,cx,cy,d,dx,dy,descent,display,dur,end,fill,fill-rule,font-family,' +
+        'font-size,font-stretch,font-style,font-variant,font-weight,from,fx,fy,g1,g2,glyph-name,' +
+        'gradientUnits,hanging,height,horiz-adv-x,horiz-origin-x,ideographic,k,keyPoints,' +
+        'keySplines,keyTimes,lang,marker-end,marker-mid,marker-start,markerHeight,markerUnits,' +
+        'markerWidth,mathematical,max,min,offset,opacity,orient,origin,overline-position,' +
+        'overline-thickness,panose-1,path,pathLength,points,preserveAspectRatio,r,refX,refY,' +
+        'repeatCount,repeatDur,requiredExtensions,requiredFeatures,restart,rotate,rx,ry,slope,stemh,' +
+        'stemv,stop-color,stop-opacity,strikethrough-position,strikethrough-thickness,stroke,' +
+        'stroke-dasharray,stroke-dashoffset,stroke-linecap,stroke-linejoin,stroke-miterlimit,' +
+        'stroke-opacity,stroke-width,systemLanguage,target,text-anchor,to,transform,type,u1,u2,' +
+        'underline-position,underline-thickness,unicode,unicode-range,units-per-em,values,version,' +
+        'viewBox,visibility,width,widths,x,x-height,x1,x2,xlink:actuate,xlink:arcrole,xlink:role,' +
+        'xlink:show,xlink:title,xlink:type,xml:base,xml:lang,xml:space,xmlns,xmlns:xlink,y,y1,y2,' +
+        'zoomAndPan');
+
+    var validAttrs = angular.extend({},
+        uriAttrs,
+        //svgAttrs,
+        htmlAttrs);
 
 function makeMap(str) {
   var obj = {}, items = str.split(','), i;
@@ -550,6 +617,16 @@ function validCustomTag(tag, attrs, lkey, value){
     return false;
 }
 
+    //EDIT: Valid Biin Tag
+    /*function validBiinClass(tag) {
+        var biinRegex = /^biin/i;
+        var validClass = biinRegex.exec(tag);
+        if (validClass != null) {
+            return true;
+        }
+        return false;s
+    }*/
+
 /**
  * create an HTML/XML writer which writes to buffer
  * @param {Array} buf use buf.jain('') to get out sanitized html string
@@ -570,20 +647,45 @@ function htmlSanitizeWriter(buf, uriValidator) {
         ignore = tag;
       }
       if (!ignore && validElements[tag] === true) {
+
         out('<');
         out(tag);
-        angular.forEach(attrs, function(value, key) {
-          var lkey=angular.lowercase(key);
-          var isImage=(tag === 'img' && lkey === 'src') || (lkey === 'background');
-          if ((lkey === 'style' && (value = validStyles(value)) !== '') || validCustomTag(tag, attrs, lkey, value) || validAttrs[lkey] === true &&
-            (uriAttrs[lkey] !== true || uriValidator(value, isImage))) {
-            out(' ');
-            out(key);
-            out('="');
-            out(encodeEntities(value));
-            out('"');
+
+          //Don't attach attributes if tag is p
+          if (tag != 'p') {
+              angular.forEach(attrs, function (value, key) {
+                  var lkey = angular.lowercase(key);
+                  var isImage = (tag === 'img' && lkey === 'src') || (lkey === 'background');
+                  if ((lkey === 'style' && (value = validStyles(value)) !== '') || validCustomTag(tag, attrs, lkey, value) || validAttrs[lkey] === true &&
+                      (uriAttrs[lkey] !== true || uriValidator(value, isImage))) {
+
+                      // Only attach the class, if it's a valid biin class
+                      if (lkey == 'class') {
+                          if (validBiinClass[value] === true) {
+                              out(' ');
+                              out(key);
+                              out('="');
+                              out(encodeEntities(value));
+                              out('"');
+                          }
+                          else {
+                              out(' ');
+                              out(key);
+                              out('="');
+                              out('biin_p');
+                              out('"');
+                          }
+                      }
+                      else {
+                          out(' ');
+                          out(key);
+                          out('="');
+                          out(encodeEntities(value));
+                          out('"');
+                      }
+                  }
+              });
           }
-        });
         out(unary ? '/>' : '>');
       }
     },
