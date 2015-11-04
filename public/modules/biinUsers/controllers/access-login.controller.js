@@ -15,7 +15,10 @@
         var vm = this;
         $scope.authentication = Authentication;
 
-        if ($scope.authentication.user) $location.path('/dashboard');
+        if ($scope.authentication.user) {
+            $location.path('/dashboard');
+            scope.getOrganizations();
+        }
 
         activate();
 
