@@ -13106,6 +13106,38 @@ body .sk-spinner-wordpress .sk-inner-circle {
   }
 }
 /* ========================================================================
+   Component: row-extra.less
+ ========================================================================== */
+.container-sm {
+  max-width: 750px;
+  width: auto;
+}
+.container-md {
+  max-width: 970px;
+  width: auto;
+}
+.container-lg {
+  max-width: 1170px;
+  width: auto;
+}
+.row-table {
+  display: table;
+  table-layout: fixed;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+.row-table > [class*="col-"] {
+  display: table-cell;
+  float: none;
+  table-layout: fixed;
+  vertical-align: middle;
+}
+.row-flush > [class*="col-"] {
+  padding-left: 0;
+  padding-right: 0;
+}
+/* ========================================================================
 Component: sidemenu.less
  ========================================================================== */
 .sidemenu-object {
@@ -13130,7 +13162,7 @@ Component: sidemenu.less
 }
 .list-items-side-menu {
   width: 100%;
-  height: 60px;
+  height: 70px;
   position: relative;
 }
 .list-items-side-menu .btnDelete {
@@ -13177,7 +13209,7 @@ Component: sidemenu.less
 }
 .objects-left-bar {
   overflow-x: hidden;
-  height: 100%;
+  height: 88%;
 }
 .objects-sidebar {
   width: 220px;
@@ -13330,6 +13362,9 @@ Component: elements.less
 }
 .img-block-buttons:hover .btnDelete {
   display: block;
+}
+.section-margin {
+  margin-bottom: 20px;
 }
 .moduleTitle {
   overflow: hidden;
@@ -13553,6 +13588,12 @@ Component: elements.less
 .img-profile {
   height: 150px;
   width: 150px;
+}
+.column-margin {
+  margin: 20px;
+}
+.modal-size {
+  height: 600px;
 }
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');

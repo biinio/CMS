@@ -18,6 +18,9 @@
          *  Functions
          =============================================================================================================*/
 
+        $scope.objectsSidebarService = ObjectsSidebar;
+        $scope.objectsSidebarService.enableAddButton = false;
+
         $scope.getSiteName = function (identifier) {
             var site = _.findWhere($scope.sites, {identifier: identifier});
             if (site) {
@@ -81,10 +84,10 @@
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.sidebarTemplate =
             "<div class='col-md-12 leftInformationArea'>" +
-            "<label class='title-sidebar-object'>{{item.name}}</label>" +
+            "<label class='title-sidebar-object moduleTitle'>{{item.name}}</label>" +
             "<div class='body-sidebar-object'>" +
-            "<localization style='display: block'></localization>" +
-            "<p>{{item.status}}</p>" +
+            "<localization class='moduleTitle' style='display: block'></localization>" +
+            "<p class='moduleTitle'>{{item.status}}</p>" +
             "</div>" +
             "</div>";
 

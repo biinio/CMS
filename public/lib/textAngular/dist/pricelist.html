@@ -4,13 +4,28 @@
     </div>
     <div class="modal-body">
         <form name="tableForm">
-            <button class="btn btn-default" ng-click="addPricedItem()" translate="PRICELIST.ADD"></button>
+            <div class="row ng-scope">
+                <div class="form-group col-md-12">
+                    <label translate="HIGHLIGHT.TITLE"></label><input type="text"
+                                                                      class="form-control ng-pristine ng-valid ng-touched"
+                                                                      placeholder="{{ 'PRICELIST.TITLE_PLACEHOLDER' | translate }}"
+                                                                      ng-model="priceListTitle"
+                                                                      ng-change="editTitle(priceListTitle)"/>
+                </div>
+            </div>
+
             <div ng-repeat="pricedItem in pricedItems" ng-include="'/lib/textAngular/dist/priceditem.html'">
             </div>
 
+            <div class="row ng-scope">
+                <div class="form-group col-md-10">
+                <button class="btn btn-default" ng-click="addPricedItem()" translate="PRICELIST.ADD"></button>
+                </div>
+            </div>
+
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-                <button type="submit" class="btn btn-primary" ng-click="ok()">Send</button>
+                <button type="button" class="btn btn-default" ng-click="cancel()" translate="TEXTANGULAR.CANCEL_BUTTON"></button>
+                <button type="submit" class="btn btn-primary" ng-click="ok()" translate="TEXTANGULAR.INSERT_BUTTON"></button>
             </div>
         </form>
     </div>

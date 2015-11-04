@@ -7,32 +7,35 @@
          </a>
       </div>
       <div class="panel-body">
-         <p class="text-center pv">SIGN IN TO CONTINUE.</p>
+         <p class="text-center pv" translate="LOGIN.SIGN_IN"></p>
          <form role="form" ng-submit="login.login()" name="login.loginForm" novalidate="" class="form-validate mb-lg">
             <div class="form-group has-feedback">
-               <input id="exampleInputEmail1" type="email" name="account_email" placeholder="Enter email" autocomplete="off" ng-model="login.account.email" required="" class="form-control" />
+               <input id="exampleInputEmail1" type="email" name="account_email" placeholder="{{ 'LOGIN.EMAIL_PLACEHOLDER' | translate }}" autocomplete="off" ng-model="login.account.email" required="" class="form-control" />
                <span class="fa fa-envelope form-control-feedback text-muted"></span>
-               <span ng-show="login.loginForm.account_email.$dirty &amp;&amp; login.loginForm.account_email.$error.required" class="text-danger">This field is required</span>
-               <span ng-show="login.loginForm.account_email.$dirty &amp;&amp; login.loginForm.account_email.$error.email" class="text-danger">This field must be a valid email address</span>
+               <span ng-show="login.loginForm.account_email.$dirty &amp;&amp; login.loginForm.account_email.$error.required" class="text-danger">{{ 'LOGIN.REQUIRED' | translate }}</span>
+               <span ng-show="login.loginForm.account_email.$dirty &amp;&amp; login.loginForm.account_email.$error.email" class="text-danger">{{ 'LOGIN.VALID_EMAIL' | translate }}</span>
             </div>
             <div class="form-group has-feedback">
-               <input id="exampleInputPassword1" type="password" name="account_password" placeholder="Password" ng-model="login.account.password" required="" class="form-control" />
+               <input id="exampleInputPassword1" type="password" name="account_password" placeholder="{{ 'LOGIN.PASSWORD' | translate }}" ng-model="login.account.password" required="" class="form-control" />
                <span class="fa fa-lock form-control-feedback text-muted"></span>
-               <span ng-show="login.loginForm.account_password.$dirty &amp;&amp; login.loginForm.account_password.$error.required" class="text-danger">This field is required</span>
+               <span ng-show="login.loginForm.account_password.$dirty &amp;&amp; login.loginForm.account_password.$error.required" class="text-danger">{{ 'LOGIN.REQUIRED' | translate }}</span>
             </div>
             <div class="clearfix">
                <div class="checkbox c-checkbox pull-left mt0">
                   <label>
                      <input type="checkbox" value="" name="account_remember" ng-model="login.account.remember" />
-                     <span class="fa fa-check"></span>Remember Me</label>
+                     <span class="fa fa-check"></span>{{ 'LOGIN.REMEMBER_ME' | translate }}</label>
                </div>
-               <div class="pull-right"><a ui-sref="page.recover" class="text-muted">Forgot your password?</a>
+               <div class="pull-right"><a ui-sref="page.recover" class="text-muted">{{ 'LOGIN.FORGOT_PASSWORD' | translate }}</a>
                </div>
             </div>
-            <button type="submit" class="btn btn-block btn-primary mt-lg">Login</button>
+            <button type="submit" class="btn btn-block btn-primary mt-lg">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
          </form>
          <div ng-show="login.authMsg" class="alert alert-danger text-center">{{login.authMsg}}</div>
-         <p class="pt-lg text-center">Need to Signup?</p><a ui-sref="page.register" class="btn btn-block btn-default">Register Now</a>
+         <!-- SIGN UP SECTION -->
+         <!--
+         <p class="pt-lg text-center">{{ 'LOGIN.SIGN_UP' | translate }}</p><a ui-sref="page.register" class="btn btn-block btn-default">{{ 'LOGIN.REGISTER_NOW' | translate }}</a>
+         -->
       </div>
    </div>
    <!-- END panel-->

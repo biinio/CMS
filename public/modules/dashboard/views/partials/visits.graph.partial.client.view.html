@@ -1,0 +1,29 @@
+<div ng-controller="VisitsGraphController" ngCloack="ngCloack" class="graph listenOrgChange visitsGraphArea">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START widget-->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <!--<paneltool tool-collapse="tool-collapse" tool-refresh="traditional"></paneltool>-->
+                    <!--<div class="col-md-6">
+                        <div class="visitsCriterias">
+                            <select ng-model="firstCriteria" ng-change="firstCriteriaChange(firstCriteria)" class="form-control bootstrap-select visitsCriteria">
+                                <option value="Visits">Visits</option>
+                            </select>
+                            <select ng-model="secondCriteria" ng-change="secondCriteriaChange(secondCriteria)" class="form-control bootstrap-select visitsCriteria">
+                                <option value="Notifications">Notifications</option>
+                                <option value="None">None</option>
+                            </select>
+                        </div>
+                    </div>-->
+                </div>
+                <div class="panel-wrapper">
+                    <div class="panel-body">
+                        <nvd3 options="options" data="data" class="visitsGraph with-3d-shadow with-transitions"></nvd3>
+                    </div>
+                </div>
+            </div>
+            <!-- END widget-->
+        </div>
+    </div>
+</div>

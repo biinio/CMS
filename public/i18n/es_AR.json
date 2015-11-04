@@ -121,19 +121,72 @@
     "INSERT": "Inserte lista de precios",
     "ADD": " Agregar item",
     "CURRENCY": "Moneda",
+    "TITLE": "Título",
+    "TITLE_PLACEHOLDER": "Ingrese el título de la lista de precios",
     "NAME": "Nombre",
+    "NAME_PLACEHOLDER": "Ingrese el nombre del producto",
     "DESCRIPTION" : "Descripción",
+    "DESCRIPTION_PLACEHOLDER": "Ingrese una descripción del producto",
     "PRICE": "Precio"
   },
   "CATEGORY": {
     "CATEGORIES_DESCRIPTION": "Las categorías permiten que su sitio y sus productos aparezcan en las búsquedas. Seleccione las categorías que considere que deben ser asociados a su sitio y a sus productos."
   },
   "TEXTANGULAR" : {
+    "INSERT_BUTTON": "Insertar",
+    "CANCEL_BUTTON": "Cancelar",
     "QUOTE_BUTTON": "Anotación",
     "TITLE_BUTTON": "Título",
     "SUBTITLE_BUTTON": "Subtítulo",
     "TEXT_BUTTON": "Texto",
     "FOOTNOTE_BUTTON": "Nota pequeña",
-    "PRICELIST_BUTTON": "Lista de precios"
+    "PRICELIST_BUTTON": "Lista de precios",
+    "HIGHLIGHT_BUTTON": "Texto grande"
+  },
+  "HIGHLIGHT": {
+    "INSERT": "Inserte detalles de oferta",
+    "TITLE": "Título",
+    "TITLE_PLACEHOLDER": "Ingrese nombre de la oferta",
+    "TEXT": "Texto grande",
+    "TEXT_PLACEHOLDER": "Ingrese texto a resaltar",
+    "SUBTEXT": "Subtexto",
+    "SUBTEXT_PLACEHOLDER": "Ingrese detalles sobre la oferta",
+    "PRICE_TOOLTIP": "Precio de lista",
+    "CURRENCY": "Moneda",
+    "CURRENCY_TOOLTIP": "Seleccione la moneda",
+    "PRICESTART": "Utilizar precio 'Desde'",
+    "PRICESTART_TOOLTIP": "Se marca para especificar que el precio empieza en este monto",
+    "PERCENT": "Porcentaje",
+    "PERCENT_TOOLTIP": "Digite el porcentaje de descuento",
+    "PERCENT_PLACEHOLDER": "0%",
+    "DISCOUNT": " Monto del descuento",
+    "DISCOUNT_TOOLTIP": "Digite manualmente el monto",
+    "DISCOUNT_PLACEHOLDER": "Monto a reducir",
+    "FINALPRICE": "Precio Final",
+    "FINALPRICE_TOOLTIP": "El precio final de la promoción",
+    "FINALPRICE_PLACEHOLDER": "Precio final",
+    "VALIDSINCE": "Válido desde",
+    "VALIDSINCE_TOOLTIP": "Fecha de inicio de la promoción",
+    "VALIDSINCE_PLACEHOLDER": "Fecha de inicio **",
+    "VALIDUNTIL": "Válido hasta",
+    "VALIDUNTIL_TOOLTIP": "Fecha final de la promoción",
+    "VALIDUNTIL_PLACEHOLDER": "Fecha de expiración **",
+    "LIMITEDQTY": "Cantidad limitada",
+    "LIMITEDQTY_TOOLTIPT": "Permita hacer promociones con cantidades limitadas",
+    "LIMITEDQTY_PLACEHOLDER": "Cantidad **"
+  },
+  "LOGIN": {
+    "SIGN_IN": "INICIA SESIÓN PARA CONTINUAR",
+    "EMAIL_PLACEHOLDER": "Introduzca su correo electrónico",
+    "REQUIRED": "Este campo es requerido",
+    "VALID_EMAIL": "Este campo requiere un correo electrónico válido",
+    "PASSWORD": "Contraseña",
+    "REMEMBER_ME": "No cerrar sesión",
+    "FORGOT_PASSWORD": "¿Has olvidado la contraseña?",
+    "LOGIN_BUTTON": "Iniciar sesión",
+    "SIGN_UP": "¿Necesita registrarse?",
+    "REGISTER_NOW": "Regístrese ahora"
+
+
   }
 }
