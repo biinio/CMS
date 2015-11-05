@@ -10,12 +10,14 @@
         .module('biinUsers')
         .controller('LoginFormController', LoginFormController);
 
-    LoginFormController.$inject = ['$http', '$state','$location','$scope','Authentication'];
-    function LoginFormController($http, $state,$location,$scope,Authentication) {
+    LoginFormController.$inject = ['$http', '$state','$location','$scope','Authentication','Organization'];
+    function LoginFormController($http, $state,$location,$scope,Authentication,Organization) {
         var vm = this;
         $scope.authentication = Authentication;
 
-        if ($scope.authentication.user) $location.path('/dashboard');
+        if ($scope.authentication.user) {
+            $location.path('/dashboard');
+        }
 
         activate();
 
@@ -41,7 +43,10 @@
                     vm.authMsg = 'Incorrect credentials.';
                   }else{
                       $scope.authentication.user = response.data.account;
-                      $state.go('app.dashboard');
+                      Organization.getOrganizations().then( function(){
+                            $state.go('app.dashboard');
+                          });
+
                   }
                 }, function() {
                   vm.authMsg = 'Server Request Error';

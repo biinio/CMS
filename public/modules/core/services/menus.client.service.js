@@ -86,6 +86,7 @@ angular.module('app.core').service('Menus', [
 
 			// Push new menu item
 			this.menus[menuId].items.push({
+				//title: menuItemTitle,
 				title: menuItemTitle,
 				link: menuItemURL,
 				menuItemType: menuItemType || 'item',
@@ -106,7 +107,7 @@ angular.module('app.core').service('Menus', [
 		};
 
 		// Add submenu item object
-		this.addSubMenuItem = function(menuId, rootMenuItemURL, menuItemTitle, menuItemURL, menuItemUIRoute, isPublic, roles, position) {
+		this.addSubMenuItem = function(menuId, rootMenuItemURL, menuItemTitle, menuItemURL, menuItemUIRoute, isPublic, roles, position, translateKey) {
 			// Validate that the menu exists
 			this.validateMenuExistance(menuId);
 
@@ -121,7 +122,8 @@ angular.module('app.core').service('Menus', [
 						isPublic: ((isPublic === null || typeof isPublic === 'undefined') ? this.menus[menuId].items[itemIndex].isPublic : isPublic),
 						roles: ((roles === null || typeof roles === 'undefined') ? this.menus[menuId].items[itemIndex].roles : roles),
 						position: position || 0,
-						shouldRender: shouldRender
+						shouldRender: shouldRender,
+						translate: translateKey
 					});
 				}
 			}

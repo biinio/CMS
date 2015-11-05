@@ -3,12 +3,25 @@
     "WELCOME": "Welcome to {{appName}}"
   },
   "topbar": {
+    "EDIT_PROFILE": "Edit profile",
+    "EDIT_SOCIALMEDIA": "Manage social networks",
+    "EDIT_PASSWORD": "Change password",
+    "SIGN_OUT": "Sign out",
     "search": {
       "PLACEHOLDER": "Type and hit enter.."
     }
   },
   "sidebar": {
-    "WELCOME": "Welcome"
+    "WELCOME": "Welcome",
+    "MENU_DASHBOARD": "Dashboard",
+    "MENU_SITES": "Sites",
+    "MENU_ELEMENTS": "Elements",
+    "MENU_SHOWCASES": "Showcases",
+    "MENU_BIINS": "Biins",
+    "MENU_ADMINISTRATION": "Administration",
+    "MENU_MAINTENANCE": "Maintenance",
+    "MENU_PROFILE": "Profile",
+    "MENU_ORGANIZATIONS": "Organizations"
   },
   "PROFILE": {
     "FIRST_NAME": "First name",

@@ -3,12 +3,25 @@
     "WELCOME": "Bienvenido a {{appName}}"
   },
   "topbar": {
+    "EDIT_PROFILE": "Editar perfil",
+    "EDIT_SOCIALMEDIA": "Manejar redes sociales",
+    "EDIT_PASSWORD": "Cambiar contraseña",
+    "SIGN_OUT": "Cerrar sesión",
     "search": {
       "PLACEHOLDER": "Escribe y presiona enter.."
     }
   },
   "sidebar": {
-    "WELCOME": "Bienvenido"
+    "WELCOME": "Bienvenido",
+    "MENU_DASHBOARD": "Resumen",
+    "MENU_SITES": "Sitios",
+    "MENU_ELEMENTS": "Elementos",
+    "MENU_SHOWCASES": "Colecciones",
+    "MENU_BIINS": "Biins",
+    "MENU_ADMINISTRATION": "Administración",
+    "MENU_MAINTENANCE": "Mantenimiento",
+    "MENU_PROFILE": "Perfil",
+    "MENU_ORGANIZATIONS": "Organizaciones"
   },
   "PROFILE": {
     "FIRST_NAME": "Nombre",
@@ -186,7 +199,6 @@
     "LOGIN_BUTTON": "Iniciar sesión",
     "SIGN_UP": "¿Necesita registrarse?",
     "REGISTER_NOW": "Regístrese ahora"
-
 
   }
 }

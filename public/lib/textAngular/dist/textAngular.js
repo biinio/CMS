@@ -73,9 +73,18 @@ if(_browserDetect.webkit) {
 
 // Global to textAngular REGEXP vars for block and list elements.
 
+
 var BLOCKELEMENTS = /^(address|article|aside|audio|blockquote|canvas|dd|div|dl|fieldset|figcaption|figure|footer|form|h1|h2|h3|h4|h5|h6|header|hgroup|hr|noscript|ol|output|p|pre|section|table|tfoot|ul|video)$/i;
 var LISTELEMENTS = /^(ul|li|ol)$/i;
 var VALIDELEMENTS = /^(address|article|aside|audio|blockquote|canvas|dd|div|dl|fieldset|figcaption|figure|footer|form|h1|h2|h3|h4|h5|h6|header|hgroup|hr|noscript|ol|output|p|pre|section|table|tfoot|ul|video|li)$/i;
+
+
+	/*
+	var BLOCKELEMENTS = /^(blockquote|div|h1|h2|h3|h6|ol|p|pre|ul)$/i;
+	var LISTELEMENTS = /^(ul|li|ol)$/i;
+	var VALIDELEMENTS = /^(blockquote|div|h1|h2|h3|h6|ol|p|pre|ul|li)$/i;
+	*/
+
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim#Compatibility
 /* istanbul ignore next: trim shim for older browsers */
@@ -1394,8 +1403,35 @@ angular.module('textAngular.taBind', ['textAngular.factories', 'textAngular.DOM'
 					var _processingPaste = false;
 					/* istanbul ignore next: phantom js cannot test this for some reason */
 					var processpaste = function(text) {
+
+						 console.log(text);
+						//TODO: Clean out all html not related to BIIN
+						//console.log(text);
+						// Remove all html attributes
+						if (text && text.trim().length) {
+
+							//remove metacharset
+							text = text.replace(/<meta charset='utf-8'>/gi, "");
+
+							//Remove all styles
+							var styleAttrPattern = / style="(.*?)"/gi;
+							text = text.replace(styleAttrPattern, "");
+
+
+							var stylePattern = /<\s*style.*?>[^]+<\s*\/\s*style>/gi;
+							text = text.replace(stylePattern, "");
+
+							//Remove empty p tags
+							var pPattern = /<\s*p[^>]*><\s*\/\s*p>/gi;
+							text = text.replace(pPattern, "");
+
+							//Remove empty div tags
+							var divPattern = /<\s*div[^>]*><\s*\/\s*div>/gi;
+							text = text.replace(divPattern, "");
+						}
+
 						/* istanbul ignore else: don't care if nothing pasted */
-						if(text && text.trim().length){
+						 if(text && text.trim().length){
 							// test paste from word/microsoft product
 							if(text.match(/class=["']*Mso(Normal|List)/i)){
 								var textFragment = text.match(/<!--StartFragment-->([\s\S]*?)<!--EndFragment-->/i);
@@ -1524,6 +1560,8 @@ angular.module('textAngular.taBind', ['textAngular.factories', 'textAngular.DOM'
 
 							text = taSanitize(text, '', _disableSanitizer);
 
+							 //console.log("Final html: " + text);
+
 							taSelection.insertHtml(text, element[0]);
 							$timeout(function(){
 								ngModel.$setViewValue(_compileHtml());
@@ -1556,11 +1594,14 @@ angular.module('textAngular.taBind', ['textAngular.factories', 'textAngular.DOM'
 								_types += " " + clipboardData.types[_t];
 							}
 							/* istanbul ignore next: browser tests */
-							if (/text\/html/i.test(_types)) {
-								pastedContent = clipboardData.getData('text/html');
-							} else if (/text\/plain/i.test(_types)) {
-								pastedContent = clipboardData.getData('text/plain');
-							}
+                            if (/text\/html/i.test(_types)) {
+                                pastedContent = clipboardData.getData('text/html');
+                            }
+
+                            else if (/text\/plain/i.test(_types)) {
+                                pastedContent = clipboardData.getData('text/plain');
+                            }
+
 
 							processpaste(pastedContent);
 							e.stopPropagation();
