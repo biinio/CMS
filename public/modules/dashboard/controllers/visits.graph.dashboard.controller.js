@@ -13,8 +13,8 @@
         .module('dashboard')
         .controller('VisitsGraphController', VisitsGraphController);
 
-    VisitsGraphController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization'];
-    function VisitsGraphController($http, $state, $scope, Authentication, Organization) {
+    VisitsGraphController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
+    function VisitsGraphController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
         var vm = this;
         activate();
 
@@ -23,29 +23,25 @@
         function activate() {
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
+            $scope.globalFilters = GlobalFilters;
         }
 
         $scope.$on('organizationChanged',function(){
-            $scope.getChartData($scope.currentDays);
+            $scope.getChartData($scope.globalFilters.dateRange);
         });
 
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
-            $scope.changeChartRange(numberdays);
+            $scope.changeChartRange($scope.globalFilters.dateRange);
         });
-
-        $scope.currentDays = 0;
-
-        $scope.firstCriteria = "Visits";
-        $scope.secondCriteria = "Notifications";
 
         $scope.secondCriteriaChange = function(value)
         {
-            $scope.getChartData($scope.currentDays);
+            $scope.getChartData($scope.globalFilters.dateRange);
         };
 
         $scope.firstCriteriaChange = function(value)
         {
-            $scope.getChartData($scope.currentDays);
+            $scope.getChartData($scope.globalFilters.dateRange);
         };
 
         function getDateString(date) {
@@ -71,57 +67,50 @@
             var previusDate = new Date();
             previusDate.setTime(today.getTime() - days * 86400000);
 
+            var filters = {};
+            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            filters.dateRange = $scope.globalFilters.dateRange;
+
+
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/notifications', {
                 headers: {
-                    organizationid: $scope.organizationService.selectedOrganization.identifier,
-                    endDate: getDateString(today),
-                    startDate: getDateString(previusDate)
+                    filters : JSON.stringify(filters)
                 }
             }).success(function(dataNotifications) {
 
                 $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/visits', {
                     headers: {
-                        organizationid: $scope.organizationService.selectedOrganization.identifier,
-                        endDate: getDateString(today),
-                        startDate: getDateString(previusDate)
+                        filters : JSON.stringify(filters)
                     }
                 }).success(function(data) {
                     var visits = [];
                     var notifications =[];
-                    var keys = Object.keys(data.data);
+                    var keys = Object.keys(data);
 
                     var maxValue = 1;
                     for (var i = 0; i < keys.length; i++) {
                         var s = new Date(keys[i]);
                         visits.push({
                             x: s.getTime(),
-                            y: data.data[keys[i]]
+                            y: data[keys[i]]
                         });
                         notifications.push({
                             x: s.getTime(),
-                            y: dataNotifications.data[keys[i]]
+                            y: dataNotifications[keys[i]]
                         });
-                        if(data.data[keys[i]] > maxValue )
-                            maxValue = data.data[keys[i]];
+                        if(data[keys[i]] > maxValue )
+                            maxValue = data[keys[i]];
                     }
-                    if($scope.secondCriteria == "Notifications")
                         $scope.data = [{
                             values: visits,
                             key: 'visits',
                             color: '#006699',
                             area: true
                         },
-                            {
-                                values: notifications,
-                                key: 'Notifications',
-                                color: '#ffa500',
-                                area: true
-                            }];
-                    else
-                        $scope.data = [{
-                            values: visits,
-                            key: 'visits',
-                            color: '#006699',
+                        {
+                            values: notifications,
+                            key: 'Notifications',
+                            color: '#ffa500',
                             area: true
                         }];
 
@@ -142,7 +131,7 @@
                                 return d.y;
                             },
                             //useInteractiveGuideline: true,
-                            dispatch: {
+                           /* dispatch: {
                                 stateChange: function(e) {
                                     console.log("stateChange");
                                 },
@@ -155,7 +144,7 @@
                                 tooltipHide: function(e) {
                                     console.log("tooltipHide");
                                 }
-                            },
+                            }, */
                             xAxis: {
                                 axisLabel: 'Date',
                                 tickFormat: function(d) {
@@ -167,7 +156,7 @@
                             yAxis: {
                             },
                             callback: function(chart) {
-                                console.log("!!! lineChart callback !!!");
+                                //console.log("!!! lineChart callback !!!");
                             },
                             forceY:[0,maxValue]
                         }
