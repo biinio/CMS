@@ -18,6 +18,7 @@
 
         var vm = this;
         $scope.value = 0;
+        $scope.enoughData = false;
         activate();
 
         ////////////////
@@ -63,16 +64,19 @@
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/newsvsreturning',{ headers:{
                 filters : JSON.stringify(filters) } } ).success(function(data) {
                 var information  = data.data;
-                $scope.data = [
-                    {
-                        key: "New Visits",
-                        y: information.news
-                    },
-                    {
-                        key: "Frecuent Client",
-                        y: information.returning
-                    }
-                ];
+                $scope.enoughData = information.news || information.returning;
+                if($scope.enoughData){
+                    $scope.data = [
+                        {
+                            key: "New Visits",
+                            y: information.news
+                        },
+                        {
+                            key: "Frecuent Client",
+                            y: information.returning
+                        }
+                    ];
+                }
             });
         };
 

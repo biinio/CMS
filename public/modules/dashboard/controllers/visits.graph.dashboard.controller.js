@@ -167,10 +167,9 @@
         };
 
         $scope.changeChartRange = function( days ){
-            $scope.getChartData(days);
-            $scope.currentDays = days;
+            $scope.getChartData($scope.globalFilters.dateRange);
         };
-        $scope.changeChartRange(30);
+        $scope.changeChartRange($scope.globalFilters.dateRange);
 
     }
 })();

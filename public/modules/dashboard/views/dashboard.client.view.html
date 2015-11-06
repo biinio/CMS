@@ -20,12 +20,10 @@
             <div class="panel-wrapper">
                 <div class="panel-body">
                     <div class="col-md-12">
-                        Filters
                         <label>Sites:</label>
-                        <select ng-model="filterSite">
+                        <select ng-model="globalFilters.selectedSite">
                             <option ng-repeat="site in organizationService.selectedOrganization.sites" ng-value="site.identifier">{{site.title1}}</option>
                         </select>
-                        <div>{{filterSite}}</div>
                         <!--<div dropdown="" is-open="language.listIsOpen" class="btn-group">
                             <button type="button" dropdown-toggle="" class="btn btn-default">{{language.selected}}<span class="caret"></span></button>
                             <ul role="menu" class="dropdown-menu dropdown-menu-right animated fadeInUpShort">
@@ -48,7 +46,7 @@
             <ng-include src="'modules/dashboard/views/partials/visits.graph.partial.client.view.html'"/>
         </div>
         <div class="mobileGraph">
-            Mobile
+            <legend>Mobile</legend>
             <div class="row">
                 <div class="col-md-8">
                     <div class="row">
@@ -74,7 +72,7 @@
             </div>
         </div>
         <div class="localGraph">
-            Local
+            <legend>Local</legend>
             <div class="row">
                 <div class="col-md-8">
                     <div class="row">
