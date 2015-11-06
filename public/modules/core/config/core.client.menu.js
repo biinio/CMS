@@ -18,7 +18,7 @@
         Menus.addMenuItem('sidebar', 'Administration', 'administration', 'dropdown', null, false, null, null,'fa fa-gears', "sidebar.MENU_ADMINISTRATION");
         //this.addSubMenu   (menuId, rootMenuItemURL, menuItemTitle, menuItemURL, menuItemUIRoute, isPublic, roles, position) {
         Menus.addSubMenuItem('sidebar', 'administration', 'Profile','profile',null, false, null, null, "sidebar.MENU_PROFILE");
-        Menus.addSubMenuItem('sidebar', 'administration', 'Organizaciones','organization',null, false, null, null, "sidebar.MENU_ORGANIZATIONS");
+        Menus.addSubMenuItem('sidebar', 'administration', 'Organizations','organization',null, false, null, null, "sidebar.MENU_ORGANIZATIONS");
         Menus.addMenuItem('sidebar', 'Maintenance', 'maintenance', null, '/maintenance', false, null, null,'icon-settings',"sidebar.MENU_MAINTENANCE");
     }
 
