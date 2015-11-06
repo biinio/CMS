@@ -22,11 +22,21 @@
         ////////////////
 
         function activate() {
+            var currentOrganization = $scope.organizationService.selectedOrganization;
+            if (currentOrganization != 'undefined') {
+                var currentSites = $scope.organizationService.selectedOrganization.sites;
+            }
 
         }
 
         $scope.changeChartRange = function (numberDays) {
             $scope.globalFilters.changeDateRange(numberDays);
         }
+
+        $scope.changeSelectedSite = function (selectedSite) {
+            $scope.globalFilters.changeSelectedSite(selectedSite);
+        }
+
+
     }
 })();
