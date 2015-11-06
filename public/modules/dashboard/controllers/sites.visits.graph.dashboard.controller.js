@@ -13,20 +13,25 @@
         .module('dashboard')
         .controller('sitesPieVisitsController', sitesPieVisitsController);
 
-    sitesPieVisitsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization'];
-    function sitesPieVisitsController($http, $state, $scope, Authentication, Organization) {
+    sitesPieVisitsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
+    function sitesPieVisitsController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+
         var vm = this;
+        $scope.value = 0;
+        $scope.enoughData = false;
         activate();
 
         ////////////////
-
         function activate() {
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
+            $scope.globalFilters = GlobalFilters;
         }
 
-        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-        $scope.currentDays = 0;
+        $scope.$on('organizationChanged',function(){
+            $scope.getChartData($scope.globalFilters.dateRange);
+        });
+
         $scope.options = {
             chart: {
                 type: 'pieChart',
@@ -46,38 +51,40 @@
             }
         };
 
-
-        $scope.$on('organizationChanged',function(){
-            $scope.getChartData($scope.currentDays);
-        });
-
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
-            $scope.changeChartRange(numberdays);
+            $scope.changeChartRange($scope.globalFilters.dateRange);
         });
-
 
         $scope.getChartData = function ( days )
         {
-            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/newsvsreturning').success(function(data) {
+            var filters = {};
+            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            filters.dateRange = $scope.globalFilters.dateRange;
+
+            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/newsvsreturning',{ headers:{
+                filters : JSON.stringify(filters) } } ).success(function(data) {
                 var information  = data.data;
-                $scope.data = [
-                    {
-                        key: "New Visits",
-                        y: information.news
-                    },
-                    {
-                        key: "Frecuent Client",
-                        y: information.returning
-                    }
-                ];
+                $scope.enoughData = information.news || information.returning;
+                if($scope.enoughData){
+                    $scope.data = [
+                        {
+                            key: "New Visits",
+                            y: information.news
+                        },
+                        {
+                            key: "Frecuent Client",
+                            y: information.returning
+                        }
+                    ];
+                }
             });
         };
 
         $scope.changeChartRange = function( days ){
             $scope.getChartData(days);
-            $scope.currentDays = days;
         };
-        $scope.changeChartRange(30);
+
+        $scope.changeChartRange($scope.globalFilters.dateRange);
 
     }
 })();

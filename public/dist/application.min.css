@@ -13599,6 +13599,9 @@ Component: elements.less
 .modal-size {
   height: 600px;
 }
+.visitsvsretorning-graph {
+  min-height: 95px;
+}
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');
 }

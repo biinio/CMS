@@ -1,7 +1,12 @@
-<div ng-controller="mobilePieVisitsController" ngCloack="ngCloack" class="panel panel-default">
+<div ng-controller="mobilePieVisitsController" ngCloack="ngCloack" class="panel visitsvsretorning-graph">
     <div collapse="" class="panel-wrapper">
         <div class="panel-body">
-            <nvd3 options="options" data="data" class="with-3d-shadow with-transitions"></nvd3>
+            <div data-ng-if="enoughData">
+                <nvd3 options="options" data="data" class="with-3d-shadow with-transitions"></nvd3>
+            </div>
+            <div data-ng-if="!enoughData" class="text-center">
+                Not Enough Data
+            </div>
         </div>
     </div>
 </div>

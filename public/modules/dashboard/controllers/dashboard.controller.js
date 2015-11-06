@@ -16,6 +16,7 @@
         $scope.authentication = Authentication;
         $scope.organizationService = Organization;
         $scope.globalFilters = GlobalFilters;
+        $scope.globalFilters.dateRange = 30;
         activate();
 
         ////////////////
