@@ -16,7 +16,6 @@ angular.module('dashboard').service('GlobalFilters', ['$http','$rootScope',
 
             changeSelectedSite : function ( newSite ) {
                 this.selectedSite = newSite;
-                console.log("SITE SELECTED: " + newSite.title1);
                 $rootScope.$broadcast('Biin: Site Changed', newSite);
             }
         };

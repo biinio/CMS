@@ -70,7 +70,7 @@
             var filters = {};
             filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
             filters.dateRange = $scope.globalFilters.dateRange;
-
+            filters.siteId = $scope.globalFilters.selectedSite.identifier;
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/notifications', {
                 headers: {

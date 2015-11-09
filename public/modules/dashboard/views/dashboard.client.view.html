@@ -14,15 +14,16 @@
     Dashboard
     <small>{{ 'dashboard.WELCOME' | translate:{ appName: app.name } }} !</small>
 </h3>
-<div ng-controller="DashboardController as dashboard" class="block-center">
+<div ng-controller="DashboardController" class="block-center">
     <div>
         <div class="panel panel-default">
             <div class="panel-wrapper">
                 <div class="panel-body">
                     <div class="col-md-12">
                         <label>Sites:</label>
-                        <select ng-model="globalFilters.selectedSite" <!--ng-change="changeSelectedSite(globalFilters.selectedSite)-->">
-                            <option ng-repeat="site in organizationService.selectedOrganization.sites" ng-value="site">{{site.title1}}</option>
+
+                        <select ng-model="globalFilters.selectedSite" ng-change="changeSelectedSite()" ng-options="site.title1 for site in organizationService.selectedOrganization.sites">
+
                         </select>
                         <!--<div dropdown="" is-open="language.listIsOpen" class="btn-group">
                             <button type="button" dropdown-toggle="" class="btn btn-default">{{language.selected}}<span class="caret"></span></button>
