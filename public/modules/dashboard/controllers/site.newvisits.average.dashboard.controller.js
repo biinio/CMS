@@ -28,7 +28,7 @@
         }
 
         $scope.$on('organizationChanged',function(){
-            $scope.getChartData($scope.globalFilters.dateRange);
+            $scope.getChartData();
         });
 
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
@@ -36,17 +36,18 @@
         });
 
         $scope.$on('Biin: Site Changed', function(){
-            $scope.getChartData($scope.globalFilters.dateRange);
+            $scope.getChartData();
         });
 
 
 
-        $scope.getChartData = function ( days )
+        $scope.getChartData = function ()
         {
             var filters = {};
             filters.siteId = $scope.globalFilters.selectedSite.identifier;
             filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
             filters.dateRange = $scope.globalFilters.dateRange;
+
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/newvisits',
                 { headers:{
