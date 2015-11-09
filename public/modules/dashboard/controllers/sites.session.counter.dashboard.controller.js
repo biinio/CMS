@@ -43,7 +43,6 @@
 
         $scope.getChartData = function ( days )
         {
-
             var filters = {};
             filters.siteId = $scope.globalFilters.selectedSite.identifier;
             filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
