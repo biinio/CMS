@@ -69,7 +69,8 @@
   "GALLERY":{
     "TITLE": "Galería de imagenes",
     "SUB_TITLE": "Agregue y use las imagenes de su marca para darle identidad a su local",
-    "UPLOAD": "Subir"
+    "UPLOAD": "Subir",
+    "LOADING": "Subiendo imágenes, por favor espere..."
   },
   "SUMMARY":{
     "TITLE": "Información del elemento",
