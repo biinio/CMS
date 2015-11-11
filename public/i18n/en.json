@@ -1,6 +1,13 @@
 {
   "dashboard": {
-    "WELCOME": "Welcome to {{appName}}"
+    "TITLE": "Dashboard",
+    "WELCOME": "Welcome to {{appName}}",
+    "SITEFILTER": "Site",
+    "SESSIONS": "Sessions",
+    "NEW_VISITS": "New visits",
+    "MOBILE_SESSIONS": "Mobile sessions",
+    "AVERAGE_VISITED": "Average visited elements",
+    "TOTAL_BIINED": "Total Biined"
   },
   "topbar": {
     "EDIT_PROFILE": "Edit profile",
