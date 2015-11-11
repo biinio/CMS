@@ -44,7 +44,7 @@ angular.module('app.core').service('Organization', ['$http', '$rootScope', 'Auth
                 if (index >= 0 && index < this.organizationsList.length) {
                     this.selectedOrganization = this.organizationsList[index];
                     $rootScope.$broadcast('organizationChanged');
-                    //TODO: Test/Remove
+                    //Update selected site when organization is changed
                     $rootScope.$broadcast('changeSelectedSite');
                 }
             },
