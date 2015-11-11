@@ -18,8 +18,8 @@
         //                  menuId, menuItemTitle, menuItemURL, menuItemType, menuItemUIRoute, isPublic, roles, position,iconClass, translateKey, alert)
         Menus.addMenuItem('sidebar', 'Administration', 'profile', 'dropdown', null, false, null, null,'fa fa-gears', "sidebar.MENU_ADMINISTRATION");
         //this.addSubMenu   menuId, rootMenuItemURL, menuItemTitle, menuItemURL, menuItemUIRoute, isPublic, roles, position, translateKey
-        Menus.addSubMenuItem('sidebar', 'profile', 'Profile','profile',null, false, null, null, "sidebar.MENU_PROFILE");
-        Menus.addSubMenuItem('sidebar', 'profile', 'Organizations','organization',null, false, null, null, "sidebar.MENU_ORGANIZATIONS");
+        Menus.addSubMenuItem('sidebar', 'profile', 'Profile','profile', '/profile', false, null, null, "sidebar.MENU_PROFILE");
+        Menus.addSubMenuItem('sidebar', 'profile', 'Organizations','organization', '/organization', false, null, null, "sidebar.MENU_ORGANIZATIONS");
         Menus.addMenuItem('sidebar', 'Maintenance', 'maintenance', null, '/maintenance', false, null, null,'icon-settings',"sidebar.MENU_MAINTENANCE");
     }
 
