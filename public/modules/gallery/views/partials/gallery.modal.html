@@ -5,7 +5,7 @@
                 <div id="gallery" ng-if="loadingImages==false">
                     <div class="galleryControls">
                         <input type="text" ng-model="queryGallery" placeholder="Search" autofocus="autofocus" class="col-md-10"/>
-                        <button upload-files="#uploadGallery" class="btn btn-default col-md-2">UPLOAD</button>
+                        <button upload-files="#uploadGallery" class="btn btn-default col-md-2">{{ 'GALLERY.UPLOAD' | translate }}</button>
                         <input id="uploadGallery" type="file" name="mediaFiles" accept="image/*" multiple="true" class="hidden"/>
                     </div>
                     <div class="galleryContainer row">
@@ -26,7 +26,7 @@
                 <div id="galleryLoader" ng-if="loadingImages==true">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="loader-inner ball-grid-pulse">
+                            <div class="loader-inner ball-grid-pulse center">
                                 <div></div>
                                 <div></div>
                                 <div></div>
@@ -38,8 +38,10 @@
                                 <div></div>
                             </div>
                         </div>
-                        <div class="loading-text">
-                            <p>Loading images please wait...</p>
+                        <div class="col-md-12">
+                            <div class="loading-text">
+                                <p>{{ 'GALLERY.LOADING' | translate }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
