@@ -103,7 +103,9 @@
     "ADD": "Añadir",
     "ADD_IMAGE": "Añadir foto",
     "HIGHLIGHT": "Ofertas",
-    "CATEGORIES": "Categorías"
+    "CATEGORIES": "Categorías",
+    "CLOSE": "Cerrar",
+    "APPLY": "Aplicar"
   },
   "SITES":{
     "GENERIC.UPLOAD_IMAGE": "Actualizar Imagen",

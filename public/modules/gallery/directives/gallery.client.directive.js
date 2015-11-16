@@ -50,7 +50,7 @@
 
             scope.$watch('gallery', function(value){
                 if(value){
-                    console.log(value);
+                    //console.log(value);
                 }
             });
 
