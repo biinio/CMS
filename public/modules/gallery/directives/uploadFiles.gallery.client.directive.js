@@ -26,7 +26,7 @@
                             if(scope.onGalleryChange)
                                 scope.onGalleryChange(obj,autoInsert);
 
-                            console.log('all done: ' + xhr.status);
+                            //console.log('all done: ' + xhr.status);
                             scope.loadingImagesChange(false);
                         } else {
                             console.log('Something went terribly wrong...');

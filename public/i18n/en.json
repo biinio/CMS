@@ -103,7 +103,9 @@
     "ADD": "Add",
     "ADD_IMAGE": "Add image",
     "HIGHLIGHT": "Sales",
-    "CATEGORIES": "Categories"
+    "CATEGORIES": "Categories",
+    "CLOSE": "Close",
+    "APPLY": "Apply"
   },
   "SITES":{
     "GENERIC.UPLOAD_IMAGE": "Update image",

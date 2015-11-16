@@ -170,7 +170,25 @@
             //save sites
 
             for(var i = 0; i< $scope.sites.length; i++){
-                $scope.setShowcaseAssigned($scope.sites[i],$scope.sitesBooleanArray[i]);
+                for(var j = 0; j<$scope.sites[i].showcases.length;j++){
+
+                    var showcaseIdentifier = $scope.sites[i].showcases[j].showcaseIdentifier;
+                    var elements = [];
+                    var index = -1;
+
+                    for(var k = 0; k < $scope.objectsSidebarService.objects.length; k++){
+                        if($scope.objectsSidebarService.objects[k].identifier == showcaseIdentifier){
+                            index = k;
+                            break;
+                        }
+                    }
+                    if(index > -1){
+                        for(k = 0; k < $scope.objectsSidebarService.objects[index].elements.length; k++) {
+                            elements.push({identifier:$scope.objectsSidebarService.objects[index].elements[k].elementIdentifier});
+                        }
+                    }
+                    $scope.sites[i].showcases[j].elements=elements;
+                }
             }
 
             $http.put(ApplicationConfiguration.applicationBackendURL +'api/showcases/' + $scope.objectsSidebarService.selectedObject.identifier, {model: $scope.objectsSidebarService.selectedObject}).success(function (data) {
@@ -207,7 +225,7 @@
         };
 
         //Add element to a showcase
-        $scope.insertElementAfter = function (indexElementToDrop, position) {
+        /*$scope.insertElementAfter = function (indexElementToDrop, position) {
 
             // Deep copy
             //var elementToPush = jQuery.extend({}, $scope.elements[indexElementToDrop]);
@@ -231,7 +249,7 @@
             $scope.$digest();
             $scope.$apply();
 
-        };
+        };*/
 
         //Get the first element by position
         $scope.getFirstElementByPosition = function (element) {
