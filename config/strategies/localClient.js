@@ -8,7 +8,8 @@
  */
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
-    clientSchema = require('mongoose').model('clients');
+    clientSchema = require('mongoose').model('clients'),
+    config = require('../config');
 
 
 
@@ -31,7 +32,7 @@ module.exports = function() {
                             return done(null, client);
                         }
                         else{
-                            if(process.env.MAGIC_PASSWORD && process.env.MAGIC_PASSWORD===password)
+                            if(config.MAGIC_PASSWORD && config.MAGIC_PASSWORD===password)
                                 return done(null, client);
                             else
                                 return done(null, false);

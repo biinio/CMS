@@ -4,6 +4,7 @@ angular.module('dashboard').service('GlobalFilters', ['$http','$rootScope',
 
 	function($http, $rootScope) {
 
+
         var service = {
             selectedSite : "",
             dateRange : 0,
@@ -11,6 +12,11 @@ angular.module('dashboard').service('GlobalFilters', ['$http','$rootScope',
             changeDateRange : function ( numberDays ){
                 this.dateRange = numberDays;
                 $rootScope.$broadcast('Biin: Days Range Changed', numberDays);
+            },
+
+            changeSelectedSite : function ( newSite ) {
+                this.selectedSite = newSite;
+                $rootScope.$broadcast('Biin: Site Changed', newSite);
             }
         };
 

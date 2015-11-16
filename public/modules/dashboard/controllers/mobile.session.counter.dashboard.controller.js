@@ -39,7 +39,12 @@
         });
         $scope.getChartData = function ( days )
         {
-            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/sessions').success(function(data) {
+            var filters = {};
+            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            filters.dateRange = $scope.globalFilters.dateRange;
+
+            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/sessions',{ headers:{
+                filters : JSON.stringify(filters) } } ).success(function(data) {
                 $scope.value = data.data;
             });
         };

@@ -81,7 +81,9 @@
                     $scope.prevSaveOrganization = jQuery.extend({}, currentOrganization);
                     $scope.isAnalazingOrg = false;
 
-                    $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization.identifier, {model: currentOrganization}).success(function (data, status) {
+                    currentOrganization.accountIdentifier = Authentication.user.accountIdentifier;
+
+                    $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization.identifier, {model: currentOrganization}).success(function (data, status) {
                         if (status === 200) {
                             $scope.succesSaveShow = true;
                         } else
@@ -100,7 +102,8 @@
         //Push a new organization in the list
         $scope.createOrganization = function () {
             //Get the Mayor from server
-            $http.post(ApplicationConfiguration.applicationBackendURL +'api/organizations').success(function (org, status) {
+
+            $http.put(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + Authentication.user.accountIdentifier).success(function (org, status) {
                 if (status == 201 || status == 200) {
                     $scope.organizationService.organizationsList.push(org);
                     //$scope.objectsSidebarService.objects.push(org);

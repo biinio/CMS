@@ -1,6 +1,19 @@
 {
   "dashboard": {
-    "WELCOME": "Bienvenido a {{appName}}"
+    "TITLE": "Resumen",
+    "WELCOME": "Bienvenido a {{appName}}",
+    "SITE_FILTER": "Sitio",
+    "SESSIONS": "Sesiones",
+    "NEW_VISITS": "Nuevas visitas",
+    "MOBILE_SESSIONS": "Sesiones móviles",
+    "AVERAGE_VISITED": "Promedio de elementos visitados",
+    "TOTAL_BIINED": "Total de biins",
+    "NOT_ENOUGH_DATA": "No hay suficientes datos",
+    "MOBILE_TITLE": "Móvil",
+    "LOCAL_TITLE": "Local",
+    "FILTER_7DAYS": "7 Días",
+    "FILTER_30DAYS": "30 Días",
+    "FILTER_6MONTHS": "6 Meses"
   },
   "topbar": {
     "EDIT_PROFILE": "Editar perfil",
@@ -56,7 +69,8 @@
   "GALLERY":{
     "TITLE": "Galería de imagenes",
     "SUB_TITLE": "Agregue y use las imagenes de su marca para darle identidad a su local",
-    "UPLOAD": "Subir"
+    "UPLOAD": "Subir",
+    "LOADING": "Subiendo imágenes, por favor espere..."
   },
   "SUMMARY":{
     "TITLE": "Información del elemento",
@@ -89,7 +103,9 @@
     "ADD": "Añadir",
     "ADD_IMAGE": "Añadir foto",
     "HIGHLIGHT": "Ofertas",
-    "CATEGORIES": "Categorías"
+    "CATEGORIES": "Categorías",
+    "CLOSE": "Cerrar",
+    "APPLY": "Aplicar"
   },
   "SITES":{
     "GENERIC.UPLOAD_IMAGE": "Actualizar Imagen",

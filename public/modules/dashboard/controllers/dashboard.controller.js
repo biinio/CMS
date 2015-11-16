@@ -16,16 +16,32 @@
         $scope.authentication = Authentication;
         $scope.organizationService = Organization;
         $scope.globalFilters = GlobalFilters;
+        $scope.globalFilters.dateRange = 30;
+
         activate();
 
         ////////////////
 
         function activate() {
 
+            var currentOrganization = $scope.organizationService.selectedOrganization;
+            if (currentOrganization != 'undefined' && currentOrganization.sites.length > 0) {
+                $scope.globalFilters.selectedSite = currentOrganization.sites[0];
+            }
         }
 
         $scope.changeChartRange = function (numberDays) {
             $scope.globalFilters.changeDateRange(numberDays);
         }
+
+        $scope.changeSelectedSite = function () {
+            $scope.globalFilters.changeSelectedSite($scope.globalFilters.selectedSite);
+        }
+
+        $scope.$on('organizationChanged', function () {
+            $scope.globalFilters.changeSelectedSite($scope.organizationService.selectedOrganization.sites[0]);
+        });
+
+
     }
 })();
