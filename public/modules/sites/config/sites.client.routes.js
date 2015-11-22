@@ -12,8 +12,11 @@ angular.module('sites').config(['$stateProvider',
                 url: '/sites',
                 templateUrl: 'modules/sites/views/sites.client.view.html',
                 resolve: {
-                    organization:function( Organization ){
-                        return Organization.promise;
+                    selectedOrganization: function (Organization) {
+                        return Organization.getSelectedOrganization();
+                    },
+                    organization: function (Organization) {
+                        return Organization.getOrganizations();
                     }
                 }
             });

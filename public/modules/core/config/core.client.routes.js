@@ -27,12 +27,7 @@
             })
             .state('app.home', {
                 url: '/home',
-                templateUrl: 'modules/core/views/home.client.view.html',
-                resolve: {
-                    organization:function( Organization ){
-                        return Organization.promise;
-                    }
-                }
+                templateUrl: 'modules/core/views/home.client.view.html'
             })
             .state('appleftbar', {
                 abstract: true,
