@@ -46,7 +46,7 @@ exports.list = function(req,res){
     var data= {};
 
     //Get the Profile Information
-    client.findOne({name:req.user.name},{profilePhoto:1,displayName:1,lastName:1,name:1,emails:1,phoneNumber:1, defaultOrganization:1, accountIdentifier:1},function(err,data){
+    client.findOne({name:req.user.name},{profilePhoto:1,displayName:1,lastName:1,name:1,emails:1,phoneNumber:1, defaultOrganization:1, accountIdentifier:1, selectedOrganization:1},function(err,data){
         if(err)
             res.send(err, 500);
         else
