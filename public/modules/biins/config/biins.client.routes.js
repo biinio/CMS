@@ -12,8 +12,11 @@ angular.module('biins').config(['$stateProvider',
                 url: '/biins',
                 templateUrl: 'modules/biins/views/biins.client.view.html',
                 resolve: {
-                    organization:function( Organization ){
-                        return Organization.promise;
+                    selectedOrganization: function (Organization) {
+                        return Organization.getSelectedOrganization();
+                    },
+                    organization: function (Organization) {
+                        return Organization.getOrganizations();
                     }
                 }
             });

@@ -10,7 +10,15 @@ angular.module('dashboard').config(['$stateProvider',
         $stateProvider.
             state('app.profile', {
                 url: '/profile',
-                templateUrl: 'modules/profile/views/profile.client.view.html'
+                templateUrl: 'modules/profile/views/profile.client.view.html',
+                resolve: {
+                    selectedOrganization: function (Organization) {
+                        return Organization.getSelectedOrganization();
+                    },
+                    organization: function (Organization) {
+                        return Organization.getOrganizations();
+                    }
+                }
             });
         /*.
          state('page.signup', {
