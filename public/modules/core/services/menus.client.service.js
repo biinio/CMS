@@ -4,11 +4,14 @@
 angular.module('app.core').service('Menus', [
 
 	function() {
-		// Define a set of default roles
-		this.defaultRoles = ['*'];
+
 
 		// Define the menus object
 		this.menus = {};
+
+		/*
+		// Define a set of default roles
+		this.defaultRoles = ['*'];
 
 		// A private function for rendering decision 
 		var shouldRender = function(user) {
@@ -29,7 +32,45 @@ angular.module('app.core').service('Menus', [
 			}
 
 			return false;
+		}; */
+
+		// Define a set of default roles
+		this.defaultRoles = ['*'];
+
+		// A private function for rendering decision
+		var shouldRender = function(user) {
+			if (user) {
+				if (!!~this.roles.indexOf('*')) {
+					return true;
+				} else {
+					for (var index in user.permissions) {
+							var attr = user.permissions[index];
+							if (attr.permission === this.roles) {
+								return true;
+							}
+					}
+					return false;
+				}
+			} else {
+				return this.isPublic;
+			}
+
+			return false;
 		};
+
+		// Private function to check if menu sidebar option should be rendered
+		this.userHasValidPermit = function(roles){
+			if (roles === null || typeof roles === 'undefined') {
+				return true;
+			}
+			else if(user.role === roles) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
 
 		// Validate menu existance
 		this.validateMenuExistance = function(menuId) {
@@ -85,7 +126,7 @@ angular.module('app.core').service('Menus', [
 			this.validateMenuExistance(menuId);
 
 			// Push new menu item
-			this.menus[menuId].items.push({
+			var newItem = {
 				//title: menuItemTitle,
 				title: menuItemTitle,
 				link: menuItemURL,
@@ -100,7 +141,9 @@ angular.module('app.core').service('Menus', [
 				iconClass: iconClass || 'fa fa-file-o',
 				translate: translateKey,
 				alert: alert
-			});
+			}
+
+			this.menus[menuId].items.push(newItem);
 
 			// Return the menu object
 			return this.menus[menuId];
