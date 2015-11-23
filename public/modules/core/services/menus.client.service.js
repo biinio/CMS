@@ -126,7 +126,7 @@ angular.module('app.core').service('Menus', [
 			this.validateMenuExistance(menuId);
 
 			// Push new menu item
-			var newItem = {
+			this.menus[menuId].items.push({
 				//title: menuItemTitle,
 				title: menuItemTitle,
 				link: menuItemURL,
@@ -141,9 +141,7 @@ angular.module('app.core').service('Menus', [
 				iconClass: iconClass || 'fa fa-file-o',
 				translate: translateKey,
 				alert: alert
-			}
-
-			this.menus[menuId].items.push(newItem);
+			});
 
 			// Return the menu object
 			return this.menus[menuId];
