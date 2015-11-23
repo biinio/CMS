@@ -9,7 +9,8 @@ var passport = require('passport');
 
 var _ = require('lodash'),
     mongoose = require('mongoose'),
-    client  = mongoose.model('clients');
+    client  = mongoose.model('clients'),
+    roles  = mongoose.model('roles');
 
 
 /**
@@ -29,9 +30,25 @@ exports.loginCMS = function (req, res, next) {
                 if (err) {
                     return next(err);
                 }
-                return res.status(200).send({
-                    "account": user
-                });
+                //Get role permission
+                else if(user.role) {
+                    user = user.toObject();
+                    roles.find({
+                        "role": user.role
+                    }, {
+                        permission: 1
+                    }).lean().exec(function(err, data) {
+                        if(err)
+                            res.send(err, 500);
+                        else {
+                            user.permissions = data;
+                            return res.status(200).send({
+                                "account": user
+                            });
+                        }
+
+                    });
+                }
             });
         }
     )
@@ -46,7 +63,7 @@ exports.list = function(req,res){
     var data= {};
 
     //Get the Profile Information
-    client.findOne({name:req.user.name},{profilePhoto:1,displayName:1,lastName:1,name:1,emails:1,phoneNumber:1, defaultOrganization:1, accountIdentifier:1, selectedOrganization:1},function(err,data){
+    client.findOne({name:req.user.name},{profilePhoto:1,displayName:1,lastName:1,name:1,emails:1,phoneNumber:1, defaultOrganization:1, accountIdentifier:1, selectedOrganization:1, role:1},function(err,data){
         if(err)
             res.send(err, 500);
         else
