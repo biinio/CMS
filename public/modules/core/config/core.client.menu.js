@@ -20,7 +20,10 @@
         //this.addSubMenu   menuId, rootMenuItemURL, menuItemTitle, menuItemURL, menuItemUIRoute, isPublic, roles, position, translateKey
         Menus.addSubMenuItem('sidebar', 'profile', 'Profile','profile', '/profile', false, null, null, "sidebar.MENU_PROFILE");
         Menus.addSubMenuItem('sidebar', 'profile', 'Organizations','organization', '/organization', false, null, null, "sidebar.MENU_ORGANIZATIONS");
-        Menus.addMenuItem('sidebar', 'Maintenance', 'maintenance', null, '/maintenance', false, null, null,'icon-settings',"sidebar.MENU_MAINTENANCE");
+
+                        //(menuId, menuItemTitle, menuItemURL, menuItemType, menuItemUIRoute, isPublic, roles, position, iconClass, translateKey, alert) {
+        //Maintenance has role field: maintenance
+        Menus.addMenuItem('sidebar', 'Maintenance', 'maintenance', null, '/maintenance', false, 'maintenance', null,'icon-settings',"sidebar.MENU_MAINTENANCE");
     }
 
 })();
