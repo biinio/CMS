@@ -43,9 +43,12 @@
                     vm.authMsg = 'Incorrect credentials.';
                   }else{
                       $scope.authentication.user = response.data.account;
-                      Organization.getOrganizations().then( function(){
-                            $state.go('app.dashboard');
+                      Organization.getSelectedOrganization().then(function() {
+                          Organization.getOrganizations().then( function() {
+
+                              $state.go('app.dashboard');
                           });
+                      });
 
                   }
                 }, function() {
@@ -60,5 +63,7 @@
             }
           };
         }
+
+
     }
 })();

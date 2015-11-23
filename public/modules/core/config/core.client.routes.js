@@ -29,8 +29,11 @@
                 url: '/home',
                 templateUrl: 'modules/core/views/home.client.view.html',
                 resolve: {
-                    organization:function( Organization ){
-                        return Organization.promise;
+                    selectedOrganization: function (Organization) {
+                        return Organization.getSelectedOrganization();
+                    },
+                    organization: function (Organization) {
+                        return Organization.getOrganizations();
                     }
                 }
             })

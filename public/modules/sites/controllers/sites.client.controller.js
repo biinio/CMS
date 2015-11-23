@@ -176,7 +176,7 @@
                 }
                 else
                 {
-                    displayErrorMessage(site,"Sites Creation",status)
+                    displayErrorMessage(site,"Sites Creation",status);
                 }
             });
         };
@@ -230,8 +230,9 @@
         $scope.limitNutshell = function(){
             var value = $scope.objectsSidebarService.selectedObject.nutshell;
 
-            if(value == null)
+            if(value === null) {
                 value = "";
+            }
 
             value = value.trim();
             var words = value.split(" ");
@@ -285,7 +286,7 @@
         //Remove the media object at specific index
         $scope.removeMediaAt=function(index){
             if($scope.objectsSidebarService.selectedObject.media.length>=index)
-                $scope.objectsSidebarService.selectedObject.media.splice(index,1)
+                $scope.objectsSidebarService.selectedObject.media.splice(index,1);
         };
     }
 })();
