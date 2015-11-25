@@ -26,7 +26,7 @@
             template:
             '<div class="row">'+
                 '<div scrollbar="scrollbarOptionsStandard" class="ownedGalleryWrapper scrollbar-inner">'+
-                    '<div ng-repeat="item in media" class="img-block">'+
+                    '<div ng-repeat="item in media" class="img-block" data-drop="true"  jqyoui-droppable="{index:{{$index}}}" data-drag="true" data-jqyoui-options="{revert: \'invalid\',zIndex: 100}" jqyoui-draggable="{insertInline:true, index:{{$index}}}" ng-model="media">'+
                         '<div class="moduleWrapper img-block-buttons">'+
                             '<img ng-src="{{item.url}}" pending-indicator="pending-indicator" class="imagegallery img-responsive"/>'+
                             '<div ng-click="removeMediaAt(media.indexOf(item))" class="btnShowcasePreview icon-round-control btnDelete btn-danger btn-on-hover">'+
@@ -50,7 +50,7 @@
 
             scope.$watch('gallery', function(value){
                 if(value){
-                    console.log(value);
+                    //console.log(value);
                 }
             });
 

@@ -6,7 +6,7 @@
  * Dashboard for biin
  =========================================================*/
 
-(function() {
+/*(function() {
     'use strict';
 
     angular
@@ -84,3 +84,4 @@
 
     }
 })();
+*/

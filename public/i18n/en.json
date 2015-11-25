@@ -1,6 +1,19 @@
 {
   "dashboard": {
-    "WELCOME": "Welcome to {{appName}}"
+    "TITLE": "Dashboard",
+    "WELCOME": "Welcome to {{appName}}",
+    "SITE_FILTER": "Site",
+    "SESSIONS": "Sessions",
+    "NEW_VISITS": "New visits",
+    "MOBILE_SESSIONS": "Mobile sessions",
+    "AVERAGE_VISITED": "Average visited elements",
+    "TOTAL_BIINED": "Total Biined",
+    "NOT_ENOUGH_DATA": "Not Enough Data",
+    "MOBILE_TITLE": "Mobile",
+    "LOCAL_TITLE": "Local",
+    "FILTER_7DAYS": "7 Days",
+    "FILTER_30DAYS": "30 Days",
+    "FILTER_6MONTHS": "6 Months"
   },
   "topbar": {
     "EDIT_PROFILE": "Edit profile",
@@ -30,6 +43,108 @@
     "EMAIL": "Email",
     "PHONE": "Phone",
     "UPLOAD_IMAGE": "Upload image"
+  },
+  "ORGANIZATION":{
+    "TITLE": "Your organizations",
+    "SUB_TITLE": "Manage your organizations that are handled by Biin",
+    "ADD_NEW": "Add new",
+    "NAME": "Name",
+    "BRAND": "Brand",
+    "INFORMATION": "About",
+    "MORE_INFO": "Additional Information",
+    "ORG_ID": "Identifier"
+  },
+  "TYPE":{
+    "TITLE":"Type of element",
+    "SUB_TITLE": "Select the type that best describes your element.",
+    "INFO": "Informative",
+    "BENEFIT": "Benefits",
+    "SELECT": "Please select a type that classifies your element to continue",
+    "INFO1": "Element description",
+    "INFO_DESC": "This allows you to create information relevant to the visitors of your establishment",
+    "BENEFIT1": "Product or Sale",
+    "BENEFIT_DESC": "Informs about products, sales or coupons",
+    "IDENTIFIER": "Identifier"
+  },
+  "GALLERY":{
+    "TITLE": "Image gallery",
+    "SUB_TITLE": "Add images that will allow your establishment to be identified by your brand",
+    "UPLOAD": "Upload",
+    "LOADING": "Loading images, please wait..."
+  },
+  "SUMMARY":{
+    "TITLE": "About the element",
+    "SUB_TITLE": "Basic information and details about the element",
+    "NAME": "Basic Information",
+    "DESC": "Name and brief description, this information will display in the preview",
+    "NAME1": "Name",
+    "DESC1": "Brief description",
+    "DESC2": "More details about your product or sale",
+    "NAMEDESCRIPTION": "Name or title of your product or sale",
+    "DETAILS": "Details",
+    "DETAILS1": "Add more details about your element, i.e. lists, price lists, quotes, etc.",
+    "DTITLE": "Title",
+    "PARAGRAPH": "Paragraph",
+    "QUOTE": "Quote",
+    "LIST": "List",
+    "PRICE_LIST": "Price list",
+    "PRICE_LIST_CURRENCY": "Currency",
+    "PRICE_LIST_DESCRIPTION": "Description",
+    "PRICE_LIST_DESCRIPTION_PLACEHOLDER": "i.e. Executive Menu",
+    "PRICE_LIST_VALUE": "Value",
+    "PRICE_LIST_VALUE_PLACEHOLDER": "i.e. 100",
+    "LINK": "Link",
+    "HIGHLIGHT": "Recommended",
+    "HIGHLIGHTDESCRIPTION": "Select this option if you want this element to appear in the recommended section of Biin"
+  },
+  "GENERIC":{
+    "SEARCH_TAGS": "Search tags",
+    "SEARCH_TAGS_DESC": "Add tags that will allow your information to be found easily.",
+    "ADD": "Add",
+    "ADD_IMAGE": "Add image",
+    "HIGHLIGHT": "Sales",
+    "CATEGORIES": "Categories",
+    "CLOSE": "Close",
+    "APPLY": "Apply"
+  },
+  "SITES":{
+    "GENERIC.UPLOAD_IMAGE": "Update image",
+    "GENERIC.IDENTIFIER": "Identifier",
+    "GENERIC.SEARCH_TAGS": "Search Tags",
+    "GENERIC.SEARCH_TAGS_DESC": "Add tags that will allow your information to be found easily.",
+    "GENERIC.ADD": "Add",
+    "MENU.DETAILS": "1.Details",
+    "MENU.IMAGES": "2.Images",
+    "MENU.DESIGN": "3.Design",
+    "MENU.LOCATION": "4.Location",
+    "MENU.BEACONS": "4.Beacons",
+    "MENU.CATEGORIES": "6.Categories",
+
+    "TITLE": "Establishment Details",
+    "NAME": "Name",
+    "AT": "Located at",
+    "EMAIL": "Email",
+    "NUTSHELL": "Brief Description",
+
+    "GALLERY.TITLE": "Image Gallery",
+    "GALLERY.SUB_TITLE": "Add images that will allow your establishment to be identified by your brand",
+    "GALLERY.UPLOAD": "Upload",
+
+    "LOCATION":{
+      "TITLE": "Establishment location",
+      "SUB_TITLE": "Add information about the location of your establishment to help clients find you easily",
+      "COUNTRY": "Country",
+      "CITY": "City",
+      "STATE": "Province/State",
+      "ZIP": "Postal Code",
+      "ADDRESS": "Address 1",
+      "PHONE": "Phone",
+      "DETAIL_LOC": "Address 2",
+      "MAP_LOCATION": "Map Location",
+      "MAP_LOCATION_SUB": "Locate you establishment in the map to determine its latitude and longitude",
+      "LATITUDE": "Latitude",
+      "LONGITUDE": "Longitude"
+    }
   },
   "PRICELIST": {
     "INSERT": "Insert price list",

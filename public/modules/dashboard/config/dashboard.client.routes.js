@@ -9,8 +9,11 @@ angular.module('dashboard').config(['$stateProvider',
                 url: '/dashboard',
                 templateUrl: 'modules/dashboard/views/dashboard.client.view.html',
                 resolve: {
+                    selectedOrganization: function (Organization) {
+                        return Organization.getSelectedOrganization();
+                    },
                     organization: function (Organization) {
-                        return Organization.promise;
+                        return Organization.getOrganizations();
                     }
                 }
             });

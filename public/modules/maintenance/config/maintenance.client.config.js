@@ -12,8 +12,11 @@ angular.module('maintenance').config(['$stateProvider',
                 url: '/maintenance',
                 templateUrl: 'modules/maintenance/views/maintenance.client.view.html',
                 resolve: {
-                    organization:function( Organization ){
-                        return Organization.promise;
+                    selectedOrganization: function (Organization) {
+                        return Organization.getSelectedOrganization();
+                    },
+                    organization: function (Organization) {
+                        return Organization.getOrganizations();
                     }
                 }
             });

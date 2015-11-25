@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose'),
 	crypto = require('crypto'),
+	bcrypt = require('bcrypt'),
 	SALT_WORK_FACTOR=10;
 
 var Schema = mongoose.Schema;
@@ -18,7 +19,9 @@ var clientSchema = new Schema({
 	joinDate:{type:Date, default:""},
 	profilePhoto:{type:String, default:""},
 	defaultOrganization:{type:String,default:""},
-	accountState:{type:Boolean,default:false}
+	accountState:{type:Boolean,default:false},
+	selectedOrganization:{type:String,default:""},
+	role:{type:String,default:""}
 });
 
 
@@ -45,14 +48,21 @@ clientSchema.methods.hashPassword = function(password) {
 	}
 };
 
+
 /**
  * Create instance method for authenticating user
  */
 clientSchema.methods.authenticate = function(password,cb) {
-	if(this.password === this.hashPassword(password))
-		cb(null, false);
+	/*if(this.password === this.hashPassword(password))
+		cb(null, true);
 	else
-	    cb(null, true);
+	    cb(null, false);*/
+	bcrypt.compare(password, this.password, function(err, isMatch) {
+		if (err) return cb(err);
+		cb(null, isMatch);
+	});
 };
+
+
 
 module.exports = mongoose.model('clients',clientSchema);
