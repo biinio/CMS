@@ -72,7 +72,9 @@ var elementSchema = new Schema({
     }],
     biinedCount:{type:Number,default:0},
     sharedCount:{type:Number,default:0},
-    commentedCount:{type:Number,default:0}
+    commentedCount:{type:Number,default:0},
+
+    isReady: {type:Number, default:0}
 });
 
 module.exports = mongoose.model('elements', elementSchema);
