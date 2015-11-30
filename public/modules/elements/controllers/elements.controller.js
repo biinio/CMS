@@ -126,6 +126,8 @@
             });
         };
 
+
+
         //Select Element Type function
         $scope.selectType=function(index){
             if($scope.objectsSidebarService.selectedObject.elementType!==''+index)
@@ -146,14 +148,48 @@
                     $scope.objectsSidebarService.objects.splice(index,1);
                 }
             );
+
+            //Remove element from showcase too
+
         };
 
         //Save detail model object
         $scope.save= function(){
 
-            //TODO: Delete following line, and uncomment the next one.
-            $scope.objectsSidebarService.selectedObject.hasPrice = 0;
-            //$scope.objectsSidebarService.selectedObject.hasPrice=$scope.objectsSidebarService.selectedObject.price > 0?'1':'0';
+            // Don't do anything if there is no selected element
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
+
+            var missingMinData = false;
+
+            //Check if required data is ready for app
+            if ($scope.objectsSidebarService.selectedObject.title.trim() === ''){
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.media.length === 0){
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.subTitle.trim() === ''){
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.categories.length === 0) {
+                missingMinData = true;
+            }
+
+            if (missingMinData) {
+                $scope.objectsSidebarService.selectedObject.isReady = 0;
+                $scope.formValidation = "El sitio NO esta listo!";
+            }
+
+            else {
+                $scope.objectsSidebarService.selectedObject.isReady = 1;
+                $scope.formValidation = "El sitio esta listo!";
+            }
+
+            $scope.objectsSidebarService.selectedObject.hasPrice = $scope.objectsSidebarService.selectedObject.price > 0?'1':'0';
 
             var tags = $("#elemSearchTag").tagsinput('items');
             $scope.objectsSidebarService.selectedObject.searchTags = [];
@@ -170,6 +206,16 @@
                     $scope.succesSaveShow=true;
             });
         };
+
+        $scope.formValidation = "El sitio no esta listo.";
+
+        /*if ($scope.objectsSidebarService.selectedObject.isReady === 0) {
+            $scope.formValidation = "El sitio NO esta listo!";
+        }
+
+        else {
+            $scope.formValidation = "El sitio esta listo!";
+        }*/
 
         //Get the List of Categories
         Categories.getList().then(function(promise){
