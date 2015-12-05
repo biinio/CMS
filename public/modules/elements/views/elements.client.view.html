@@ -6,17 +6,13 @@
                 <section>
                     <div class="panel panel-default">
                         <div class="panel-body">
-
-                            <legend translate="SUMMARY.TITLE">
-
-                            </legend>
+                            <legend translate="SUMMARY.TITLE"></legend>
                             <div ng-if="myForm.$invalid || objectsSidebarService.selectedObject.categories.length == 0 || objectsSidebarService.selectedObject.media.length == 0">
                                 <label class="error-icon fa fa-minus-square enlarge-icon"></label>
                             </div>
                             <div ng-if="myForm.$valid && objectsSidebarService.selectedObject.categories.length > 0 && objectsSidebarService.selectedObject.media.length > 0">
                                 <label class="ready-icon fa fa-check-square-o enlarge-icon"></label>
                             </div>
-
                             <form name="myForm" role="form" class="form-validate">
                                 <div class="section">
                                     <div class="form-group">
