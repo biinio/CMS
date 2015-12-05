@@ -13323,9 +13323,11 @@ Component: elements.less
 }
 .ready-icon {
   color: green;
+  margin-top: -60px;
 }
 .error-icon {
   color: red;
+  margin-top: -60px;
 }
 .error-message {
   color: red;
