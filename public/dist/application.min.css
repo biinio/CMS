@@ -13317,6 +13317,20 @@ Component: sidemenu.less
 /* ========================================================================
 Component: elements.less
  ========================================================================== */
+.enlarge-icon {
+  font-size: 18px !important;
+  float: right;
+}
+.ready-icon {
+  color: green;
+}
+.error-icon {
+  color: red;
+}
+.error-message {
+  color: red;
+  font-size: 12px;
+}
 .imagegallery {
   height: 100px;
   width: 100px;
