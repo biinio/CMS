@@ -106,6 +106,8 @@
     "CATEGORIES": "Categorías",
     "CLOSE": "Cerrar",
     "APPLY": "Aplicar"
+    "CATEGORIES_REQUIRED_MESSAGE": "Seleccione al menos una categoría",
+    "GALLERIES_REQUIRED_MESSAGE": "Agregue al menos una imagen"
   },
   "SITES":{
     "GENERIC.UPLOAD_IMAGE": "Actualizar Imagen",
