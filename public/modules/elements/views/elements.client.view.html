@@ -7,14 +7,23 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <legend translate="SUMMARY.TITLE"></legend>
-                            <form role="form" class="novalidate">
+                            <div ng-if="myForm.$invalid || objectsSidebarService.selectedObject.categories.length == 0 || objectsSidebarService.selectedObject.media.length == 0">
+                                <label class="error-icon fa fa-minus-square enlarge-icon"></label>
+                            </div>
+                            <div ng-if="myForm.$valid && objectsSidebarService.selectedObject.categories.length > 0 && objectsSidebarService.selectedObject.media.length > 0">
+                                <label class="ready-icon fa fa-check-square-o enlarge-icon"></label>
+                            </div>
+                            <form name="myForm" role="form" class="form-validate">
                                 <div class="section">
                                     <div class="form-group">
                                         <label for="title1" translate="SUMMARY.NAME1" class="control-label"></label>
                                         <input id="title1" ng-model="objectsSidebarService.selectedObject.title" name="title"
-                                               type="text" placeholder="Title **" ng-blur="validate()"
+                                               type="text" placeholder="Title **"
                                                required="required" class="form-control title-value"/>
                                         <span class="help-block" translate="SUMMARY.NAMEDESCRIPTION"></span>
+                                        <span ng-show="myForm.title.$dirty && myForm.title.$error.required"></span>
+
+
                                     </div>
                                     <div class="form-group">
                                         <span class= "checkbox-inline c-checkbox">
@@ -36,7 +45,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="elemSearchTag" translate="GENERIC.SEARCH_TAGS"></label>
-                                    <input id="elemSearchTag" type="text" tagsinput="tagsinput" ng-model="temptags" class="form-control"/>
+                                    <input id="elemSearchTag" type="text" tagsinput="tagsinput" ng-model="temptags" />
                                     <span class="help-block" translate="GENERIC.SEARCH_TAGS_DESC"></span>
                                 </div>
                             </form>
@@ -50,6 +59,7 @@
                         <div class="panel-body">
                             <legend translate="GENERIC.CATEGORIES"></legend>
                             <p translate="CATEGORY.CATEGORIES_DESCRIPTION"></p>
+                            <div class="error-message" ng-show="objectsSidebarService.selectedObject.categories.length == 0">* {{ 'GENERIC.CATEGORIES_REQUIRED_MESSAGE' | translate }}</div>
                             <div class="section">
                                 <div id="categories">
                                     <div class="container-fluid">
@@ -80,6 +90,7 @@
                         <div class="panel-body">
                             <legend translate="GALLERY.TITLE"></legend>
                             <p translate="GALLERY.SUB_TITLE"></p>
+                            <div class="error-message" ng-show="objectsSidebarService.selectedObject.media.length == 0">* {{ 'GENERIC.GALLERIES_REQUIRED_MESSAGE' | translate }}</div>
                             <gallery ng-model="objectsSidebarService.selectedObject.media" gallery="galleries"></gallery>
                         </div>
                     </div>
