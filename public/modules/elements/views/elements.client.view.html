@@ -6,7 +6,7 @@
                 <section>
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <legend translate="SUMMARY.TITLE"></legend>
+                            <legend translate="ELEMENT.TITLE"></legend>
                             <div ng-if="myForm.$invalid || objectsSidebarService.selectedObject.categories.length == 0 || objectsSidebarService.selectedObject.media.length == 0">
                                 <label class="error-icon fa fa-minus-square enlarge-icon"></label>
                             </div>
@@ -16,14 +16,10 @@
                             <form name="myForm" role="form" class="form-validate">
                                 <div class="section">
                                     <div class="form-group">
-                                        <label for="title1" translate="SUMMARY.NAME1" class="control-label"></label>
-                                        <input id="title1" ng-model="objectsSidebarService.selectedObject.title" name="title"
-                                               type="text" placeholder="{{ 'SUMMARY.NAME1_PLACEHOLDER' | translate }}"
+                                        <label for="title" translate="ELEMENT.NAME" class="control-label"></label>
+                                        <input id="title" ng-model="objectsSidebarService.selectedObject.title" name="title"
+                                               type="text" placeholder="{{ 'ELEMENT.NAME_PLACEHOLDER' | translate }}"
                                                required="required" class="form-control title-value"/>
-                                        <span class="help-block" translate="SUMMARY.NAMEDESCRIPTION"></span>
-                                        <span ng-show="myForm.title.$dirty && myForm.title.$error.required"></span>
-
-
                                     </div>
                                     <div class="form-group">
                                         <span class= "checkbox-inline c-checkbox">
@@ -32,15 +28,14 @@
                                                 <span class="fa fa-check"></span>
                                             </label>
                                         </span>
-                                        <span translate="SUMMARY.HIGHLIGHT"></span>
-                                        <span class="help-block" translate="SUMMARY.HIGHLIGHTDESCRIPTION">Turn on Hightlight to presents this element in the Hightlight section of the mobile app</span>
+                                        <span translate="ELEMENT.HIGHLIGHT"></span>
+                                        <span class="help-block" translate="ELEMENT.HIGHLIGHT_INFO">Turn on Hightlight to presents this element in the Hightlight section of the mobile app</span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="title2" translate="SUMMARY.DESC1" class="control-label"></label>
-                                        <input id="title2" ng-model="objectsSidebarService.selectedObject.subTitle" name="subTitle"
-                                               type="text" placeholder="{{ 'SUMMARY.DESC2_PLACEHOLDER' | translate }}" ng-blur="validate()"
+                                        <label for="description" translate="ELEMENT.DESCRIPTION" class="control-label"></label>
+                                        <input id="description" ng-model="objectsSidebarService.selectedObject.subTitle" name="subTitle"
+                                               type="text" placeholder="{{ 'ELEMENT.DESCRIPTION_PLACEHOLDER' | translate }}" ng-blur="validate()"
                                                required="required" class="form-control title-value"/>
-                                        <span class="help-block" translate="SUMMARY.DESC2"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -99,8 +94,8 @@
                 <section>
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <legend translate="SUMMARY.DETAILS"></legend>
-                            <p translate="SUMMARY.DETAILS1"></p>
+                            <legend translate="ELEMENT.DETAILS"></legend>
+                            <p translate="ELEMENT.DETAILS_INFO"></p>
                             <text-angular ng-model="objectsSidebarService.selectedObject.detailsHtml"></text-angular>
                         </div>
                     </div>
