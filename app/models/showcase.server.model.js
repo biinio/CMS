@@ -98,7 +98,8 @@ var showcaseObj={
         text:{type:String, default:""}
     }],
     startTime:{type:String, default:"000000"},
-    endTime:{type:String, default:"000000"}
+    endTime:{type:String, default:"000000"},
+    isReady:{type:Number,default:0}
 };
 var showcaseSchema = new Schema(showcaseObj);
 module.exports = mongoose.model('showcases', showcaseSchema);
