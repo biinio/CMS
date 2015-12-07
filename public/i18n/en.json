@@ -78,8 +78,10 @@
     "NAME": "Basic Information",
     "DESC": "Name and brief description, this information will display in the preview",
     "NAME1": "Name",
+    "NAME1_PLACEHOLDER": "Enter element name",
     "DESC1": "Brief description",
     "DESC2": "More details about your product or sale",
+    "DESC2_PLACEHOLDER": "Enter element description",
     "NAMEDESCRIPTION": "Name or title of your product or sale",
     "DETAILS": "Details",
     "DETAILS1": "Add more details about your element, i.e. lists, price lists, quotes, etc.",
@@ -194,5 +196,16 @@
     "LOGIN_BUTTON": "Login",
     "SIGN_UP": "Need to Signup?",
     "REGISTER_NOW": "Register Now"
+  },
+  "SHOWCASE": {
+    "DETAILS": "Showcase Details",
+    "DETAILS_INFO": "Add information about the showcases here",
+    "TITLE": "Title",
+    "DESCRIPTION": "Description",
+    "ELEMENTS": "Showcase Elements",
+    "ELEMENTS_INFO": "Add elements to your showcase",
+    "ASSIGNMENT": "Showcase Assignment",
+    "ASSIGNMENT_INFO": "Please select the sites that the showcase is going to be enabled",
+    "ELEMENTS_REQUIRED_MESSAGE": "Please assign at least one valid element to this showcase"
   }
 }

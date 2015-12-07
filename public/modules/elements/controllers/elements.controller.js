@@ -168,10 +168,12 @@
             //Check if required data is ready for app
             if ($scope.objectsSidebarService.selectedObject.title == null) {
                 missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.title = "";
             }
 
             else if ($scope.objectsSidebarService.selectedObject.title.trim() === ''){
                 missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.title = "";
             }
 
             if ($scope.objectsSidebarService.selectedObject.media.length === 0){
@@ -180,9 +182,11 @@
 
             if ($scope.objectsSidebarService.selectedObject.subTitle == null) {
                 missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.subTitle = "";
             }
             else if ($scope.objectsSidebarService.selectedObject.subTitle.trim() === ''){
                 missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.subTitle = "";
             }
 
             if ($scope.objectsSidebarService.selectedObject.categories.length === 0) {
