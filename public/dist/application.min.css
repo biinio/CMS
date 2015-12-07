@@ -13422,6 +13422,32 @@ Component: elements.less
   padding-left: 20px;
   padding-top: 2px;
 }
+.enlarge-icon {
+  font-size: 18px !important;
+  float: right;
+}
+.ready-icon {
+  color: green;
+  margin-top: -60px;
+}
+.error-icon {
+  color: red;
+  margin-top: -60px;
+}
+.error-message {
+  color: red;
+  font-size: 12px;
+}
+.element-incomplete {
+  position: absolute;
+  top: 21px;
+  right: 15px;
+  color: yellow;
+  background: black;
+  width: 18px;
+  height: 15px;
+  text-align: center;
+}
 .element-showcase {
   width: 16.666667%;
   height: 50%;
