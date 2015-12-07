@@ -29,7 +29,7 @@
     "MENU_DASHBOARD": "Resumen",
     "MENU_SITES": "Sitios",
     "MENU_ELEMENTS": "Elementos",
-    "MENU_SHOWCASES": "Colecciones",
+    "MENU_SHOWCASES": "Vitrinas",
     "MENU_BIINS": "Biins",
     "MENU_ADMINISTRATION": "Administración",
     "MENU_MAINTENANCE": "Mantenimiento",
@@ -76,10 +76,12 @@
     "TITLE": "Información del elemento",
     "SUB_TITLE": "Información básica y detalles  del elemento",
     "NAME": "Información Básica",
+    "NAME1_PLACEHOLDER": "Ingrese el nombre del elemento",
     "DESC": "Nombre y descripción breve, esta información se vera en la vista previa",
     "NAME1": "Nombre",
     "DESC1": "Descripción Breve",
     "DESC2": "Un poco más de detalle de tu producto u oferta",
+    "DESC2_PLACEHOLDER": "Ingrese una descripción del elemento",
     "NAMEDESCRIPTION": "El nombre o título de tu producto u oferta",
     "DETAILS": "Detalles",
     "DETAILS1": "Agrega mas detalles sobre el elemento por ejemplo, listas, Listas de Precios, acotaciones.",
@@ -218,5 +220,16 @@
     "SIGN_UP": "¿Necesita registrarse?",
     "REGISTER_NOW": "Regístrese ahora"
 
+  },
+  "SHOWCASE": {
+    "DETAILS": "Detalles de Vitrinas",
+    "DETAILS_INFO": "Agregue información sobre las vitrinas",
+    "TITLE": "Título",
+    "DESCRIPTION": "Descripción",
+    "ELEMENTS": "Elementos para Vitrinas",
+    "ELEMENTS_INFO": "Agregue elementos a su vitrina",
+    "ASSIGNMENT": "Asignación de Elementos",
+    "ASSIGNMENT_INFO": "Por favor seleccione los sitios en los que se va a habilitar las vitrinas",
+    "ELEMENTS_REQUIRED_MESSAGE": "Por favor asigne al menos un elemento valido a esta vitrina"
   }
 }

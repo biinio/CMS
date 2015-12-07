@@ -18,7 +18,7 @@
                                     <div class="form-group">
                                         <label for="title1" translate="SUMMARY.NAME1" class="control-label"></label>
                                         <input id="title1" ng-model="objectsSidebarService.selectedObject.title" name="title"
-                                               type="text" placeholder="Title **"
+                                               type="text" placeholder="{{ 'SUMMARY.NAME1_PLACEHOLDER' | translate }}"
                                                required="required" class="form-control title-value"/>
                                         <span class="help-block" translate="SUMMARY.NAMEDESCRIPTION"></span>
                                         <span ng-show="myForm.title.$dirty && myForm.title.$error.required"></span>
@@ -38,7 +38,7 @@
                                     <div class="form-group">
                                         <label for="title2" translate="SUMMARY.DESC1" class="control-label"></label>
                                         <input id="title2" ng-model="objectsSidebarService.selectedObject.subTitle" name="subTitle"
-                                               type="text" placeholder="Subtitle" ng-blur="validate()"
+                                               type="text" placeholder="{{ 'SUMMARY.DESC2_PLACEHOLDER' | translate }}" ng-blur="validate()"
                                                required="required" class="form-control title-value"/>
                                         <span class="help-block" translate="SUMMARY.DESC2"></span>
                                     </div>
