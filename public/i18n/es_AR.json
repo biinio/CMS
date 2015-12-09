@@ -68,36 +68,20 @@
   },
   "GALLERY":{
     "TITLE": "Galería de imagenes",
-    "SUB_TITLE": "Agregue y use las imagenes de su marca para darle identidad a su local",
+    "SUB_TITLE": "Agregue y use las imagenes de su marca para darle identidad a su local.",
     "UPLOAD": "Subir",
     "LOADING": "Subiendo imágenes, por favor espere..."
   },
-  "SUMMARY":{
+  "ELEMENT":{
     "TITLE": "Información del elemento",
-    "SUB_TITLE": "Información básica y detalles  del elemento",
-    "NAME": "Información Básica",
-    "NAME1_PLACEHOLDER": "Ingrese el nombre del elemento",
-    "DESC": "Nombre y descripción breve, esta información se vera en la vista previa",
-    "NAME1": "Nombre",
-    "DESC1": "Descripción Breve",
-    "DESC2": "Un poco más de detalle de tu producto u oferta",
-    "DESC2_PLACEHOLDER": "Ingrese una descripción del elemento",
-    "NAMEDESCRIPTION": "El nombre o título de tu producto u oferta",
-    "DETAILS": "Detalles",
-    "DETAILS1": "Agrega mas detalles sobre el elemento por ejemplo, listas, Listas de Precios, acotaciones.",
-    "DTITLE": "Un título",
-    "PARAGRAPH": "Párrafo",
-    "QUOTE": "Anotación",
-    "LIST": "Lista",
-    "PRICE_LIST": "Lista Precios",
-    "PRICE_LIST_CURRENCY": "Moneda",
-    "PRICE_LIST_DESCRIPTION": "Descripción",
-    "PRICE_LIST_DESCRIPTION_PLACEHOLDER": "Ej. Menú Ejecutivo",
-    "PRICE_LIST_VALUE": "Valor",
-    "PRICE_LIST_VALUE_PLACEHOLDER": "Ej. 100",
-    "LINK": "Enlace",
+    "NAME": "Nombre",
+    "NAME_PLACEHOLDER": "Ingrese el nombre o título de tu producto u oferta",
     "HIGHLIGHT": "Recomendado",
-    "HIGHLIGHTDESCRIPTION": "Selecciona esta opción para que el elemento aparezca en la pantalla de recomendados en Biin"
+    "HIGHLIGHT_INFO": "Seleccione esta opción para que el elemento aparezca en la pantalla de recomendados en Biin.",
+    "DESCRIPTION": "Descripción breve",
+    "DESCRIPTION_PLACEHOLDER": "Ingrese un poco más de detalle de tu producto u oferta",
+    "DETAILS": "Detalles",
+    "DETAILS_INFO": "Agregue mas detalles sobre el elemento, por ejemplo: listas, listas de precios, acotaciones, entre otros."
   },
   "GENERIC":{
     "SEARCH_TAGS": "Etiquetas de búsqueda",
@@ -131,7 +115,7 @@
     "NUTSHELL": "Mini Descripción",
 
     "GALLERY.TITLE": "Galería de imagenes",
-    "GALLERY.SUB_TITLE": "Agregue y use las imagenes de su marca para darle identidad a su local",
+    "GALLERY.SUB_TITLE": "Agregue y use las imagenes de su marca para darle identidad a su local.",
     "GALLERY.UPLOAD": "Subir",
 
     "LOCATION":{
@@ -223,13 +207,15 @@
   },
   "SHOWCASE": {
     "DETAILS": "Detalles de Vitrinas",
-    "DETAILS_INFO": "Agregue información sobre las vitrinas",
-    "TITLE": "Título",
+    "DETAILS_INFO": "Agregue información sobre las vitrinas.",
+    "NAME": "Título",
+    "NAME_PLACEHOLDER": "Ingrese el un nombre o título para la vitrina",
     "DESCRIPTION": "Descripción",
-    "ELEMENTS": "Elementos para Vitrinas",
-    "ELEMENTS_INFO": "Agregue elementos a su vitrina",
-    "ASSIGNMENT": "Asignación de Elementos",
-    "ASSIGNMENT_INFO": "Por favor seleccione los sitios en los que se va a habilitar las vitrinas",
-    "ELEMENTS_REQUIRED_MESSAGE": "Por favor asigne al menos un elemento valido a esta vitrina"
+    "DESCRIPTION_PLACEHOLDER": "Ingrese una descripción breve para la vitrina",
+    "ELEMENTS": "Asignación de elementos",
+    "ELEMENTS_INFO": "Agregue elementos a su vitrina.",
+    "SITES": "Sitios habilitados",
+    "SITES_INFO": "Por favor seleccione las vitrinas que se desean habilitar en cada sitio.",
+    "ELEMENTS_REQUIRED_MESSAGE": "Por favor asigne al menos un elemento válido a esta vitrina"
   }
 }
