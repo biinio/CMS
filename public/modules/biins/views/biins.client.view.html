@@ -91,7 +91,7 @@
                                                 <p>{{getObjectName(obj.identifier,obj.objectType)}}</p>
                                             </td>
                                             <td>
-                                                <p>{{obj.startTime | date:'HH:mm'}} - {{obj.endTime | date:'HH:mm'}}</p>
+                                                <p>{{convertTime(obj.startTime) | date:'HH:mm'}} - {{convertTime(obj.endTime) | date:'HH:mm'}}</p>
                                                 <p><span ng-if="obj.onMonday==='1'">L</span><span ng-if="obj.onTuesday==='1'">K</span><span ng-if="obj.onWednesday==='1'">M</span><span ng-if="obj.onThursday==='1'">J</span><span ng-if="obj.onFriday==='1'">V</span><span ng-if="obj.onSaturday==='1'">S</span><span ng-if="obj.onSunday==='1'">D</span></p>
                                             </td>
                                             <td>
