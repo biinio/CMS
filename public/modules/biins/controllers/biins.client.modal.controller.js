@@ -19,7 +19,7 @@
         $scope.type = selectedObj.type;
         $scope.elements=elements;
         $scope.showcases=showcases;
-
+        $scope.timeEnabled = [0,24];
         //Create the modal for the creation Model
         if($scope.type==='create'){
             var obj={objectType:'1',notification:'', hasNotification:'0', isNew:true};
@@ -38,7 +38,9 @@
             obj.endTime=time.format();
             $scope.obj= obj;
         }else
-        {    $scope.obj =selectedObj.obj;
+        {
+            $scope.obj =selectedObj.obj;
+            $scope.timeEnabled = [Number($scope.obj.startTime),Number($scope.obj.endTime)];
         }
         //$scope.objects=[];
         $scope.hasNotificationBool=false;
@@ -90,12 +92,29 @@
         };
 
         $scope.save = function () {
+            if($scope.obj.hasTimeOptions == "1"){
+                $scope.obj.startTime = $scope.timeEnabled[0]+"";
+                $scope.obj.endTime = $scope.timeEnabled[1]+"";
+            }else{
+                $scope.obj.startTime = "0";
+                $scope.obj.endTime = "24";
+            }
             $modalInstance.close($scope.obj);
         };
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
+
+        $scope.validatesValues = function( value, event){
+            if(value && Array.isArray(value)){
+                if(value[1]-value[0] <= 0.5 && value[1] == 24){
+                    $scope.timeEnabled = [23.5, 24];
+                } else if(value[1]-value[0] < 0.5){
+                    $scope.timeEnabled = [value[0], value[0]+0.5];
+                }
+            }
+        }
 
     }
 })();
