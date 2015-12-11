@@ -7,40 +7,48 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <legend translate="SITES.TITLE"></legend>
-                            <form role="form" class="novalidate">
+                            <div ng-if="myForm.$invalid || locationForm.$invalid || objectsSidebarService.selectedObject.media.length == 0 || objectsSidebarService.selectedObject.lat == 0 || objectsSidebarService.selectedObject.lng == 0">
+                                <label class="error-icon fa fa-minus-square enlarge-icon"></label>
+                            </div>
+                            <div ng-if="myForm.$valid && locationForm.$valid && objectsSidebarService.selectedObject.media.length > 0 && objectsSidebarService.selectedObject.lat != 0 && objectsSidebarService.selectedObject.lng != 0">
+                                <label class="ready-icon fa fa-check-square-o enlarge-icon"></label>
+                            </div>
+                            <form name="myForm" role="form" class="form-validate">
+
                                 <div class="section">
                                     <div class="form-group">
                                         <label for="title1" translate="SITES.NAME" class="control-label"></label>
                                         <input id="title1" ng-model="objectsSidebarService.selectedObject.title1"
-                                               name="title1" type="text" placeholder="Tittle **" ng-blur="validate()"
+                                               name="title1" type="text" placeholder="{{ 'SITES.NAME_PLACEHOLDER' | translate }}" ng-blur="validate()"
                                                required="required" class="form-control title-value"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="title2" translate="SITES.AT" class="control-label"></label>
                                         <input id="title2" ng-model="objectsSidebarService.selectedObject.title2"
-                                               name="title1" type="text" placeholder="Subtittle **" ng-blur="validate()"
+                                               name="title1" type="text" placeholder="{{ 'SITES.AT_PLACEHOLDER' | translate }}" ng-blur="validate()"
                                                required="required" class="form-control title-value"/>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="email" translate="SITES.EMAIL" class=control-label"></label>
                                         <input id="email" ng-model="objectsSidebarService.selectedObject.email"
-                                               name="email" type="text" placeholder="email@email.com **"
-                                               ng-blur="validate()" required="required"
+                                               name="email" type="text" placeholder="{{ 'SITES.EMAIL_PLACEHOLDER' | translate }}"
+                                               ng-blur="validate()"
                                                class="form-control title-value"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="nutshell" translate="SITES.NUTSHELL" class="control-label"></label>
                                         <input id="nutshell" ng-model="objectsSidebarService.selectedObject.nutshell"
-                                               name="nutshell" type="text" placeholder="Mini Description **"
-                                               ng-blur="validate()" ng-change="limitNutshell()" required="required"
+                                               name="nutshell" type="text" placeholder="{{ 'SITES.NUTSHELL_PLACEHOLDER' | translate }}"
+                                               ng-blur="validate()" ng-change="limitNutshell()"
                                                class="form-control title-value"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="siteSearchTag" translate="GENERIC.SEARCH_TAGS" class="control-label"></label>
-                                        <input id="siteSearchTag" type="text" tagsinput="tagsinput" ng-model="temptags"
-                                               class="form-control"/>
+                                        <input id="siteSearchTag" type="text" tagsinput="tagsinput" ng-model="temptags"/>
                                         <span class="help-block" translate="GENERIC.SEARCH_TAGS_DESC"></span>
                                     </div>
+
                                 </div>
                             </form>
                         </div>
@@ -52,6 +60,7 @@
                         <div class="panel-body">
                             <legend translate="GALLERY.TITLE"></legend>
                             <p translate="GALLERY.SUB_TITLE"></p>
+                            <div class="error-message" ng-show="objectsSidebarService.selectedObject.media.length == 0">* {{ 'GENERIC.GALLERIES_REQUIRED_MESSAGE' | translate }}</div>
                             <gallery ng-model="objectsSidebarService.selectedObject.media"
                                      gallery="galleries"></gallery>
                         </div>
@@ -63,7 +72,7 @@
                         <div class="panel-body">
                             <legend translate="SITES.LOCATION.TITLE"></legend>
                             <p translate="SITES.LOCATION.SUB_TITLE"></p>
-                            <form role="form" class="novalidate">
+                            <form name="locationForm" role="form" class="form-validate">
                                 <div class="section">
                                     <div class="form-group">
                                         <label for="countryText" translate="SITES.LOCATION.COUNTRY"
@@ -91,7 +100,7 @@
                                                class="control-label"></label>
                                         <input id="zipText" ng-model="objectsSidebarService.selectedObject.zipCode"
                                                name="zipCode" type="text" placeholder="Zip Code **" ng-blur="validate()"
-                                               required="required" class="form-control title-value"/>
+                                               class="form-control title-value"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="stAddresText" translate="SITES.LOCATION.ADDRESS"
@@ -108,7 +117,7 @@
                                         <input id="ubicationText"
                                                ng-model="objectsSidebarService.selectedObject.ubication"
                                                name="ubication" type="text" placeholder="Ubication **"
-                                               ng-blur="validate()" required="required"
+                                               ng-blur="validate()"
                                                class="form-control title-value"/>
                                     </div>
                                     <div class="form-group">
@@ -117,7 +126,7 @@
                                         <input id="phoneNumText"
                                                ng-model="objectsSidebarService.selectedObject.phoneNumber"
                                                name="phoneNumber" type="text" placeholder="Phone number **"
-                                               ng-blur="validate()" required="required"
+                                               ng-blur="validate()"
                                                class="form-control title-value"/>
                                     </div>
                                 </div>
@@ -125,7 +134,7 @@
                                     <h4 translate="SITES.LOCATION.MAP_LOCATION"></h4>
 
                                     <p translate="SITES.LOCATION.MAP_LOCATION_SUB"></p>
-
+                                    <div class="error-message" ng-show="objectsSidebarService.selectedObject.lat == 0 || objectsSidebarService.selectedObject.lng == 0">* {{ 'GENERIC.MAP_REQUIRED_MESSAGE' | translate }}</div>
                                     <div class="form-group">
                                         <label for="latText" translate="SITES.LOCATION.LATITUDE"
                                                class="col-sm-2 control-label"></label>
