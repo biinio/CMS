@@ -93,30 +93,19 @@
     "CLOSE": "Close",
     "APPLY": "Apply",
     "CATEGORIES_REQUIRED_MESSAGE": "Select at least one category",
-    "GALLERIES_REQUIRED_MESSAGE": "Add at least one image"
+    "GALLERIES_REQUIRED_MESSAGE": "Add at least one image",
+    "MAP_REQUIRED_MESSAGE":"Mark your location on the map"
   },
   "SITES":{
-    "GENERIC.UPLOAD_IMAGE": "Update image",
-    "GENERIC.IDENTIFIER": "Identifier",
-    "GENERIC.SEARCH_TAGS": "Search Tags",
-    "GENERIC.SEARCH_TAGS_DESC": "Add tags that will allow your information to be found easily.",
-    "GENERIC.ADD": "Add",
-    "MENU.DETAILS": "1.Details",
-    "MENU.IMAGES": "2.Images",
-    "MENU.DESIGN": "3.Design",
-    "MENU.LOCATION": "4.Location",
-    "MENU.BEACONS": "4.Beacons",
-    "MENU.CATEGORIES": "6.Categories",
-
     "TITLE": "Establishment Details",
     "NAME": "Name",
+    "NAME_PLACEHOLDER": "Enter the name of your establishment",
     "AT": "Located at",
+    "AT_PLACEHOLDER": "Enter the name of your location",
     "EMAIL": "Email",
+    "EMAIL_PLACEHOLDER": "my-site@example.com",
     "NUTSHELL": "Brief Description",
-
-    "GALLERY.TITLE": "Image Gallery",
-    "GALLERY.SUB_TITLE": "Add images that will allow your establishment to be identified by your brand",
-    "GALLERY.UPLOAD": "Upload",
+    "NUTSHELL_PLACEHOLDER": "Enter a short description of your establishment",
 
     "LOCATION":{
       "TITLE": "Establishment location",
