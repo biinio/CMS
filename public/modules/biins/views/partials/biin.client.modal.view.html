@@ -85,16 +85,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
-                        <h4>Desde</h4>
-                        <timepicker readonly-input="true" hour-step="1" minute-step="30" show-meridian="false"
-                                    ng-model="obj.startTime" ng-disabled="!hasTimeOptionsBool"></timepicker>
-                    </div>
-                    <div class="col-md-6">
-                        <h4>Hasta</h4>
-                        <timepicker readonly-input="true" hour-step="1" minute-step="30" show-meridian="false"
-                                    ng-model="obj.endTime" ng-disabled="!hasTimeOptionsBool"></timepicker>
-                    </div>
+                    <slider ng-model="timeEnabled" min="0" max="24" precision="2" value="timeEnabled" step="0.5" range="true" class="bs-slider" ng-disabled="!hasTimeOptionsBool" on-slide="validatesValues(value, $event)"></slider>
                 </div>
             </div>
             </div>

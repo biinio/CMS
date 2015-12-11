@@ -5,21 +5,25 @@
                 <!-- NutShell Section -->
                 <section>
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <legend>Showcase Details</legend>
-                            <p>Add information about the showcases here.</p>
-                        </div>
                         <div class="panel-body">
-                            <form class="novalidate">
+                            <legend>{{ 'SHOWCASE.DETAILS' | translate }}</legend>
+                            <div ng-if="myForm.$invalid || objectsSidebarService.selectedObject.elements.length == 0 || !hasValidElements(objectsSidebarService.selectedObject.elements)">
+                                <label class="error-icon fa fa-minus-square enlarge-icon"></label>
+                            </div>
+                            <div ng-if="myForm.$valid && objectsSidebarService.selectedObject.elements.length > 0 && hasValidElements(objectsSidebarService.selectedObject.elements)">
+                                <label class="ready-icon fa fa-check-square-o enlarge-icon"></label>
+                            </div>
+                            <p>{{ 'SHOWCASE.DETAILS_INFO' | translate }}</p>
+                            <form name="myForm" class="form-validate">
                                 <div class="section form-horizontal">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="title1" class="control-label">Tittle</label>
-                                            <input id="title1" ng-model="objectsSidebarService.selectedObject.name" name="name" type="text" placeholder="Name **" ng-blur="validate()" required="required" class="form-control title-value"/>
+                                            <label for="name" class="control-label">{{ 'SHOWCASE.NAME' | translate }}</label>
+                                            <input id="name" ng-model="objectsSidebarService.selectedObject.name" name="name" type="text"  ng-blur="validate()" placeholder="{{'SHOWCASE.NAME_PLACEHOLDER'|translate}}" required="required" class="form-control title-value"/>
                                         </div>
                                         <div class="form-group">
-                                            <label for="desctText" class="control-label">Description</label>
-                                            <input id="desctText" ng-model="objectsSidebarService.selectedObject.description" name="description" type="text" placeholder="Description **" ng-blur="validate()" class="form-control title-value"/>
+                                            <label for="description" class="control-label">{{ 'SHOWCASE.DESCRIPTION' | translate }}</label>
+                                            <input id="description" ng-model="objectsSidebarService.selectedObject.description" name="description" type="text"  ng-blur="validate()" placeholder="{{'SHOWCASE.DESCRIPTION_PLACEHOLDER'|translate}}" class="form-control title-value"/>
                                         </div>
                                     </div>
                                     <!--<div class="col-md-12">
@@ -48,10 +52,6 @@
                                             <slider ng-model="objectsSidebarService.selectedObject.segregation.age" min="0" max="65" value="[25,65]" range="true" class="bs-slider"></slider>
                                         </div>
                                     </div>-->
-                                    <div class="col-md-12">
-                                        <label>Identifier:</label>
-                                        <code>{{objectsSidebarService.selectedObject.identifier}}</code>
-                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -60,14 +60,11 @@
                 <!-- Elements Section -->
                 <section>
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <legend>Showcase Elements</legend>
-                            <p>Add elements to your showcase</p>
-                        </div>
                         <div class="panel-body">
+                            <legend>{{ 'SHOWCASE.ELEMENTS' | translate }}</legend>
+                            <p>{{ 'SHOWCASE.ELEMENTS_INFO' | translate }}</p>
+                            <div class="error-message" ng-show="objectsSidebarService.selectedObject.elements.length == 0 || !hasValidElements(objectsSidebarService.selectedObject.elements)">* {{ 'SHOWCASE.ELEMENTS_REQUIRED_MESSAGE' | translate }}</div>
                             <form class="novalidate">
-                                <div class="section">
-                                </div>
                                 <div class="section">
                                     <div id="showcaseElements">
                                         <div class="elementInShowcaseList" data-drop="true" data-jqyoui-options jqyoui-droppable  ng-model="objectsSidebarService.selectedObject.elements">
@@ -80,6 +77,7 @@
                                                     <span>{{el.title}}</span>
                                                 </div>
                                                 <img ng-src="{{el.media[0].url}}" class="img-responsive"/>
+                                                <span ng-show="el.isReady == 0" class="fa fa-warning element-incomplete"></span>
                                                 <div ng-click="removeElementAt(objectsSidebarService.selectedObject.elements.indexOf(el))"
                                                      class="btnDelete icon-round-control btn-on-hover">
                                                     <em class="fa fa-trash"></em>
@@ -95,6 +93,7 @@
                                                     <div class="moduleTitle">
                                                         <span>{{avEl.title}}</span>
                                                     </div>
+                                                    <span ng-show="avEl.isReady == 0" class="fa fa-warning element-incomplete"></span>
                                                     <img ng-src="{{avEl.media[0].url}}" class="img-responsive"/>
                                                 </div>
                                             </div>
@@ -110,11 +109,9 @@
                             </form>
                         </div>
 
-                        <div class="panel-heading">
-                            <legend>Showcase Assignment</legend>
-                            <p>Please select the sites that the showcase is going to be enabled</p>
-                        </div>
                         <div class="panel-body">
+                            <legend>{{ 'SHOWCASE.SITES' | translate }}</legend>
+                            <p>{{ 'SHOWCASE.SITES_INFO' | translate }}</p>
                             <div class="section">
                                 <div id="wizardShowcasePublishWrapper">
                                     <div scrollbar="scrollbarOptionsStandard" class="showcaseWrapperContainer scrollbar-inner">
@@ -148,7 +145,7 @@
                     </div>
 
                 </section>
-
+                <code>IDENTIFIER: {{objectsSidebarService.selectedObject.identifier}}</code>
             </div>
         </div>
     </div>

@@ -68,34 +68,20 @@
   },
   "GALLERY":{
     "TITLE": "Image gallery",
-    "SUB_TITLE": "Add images that will allow your establishment to be identified by your brand",
+    "SUB_TITLE": "Add images that will allow your establishment to be identified by your brand.",
     "UPLOAD": "Upload",
     "LOADING": "Loading images, please wait..."
   },
-  "SUMMARY":{
+  "ELEMENT":{
     "TITLE": "About the element",
-    "SUB_TITLE": "Basic information and details about the element",
-    "NAME": "Basic Information",
-    "DESC": "Name and brief description, this information will display in the preview",
-    "NAME1": "Name",
-    "DESC1": "Brief description",
-    "DESC2": "More details about your product or sale",
-    "NAMEDESCRIPTION": "Name or title of your product or sale",
-    "DETAILS": "Details",
-    "DETAILS1": "Add more details about your element, i.e. lists, price lists, quotes, etc.",
-    "DTITLE": "Title",
-    "PARAGRAPH": "Paragraph",
-    "QUOTE": "Quote",
-    "LIST": "List",
-    "PRICE_LIST": "Price list",
-    "PRICE_LIST_CURRENCY": "Currency",
-    "PRICE_LIST_DESCRIPTION": "Description",
-    "PRICE_LIST_DESCRIPTION_PLACEHOLDER": "i.e. Executive Menu",
-    "PRICE_LIST_VALUE": "Value",
-    "PRICE_LIST_VALUE_PLACEHOLDER": "i.e. 100",
-    "LINK": "Link",
+    "NAME": "Name",
+    "NAME_PLACEHOLDER": "Enter the name or title of your product or sale",
     "HIGHLIGHT": "Recommended",
-    "HIGHLIGHTDESCRIPTION": "Select this option if you want this element to appear in the recommended section of Biin"
+    "HIGHLIGHT_INFO": "Select this option if you want this element to appear in the recommended section of Biin.",
+    "DESCRIPTION": "Brief description",
+    "DESCRIPTION_PLACEHOLDER": "Enter more details about your product or sale",
+    "DETAILS": "Details",
+    "DETAILS_INFO": "Add more details about your element, i.e. lists, price lists, quotes, among others."
   },
   "GENERIC":{
     "SEARCH_TAGS": "Search tags",
@@ -105,30 +91,21 @@
     "HIGHLIGHT": "Sales",
     "CATEGORIES": "Categories",
     "CLOSE": "Close",
-    "APPLY": "Apply"
+    "APPLY": "Apply",
+    "CATEGORIES_REQUIRED_MESSAGE": "Select at least one category",
+    "GALLERIES_REQUIRED_MESSAGE": "Add at least one image",
+    "MAP_REQUIRED_MESSAGE":"Mark your location on the map"
   },
   "SITES":{
-    "GENERIC.UPLOAD_IMAGE": "Update image",
-    "GENERIC.IDENTIFIER": "Identifier",
-    "GENERIC.SEARCH_TAGS": "Search Tags",
-    "GENERIC.SEARCH_TAGS_DESC": "Add tags that will allow your information to be found easily.",
-    "GENERIC.ADD": "Add",
-    "MENU.DETAILS": "1.Details",
-    "MENU.IMAGES": "2.Images",
-    "MENU.DESIGN": "3.Design",
-    "MENU.LOCATION": "4.Location",
-    "MENU.BEACONS": "4.Beacons",
-    "MENU.CATEGORIES": "6.Categories",
-
     "TITLE": "Establishment Details",
     "NAME": "Name",
+    "NAME_PLACEHOLDER": "Enter the name of your establishment",
     "AT": "Located at",
+    "AT_PLACEHOLDER": "Enter the name of your location",
     "EMAIL": "Email",
+    "EMAIL_PLACEHOLDER": "my-site@example.com",
     "NUTSHELL": "Brief Description",
-
-    "GALLERY.TITLE": "Image Gallery",
-    "GALLERY.SUB_TITLE": "Add images that will allow your establishment to be identified by your brand",
-    "GALLERY.UPLOAD": "Upload",
+    "NUTSHELL_PLACEHOLDER": "Enter a short description of your establishment",
 
     "LOCATION":{
       "TITLE": "Establishment location",
@@ -190,7 +167,20 @@
     "REMEMBER_ME": "Remember Me",
     "FORGOT_PASSWORD": "Forgot your password?",
     "LOGIN_BUTTON": "Login",
-    "SIGN_UP": "Need to Signup?",
+    "SIGN_UP": "Need to sign up?",
     "REGISTER_NOW": "Register Now"
+  },
+  "SHOWCASE": {
+    "DETAILS": "Showcase details",
+    "DETAILS_INFO": "Add information about the showcases here.",
+    "NAME": "Title",
+    "NAME_PLACEHOLDER":"Enter a name or title for the showcase",
+    "DESCRIPTION": "Description",
+    "DESCRIPTION_PLACEHOLDER": "Enter a brief description of the showcase",
+    "ELEMENTS": "Showcase elements",
+    "ELEMENTS_INFO": "Add elements to your showcase.",
+    "SITES": "Enabled sites",
+    "SITES_INFO": "Please select the showcases you wish to enable at each site.",
+    "ELEMENTS_REQUIRED_MESSAGE": "Please assign at least one valid element to this showcase"
   }
 }

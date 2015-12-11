@@ -102,6 +102,10 @@
             $scope.removeElementAt(index);
         });
 
+        /*$scope.$on("Biin: onGalleryChanged", function(){
+
+        });*/
+
 
         //Get the List of Objects
         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
@@ -148,8 +152,56 @@
                     $scope.objectsSidebarService.objects.splice(index,1);
                 }
             );
+        };
 
-            //Remove element from showcase too
+
+
+        //Check min data has been filled
+        $scope.hasMissingData = function() {
+
+            // Don't do anything if there is no selected element
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
+
+            var missingMinData = false;
+
+            //Check if required data is ready for app
+            if ($scope.objectsSidebarService.selectedObject.title == null) {
+                missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.title = "";
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.title.trim() === ''){
+                missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.title = "";
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.media.length === 0){
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.subTitle == null) {
+                missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.subTitle = "";
+            }
+            else if ($scope.objectsSidebarService.selectedObject.subTitle.trim() === ''){
+                missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.subTitle = "";
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.categories.length === 0) {
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.media == null) {
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.media.length === 0) {
+                missingMinData = true;
+            }
+
+            return missingMinData;
 
         };
 
@@ -160,33 +212,12 @@
             if ($scope.objectsSidebarService.selectedObject == null)
                 return;
 
-            var missingMinData = false;
-
-            //Check if required data is ready for app
-            if ($scope.objectsSidebarService.selectedObject.title.trim() === ''){
-                missingMinData = true;
-            }
-
-            if ($scope.objectsSidebarService.selectedObject.media.length === 0){
-                missingMinData = true;
-            }
-
-            if ($scope.objectsSidebarService.selectedObject.subTitle.trim() === ''){
-                missingMinData = true;
-            }
-
-            if ($scope.objectsSidebarService.selectedObject.categories.length === 0) {
-                missingMinData = true;
-            }
-
-            if (missingMinData) {
+            if ($scope.hasMissingData()) {
                 $scope.objectsSidebarService.selectedObject.isReady = 0;
-                $scope.formValidation = "El sitio NO esta listo!";
             }
 
             else {
                 $scope.objectsSidebarService.selectedObject.isReady = 1;
-                $scope.formValidation = "El sitio esta listo!";
             }
 
             $scope.objectsSidebarService.selectedObject.hasPrice = $scope.objectsSidebarService.selectedObject.price > 0?'1':'0';
@@ -207,15 +238,7 @@
             });
         };
 
-        $scope.formValidation = "El sitio no esta listo.";
 
-        /*if ($scope.objectsSidebarService.selectedObject.isReady === 0) {
-            $scope.formValidation = "El sitio NO esta listo!";
-        }
-
-        else {
-            $scope.formValidation = "El sitio esta listo!";
-        }*/
 
         //Get the List of Categories
         Categories.getList().then(function(promise){
@@ -229,6 +252,7 @@
               //  categories = $scope.objectsSidebarService.selectedObject.categories;
             return categories;
         };
+
 
 
         //Set the gallery index when start draggin
@@ -266,12 +290,15 @@
                 $scope.$digest();
                 $scope.$apply();
             }
+
+
         };
 
         //Remove the media object at specific index
         $scope.removeMediaAt=function(index){
-            if($scope.objectsSidebarService.selectedObject.media.length>=index)
-                $scope.objectsSidebarService.selectedObject.media.splice(index,1);
+            if($scope.objectsSidebarService.selectedObject.media.length>=index) {
+                $scope.objectsSidebarService.selectedObject.media.splice(index, 1);
+            }
         };
 
         //Get the list of the gallery
