@@ -5,9 +5,9 @@
         .module('gallery')
         .directive('uploadFiles', UploadFiles);
 
-    UploadFiles.$inject = ['$modal','Organization','$rootScope'];
+    UploadFiles.$inject = ['$modal','Organization'];
 
-    function UploadFiles($modal,Organization,$rootScope) {
+    function UploadFiles($modal,Organization) {
         var organizationService = Organization;
         return {
             restrict: 'A',
@@ -56,16 +56,8 @@
                         mediaFile.originalFilename = files[i].name;
                         formData.append('file', mediaFile);
                     }
-
-                    var file=files[0];
-                    var reader = new FileReader();
-                    reader.onload = function (evt) {
-                        $rootScope.$broadcast("Biin: on fileUploaded", evt);
-                    };
-                    if(file)
-                        reader.readAsDataURL(file);
                     //Upload The media information
-                    //scope.uploadMedia(scope, formData);
+                    scope.uploadMedia(scope, formData);
                 });
                 //Click event of the style button
                 $(element[0]).on('click touch', function (e) {
