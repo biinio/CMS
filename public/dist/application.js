@@ -5,8 +5,7 @@ var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'BiinCMSApp';
 
-	var applicationBackendURL = window.location.href.indexOf('angle-biin') > -1 ? 'https://qa-biinapp.herokuapp.com/' :
-		window.location.href.indexOf('dev') > -1 ? 'https://dev-biin-backend.herokuapp.com/' :
+	var applicationBackendURL = window.location.href.indexOf('dev') > -1 ? 'https://dev-biin-backend.herokuapp.com/' :
 			window.location.href.indexOf('qa') > -1 ?'https://qa-biin-backend.herokuapp.com/' :
 				window.location.href.indexOf('demo') > -1 ? 'https://demo-biin-backend.herokuapp.com/' :
 					window.location.href.indexOf('production') > -1 ? 'https://www.biin.io/' :
@@ -18,7 +17,7 @@ var ApplicationConfiguration = (function() {
 	var applicationModuleVendorDependencies = ['ngRoute', 'ngAnimate', 'ngStorage', 'ngTouch', 'ngCookies',
         'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize',
         'ngResource', 'ui.utils','ngAnimate', 'toaster','textAngular','bootstrap-tagsinput','angular-bind-html-compile',
-		'datePicker','ui.bootstrap-slider','ngDragDrop','nvd3'];
+		'datePicker','ui.bootstrap-slider','ngDragDrop','nvd3','ngImgCrop'];
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
 		// Create angular module
@@ -518,7 +517,7 @@ angular.module('biins').config(['$stateProvider',
         $scope.type = selectedObj.type;
         $scope.elements=elements;
         $scope.showcases=showcases;
-
+        $scope.timeEnabled = [0,24];
         //Create the modal for the creation Model
         if($scope.type==='create'){
             var obj={objectType:'1',notification:'', hasNotification:'0', isNew:true};
@@ -537,7 +536,9 @@ angular.module('biins').config(['$stateProvider',
             obj.endTime=time.format();
             $scope.obj= obj;
         }else
-        {    $scope.obj =selectedObj.obj;
+        {
+            $scope.obj =selectedObj.obj;
+            $scope.timeEnabled = [Number($scope.obj.startTime),Number($scope.obj.endTime)];
         }
         //$scope.objects=[];
         $scope.hasNotificationBool=false;
@@ -589,12 +590,29 @@ angular.module('biins').config(['$stateProvider',
         };
 
         $scope.save = function () {
+            if($scope.obj.hasTimeOptions == "1"){
+                $scope.obj.startTime = $scope.timeEnabled[0]+"";
+                $scope.obj.endTime = $scope.timeEnabled[1]+"";
+            }else{
+                $scope.obj.startTime = "0";
+                $scope.obj.endTime = "24";
+            }
             $modalInstance.close($scope.obj);
         };
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
+
+        $scope.validatesValues = function( value, event){
+            if(value && Array.isArray(value)){
+                if(value[1]-value[0] <= 0.5 && value[1] == 24){
+                    $scope.timeEnabled = [23.5, 24];
+                } else if(value[1]-value[0] < 0.5){
+                    $scope.timeEnabled = [value[0], value[0]+0.5];
+                }
+            }
+        }
 
     }
 })();
@@ -655,18 +673,21 @@ angular.module('biins').config(['$stateProvider',
 
         //Save The Biin Objects Changes
         $scope.save = function () {
-            $http.put(ApplicationConfiguration.applicationBackendURL + 'api/venues/create', null, {
-                headers: {
-                    name: $scope.objectsSidebarService.selectedObject.venue,
-                    orgidentifier: $scope.organizationId
-                }
-            }).success(function () {
-                $http.post(ApplicationConfiguration.applicationBackendURL + 'api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.objectsSidebarService.selectedObject).success(function () {
-                    console.log("success");
-                }).error(function (err) {
-                    console.log(err);
+
+            if ($scope.objectsSidebarService.selectedObject != null) {
+                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/venues/create', null, {
+                    headers: {
+                        name: $scope.objectsSidebarService.selectedObject.venue,
+                        orgidentifier: $scope.organizationId
+                    }
+                }).success(function () {
+                    $http.post(ApplicationConfiguration.applicationBackendURL + 'api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.objectsSidebarService.selectedObject).success(function () {
+                        console.log("success");
+                    }).error(function (err) {
+                       console.log(err);
+                    });
                 });
-            });
+            }
         };
 
         var vm = this;
@@ -802,6 +823,14 @@ angular.module('biins').config(['$stateProvider',
             });
         };
 
+        $scope.convertTime = function (time) {
+            var hours = parseInt(time);
+            var min = ( parseFloat(time) - hours )*60;
+            var hoursString = hours < 10 ? "0"+hours : ""+ hours;
+            var minString = min < 10 ? "0"+min : ""+ min;
+            return hoursString+":"+minString;
+        };
+
         //Modal to edit or create an Object
         $scope.biinObject = function (size, type, obj) {
 
@@ -824,6 +853,7 @@ angular.module('biins').config(['$stateProvider',
                     }
                 }
             });
+
 
             modalInstance.result.then(function (objectToCreate) {
                 $scope.saveObject(objectToCreate);
@@ -2545,6 +2575,10 @@ angular.module('elements').config(['$stateProvider',
             $scope.removeElementAt(index);
         });
 
+        /*$scope.$on("Biin: onGalleryChanged", function(){
+
+        });*/
+
 
         //Get the List of Objects
         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
@@ -2591,8 +2625,56 @@ angular.module('elements').config(['$stateProvider',
                     $scope.objectsSidebarService.objects.splice(index,1);
                 }
             );
+        };
 
-            //Remove element from showcase too
+
+
+        //Check min data has been filled
+        $scope.hasMissingData = function() {
+
+            // Don't do anything if there is no selected element
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
+
+            var missingMinData = false;
+
+            //Check if required data is ready for app
+            if ($scope.objectsSidebarService.selectedObject.title == null) {
+                missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.title = "";
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.title.trim() === ''){
+                missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.title = "";
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.media.length === 0){
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.subTitle == null) {
+                missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.subTitle = "";
+            }
+            else if ($scope.objectsSidebarService.selectedObject.subTitle.trim() === ''){
+                missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.subTitle = "";
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.categories.length === 0) {
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.media == null) {
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.media.length === 0) {
+                missingMinData = true;
+            }
+
+            return missingMinData;
 
         };
 
@@ -2603,33 +2685,12 @@ angular.module('elements').config(['$stateProvider',
             if ($scope.objectsSidebarService.selectedObject == null)
                 return;
 
-            var missingMinData = false;
-
-            //Check if required data is ready for app
-            if ($scope.objectsSidebarService.selectedObject.title.trim() === ''){
-                missingMinData = true;
-            }
-
-            if ($scope.objectsSidebarService.selectedObject.media.length === 0){
-                missingMinData = true;
-            }
-
-            if ($scope.objectsSidebarService.selectedObject.subTitle.trim() === ''){
-                missingMinData = true;
-            }
-
-            if ($scope.objectsSidebarService.selectedObject.categories.length === 0) {
-                missingMinData = true;
-            }
-
-            if (missingMinData) {
+            if ($scope.hasMissingData()) {
                 $scope.objectsSidebarService.selectedObject.isReady = 0;
-                $scope.formValidation = "El sitio NO esta listo!";
             }
 
             else {
                 $scope.objectsSidebarService.selectedObject.isReady = 1;
-                $scope.formValidation = "El sitio esta listo!";
             }
 
             $scope.objectsSidebarService.selectedObject.hasPrice = $scope.objectsSidebarService.selectedObject.price > 0?'1':'0';
@@ -2650,15 +2711,7 @@ angular.module('elements').config(['$stateProvider',
             });
         };
 
-        $scope.formValidation = "El sitio no esta listo.";
 
-        /*if ($scope.objectsSidebarService.selectedObject.isReady === 0) {
-            $scope.formValidation = "El sitio NO esta listo!";
-        }
-
-        else {
-            $scope.formValidation = "El sitio esta listo!";
-        }*/
 
         //Get the List of Categories
         Categories.getList().then(function(promise){
@@ -2672,6 +2725,7 @@ angular.module('elements').config(['$stateProvider',
               //  categories = $scope.objectsSidebarService.selectedObject.categories;
             return categories;
         };
+
 
 
         //Set the gallery index when start draggin
@@ -2709,12 +2763,15 @@ angular.module('elements').config(['$stateProvider',
                 $scope.$digest();
                 $scope.$apply();
             }
+
+
         };
 
         //Remove the media object at specific index
         $scope.removeMediaAt=function(index){
-            if($scope.objectsSidebarService.selectedObject.media.length>=index)
-                $scope.objectsSidebarService.selectedObject.media.splice(index,1);
+            if($scope.objectsSidebarService.selectedObject.media.length>=index) {
+                $scope.objectsSidebarService.selectedObject.media.splice(index, 1);
+            }
         };
 
         //Get the list of the gallery
@@ -3714,11 +3771,29 @@ angular.module('elements').config(['$stateProvider',
 angular
     .module('gallery')
     .controller('GalleryController', GalleryController);
-GalleryController.$inject = ['$scope','$modalInstance','galleries'];
-function GalleryController($scope, $modalInstance, galleries) {
+GalleryController.$inject = ['$scope','$modalInstance','galleries','Organization'];
+function GalleryController($scope, $modalInstance, galleries,Organization) {
+    $scope.organizationService = Organization;
     $scope.render = true;
     $scope.loadingImages = false;
     $scope.galleries = galleries;
+
+    $scope.reset = function() {
+        $scope.myImage        = '';
+        $scope.myCroppedImage = '';
+        $scope.imgcropType    = 'square';
+    };
+    $scope.image = {
+        image: "",
+        cropImage: ""
+    };
+
+    $scope.reset();
+
+    $scope.$on("Biin: on fileUploaded",function(scope,event){
+        $scope.image.image=event.target.result;
+        $scope.$digest();
+    });
 
 
     $scope.loadingImagesChange = function (state) {
@@ -3743,6 +3818,17 @@ function GalleryController($scope, $modalInstance, galleries) {
             }
         }
     };
+
+    $scope.uploadImage = function(){
+
+        var myImage = $scope.image.cropImage;
+        //$http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/gallery',{}).success(function(){
+
+        //}).error(function(){
+
+        //})
+    };
+
 
     $scope.apply = function () {
         var selectedImages = [];
@@ -3889,9 +3975,9 @@ function GalleryController($scope, $modalInstance, galleries) {
         .module('gallery')
         .directive('uploadFiles', UploadFiles);
 
-    UploadFiles.$inject = ['$modal','Organization'];
+    UploadFiles.$inject = ['$modal','Organization','$rootScope'];
 
-    function UploadFiles($modal,Organization) {
+    function UploadFiles($modal,Organization,$rootScope) {
         var organizationService = Organization;
         return {
             restrict: 'A',
@@ -3940,8 +4026,16 @@ function GalleryController($scope, $modalInstance, galleries) {
                         mediaFile.originalFilename = files[i].name;
                         formData.append('file', mediaFile);
                     }
+
+                    var file=files[0];
+                    var reader = new FileReader();
+                    reader.onload = function (evt) {
+                        $rootScope.$broadcast("Biin: on fileUploaded", evt);
+                    };
+                    if(file)
+                        reader.readAsDataURL(file);
                     //Upload The media information
-                    scope.uploadMedia(scope, formData);
+                    //scope.uploadMedia(scope, formData);
                 });
                 //Click event of the style button
                 $(element[0]).on('click touch', function (e) {
@@ -6232,8 +6326,58 @@ angular.module('showcases').config(['$stateProvider',
 
         };
 
+
+        $scope.hasValidElements = function(selectedShowcase) {
+            var validElement = _.findWhere(selectedShowcase, {isReady: 1});
+            if (validElement)
+                return true;
+            else
+                return false;
+        }
+
+        //Check min data has been filled
+        $scope.hasMissingData = function() {
+
+            // Don't do anything if there is no selected element
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
+
+            var missingMinData = false;
+
+            //Check if required data is ready for app
+            if ($scope.objectsSidebarService.selectedObject.name == null) {
+                $scope.objectsSidebarService.selectedObject.name = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.name.trim() === ''){
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.description == null) {
+                $scope.objectsSidebarService.selectedObject.description = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.description.trim() === ''){
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.elements.length === 0){
+                missingMinData = true;
+            }
+
+            else if (!$scope.hasValidElements($scope.objectsSidebarService.selectedObject.elements)) {
+                missingMinData = true;
+            }
+
+            return missingMinData;
+
+        };
+
         //Save detail model object
         $scope.save = function () {
+
 
             //save sites
 
@@ -6257,6 +6401,14 @@ angular.module('showcases').config(['$stateProvider',
                     }
                     $scope.sites[i].showcases[j].elements=elements;
                 }
+            }
+
+            if ($scope.hasMissingData()) {
+                $scope.objectsSidebarService.selectedObject.isReady = 0;
+            }
+
+            else {
+                $scope.objectsSidebarService.selectedObject.isReady = 1;
             }
 
             $http.put(ApplicationConfiguration.applicationBackendURL +'api/showcases/' + $scope.objectsSidebarService.selectedObject.identifier, {model: $scope.objectsSidebarService.selectedObject}).success(function (data) {
@@ -7068,6 +7220,87 @@ angular.module('sites').config(['$stateProvider',
 
         };
 
+        //Check min data has been filled
+        $scope.hasMissingData = function() {
+
+            // Don't do anything if there is no selected element
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
+
+            var missingMinData = false;
+
+            //Check if required data is ready for app
+            if ($scope.objectsSidebarService.selectedObject.title1 == null) {
+                $scope.objectsSidebarService.selectedObject.title1 = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.title1.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.title1 = "";
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.title2 == null) {
+                $scope.objectsSidebarService.selectedObject.title2 = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.title2.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.title2 = "";
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.media.length == 0){
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.country == null) {
+                $scope.objectsSidebarService.selectedObject.country = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.country.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.country = "";
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.state == null) {
+                $scope.objectsSidebarService.selectedObject.state = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.state.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.state = "";
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.city == null) {
+                $scope.objectsSidebarService.selectedObject.city = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.city.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.city = "";
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.streetAddres == null) {
+                $scope.objectsSidebarService.selectedObject.streetAddres = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.streetAddres.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.streetAddres = "";
+                missingMinData = true;
+            }
+
+            if($scope.objectsSidebarService.selectedObject.lat == 0 || $scope.objectsSidebarService.selectedObject.lng == 0) {
+                missingMinData = true;
+            }
+
+            return missingMinData;
+        };
+
         //Save detail model object
         $scope.save= function(){
 
@@ -7079,12 +7312,23 @@ angular.module('sites').config(['$stateProvider',
                 $scope.objectsSidebarService.selectedObject.searchTags.push(tags[i]);
             }
 
+            if ($scope.hasMissingData()) {
+                $scope.objectsSidebarService.selectedObject.isReady = 0;
+            }
+
+            else {
+                $scope.objectsSidebarService.selectedObject.isReady = 1;
+            }
+
             $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites/'+$scope.objectsSidebarService.selectedObject.identifier,{model:$scope.objectsSidebarService.selectedObject}).success(function(data,status){
                 if("replaceModel" in data){
                     $scope.objectsSidebarService.selectedObject = data.replaceModel;
                 }
                 if(data.state=="success")
                     $scope.succesSaveShow=true;
+                /*else {
+                    console.log("ERROR SAVING SITES: " + status);
+                }*/
             });
 
         };

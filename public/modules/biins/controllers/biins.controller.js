@@ -53,18 +53,21 @@
 
         //Save The Biin Objects Changes
         $scope.save = function () {
-            $http.put(ApplicationConfiguration.applicationBackendURL + 'api/venues/create', null, {
-                headers: {
-                    name: $scope.objectsSidebarService.selectedObject.venue,
-                    orgidentifier: $scope.organizationId
-                }
-            }).success(function () {
-                $http.post(ApplicationConfiguration.applicationBackendURL + 'api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.objectsSidebarService.selectedObject).success(function () {
-                    console.log("success");
-                }).error(function (err) {
-                    console.log(err);
+
+            if ($scope.objectsSidebarService.selectedObject != null) {
+                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/venues/create', null, {
+                    headers: {
+                        name: $scope.objectsSidebarService.selectedObject.venue,
+                        orgidentifier: $scope.organizationId
+                    }
+                }).success(function () {
+                    $http.post(ApplicationConfiguration.applicationBackendURL + 'api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.objectsSidebarService.selectedObject).success(function () {
+                        console.log("success");
+                    }).error(function (err) {
+                       console.log(err);
+                    });
                 });
-            });
+            }
         };
 
         var vm = this;
@@ -200,6 +203,14 @@
             });
         };
 
+        $scope.convertTime = function (time) {
+            var hours = parseInt(time);
+            var min = ( parseFloat(time) - hours )*60;
+            var hoursString = hours < 10 ? "0"+hours : ""+ hours;
+            var minString = min < 10 ? "0"+min : ""+ min;
+            return hoursString+":"+minString;
+        };
+
         //Modal to edit or create an Object
         $scope.biinObject = function (size, type, obj) {
 
@@ -222,6 +233,7 @@
                     }
                 }
             });
+
 
             modalInstance.result.then(function (objectToCreate) {
                 $scope.saveObject(objectToCreate);
