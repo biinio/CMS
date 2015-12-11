@@ -3,29 +3,11 @@
 angular
     .module('gallery')
     .controller('GalleryController', GalleryController);
-GalleryController.$inject = ['$scope','$modalInstance','galleries','Organization'];
-function GalleryController($scope, $modalInstance, galleries,Organization) {
-    $scope.organizationService = Organization;
+GalleryController.$inject = ['$scope','$modalInstance','galleries'];
+function GalleryController($scope, $modalInstance, galleries) {
     $scope.render = true;
     $scope.loadingImages = false;
     $scope.galleries = galleries;
-
-    $scope.reset = function() {
-        $scope.myImage        = '';
-        $scope.myCroppedImage = '';
-        $scope.imgcropType    = 'square';
-    };
-    $scope.image = {
-        image: "",
-        cropImage: ""
-    };
-
-    $scope.reset();
-
-    $scope.$on("Biin: on fileUploaded",function(scope,event){
-        $scope.image.image=event.target.result;
-        $scope.$digest();
-    });
 
 
     $scope.loadingImagesChange = function (state) {
@@ -50,17 +32,6 @@ function GalleryController($scope, $modalInstance, galleries,Organization) {
             }
         }
     };
-
-    $scope.uploadImage = function(){
-
-        var myImage = $scope.image.cropImage;
-        //$http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/gallery',{}).success(function(){
-
-        //}).error(function(){
-
-        //})
-    };
-
 
     $scope.apply = function () {
         var selectedImages = [];
