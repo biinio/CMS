@@ -203,6 +203,14 @@
             });
         };
 
+        $scope.convertTime = function (time) {
+            var hours = parseInt(time);
+            var min = ( parseFloat(time) - hours )*60;
+            var hoursString = hours < 10 ? "0"+hours : ""+ hours;
+            var minString = min < 10 ? "0"+min : ""+ min;
+            return hoursString+":"+minString;
+        };
+
         //Modal to edit or create an Object
         $scope.biinObject = function (size, type, obj) {
 
@@ -225,6 +233,7 @@
                     }
                 }
             });
+
 
             modalInstance.result.then(function (objectToCreate) {
                 $scope.saveObject(objectToCreate);
