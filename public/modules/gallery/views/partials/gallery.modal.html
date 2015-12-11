@@ -2,7 +2,7 @@
     <div class="modal-body">
         <div class="">
             <div class="galleryWrapper">
-                <div id="gallery" ng-if="loadingImages==false">
+                <div id="gallery" data-ng-if="loadingImages==false">
                     <div class="galleryControls">
                         <input type="text" ng-model="queryGallery" placeholder="Search" autofocus="autofocus" class="col-md-10"/>
                         <button upload-files="#uploadGallery" class="btn btn-default col-md-2">{{ 'GALLERY.UPLOAD' | translate }}</button>
@@ -23,7 +23,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="galleryLoader" ng-if="loadingImages==true">
+                <div id="galleryLoader" data-ng-if="loadingImages==true">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="loader-inner ball-grid-pulse center">
@@ -44,6 +44,43 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div id="galleryCrop" data-ng-if="true">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <a href="#" ng-click="reset()" class="pull-right">
+                                        <small class="fa fa-refresh text-muted"></small>
+                                    </a>Select an image file</div>
+                                <div class="panel-body">
+                                    <!--<p class="pv">Crop type:</p>
+                                    <div class="btn-group btn-group-justified mb">
+                                        <label ng-model="imgcropType" btn-radio="'square'" class="btn btn-default">Square</label>
+                                        <label ng-model="imgcropType" btn-radio="'circle'" class="btn btn-default">Circle</label>
+                                    </div>-->
+                                    <br/>
+                                    <div data-text="Cropped Image" class="imgcrop-preview">
+                                        <img ng-src="{{image.cropImage}}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <div class="imgcrop-area">
+                                        <img-crop image="image.image" result-image="image.cropImage" area-type="{{imgcropType}}" result-image-size="1024" result-image-format="image/jpeg" result-image-quality="0.3"></img-crop>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button data-ng-click="next()" class="btn btn-theme btn-sm">{{ 'GENERIC.APPLY' | translate }}</button>
+                        <button data-ng-click="uploadImage()" class="btn btn-theme btn-sm">{{ 'GENERIC.SAVE' | translate }}</button>
+                    </div>
+
                 </div>
             </div>
         </div>
