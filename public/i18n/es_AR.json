@@ -93,30 +93,19 @@
     "CLOSE": "Cerrar",
     "APPLY": "Aplicar",
     "CATEGORIES_REQUIRED_MESSAGE": "Seleccione al menos una categoría",
-    "GALLERIES_REQUIRED_MESSAGE": "Agregue al menos una imagen"
+    "GALLERIES_REQUIRED_MESSAGE": "Agregue al menos una imagen",
+    "MAP_REQUIRED_MESSAGE":"Indique la ubicacion de su local en el mapa"
   },
   "SITES":{
-    "GENERIC.UPLOAD_IMAGE": "Actualizar Imagen",
-    "GENERIC.IDENTIFIER": "Identificador",
-    "GENERIC.SEARCH_TAGS": "Etiquetas para busqueda",
-    "GENERIC.SEARCH_TAGS_DESC": "Las etiquetas ayudan a que su información sea encontrada mas fácilmente.",
-    "GENERIC.ADD": "Añadir",
-    "MENU.DETAILS": "1.Detalles",
-    "MENU.IMAGES": "2.Imagenes",
-    "MENU.DESIGN": "3.Diseño",
-    "MENU.LOCATION": "4.Ubicación",
-    "MENU.BEACONS": "4.Beacons",
-    "MENU.CATEGORIES": "6.Categorías",
-
     "TITLE": "Detalles del Local",
     "NAME": "Nombre",
+    "NAME_PLACEHOLDER": "Ingrese nombre del local",
     "AT": "Está en",
+    "AT_PLACEHOLDER": "Ingrese el nombre del sitio en el que se encuentra su local",
     "EMAIL": "Correo Electrónico",
+    "EMAIL_PLACEHOLDER": "mi-sitio@ejemplo.com",
     "NUTSHELL": "Mini Descripción",
-
-    "GALLERY.TITLE": "Galería de imagenes",
-    "GALLERY.SUB_TITLE": "Agregue y use las imagenes de su marca para darle identidad a su local.",
-    "GALLERY.UPLOAD": "Subir",
+    "NUTSHELL_PLACEHOLDER": "Ingrese una descripción breve de su local",
 
     "LOCATION":{
       "TITLE": "Ubicación del Local",
