@@ -59,7 +59,9 @@ module.exports = {
 				'public/lib/jquery-ui/jquery-ui.js',
 				'public/lib/d3/d3.js',
 				'public/lib/nvd3/build/nv.d3.js',
-				'public/lib/angular-nvd3/dist/angular-nvd3.js'
+				'public/lib/angular-nvd3/dist/angular-nvd3.js',
+				'public/lib/ng-img-crop/compile/minified/ng-img-crop.js'
+
 			]
 		},
 		css: [
@@ -71,7 +73,8 @@ module.exports = {
 			'public/lib/angular-datepicker/dist/angular-datepicker.css',
 			'public/lib/loaders.css/loaders.css',
 			'public/lib/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css',
-			'public/lib/nvd3/build/nv.d3.css'
+			'public/lib/nvd3/build/nv.d3.css',
+			'public/lib/ng-img-crop/compile/minified/ng-img-crop.css'
 		],
 		js: 'public/dist/application.min.js'
 	},

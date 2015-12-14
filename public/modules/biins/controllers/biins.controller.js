@@ -53,18 +53,21 @@
 
         //Save The Biin Objects Changes
         $scope.save = function () {
-            $http.put(ApplicationConfiguration.applicationBackendURL + 'api/venues/create', null, {
-                headers: {
-                    name: $scope.objectsSidebarService.selectedObject.venue,
-                    orgidentifier: $scope.organizationId
-                }
-            }).success(function () {
-                $http.post(ApplicationConfiguration.applicationBackendURL + 'api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.objectsSidebarService.selectedObject).success(function () {
-                    console.log("success");
-                }).error(function (err) {
-                    console.log(err);
+
+            if ($scope.objectsSidebarService.selectedObject != null) {
+                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/venues/create', null, {
+                    headers: {
+                        name: $scope.objectsSidebarService.selectedObject.venue,
+                        orgidentifier: $scope.organizationId
+                    }
+                }).success(function () {
+                    $http.post(ApplicationConfiguration.applicationBackendURL + 'api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.objectsSidebarService.selectedObject).success(function () {
+                        console.log("success");
+                    }).error(function (err) {
+                       console.log(err);
+                    });
                 });
-            });
+            }
         };
 
         var vm = this;

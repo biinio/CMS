@@ -205,6 +205,87 @@
 
         };
 
+        //Check min data has been filled
+        $scope.hasMissingData = function() {
+
+            // Don't do anything if there is no selected element
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
+
+            var missingMinData = false;
+
+            //Check if required data is ready for app
+            if ($scope.objectsSidebarService.selectedObject.title1 == null) {
+                $scope.objectsSidebarService.selectedObject.title1 = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.title1.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.title1 = "";
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.title2 == null) {
+                $scope.objectsSidebarService.selectedObject.title2 = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.title2.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.title2 = "";
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.media.length == 0){
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.country == null) {
+                $scope.objectsSidebarService.selectedObject.country = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.country.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.country = "";
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.state == null) {
+                $scope.objectsSidebarService.selectedObject.state = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.state.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.state = "";
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.city == null) {
+                $scope.objectsSidebarService.selectedObject.city = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.city.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.city = "";
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.streetAddres == null) {
+                $scope.objectsSidebarService.selectedObject.streetAddres = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.streetAddres.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.streetAddres = "";
+                missingMinData = true;
+            }
+
+            if($scope.objectsSidebarService.selectedObject.lat == 0 || $scope.objectsSidebarService.selectedObject.lng == 0) {
+                missingMinData = true;
+            }
+
+            return missingMinData;
+        };
+
         //Save detail model object
         $scope.save= function(){
 
@@ -216,12 +297,23 @@
                 $scope.objectsSidebarService.selectedObject.searchTags.push(tags[i]);
             }
 
+            if ($scope.hasMissingData()) {
+                $scope.objectsSidebarService.selectedObject.isReady = 0;
+            }
+
+            else {
+                $scope.objectsSidebarService.selectedObject.isReady = 1;
+            }
+
             $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites/'+$scope.objectsSidebarService.selectedObject.identifier,{model:$scope.objectsSidebarService.selectedObject}).success(function(data,status){
                 if("replaceModel" in data){
                     $scope.objectsSidebarService.selectedObject = data.replaceModel;
                 }
                 if(data.state=="success")
                     $scope.succesSaveShow=true;
+                /*else {
+                    console.log("ERROR SAVING SITES: " + status);
+                }*/
             });
 
         };

@@ -164,8 +164,58 @@
 
         };
 
+
+        $scope.hasValidElements = function(selectedShowcase) {
+            var validElement = _.findWhere(selectedShowcase, {isReady: 1});
+            if (validElement)
+                return true;
+            else
+                return false;
+        }
+
+        //Check min data has been filled
+        $scope.hasMissingData = function() {
+
+            // Don't do anything if there is no selected element
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
+
+            var missingMinData = false;
+
+            //Check if required data is ready for app
+            if ($scope.objectsSidebarService.selectedObject.name == null) {
+                $scope.objectsSidebarService.selectedObject.name = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.name.trim() === ''){
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.description == null) {
+                $scope.objectsSidebarService.selectedObject.description = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.description.trim() === ''){
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.elements.length === 0){
+                missingMinData = true;
+            }
+
+            else if (!$scope.hasValidElements($scope.objectsSidebarService.selectedObject.elements)) {
+                missingMinData = true;
+            }
+
+            return missingMinData;
+
+        };
+
         //Save detail model object
         $scope.save = function () {
+
 
             //save sites
 
@@ -189,6 +239,14 @@
                     }
                     $scope.sites[i].showcases[j].elements=elements;
                 }
+            }
+
+            if ($scope.hasMissingData()) {
+                $scope.objectsSidebarService.selectedObject.isReady = 0;
+            }
+
+            else {
+                $scope.objectsSidebarService.selectedObject.isReady = 1;
             }
 
             $http.put(ApplicationConfiguration.applicationBackendURL +'api/showcases/' + $scope.objectsSidebarService.selectedObject.identifier, {model: $scope.objectsSidebarService.selectedObject}).success(function (data) {
