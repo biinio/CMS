@@ -211,7 +211,7 @@
         $scope.filteredElements = function ( element ) {
             var index = -1;
             for(var i = 0; i < $scope.objectsSidebarService.selectedObject.elements.length; i++){
-                if($scope.objectsSidebarService.selectedObject.elements[i]._id == element._id){
+                if($scope.objectsSidebarService.selectedObject.elements[i].elementIdentifier == element.elementIdentifier){
                     index = i;
                     break;
                 }
