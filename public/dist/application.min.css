@@ -13317,6 +13317,9 @@ Component: sidemenu.less
 /* ========================================================================
 Component: elements.less
  ========================================================================== */
+.align-right {
+  float: right;
+}
 .enlarge-icon {
   font-size: 18px !important;
   float: right;

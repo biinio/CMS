@@ -21,6 +21,15 @@
         function activate() {
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
+
+            $scope.canDeleteSite = false;
+
+            for (var permit = 0; permit < Authentication.user.permissions.length; permit++) {
+                if (Authentication.user.permissions[permit].permission == "delete") {
+                    $scope.canDeleteSite = true;
+                    break;
+                }
+            }
         }
 
         /**=============================================================================================================
@@ -37,12 +46,14 @@
             "<label class='moduleTitle'>{{item.title1}}</label>"+
             "<br/>"+
             "<label class='moduleTitle'>{{item.title2}}</label>"+
+                /*
             "<div class='btnShowcasePreview icon-round-control btn-on-hover'>"+
             "<div class='icon icon-arrange-1'></div>"+
             "</div>"+
             "</div>"+
             "<div ng-click=\"deleteItem(objectsSidebarService.objects.indexOf(item),$event)\" class=\"icon-round-control btnDelete  btn-danger btn-on-hover\">"+
             "<i class=\"fa fa-close\"></i>"+
+            */
             "</div>";
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
@@ -90,8 +101,11 @@
         });
 
         $scope.$on("Biin: On Object Deleted", function(event,index){
-            $scope.removeSiteAt(index);
+
+
         });
+
+
 
         /**=============================================================================================================
          * Variables
@@ -152,6 +166,13 @@
                     siteSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
                 }
             },100);
+
+        };
+
+        $scope.deleteSite = function(message, selectedObject) {
+            if (confirm(message)) {
+                $scope.removeSiteAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
+            }
 
         };
 
