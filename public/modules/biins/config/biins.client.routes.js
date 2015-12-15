@@ -12,6 +12,9 @@ angular.module('biins').config(['$stateProvider',
                 url: '/biins',
                 templateUrl: 'modules/biins/views/biins.client.view.html',
                 resolve: {
+                    permissions: function(Permission) {
+                        return Permission.getPermissions();
+                    },
                     selectedOrganization: function (Organization) {
                         return Organization.getSelectedOrganization();
                     },
