@@ -185,6 +185,7 @@
                         </div>
                     </div>
                 </section>
+                <button  type="button" ng-if="canDeleteSite" class="btn btn-oval btn-default align-right" ng-click="deleteSite(' {{'GENERIC.DELETE_SITE_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">{{ 'GENERIC.DELETE_SITE' | translate }}</button>
                 <code ng-hide="true">{{'GENERIC.IDENTIFIER' | translate}} :
                     {{objectsSidebarService.selectedObject.identifier }}</code>
             </div>

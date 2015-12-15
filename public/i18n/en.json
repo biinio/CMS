@@ -94,7 +94,9 @@
     "APPLY": "Apply",
     "CATEGORIES_REQUIRED_MESSAGE": "Select at least one category",
     "GALLERIES_REQUIRED_MESSAGE": "Add at least one image",
-    "MAP_REQUIRED_MESSAGE":"Mark your location on the map"
+    "MAP_REQUIRED_MESSAGE":"Mark your location on the map",
+    "DELETE_SITE": "Delete site",
+    "DELETE_SITE_CONFIRMATION": "Do you wish to delete this site?"
   },
   "SITES":{
     "TITLE": "Establishment Details",
