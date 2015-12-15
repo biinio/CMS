@@ -29,6 +29,9 @@
                 url: '/home',
                 templateUrl: 'modules/core/views/home.client.view.html',
                 resolve: {
+                    permissions: function(Permission) {
+                        return Permission.getPermissions();
+                    },
                     selectedOrganization: function (Organization) {
                         return Organization.getSelectedOrganization();
                     },
