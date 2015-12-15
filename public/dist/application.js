@@ -5,8 +5,7 @@ var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'BiinCMSApp';
 
-	var applicationBackendURL = window.location.href.indexOf('angle-biin') > -1 ? 'https://qa-biinapp.herokuapp.com/' :
-		window.location.href.indexOf('dev') > -1 ? 'https://dev-biin-backend.herokuapp.com/' :
+	var applicationBackendURL = window.location.href.indexOf('dev') > -1 ? 'https://dev-biin-backend.herokuapp.com/' :
 			window.location.href.indexOf('qa') > -1 ?'https://qa-biin-backend.herokuapp.com/' :
 				window.location.href.indexOf('demo') > -1 ? 'https://demo-biin-backend.herokuapp.com/' :
 					window.location.href.indexOf('production') > -1 ? 'https://www.biin.io/' :
@@ -18,7 +17,7 @@ var ApplicationConfiguration = (function() {
 	var applicationModuleVendorDependencies = ['ngRoute', 'ngAnimate', 'ngStorage', 'ngTouch', 'ngCookies',
         'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize',
         'ngResource', 'ui.utils','ngAnimate', 'toaster','textAngular','bootstrap-tagsinput','angular-bind-html-compile',
-		'datePicker','ui.bootstrap-slider','ngDragDrop','nvd3'];
+		'datePicker','ui.bootstrap-slider','ngDragDrop','nvd3','ngImgCrop'];
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
 		// Create angular module
@@ -447,9 +446,12 @@ angular.module('biinUsers').config(['$stateProvider',
                     vm.authMsg = 'Incorrect credentials.';
                   }else{
                       $scope.authentication.user = response.data.account;
-                      Organization.getOrganizations().then( function(){
-                            $state.go('app.dashboard');
+                      Organization.getSelectedOrganization().then(function() {
+                          Organization.getOrganizations().then( function() {
+
+                              $state.go('app.dashboard');
                           });
+                      });
 
                   }
                 }, function() {
@@ -464,6 +466,8 @@ angular.module('biinUsers').config(['$stateProvider',
             }
           };
         }
+
+
     }
 })();
 
@@ -481,8 +485,11 @@ angular.module('biins').config(['$stateProvider',
                 url: '/biins',
                 templateUrl: 'modules/biins/views/biins.client.view.html',
                 resolve: {
-                    organization:function( Organization ){
-                        return Organization.promise;
+                    selectedOrganization: function (Organization) {
+                        return Organization.getSelectedOrganization();
+                    },
+                    organization: function (Organization) {
+                        return Organization.getOrganizations();
                     }
                 }
             });
@@ -510,7 +517,7 @@ angular.module('biins').config(['$stateProvider',
         $scope.type = selectedObj.type;
         $scope.elements=elements;
         $scope.showcases=showcases;
-
+        $scope.timeEnabled = [0,24];
         //Create the modal for the creation Model
         if($scope.type==='create'){
             var obj={objectType:'1',notification:'', hasNotification:'0', isNew:true};
@@ -529,7 +536,9 @@ angular.module('biins').config(['$stateProvider',
             obj.endTime=time.format();
             $scope.obj= obj;
         }else
-        {    $scope.obj =selectedObj.obj;
+        {
+            $scope.obj =selectedObj.obj;
+            $scope.timeEnabled = [Number($scope.obj.startTime),Number($scope.obj.endTime)];
         }
         //$scope.objects=[];
         $scope.hasNotificationBool=false;
@@ -581,12 +590,29 @@ angular.module('biins').config(['$stateProvider',
         };
 
         $scope.save = function () {
+            if($scope.obj.hasTimeOptions == "1"){
+                $scope.obj.startTime = $scope.timeEnabled[0]+"";
+                $scope.obj.endTime = $scope.timeEnabled[1]+"";
+            }else{
+                $scope.obj.startTime = "0";
+                $scope.obj.endTime = "24";
+            }
             $modalInstance.close($scope.obj);
         };
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
+
+        $scope.validatesValues = function( value, event){
+            if(value && Array.isArray(value)){
+                if(value[1]-value[0] <= 0.5 && value[1] == 24){
+                    $scope.timeEnabled = [23.5, 24];
+                } else if(value[1]-value[0] < 0.5){
+                    $scope.timeEnabled = [value[0], value[0]+0.5];
+                }
+            }
+        }
 
     }
 })();
@@ -647,18 +673,21 @@ angular.module('biins').config(['$stateProvider',
 
         //Save The Biin Objects Changes
         $scope.save = function () {
-            $http.put(ApplicationConfiguration.applicationBackendURL + 'api/venues/create', null, {
-                headers: {
-                    name: $scope.objectsSidebarService.selectedObject.venue,
-                    orgidentifier: $scope.organizationId
-                }
-            }).success(function () {
-                $http.post(ApplicationConfiguration.applicationBackendURL + 'api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.objectsSidebarService.selectedObject).success(function () {
-                    console.log("success");
-                }).error(function (err) {
-                    console.log(err);
+
+            if ($scope.objectsSidebarService.selectedObject != null) {
+                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/venues/create', null, {
+                    headers: {
+                        name: $scope.objectsSidebarService.selectedObject.venue,
+                        orgidentifier: $scope.organizationId
+                    }
+                }).success(function () {
+                    $http.post(ApplicationConfiguration.applicationBackendURL + 'api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.objectsSidebarService.selectedObject).success(function () {
+                        console.log("success");
+                    }).error(function (err) {
+                       console.log(err);
+                    });
                 });
-            });
+            }
         };
 
         var vm = this;
@@ -794,6 +823,14 @@ angular.module('biins').config(['$stateProvider',
             });
         };
 
+        $scope.convertTime = function (time) {
+            var hours = parseInt(time);
+            var min = ( parseFloat(time) - hours )*60;
+            var hoursString = hours < 10 ? "0"+hours : ""+ hours;
+            var minString = min < 10 ? "0"+min : ""+ min;
+            return hoursString+":"+minString;
+        };
+
         //Modal to edit or create an Object
         $scope.biinObject = function (size, type, obj) {
 
@@ -816,6 +853,7 @@ angular.module('biins').config(['$stateProvider',
                     }
                 }
             });
+
 
             modalInstance.result.then(function (objectToCreate) {
                 $scope.saveObject(objectToCreate);
@@ -974,16 +1012,21 @@ angular.module('biins').config(['$stateProvider',
     function coreMenu(Menus) {
         // Add default menu entry
         //Menus.addMenuItem('sidebar', 'Home', 'home', null, '/home', true, null, null, 'icon-home');
-        Menus.addMenuItem('sidebar', 'Dashboard', 'dashboard', null, '/dashboard', false, null, null,'icon-speedometer',null);
-        Menus.addMenuItem('sidebar', 'Sites', 'sites', null, '/sites', false, null, null,'icon-pointer',null);
-        Menus.addMenuItem('sidebar', 'Elements', 'elements', null, '/elements', false, null, null,'icon-book-open',null);
-        Menus.addMenuItem('sidebar', 'Showcase', 'showcases', null, '/showcase', false, null, null,'icon-docs',null);
-        Menus.addMenuItem('sidebar', 'Biins', 'biins', null, '/biins', false, null, null,'icon-feed',null);
-        Menus.addMenuItem('sidebar', 'Administration', 'profile', 'dropdown', null, false, null, null,'fa fa-gears');
-        //this.addSubMenu   (menuId, rootMenuItemURL, menuItemTitle, menuItemURL, menuItemUIRoute, isPublic, roles, position) {
-        Menus.addSubMenuItem('sidebar', 'profile', 'Profile','profile',null, false, null, null);
-        Menus.addSubMenuItem('sidebar', 'profile', 'Organizaciones','organization',null, false, null, null);
-        Menus.addMenuItem('sidebar', 'Maintenance', 'maintenance', null, '/maintenance', false, null, null,'icon-settings',null);
+
+        Menus.addMenuItem('sidebar', 'Dashboard', 'dashboard', null, '/dashboard', false, null, null,'icon-speedometer', "sidebar.MENU_DASHBOARD");
+        Menus.addMenuItem('sidebar', 'Sites', 'sites', null, '/sites', false, null, null,'icon-pointer', "sidebar.MENU_SITES");
+        Menus.addMenuItem('sidebar', 'Elements', 'elements', null, '/elements', false, null, null,'icon-book-open', "sidebar.MENU_ELEMENTS");
+        Menus.addMenuItem('sidebar', 'Showcase', 'showcases', null, '/showcase', false, null, null,'icon-docs', "sidebar.MENU_SHOWCASES");
+        Menus.addMenuItem('sidebar', 'Biins', 'biins', null, '/biins', false, null, null,'icon-feed', "sidebar.MENU_BIINS");
+        //                  menuId, menuItemTitle, menuItemURL, menuItemType, menuItemUIRoute, isPublic, roles, position,iconClass, translateKey, alert)
+        Menus.addMenuItem('sidebar', 'Administration', 'profile', 'dropdown', null, false, null, null,'fa fa-gears', "sidebar.MENU_ADMINISTRATION");
+        //this.addSubMenu   menuId, rootMenuItemURL, menuItemTitle, menuItemURL, menuItemUIRoute, isPublic, roles, position, translateKey
+        Menus.addSubMenuItem('sidebar', 'profile', 'Profile','profile', '/profile', false, null, null, "sidebar.MENU_PROFILE");
+        Menus.addSubMenuItem('sidebar', 'profile', 'Organizations','organization', '/organization', false, null, null, "sidebar.MENU_ORGANIZATIONS");
+
+                        //(menuId, menuItemTitle, menuItemURL, menuItemType, menuItemUIRoute, isPublic, roles, position, iconClass, translateKey, alert) {
+        //Maintenance has role field: maintenance
+        Menus.addMenuItem('sidebar', 'Maintenance', 'maintenance', null, '/maintenance', false, 'maintenance', null,'icon-settings',"sidebar.MENU_MAINTENANCE");
     }
 
 })();
@@ -1019,8 +1062,11 @@ angular.module('biins').config(['$stateProvider',
                 url: '/home',
                 templateUrl: 'modules/core/views/home.client.view.html',
                 resolve: {
-                    organization:function( Organization ){
-                        return Organization.promise;
+                    selectedOrganization: function (Organization) {
+                        return Organization.getSelectedOrganization();
+                    },
+                    organization: function (Organization) {
+                        return Organization.getOrganizations();
                     }
                 }
             })
@@ -1174,11 +1220,14 @@ angular.module('app.core').service('Categories', ['$http', function (async) {
 angular.module('app.core').service('Menus', [
 
 	function() {
-		// Define a set of default roles
-		this.defaultRoles = ['*'];
+
 
 		// Define the menus object
 		this.menus = {};
+
+		/*
+		// Define a set of default roles
+		this.defaultRoles = ['*'];
 
 		// A private function for rendering decision 
 		var shouldRender = function(user) {
@@ -1199,7 +1248,45 @@ angular.module('app.core').service('Menus', [
 			}
 
 			return false;
+		}; */
+
+		// Define a set of default roles
+		this.defaultRoles = ['*'];
+
+		// A private function for rendering decision
+		var shouldRender = function(user) {
+			if (user) {
+				if (!!~this.roles.indexOf('*')) {
+					return true;
+				} else {
+					for (var index in user.permissions) {
+							var attr = user.permissions[index];
+							if (attr.permission === this.roles) {
+								return true;
+							}
+					}
+					return false;
+				}
+			} else {
+				return this.isPublic;
+			}
+
+			return false;
 		};
+
+		// Private function to check if menu sidebar option should be rendered
+		this.userHasValidPermit = function(roles){
+			if (roles === null || typeof roles === 'undefined') {
+				return true;
+			}
+			else if(user.role === roles) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
 
 		// Validate menu existance
 		this.validateMenuExistance = function(menuId) {
@@ -1256,6 +1343,7 @@ angular.module('app.core').service('Menus', [
 
 			// Push new menu item
 			this.menus[menuId].items.push({
+				//title: menuItemTitle,
 				title: menuItemTitle,
 				link: menuItemURL,
 				menuItemType: menuItemType || 'item',
@@ -1276,7 +1364,7 @@ angular.module('app.core').service('Menus', [
 		};
 
 		// Add submenu item object
-		this.addSubMenuItem = function(menuId, rootMenuItemURL, menuItemTitle, menuItemURL, menuItemUIRoute, isPublic, roles, position) {
+		this.addSubMenuItem = function(menuId, rootMenuItemURL, menuItemTitle, menuItemURL, menuItemUIRoute, isPublic, roles, position, translateKey) {
 			// Validate that the menu exists
 			this.validateMenuExistance(menuId);
 
@@ -1291,7 +1379,8 @@ angular.module('app.core').service('Menus', [
 						isPublic: ((isPublic === null || typeof isPublic === 'undefined') ? this.menus[menuId].items[itemIndex].isPublic : isPublic),
 						roles: ((roles === null || typeof roles === 'undefined') ? this.menus[menuId].items[itemIndex].roles : roles),
 						position: position || 0,
-						shouldRender: shouldRender
+						shouldRender: shouldRender,
+						translate: translateKey
 					});
 				}
 			}
@@ -1343,50 +1432,86 @@ angular.module('app.core').service('Menus', [
 
 'use strict';
 
-angular.module('app.core').service('Organization', ['$http', '$rootScope', 'Authentication',
+angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope', 'Authentication', 'GlobalFilters',
 
 
-    function ($http, $rootScope, Authentication) {
-        var selectedOrganization = {};
-        var organizationsList = [];
+    function ($http, $q, $rootScope, Authentication, GlobalFilters) {
 
-        var promise = 'undefined';
-        if (Authentication.user != "") {
-            promise = $http.get('/api/organization').then(function (result) {
-                    service.organizationsList = result.data.data;
-                    service.selectedOrganization = service.organizationsList[0];
-                },
-                function () {
+        var deferObject;
 
-                }
-            );
-        }
-        /*var promise = $http.get('/api/organization').then(function(result) {
-         service.organizationsList = result.data.data;
-         service.selectedOrganization = service.organizationsList[0];
-         },
-         function(){
-
-         }
-         );*/
         var service = {
-            promise: promise,
-            selectedOrganization: selectedOrganization,
-            organizationsList: organizationsList,
+
+            selectedOrganization: 'undefined',
+            selectedOrganizationId: 'undefined',
+            organizationsList: [],
+
+            getSelectedOrganization: function () {
+
+                if (Authentication.user) {
+                    var promise = $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + Authentication.user.accountIdentifier + '/selectedOrganization/');
+                    deferObject = deferObject || $q.defer();
+
+                    promise.then(function (result) {
+                            service.selectedOrganizationId = result.data.data.selectedOrganization;
+                            deferObject.resolve(result);
+                        },
+                        function (reason) {
+                            deferObject.reject(reason);
+                        });
+                    return deferObject.promise;
+                }
+            },
 
             getOrganizations: function () {
-                return $http.get('/api/organization').then(function (result) {
-                        service.organizationsList = result.data.data;
-                        service.selectedOrganization = service.organizationsList[0];
-                    },
-                    function () {
-                    });
+
+                if (Authentication.user) {
+                    var promise = $http.get('/api/organization');
+                    deferObject = deferObject || $q.defer();
+
+                    promise.then(function (result) {
+                            service.organizationsList = result.data.data;
+
+                            service.selectedOrganization = service.organizationsList[0];
+
+                            // If last selected organization id has been retrieved
+                            if (service.selectedOrganizationId != 'undefined') {
+
+                                var orgFound = false;
+                                var index = 0;
+                                while (!orgFound && index < service.organizationsList.length) {
+                                    if (service.organizationsList[index].identifier == service.selectedOrganizationId) {
+                                        service.selectedOrganization = service.organizationsList[index];
+                                        orgFound = true;
+                                    }
+                                    index++;
+                                }
+
+                            }
+                            GlobalFilters.setDefaultSite(service.selectedOrganization.sites[0]);
+
+                            deferObject.resolve(result);
+                        },
+                        function (reason) {
+                            deferObject.reject(reason);
+                        });
+                    return deferObject.promise;
+                }
             },
 
             setSelectedOrganization: function (index) {
-                if (index >= 0 && index < this.organizationsList.length) {
-                    this.selectedOrganization = this.organizationsList[index];
-                    $rootScope.$broadcast('organizationChanged');
+                if (Authentication.user) {
+                    if (!(index >= 0 && index < this.organizationsList.length)) {
+                    } else {
+                        this.selectedOrganization = this.organizationsList[index];
+                        this.selectedOrganizationId = this.selectedOrganization.identifier;
+                        GlobalFilters.setDefaultSite(service.selectedOrganization.sites[0]);
+
+                        $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + Authentication.user.accountIdentifier + '/' + service.selectedOrganization.identifier, {});
+
+                        $rootScope.$broadcast('organizationChanged');
+                        //Update selected site when organization is changed
+                        $rootScope.$broadcast('changeSelectedSite');
+                    }
                 }
             },
 
@@ -1401,8 +1526,9 @@ angular.module('app.core').service('Organization', ['$http', '$rootScope', 'Auth
         };
 
         return service;
-    }
-]);
+
+    }]);
+
 
 'use strict';
 
@@ -1415,8 +1541,11 @@ angular.module('dashboard').config(['$stateProvider',
                 url: '/dashboard',
                 templateUrl: 'modules/dashboard/views/dashboard.client.view.html',
                 resolve: {
+                    selectedOrganization: function (Organization) {
+                        return Organization.getSelectedOrganization();
+                    },
                     organization: function (Organization) {
-                        return Organization.promise;
+                        return Organization.getOrganizations();
                     }
                 }
             });
@@ -1441,17 +1570,34 @@ angular.module('dashboard').config(['$stateProvider',
         $scope.authentication = Authentication;
         $scope.organizationService = Organization;
         $scope.globalFilters = GlobalFilters;
+
+
         activate();
 
         ////////////////
 
         function activate() {
 
+            $scope.globalFilters.dateRange = 30;
+            //$scope.globalFilters.selectedSite = $scope.organizationService.selectedOrganization.sites[0];
+
         }
+
 
         $scope.changeChartRange = function (numberDays) {
             $scope.globalFilters.changeDateRange(numberDays);
         }
+
+        $scope.changeSelectedSite = function () {
+            $scope.globalFilters.changeSelectedSite($scope.globalFilters.selectedSite);
+        }
+
+        $scope.$on('organizationChanged', function () {
+            $scope.globalFilters.selectedSite = $scope.organizationService.selectedOrganization.sites[0];
+            $scope.globalFilters.changeSelectedSite($scope.organizationService.selectedOrganization.sites[0]);
+        });
+
+
     }
 })();
 
@@ -1528,12 +1674,10 @@ angular.module('dashboard').config(['$stateProvider',
         .module('dashboard')
         .controller('mobileAverageVisitedElementsController', mobileAverageVisitedElementsController);
 
-    mobileAverageVisitedElementsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization'];
-    function mobileAverageVisitedElementsController($http, $state, $scope, Authentication, Organization) {
+    mobileAverageVisitedElementsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
+    function mobileAverageVisitedElementsController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
         var vm = this;
         $scope.value = 0;
-
-        $scope.currentDays = 0;
 
         activate();
 
@@ -1541,30 +1685,35 @@ angular.module('dashboard').config(['$stateProvider',
         function activate() {
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
+            $scope.globalFilters = GlobalFilters;
         }
 
-
         $scope.$on('organizationChanged',function(){
-            $scope.getChartData($scope.currentDays);
+            $scope.getChartData($scope.globalFilters.dateRange);
         });
-
 
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
-            $scope.changeChartRange($scope.currentDays);
+            $scope.changeChartRange($scope.globalFilters.dateRange);
         });
+
         $scope.getChartData = function ( days )
         {
-            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/visitedelements').success(function(data) {
-                $scope.value = data.data;
-            });
+            var filters = {};
+            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            filters.dateRange = $scope.globalFilters.dateRange;
+
+            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/visitedelements',
+                { headers:{
+                    filters : JSON.stringify(filters) } } ).success(function(data) {
+                    $scope.value = data.data;
+                });
         };
 
         $scope.changeChartRange = function( days ){
             $scope.getChartData(days);
-            $scope.currentDays = days;
         };
 
-        $scope.changeChartRange(30);
+        $scope.changeChartRange($scope.globalFilters.dateRange);
     }
 })();
 
@@ -1667,7 +1816,12 @@ angular.module('dashboard').config(['$stateProvider',
         });
         $scope.getChartData = function ( days )
         {
-            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/sessions').success(function(data) {
+            var filters = {};
+            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            filters.dateRange = $scope.globalFilters.dateRange;
+
+            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/sessions',{ headers:{
+                filters : JSON.stringify(filters) } } ).success(function(data) {
                 $scope.value = data.data;
             });
         };
@@ -1696,23 +1850,23 @@ angular.module('dashboard').config(['$stateProvider',
         .module('dashboard')
         .controller('mobilePieVisitsController', mobilePieVisitsController);
 
-    mobilePieVisitsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization'];
-    function mobilePieVisitsController($http, $state, $scope, Authentication, Organization) {
+    mobilePieVisitsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
+    function mobilePieVisitsController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+
         var vm = this;
+        $scope.value = 0;
+        $scope.enoughData = false;
         activate();
 
         ////////////////
-
         function activate() {
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
+            $scope.globalFilters = GlobalFilters;
         }
 
-        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-        $scope.currentDays = 0;
-
-        $scope.$on('organizationsChanged', function(orgId) {
-            $scope.getChartData($scope.currentDays);
+        $scope.$on('organizationChanged',function(){
+            $scope.getChartData($scope.globalFilters.dateRange);
         });
 
         $scope.options = {
@@ -1734,28 +1888,40 @@ angular.module('dashboard').config(['$stateProvider',
             }
         };
 
+        $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
+            $scope.changeChartRange($scope.globalFilters.dateRange);
+        });
+
         $scope.getChartData = function ( days )
         {
-            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/newsvsreturning').success(function(data) {
+            var filters = {};
+            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            filters.dateRange = $scope.globalFilters.dateRange;
+
+            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/newsvsreturning',{ headers:{
+                filters : JSON.stringify(filters) } } ).success(function(data) {
                 var information  = data.data;
-                $scope.data = [
-                    {
-                        key: "New Visits",
-                        y: information.news
-                    },
-                    {
-                        key: "Frecuent Client",
-                        y: information.returning
-                    }
-                ];
+                $scope.enoughData = information.news || information.returning;
+                if($scope.enoughData){
+                    $scope.data = [
+                        {
+                            key: "New Visits",
+                            y: information.news
+                        },
+                        {
+                            key: "Frecuent Client",
+                            y: information.returning
+                        }
+                    ];
+                }
             });
         };
 
         $scope.changeChartRange = function( days ){
             $scope.getChartData(days);
-            $scope.currentDays = days;
         };
-        $scope.changeChartRange(30);
+
+        $scope.changeChartRange($scope.globalFilters.dateRange);
 
     }
 })();
@@ -1790,18 +1956,26 @@ angular.module('dashboard').config(['$stateProvider',
         }
 
         $scope.$on('organizationChanged',function(){
-            $scope.getChartData($scope.globalFilters.dateRange);
+            $scope.getChartData();
         });
 
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
             $scope.changeChartRange($scope.globalFilters.dateRange);
         });
 
-        $scope.getChartData = function ( days )
+        $scope.$on('Biin: Site Changed', function(){
+            $scope.getChartData();
+        });
+
+
+
+        $scope.getChartData = function ()
         {
             var filters = {};
+            filters.siteId = $scope.globalFilters.selectedSite.identifier;
             filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
             filters.dateRange = $scope.globalFilters.dateRange;
+
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/newvisits',
                 { headers:{
@@ -1826,7 +2000,7 @@ angular.module('dashboard').config(['$stateProvider',
  * Dashboard for biin
  =========================================================*/
 
-(function() {
+/*(function() {
     'use strict';
 
     angular
@@ -1904,6 +2078,7 @@ angular.module('dashboard').config(['$stateProvider',
 
     }
 })();
+*/
 
 /**
  * Created by Ivan on 10/26/15.
@@ -1944,9 +2119,19 @@ angular.module('dashboard').config(['$stateProvider',
             $scope.changeChartRange(numberdays);
         });
 
+        $scope.$on('Biin: Site Changed', function(){
+            $scope.getChartData($scope.globalFilters.dateRange);
+        });
+
         $scope.getChartData = function ( days )
         {
-            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/sessions').success(function(data) {
+            var filters = {};
+            filters.siteId = $scope.globalFilters.selectedSite.identifier;
+            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            filters.dateRange = $scope.globalFilters.dateRange;
+
+            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/sessions',{ headers:{
+                filters : JSON.stringify(filters) } } ).success(function(data) {
                 $scope.value = data.data;
             });
         };
@@ -1975,20 +2160,25 @@ angular.module('dashboard').config(['$stateProvider',
         .module('dashboard')
         .controller('sitesPieVisitsController', sitesPieVisitsController);
 
-    sitesPieVisitsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization'];
-    function sitesPieVisitsController($http, $state, $scope, Authentication, Organization) {
+    sitesPieVisitsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
+    function sitesPieVisitsController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+
         var vm = this;
+        $scope.value = 0;
+        $scope.enoughData = false;
         activate();
 
         ////////////////
-
         function activate() {
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
+            $scope.globalFilters = GlobalFilters;
         }
 
-        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-        $scope.currentDays = 0;
+        $scope.$on('organizationChanged',function(){
+            $scope.getChartData($scope.globalFilters.dateRange);
+        });
+
         $scope.options = {
             chart: {
                 type: 'pieChart',
@@ -2008,38 +2198,45 @@ angular.module('dashboard').config(['$stateProvider',
             }
         };
 
-
-        $scope.$on('organizationChanged',function(){
-            $scope.getChartData($scope.currentDays);
-        });
-
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
-            $scope.changeChartRange(numberdays);
+            $scope.changeChartRange($scope.globalFilters.dateRange);
         });
 
+        $scope.$on('Biin: Site Changed', function(){
+            $scope.getChartData($scope.globalFilters.dateRange);
+        });
 
         $scope.getChartData = function ( days )
         {
-            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/newsvsreturning').success(function(data) {
+            var filters = {};
+            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            filters.dateRange = $scope.globalFilters.dateRange;
+            filters.siteId = $scope.globalFilters.selectedSite.identifier;
+
+            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/newsvsreturning',{ headers:{
+                filters : JSON.stringify(filters) } } ).success(function(data) {
                 var information  = data.data;
-                $scope.data = [
-                    {
-                        key: "New Visits",
-                        y: information.news
-                    },
-                    {
-                        key: "Frecuent Client",
-                        y: information.returning
-                    }
-                ];
+                $scope.enoughData = information.news || information.returning;
+                if($scope.enoughData){
+                    $scope.data = [
+                        {
+                            key: "New Visits",
+                            y: information.news
+                        },
+                        {
+                            key: "Frecuent Client",
+                            y: information.returning
+                        }
+                    ];
+                }
             });
         };
 
         $scope.changeChartRange = function( days ){
             $scope.getChartData(days);
-            $scope.currentDays = days;
         };
-        $scope.changeChartRange(30);
+
+        $scope.changeChartRange($scope.globalFilters.dateRange);
 
     }
 })();
@@ -2059,8 +2256,8 @@ angular.module('dashboard').config(['$stateProvider',
         .module('dashboard')
         .controller('VisitsGraphController', VisitsGraphController);
 
-    VisitsGraphController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization'];
-    function VisitsGraphController($http, $state, $scope, Authentication, Organization) {
+    VisitsGraphController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
+    function VisitsGraphController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
         var vm = this;
         activate();
 
@@ -2069,29 +2266,25 @@ angular.module('dashboard').config(['$stateProvider',
         function activate() {
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
+            $scope.globalFilters = GlobalFilters;
         }
 
         $scope.$on('organizationChanged',function(){
-            $scope.getChartData($scope.currentDays);
+            $scope.getChartData($scope.globalFilters.dateRange);
         });
 
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
-            $scope.changeChartRange(numberdays);
+            $scope.changeChartRange($scope.globalFilters.dateRange);
         });
-
-        $scope.currentDays = 0;
-
-        $scope.firstCriteria = "Visits";
-        $scope.secondCriteria = "Notifications";
 
         $scope.secondCriteriaChange = function(value)
         {
-            $scope.getChartData($scope.currentDays);
+            $scope.getChartData($scope.globalFilters.dateRange);
         };
 
         $scope.firstCriteriaChange = function(value)
         {
-            $scope.getChartData($scope.currentDays);
+            $scope.getChartData($scope.globalFilters.dateRange);
         };
 
         function getDateString(date) {
@@ -2117,57 +2310,50 @@ angular.module('dashboard').config(['$stateProvider',
             var previusDate = new Date();
             previusDate.setTime(today.getTime() - days * 86400000);
 
+            var filters = {};
+            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            filters.dateRange = $scope.globalFilters.dateRange;
+            filters.siteId = $scope.globalFilters.selectedSite.identifier;
+
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/notifications', {
                 headers: {
-                    organizationid: $scope.organizationService.selectedOrganization.identifier,
-                    endDate: getDateString(today),
-                    startDate: getDateString(previusDate)
+                    filters : JSON.stringify(filters)
                 }
             }).success(function(dataNotifications) {
 
                 $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/visits', {
                     headers: {
-                        organizationid: $scope.organizationService.selectedOrganization.identifier,
-                        endDate: getDateString(today),
-                        startDate: getDateString(previusDate)
+                        filters : JSON.stringify(filters)
                     }
                 }).success(function(data) {
                     var visits = [];
                     var notifications =[];
-                    var keys = Object.keys(data.data);
+                    var keys = Object.keys(data);
 
                     var maxValue = 1;
                     for (var i = 0; i < keys.length; i++) {
                         var s = new Date(keys[i]);
                         visits.push({
                             x: s.getTime(),
-                            y: data.data[keys[i]]
+                            y: data[keys[i]]
                         });
                         notifications.push({
                             x: s.getTime(),
-                            y: dataNotifications.data[keys[i]]
+                            y: dataNotifications[keys[i]]
                         });
-                        if(data.data[keys[i]] > maxValue )
-                            maxValue = data.data[keys[i]];
+                        if(data[keys[i]] > maxValue )
+                            maxValue = data[keys[i]];
                     }
-                    if($scope.secondCriteria == "Notifications")
                         $scope.data = [{
                             values: visits,
                             key: 'visits',
                             color: '#006699',
                             area: true
                         },
-                            {
-                                values: notifications,
-                                key: 'Notifications',
-                                color: '#ffa500',
-                                area: true
-                            }];
-                    else
-                        $scope.data = [{
-                            values: visits,
-                            key: 'visits',
-                            color: '#006699',
+                        {
+                            values: notifications,
+                            key: 'Notifications',
+                            color: '#ffa500',
                             area: true
                         }];
 
@@ -2188,7 +2374,7 @@ angular.module('dashboard').config(['$stateProvider',
                                 return d.y;
                             },
                             //useInteractiveGuideline: true,
-                            dispatch: {
+                           /* dispatch: {
                                 stateChange: function(e) {
                                     console.log("stateChange");
                                 },
@@ -2201,7 +2387,7 @@ angular.module('dashboard').config(['$stateProvider',
                                 tooltipHide: function(e) {
                                     console.log("tooltipHide");
                                 }
-                            },
+                            }, */
                             xAxis: {
                                 axisLabel: 'Date',
                                 tickFormat: function(d) {
@@ -2213,7 +2399,7 @@ angular.module('dashboard').config(['$stateProvider',
                             yAxis: {
                             },
                             callback: function(chart) {
-                                console.log("!!! lineChart callback !!!");
+                                //console.log("!!! lineChart callback !!!");
                             },
                             forceY:[0,maxValue]
                         }
@@ -2224,10 +2410,9 @@ angular.module('dashboard').config(['$stateProvider',
         };
 
         $scope.changeChartRange = function( days ){
-            $scope.getChartData(days);
-            $scope.currentDays = days;
+            $scope.getChartData($scope.globalFilters.dateRange);
         };
-        $scope.changeChartRange(30);
+        $scope.changeChartRange($scope.globalFilters.dateRange);
 
     }
 })();
@@ -2238,13 +2423,22 @@ angular.module('dashboard').service('GlobalFilters', ['$http','$rootScope',
 
 	function($http, $rootScope) {
 
+
         var service = {
-            selectedSite : "",
+            selectedSite : 'undefined',
             dateRange : 0,
 
             changeDateRange : function ( numberDays ){
                 this.dateRange = numberDays;
                 $rootScope.$broadcast('Biin: Days Range Changed', numberDays);
+            },
+
+            changeSelectedSite : function ( newSite ) {
+                this.selectedSite = newSite;
+                $rootScope.$broadcast('Biin: Site Changed', newSite);
+            },
+            setDefaultSite: function( site ) {
+                this.selectedSite = site;
             }
         };
 
@@ -2266,8 +2460,11 @@ angular.module('elements').config(['$stateProvider',
                 url: '/elements',
                 templateUrl: 'modules/elements/views/elements.client.view.html',
                 resolve:{
-                    organization:function( Organization ){
-                        return Organization.promise;
+                    selectedOrganization: function (Organization) {
+                        return Organization.getSelectedOrganization();
+                    },
+                    organization: function (Organization) {
+                        return Organization.getOrganizations();
                     }
                 }
             });
@@ -2378,6 +2575,10 @@ angular.module('elements').config(['$stateProvider',
             $scope.removeElementAt(index);
         });
 
+        /*$scope.$on("Biin: onGalleryChanged", function(){
+
+        });*/
+
 
         //Get the List of Objects
         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
@@ -2402,6 +2603,8 @@ angular.module('elements').config(['$stateProvider',
             });
         };
 
+
+
         //Select Element Type function
         $scope.selectType=function(index){
             if($scope.objectsSidebarService.selectedObject.elementType!==''+index)
@@ -2424,12 +2627,73 @@ angular.module('elements').config(['$stateProvider',
             );
         };
 
+
+
+        //Check min data has been filled
+        $scope.hasMissingData = function() {
+
+            // Don't do anything if there is no selected element
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
+
+            var missingMinData = false;
+
+            //Check if required data is ready for app
+            if ($scope.objectsSidebarService.selectedObject.title == null) {
+                missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.title = "";
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.title.trim() === ''){
+                missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.title = "";
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.media.length === 0){
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.subTitle == null) {
+                missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.subTitle = "";
+            }
+            else if ($scope.objectsSidebarService.selectedObject.subTitle.trim() === ''){
+                missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.subTitle = "";
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.categories.length === 0) {
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.media == null) {
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.media.length === 0) {
+                missingMinData = true;
+            }
+
+            return missingMinData;
+
+        };
+
         //Save detail model object
         $scope.save= function(){
 
-            //TODO: Delete following line, and uncomment the next one.
-            $scope.objectsSidebarService.selectedObject.hasPrice = 0;
-            //$scope.objectsSidebarService.selectedObject.hasPrice=$scope.objectsSidebarService.selectedObject.price > 0?'1':'0';
+            // Don't do anything if there is no selected element
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
+
+            if ($scope.hasMissingData()) {
+                $scope.objectsSidebarService.selectedObject.isReady = 0;
+            }
+
+            else {
+                $scope.objectsSidebarService.selectedObject.isReady = 1;
+            }
+
+            $scope.objectsSidebarService.selectedObject.hasPrice = $scope.objectsSidebarService.selectedObject.price > 0?'1':'0';
 
             var tags = $("#elemSearchTag").tagsinput('items');
             $scope.objectsSidebarService.selectedObject.searchTags = [];
@@ -2447,6 +2711,8 @@ angular.module('elements').config(['$stateProvider',
             });
         };
 
+
+
         //Get the List of Categories
         Categories.getList().then(function(promise){
             $scope.categories = promise.data.data;
@@ -2459,6 +2725,7 @@ angular.module('elements').config(['$stateProvider',
               //  categories = $scope.objectsSidebarService.selectedObject.categories;
             return categories;
         };
+
 
 
         //Set the gallery index when start draggin
@@ -2496,12 +2763,15 @@ angular.module('elements').config(['$stateProvider',
                 $scope.$digest();
                 $scope.$apply();
             }
+
+
         };
 
         //Remove the media object at specific index
         $scope.removeMediaAt=function(index){
-            if($scope.objectsSidebarService.selectedObject.media.length>=index)
-                $scope.objectsSidebarService.selectedObject.media.splice(index,1);
+            if($scope.objectsSidebarService.selectedObject.media.length>=index) {
+                $scope.objectsSidebarService.selectedObject.media.splice(index, 1);
+            }
         };
 
         //Get the list of the gallery
@@ -3501,11 +3771,29 @@ angular.module('elements').config(['$stateProvider',
 angular
     .module('gallery')
     .controller('GalleryController', GalleryController);
-GalleryController.$inject = ['$scope','$modalInstance','galleries'];
-function GalleryController($scope, $modalInstance, galleries) {
+GalleryController.$inject = ['$scope','$modalInstance','galleries','Organization'];
+function GalleryController($scope, $modalInstance, galleries,Organization) {
+    $scope.organizationService = Organization;
     $scope.render = true;
     $scope.loadingImages = false;
     $scope.galleries = galleries;
+
+    $scope.reset = function() {
+        $scope.myImage        = '';
+        $scope.myCroppedImage = '';
+        $scope.imgcropType    = 'square';
+    };
+    $scope.image = {
+        image: "",
+        cropImage: ""
+    };
+
+    $scope.reset();
+
+    $scope.$on("Biin: on fileUploaded",function(scope,event){
+        $scope.image.image=event.target.result;
+        $scope.$digest();
+    });
 
 
     $scope.loadingImagesChange = function (state) {
@@ -3530,6 +3818,17 @@ function GalleryController($scope, $modalInstance, galleries) {
             }
         }
     };
+
+    $scope.uploadImage = function(){
+
+        var myImage = $scope.image.cropImage;
+        //$http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/gallery',{}).success(function(){
+
+        //}).error(function(){
+
+        //})
+    };
+
 
     $scope.apply = function () {
         var selectedImages = [];
@@ -3579,7 +3878,7 @@ function GalleryController($scope, $modalInstance, galleries) {
             template:
             '<div class="row">'+
                 '<div scrollbar="scrollbarOptionsStandard" class="ownedGalleryWrapper scrollbar-inner">'+
-                    '<div ng-repeat="item in media" class="img-block">'+
+                    '<div ng-repeat="item in media" class="img-block" data-drop="true"  jqyoui-droppable="{index:{{$index}}}" data-drag="true" data-jqyoui-options="{revert: \'invalid\',zIndex: 100}" jqyoui-draggable="{insertInline:true, index:{{$index}}}" ng-model="media">'+
                         '<div class="moduleWrapper img-block-buttons">'+
                             '<img ng-src="{{item.url}}" pending-indicator="pending-indicator" class="imagegallery img-responsive"/>'+
                             '<div ng-click="removeMediaAt(media.indexOf(item))" class="btnShowcasePreview icon-round-control btnDelete btn-danger btn-on-hover">'+
@@ -3603,7 +3902,7 @@ function GalleryController($scope, $modalInstance, galleries) {
 
             scope.$watch('gallery', function(value){
                 if(value){
-                    console.log(value);
+                    //console.log(value);
                 }
             });
 
@@ -3630,6 +3929,9 @@ function GalleryController($scope, $modalInstance, galleries) {
                         newObj.identifier = modalInfo.selectedImages[i].identifier;
                         newObj.url = modalInfo.selectedImages[i].url;
                         newObj.mainColor = modalInfo.selectedImages[i].mainColor;
+                        newObj.vibrantColor = modalInfo.selectedImages[i].vibrantColor;
+                        newObj.vibrantDarkColor = modalInfo.selectedImages[i].vibrantDarkColor;
+                        newObj.vibrantLightColor = modalInfo.selectedImages[i].vibrantLightColor;
                         objectsSidebar.selectedObject.media.push(newObj);
                     }
                     scope.gallery=modalInfo.galleries;
@@ -3673,9 +3975,9 @@ function GalleryController($scope, $modalInstance, galleries) {
         .module('gallery')
         .directive('uploadFiles', UploadFiles);
 
-    UploadFiles.$inject = ['$modal','Organization'];
+    UploadFiles.$inject = ['$modal','Organization','$rootScope'];
 
-    function UploadFiles($modal,Organization) {
+    function UploadFiles($modal,Organization,$rootScope) {
         var organizationService = Organization;
         return {
             restrict: 'A',
@@ -3694,7 +3996,7 @@ function GalleryController($scope, $modalInstance, galleries) {
                             if(scope.onGalleryChange)
                                 scope.onGalleryChange(obj,autoInsert);
 
-                            console.log('all done: ' + xhr.status);
+                            //console.log('all done: ' + xhr.status);
                             scope.loadingImagesChange(false);
                         } else {
                             console.log('Something went terribly wrong...');
@@ -3724,8 +4026,16 @@ function GalleryController($scope, $modalInstance, galleries) {
                         mediaFile.originalFilename = files[i].name;
                         formData.append('file', mediaFile);
                     }
+
+                    var file=files[0];
+                    var reader = new FileReader();
+                    reader.onload = function (evt) {
+                        $rootScope.$broadcast("Biin: on fileUploaded", evt);
+                    };
+                    if(file)
+                        reader.readAsDataURL(file);
                     //Upload The media information
-                    scope.uploadMedia(scope, formData);
+                    //scope.uploadMedia(scope, formData);
                 });
                 //Click event of the style button
                 $(element[0]).on('click touch', function (e) {
@@ -4086,8 +4396,11 @@ angular.module('maintenance').config(['$stateProvider',
                 url: '/maintenance',
                 templateUrl: 'modules/maintenance/views/maintenance.client.view.html',
                 resolve: {
-                    organization:function( Organization ){
-                        return Organization.promise;
+                    selectedOrganization: function (Organization) {
+                        return Organization.getSelectedOrganization();
+                    },
+                    organization: function (Organization) {
+                        return Organization.getOrganizations();
                     }
                 }
             });
@@ -4667,8 +4980,11 @@ angular.module('organization').config(['$stateProvider',
                 url: '/organization',
                 templateUrl: 'modules/organization/views/organization.client.view.html',
                 resolve: {
-                    organization:function( Organization ){
-                        return Organization.promise;
+                    selectedOrganization: function (Organization) {
+                        return Organization.getSelectedOrganization();
+                    },
+                    organization: function (Organization) {
+                        return Organization.getOrganizations();
                     }
                 }
             });
@@ -4791,7 +5107,9 @@ angular.module('organization').config(['$stateProvider',
                     $scope.prevSaveOrganization = jQuery.extend({}, currentOrganization);
                     $scope.isAnalazingOrg = false;
 
-                    $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization.identifier, {model: currentOrganization}).success(function (data, status) {
+                    currentOrganization.accountIdentifier = Authentication.user.accountIdentifier;
+
+                    $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization.identifier, {model: currentOrganization}).success(function (data, status) {
                         if (status === 200) {
                             $scope.succesSaveShow = true;
                         } else
@@ -4810,7 +5128,8 @@ angular.module('organization').config(['$stateProvider',
         //Push a new organization in the list
         $scope.createOrganization = function () {
             //Get the Mayor from server
-            $http.post(ApplicationConfiguration.applicationBackendURL +'api/organizations').success(function (org, status) {
+
+            $http.put(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + Authentication.user.accountIdentifier).success(function (org, status) {
                 if (status == 201 || status == 200) {
                     $scope.organizationService.organizationsList.push(org);
                     //$scope.objectsSidebarService.objects.push(org);
@@ -5495,7 +5814,15 @@ angular.module('dashboard').config(['$stateProvider',
         $stateProvider.
             state('app.profile', {
                 url: '/profile',
-                templateUrl: 'modules/profile/views/profile.client.view.html'
+                templateUrl: 'modules/profile/views/profile.client.view.html',
+                resolve: {
+                    selectedOrganization: function (Organization) {
+                        return Organization.getSelectedOrganization();
+                    },
+                    organization: function (Organization) {
+                        return Organization.getOrganizations();
+                    }
+                }
             });
         /*.
          state('page.signup', {
@@ -5822,8 +6149,11 @@ angular.module('showcases').config(['$stateProvider',
                 url: '/showcases',
                 templateUrl: 'modules/showcases/views/showcases.client.view.html',
                 resolve: {
-                    organization:function( Organization ){
-                        return Organization.promise;
+                    selectedOrganization: function (Organization) {
+                        return Organization.getSelectedOrganization();
+                    },
+                    organization: function (Organization) {
+                        return Organization.getOrganizations();
                     }
                 }
             });
@@ -5996,13 +6326,89 @@ angular.module('showcases').config(['$stateProvider',
 
         };
 
+
+        $scope.hasValidElements = function(selectedShowcase) {
+            var validElement = _.findWhere(selectedShowcase, {isReady: 1});
+            if (validElement)
+                return true;
+            else
+                return false;
+        }
+
+        //Check min data has been filled
+        $scope.hasMissingData = function() {
+
+            // Don't do anything if there is no selected element
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
+
+            var missingMinData = false;
+
+            //Check if required data is ready for app
+            if ($scope.objectsSidebarService.selectedObject.name == null) {
+                $scope.objectsSidebarService.selectedObject.name = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.name.trim() === ''){
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.description == null) {
+                $scope.objectsSidebarService.selectedObject.description = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.description.trim() === ''){
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.elements.length === 0){
+                missingMinData = true;
+            }
+
+            else if (!$scope.hasValidElements($scope.objectsSidebarService.selectedObject.elements)) {
+                missingMinData = true;
+            }
+
+            return missingMinData;
+
+        };
+
         //Save detail model object
         $scope.save = function () {
+
 
             //save sites
 
             for(var i = 0; i< $scope.sites.length; i++){
-                $scope.setShowcaseAssigned($scope.sites[i],$scope.sitesBooleanArray[i]);
+                for(var j = 0; j<$scope.sites[i].showcases.length;j++){
+
+                    var showcaseIdentifier = $scope.sites[i].showcases[j].showcaseIdentifier;
+                    var elements = [];
+                    var index = -1;
+
+                    for(var k = 0; k < $scope.objectsSidebarService.objects.length; k++){
+                        if($scope.objectsSidebarService.objects[k].identifier == showcaseIdentifier){
+                            index = k;
+                            break;
+                        }
+                    }
+                    if(index > -1){
+                        for(k = 0; k < $scope.objectsSidebarService.objects[index].elements.length; k++) {
+                            elements.push({identifier:$scope.objectsSidebarService.objects[index].elements[k].elementIdentifier});
+                        }
+                    }
+                    $scope.sites[i].showcases[j].elements=elements;
+                }
+            }
+
+            if ($scope.hasMissingData()) {
+                $scope.objectsSidebarService.selectedObject.isReady = 0;
+            }
+
+            else {
+                $scope.objectsSidebarService.selectedObject.isReady = 1;
             }
 
             $http.put(ApplicationConfiguration.applicationBackendURL +'api/showcases/' + $scope.objectsSidebarService.selectedObject.identifier, {model: $scope.objectsSidebarService.selectedObject}).success(function (data) {
@@ -6039,7 +6445,7 @@ angular.module('showcases').config(['$stateProvider',
         };
 
         //Add element to a showcase
-        $scope.insertElementAfter = function (indexElementToDrop, position) {
+        /*$scope.insertElementAfter = function (indexElementToDrop, position) {
 
             // Deep copy
             //var elementToPush = jQuery.extend({}, $scope.elements[indexElementToDrop]);
@@ -6063,7 +6469,7 @@ angular.module('showcases').config(['$stateProvider',
             $scope.$digest();
             $scope.$apply();
 
-        };
+        };*/
 
         //Get the first element by position
         $scope.getFirstElementByPosition = function (element) {
@@ -6596,8 +7002,11 @@ angular.module('sites').config(['$stateProvider',
                 url: '/sites',
                 templateUrl: 'modules/sites/views/sites.client.view.html',
                 resolve: {
-                    organization:function( Organization ){
-                        return Organization.promise;
+                    selectedOrganization: function (Organization) {
+                        return Organization.getSelectedOrganization();
+                    },
+                    organization: function (Organization) {
+                        return Organization.getOrganizations();
                     }
                 }
             });
@@ -6782,7 +7191,7 @@ angular.module('sites').config(['$stateProvider',
                 }
                 else
                 {
-                    displayErrorMessage(site,"Sites Creation",status)
+                    displayErrorMessage(site,"Sites Creation",status);
                 }
             });
         };
@@ -6811,6 +7220,87 @@ angular.module('sites').config(['$stateProvider',
 
         };
 
+        //Check min data has been filled
+        $scope.hasMissingData = function() {
+
+            // Don't do anything if there is no selected element
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
+
+            var missingMinData = false;
+
+            //Check if required data is ready for app
+            if ($scope.objectsSidebarService.selectedObject.title1 == null) {
+                $scope.objectsSidebarService.selectedObject.title1 = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.title1.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.title1 = "";
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.title2 == null) {
+                $scope.objectsSidebarService.selectedObject.title2 = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.title2.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.title2 = "";
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.media.length == 0){
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.country == null) {
+                $scope.objectsSidebarService.selectedObject.country = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.country.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.country = "";
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.state == null) {
+                $scope.objectsSidebarService.selectedObject.state = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.state.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.state = "";
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.city == null) {
+                $scope.objectsSidebarService.selectedObject.city = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.city.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.city = "";
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.streetAddres == null) {
+                $scope.objectsSidebarService.selectedObject.streetAddres = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.streetAddres.trim() === ''){
+                $scope.objectsSidebarService.selectedObject.streetAddres = "";
+                missingMinData = true;
+            }
+
+            if($scope.objectsSidebarService.selectedObject.lat == 0 || $scope.objectsSidebarService.selectedObject.lng == 0) {
+                missingMinData = true;
+            }
+
+            return missingMinData;
+        };
+
         //Save detail model object
         $scope.save= function(){
 
@@ -6822,12 +7312,23 @@ angular.module('sites').config(['$stateProvider',
                 $scope.objectsSidebarService.selectedObject.searchTags.push(tags[i]);
             }
 
+            if ($scope.hasMissingData()) {
+                $scope.objectsSidebarService.selectedObject.isReady = 0;
+            }
+
+            else {
+                $scope.objectsSidebarService.selectedObject.isReady = 1;
+            }
+
             $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites/'+$scope.objectsSidebarService.selectedObject.identifier,{model:$scope.objectsSidebarService.selectedObject}).success(function(data,status){
                 if("replaceModel" in data){
                     $scope.objectsSidebarService.selectedObject = data.replaceModel;
                 }
                 if(data.state=="success")
                     $scope.succesSaveShow=true;
+                /*else {
+                    console.log("ERROR SAVING SITES: " + status);
+                }*/
             });
 
         };
@@ -6836,8 +7337,9 @@ angular.module('sites').config(['$stateProvider',
         $scope.limitNutshell = function(){
             var value = $scope.objectsSidebarService.selectedObject.nutshell;
 
-            if(value == null)
+            if(value === null) {
                 value = "";
+            }
 
             value = value.trim();
             var words = value.split(" ");
@@ -6891,7 +7393,7 @@ angular.module('sites').config(['$stateProvider',
         //Remove the media object at specific index
         $scope.removeMediaAt=function(index){
             if($scope.objectsSidebarService.selectedObject.media.length>=index)
-                $scope.objectsSidebarService.selectedObject.media.splice(index,1)
+                $scope.objectsSidebarService.selectedObject.media.splice(index,1);
         };
     }
 })();
