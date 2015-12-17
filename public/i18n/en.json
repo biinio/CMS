@@ -96,7 +96,11 @@
     "GALLERIES_REQUIRED_MESSAGE": "Add at least one image",
     "MAP_REQUIRED_MESSAGE":"Mark your location on the map",
     "DELETE_SITE": "Delete site",
-    "DELETE_SITE_CONFIRMATION": "Do you wish to delete this site?"
+    "DELETE_SITE_CONFIRMATION": "Do you wish to delete this site?",
+    "DELETE_ELEMENT": "Delete element",
+    "DELETE_ELEMENT_CONFIRMATION": "Do you wish to delete this element?",
+    "DELETE_SHOWCASE": "Delete showcase",
+    "DELETE_SHOWCASE_CONFIRMATION": "Do you wish to delete this showcase?"
   },
   "SITES":{
     "TITLE": "Establishment Details",
