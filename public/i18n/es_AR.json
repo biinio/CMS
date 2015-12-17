@@ -96,7 +96,11 @@
     "GALLERIES_REQUIRED_MESSAGE": "Agregue al menos una imagen",
     "MAP_REQUIRED_MESSAGE":"Indique la ubicacion de su local en el mapa",
     "DELETE_SITE": "Eliminar sitio",
-    "DELETE_SITE_CONFIRMATION": "¿Desea eliminar este sitio?"
+    "DELETE_SITE_CONFIRMATION": "¿Desea eliminar este sitio?",
+    "DELETE_ELEMENT": "Eliminar elemento",
+    "DELETE_ELEMENT_CONFIRMATION": "¿Desea eliminar este elemento?",
+    "DELETE_SHOWCASE": "Eliminar vitrina",
+    "DELETE_SHOWCASE_CONFIRMATION": "¿Desea eliminar esta vitrina?"
   },
   "SITES":{
     "TITLE": "Detalles del Local",

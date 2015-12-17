@@ -35,13 +35,13 @@
             "</div>" +
             "<div class='col-md-9 leftInformationArea'>" +
             "<label class='moduleTitle'>{{item.name}}</label>" +
-            "<div class='btnShowcasePreview icon-round-control btn-on-hover'>" +
+            /*"<div class='btnShowcasePreview icon-round-control btn-on-hover'>" +
             "<div class='icon icon-arrange-1'></div>" +
-            "</div>" +
-            "</div>" +
-            "<div ng-click=\"deleteItem(objectsSidebarService.objects.indexOf(item),$event)\" class=\"icon-round-control btnDelete  btn-danger btn-on-hover\">" +
-            "<i class=\"fa fa-close\"></i>" +
+            "</div>" +*/
             "</div>";
+            /*"<div ng-click=\"deleteItem(objectsSidebarService.objects.indexOf(item),$event)\" class=\"icon-round-control btnDelete  btn-danger btn-on-hover\">" +
+            "<i class=\"fa fa-close\"></i>" +
+            "</div>";*/
 
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
 
@@ -92,9 +92,9 @@
             $scope.create();
         });
 
-        $scope.$on("Biin: On Object Deleted", function (event, index) {
+        /*$scope.$on("Biin: On Object Deleted", function (event, index) {
             $scope.removeShowcaseAt(index);
-        });
+        });*/
 
         /**=============================================================================================================
          * Variables
@@ -144,6 +144,13 @@
                     $scope.objectsSidebarService.objects.push(showcase);
                 }
             });
+
+        };
+
+        $scope.deleteShowcase = function(message, selectedObject) {
+            if (confirm(message)) {
+                $scope.removeShowcaseAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
+            }
 
         };
 
@@ -276,6 +283,9 @@
             }
             return  index == -1;
         };
+
+
+
 
         //Remove an element of a Showcase
         $scope.removeElementAt = function (index) {
