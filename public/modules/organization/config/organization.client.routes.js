@@ -12,6 +12,9 @@ angular.module('organization').config(['$stateProvider',
                 url: '/organization',
                 templateUrl: 'modules/organization/views/organization.client.view.html',
                 resolve: {
+                    permissions: function(Permission) {
+                        return Permission.getPermissions();
+                    },
                     selectedOrganization: function (Organization) {
                         return Organization.getSelectedOrganization();
                     },

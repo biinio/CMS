@@ -74,7 +74,8 @@ var elementSchema = new Schema({
     sharedCount:{type:Number,default:0},
     commentedCount:{type:Number,default:0},
 
-    isReady: {type:Number, default:0}
+    isReady: {type:Number, default:0},
+    isDeleted: {type:Number, default:0}
 });
 
 module.exports = mongoose.model('elements', elementSchema);

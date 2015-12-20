@@ -45,7 +45,7 @@
     "UPLOAD_IMAGE": "Upload image"
   },
   "ORGANIZATION":{
-    "TITLE": "Your organizations",
+    "TITLE": "Organizations",
     "SUB_TITLE": "Manage your organizations that are handled by Biin",
     "ADD_NEW": "Add new",
     "NAME": "Name",
@@ -92,6 +92,7 @@
     "CATEGORIES": "Categories",
     "CLOSE": "Close",
     "APPLY": "Apply",
+    "UPLOAD_IMAGE": "Upload image",
     "CATEGORIES_REQUIRED_MESSAGE": "Select at least one category",
     "GALLERIES_REQUIRED_MESSAGE": "Add at least one image",
     "MAP_REQUIRED_MESSAGE":"Mark your location on the map",
