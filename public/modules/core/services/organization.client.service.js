@@ -90,6 +90,7 @@ angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope',
                         break;
                     }
                 }
+                service.setSelectedOrganization(0);
             }
         };
 

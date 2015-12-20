@@ -123,9 +123,9 @@
             $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + id).success(function (data) {
                 $scope.organizationService.removeOrganization(id);
                 $scope.objectsSidebarService.objects.splice(index,1);
-                if($scope.objectsSidebarService.selectedObject.identifier == id){
+                /*if($scope.objectsSidebarService.selectedObject.identifier == id){
                     $scope.objectsSidebarService.selectedObject = null;
-                }
+                }*/
             });
         };
 
