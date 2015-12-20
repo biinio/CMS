@@ -34,6 +34,13 @@
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
         $scope.objectsSidebarService.setObjects($scope.organizationService.organizationsList);
 
+        for (var permit = 0; permit < Authentication.user.permissions.length; permit++) {
+            if (Authentication.user.permissions[permit].permission == "delete") {
+                $scope.deletePermit = true;
+                break;
+            }
+        }
+
         /**=============================================================================================================
          * Events Listeners
          *
