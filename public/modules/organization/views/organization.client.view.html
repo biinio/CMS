@@ -35,7 +35,7 @@
                         <!-- END row -->
                     </div>
                 </div>
-                <button  type="button" class="btn btn-oval btn-default align-right" ng-click="deleteOrganization(' {{'GENERIC.DELETE_ORGANIZATION_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">{{ 'GENERIC.DELETE_ORGANIZATION' | translate }}</button>
+                <button  type="button" ng-if="deletePermit" class="btn btn-oval btn-default align-right" ng-click="deleteOrganization(' {{'GENERIC.DELETE_ORGANIZATION_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">{{ 'GENERIC.DELETE_ORGANIZATION' | translate }}</button>
                 <code>IDENTIFIER: {{objectsSidebarService.selectedObject.identifier}}</code>
                 <!-- END panel -->
             </div>
