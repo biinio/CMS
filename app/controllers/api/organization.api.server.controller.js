@@ -42,7 +42,7 @@ var _ = require('lodash'),
 //GET the list of organizations
 exports.organizationList = function (req, res) {
     res.setHeader('Content-Type', 'application/json');
-    organization.find({"accountIdentifier": req.user.accountIdentifier}, {
+    organization.find({"accountIdentifier": req.user.accountIdentifier, "isDeleted":false}, {
         _id: 0,
         identifier: 1,
         name: 1,
