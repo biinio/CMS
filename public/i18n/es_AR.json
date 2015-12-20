@@ -45,7 +45,7 @@
     "UPLOAD_IMAGE":"Subir imagen"
   },
   "ORGANIZATION":{
-    "TITLE": "Tus organizaciones",
+    "TITLE": "Organizaciones",
     "SUB_TITLE": "Aquí puedes administrar las organizaciones que manejas en Biin",
     "ADD_NEW": "Añadir nueva",
     "NAME": "Nombre",
@@ -92,6 +92,7 @@
     "CATEGORIES": "Categorías",
     "CLOSE": "Cerrar",
     "APPLY": "Aplicar",
+    "UPLOAD_IMAGE": "Subir imagen",
     "CATEGORIES_REQUIRED_MESSAGE": "Seleccione al menos una categoría",
     "GALLERIES_REQUIRED_MESSAGE": "Agregue al menos una imagen",
     "MAP_REQUIRED_MESSAGE":"Indique la ubicacion de su local en el mapa",
@@ -100,7 +101,9 @@
     "DELETE_ELEMENT": "Eliminar elemento",
     "DELETE_ELEMENT_CONFIRMATION": "¿Desea eliminar este elemento?",
     "DELETE_SHOWCASE": "Eliminar vitrina",
-    "DELETE_SHOWCASE_CONFIRMATION": "¿Desea eliminar esta vitrina?"
+    "DELETE_SHOWCASE_CONFIRMATION": "¿Desea eliminar esta vitrina?",
+    "DELETE_ORGANIZATION": "Eliminar organización",
+    "DELETE_ORGANIZATION_CONFIRMATION": "¿Desea eliminar esta organización?"
   },
   "SITES":{
     "TITLE": "Detalles del Local",

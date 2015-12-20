@@ -30,12 +30,12 @@
             "</div>" +
             "<div class='col-md-9 leftInformationArea'>" +
             "<label class='moduleTitle'>{{item.name}}</label>" +
-            "<div class='btnShowcasePreview icon-round-control btn-on-hover'>" +
+            /*"<div class='btnShowcasePreview icon-round-control btn-on-hover'>" +
             "<div class='icon icon-arrange-1'></div>" +
             "</div>" +
             "</div>" +
             "<div ng-click=\"deleteItem(objectsSidebarService.objects.indexOf(item),$event)\" class=\"icon-round-control btnDelete  btn-danger btn-on-hover\">" +
-            "<i class=\"fa fa-close\"></i>" +
+            "<i class=\"fa fa-close\"></i>" + */
             "</div>";
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
         $scope.objectsSidebarService.setObjects($scope.organizationService.organizationsList);
@@ -112,6 +112,14 @@
                     displayErrorMessage(org, "Organizations Creation", status);
                 }
             });
+        };
+
+
+        // Confirm before deleting organization
+        $scope.deleteOrganization = function(message, selectedObject) {
+            if (confirm(message)) {
+                $scope.removeOrganization($scope.objectsSidebarService.objects.indexOf(selectedObject));
+            }
         };
 
         //Remove showcase at specific position
