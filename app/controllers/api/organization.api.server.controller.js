@@ -52,6 +52,14 @@ exports.organizationList = function (req, res) {
         media: 1,
         sites:1
     }, function (err, data) {
+        var siteList = [];
+        for (var index = 0; index < data.sites.length; index++) {
+            if (data.sites[index].isDeleted == 0) {
+                siteList.push(data.sites[index]);
+            }
+        }
+        data.sites = siteList;
+
         res.json({data: data});
     });
 };
