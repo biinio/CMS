@@ -256,6 +256,8 @@
                 $scope.objectsSidebarService.selectedObject.isReady = 1;
             }
 
+            $scope.objectsSidebarService.selectedObject.isDeleted = 0;
+
             $http.put(ApplicationConfiguration.applicationBackendURL +'api/showcases/' + $scope.objectsSidebarService.selectedObject.identifier, {model: $scope.objectsSidebarService.selectedObject}).success(function (data) {
                 if ("replaceModel" in data) {
                     $scope.objectsSidebarService.selectedObject = data.replaceModel;

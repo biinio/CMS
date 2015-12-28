@@ -155,7 +155,7 @@
                 $scope.objectsSidebarService.selectedObject = null;
             }
             var elementId = $scope.objectsSidebarService.objects[index].elementIdentifier;
-            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationId+'/elements/'+elementId).success(function(data){
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationId+'/elements/'+elementId + '/delete').success(function(data){
                     $scope.objectsSidebarService.objects.splice(index,1);
                 }
             );
@@ -226,6 +226,9 @@
             else {
                 $scope.objectsSidebarService.selectedObject.isReady = 1;
             }
+
+            $scope.objectsSidebarService.selectedObject.isDeleted = 0;
+
 
             $scope.objectsSidebarService.selectedObject.hasPrice = $scope.objectsSidebarService.selectedObject.price > 0?'1':'0';
 
