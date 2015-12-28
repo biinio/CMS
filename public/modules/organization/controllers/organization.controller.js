@@ -30,15 +30,16 @@
             "</div>" +
             "<div class='col-md-9 leftInformationArea'>" +
             "<label class='moduleTitle'>{{item.name}}</label>" +
-            "<div class='btnShowcasePreview icon-round-control btn-on-hover'>" +
-            "<div class='icon icon-arrange-1'></div>" +
-            "</div>" +
-            "</div>" +
-            "<div ng-click=\"deleteItem(objectsSidebarService.objects.indexOf(item),$event)\" class=\"icon-round-control btnDelete  btn-danger btn-on-hover\">" +
-            "<i class=\"fa fa-close\"></i>" +
             "</div>";
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
         $scope.objectsSidebarService.setObjects($scope.organizationService.organizationsList);
+
+        for (var permit = 0; permit < Authentication.user.permissions.length; permit++) {
+            if (Authentication.user.permissions[permit].permission == "delete") {
+                $scope.deletePermit = true;
+                break;
+            }
+        }
 
         /**=============================================================================================================
          * Events Listeners
@@ -82,6 +83,7 @@
                     $scope.isAnalazingOrg = false;
 
                     currentOrganization.accountIdentifier = Authentication.user.accountIdentifier;
+                    currentOrganization.isDeleted = 0;
 
                     $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization.identifier, {model: currentOrganization}).success(function (data, status) {
                         if (status === 200) {
@@ -114,15 +116,23 @@
             });
         };
 
+
+        // Confirm before deleting organization
+        $scope.deleteOrganization = function(message, selectedObject) {
+            if (confirm(message)) {
+                $scope.removeOrganization($scope.objectsSidebarService.objects.indexOf(selectedObject));
+            }
+        };
+
         //Remove showcase at specific position
         $scope.removeOrganization = function (index) {
             var id = $scope.objectsSidebarService.objects[index].identifier;
             $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + id).success(function (data) {
                 $scope.organizationService.removeOrganization(id);
                 $scope.objectsSidebarService.objects.splice(index,1);
-                if($scope.objectsSidebarService.selectedObject.identifier == id){
+                /*if($scope.objectsSidebarService.selectedObject.identifier == id){
                     $scope.objectsSidebarService.selectedObject = null;
-                }
+                }*/
             });
         };
 
