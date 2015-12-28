@@ -101,7 +101,9 @@
     "DELETE_ELEMENT": "Delete element",
     "DELETE_ELEMENT_CONFIRMATION": "Do you wish to delete this element?",
     "DELETE_SHOWCASE": "Delete showcase",
-    "DELETE_SHOWCASE_CONFIRMATION": "Do you wish to delete this showcase?"
+    "DELETE_SHOWCASE_CONFIRMATION": "Do you wish to delete this showcase?",
+    "DELETE_ORGANIZATION": "Delete organization",
+    "DELETE_ORGANIZATION_CONFIRMATION": "Do you wish to delete this organization?"
   },
   "SITES":{
     "TITLE": "Establishment Details",
