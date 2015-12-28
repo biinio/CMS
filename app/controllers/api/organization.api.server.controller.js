@@ -53,13 +53,13 @@ exports.organizationList = function (req, res) {
         sites:1
     }, function (err, data) {
         var siteList = [];
-        for (var index = 0; index < data.sites.length; index++) {
+       /* var index;
+        for (index = 0; index < data.sites.length; index++) {
             if (data.sites[index].isDeleted == 0) {
                 siteList.push(data.sites[index]);
             }
         }
-        data.sites = siteList;
-
+        data.sites = siteList;*/
         res.json({data: data});
     });
 };
