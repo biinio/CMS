@@ -42,7 +42,7 @@ var _ = require('lodash'),
 //GET the list of organizations
 exports.organizationList = function (req, res) {
     res.setHeader('Content-Type', 'application/json');
-    organization.find({"accountIdentifier": req.user.accountIdentifier}, {
+    organization.find({"accountIdentifier": req.user.accountIdentifier, "isDeleted":false}, {
         _id: 0,
         identifier: 1,
         name: 1,
@@ -52,6 +52,14 @@ exports.organizationList = function (req, res) {
         media: 1,
         sites:1
     }, function (err, data) {
+        var siteList = [];
+       /* var index;
+        for (index = 0; index < data.sites.length; index++) {
+            if (data.sites[index].isDeleted == 0) {
+                siteList.push(data.sites[index]);
+            }
+        }
+        data.sites = siteList;*/
         res.json({data: data});
     });
 };

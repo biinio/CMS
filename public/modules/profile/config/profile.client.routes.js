@@ -12,6 +12,9 @@ angular.module('dashboard').config(['$stateProvider',
                 url: '/profile',
                 templateUrl: 'modules/profile/views/profile.client.view.html',
                 resolve: {
+                    permissions: function(Permission) {
+                        return Permission.getPermissions();
+                    },
                     selectedOrganization: function (Organization) {
                         return Organization.getSelectedOrganization();
                     },
