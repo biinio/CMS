@@ -2,7 +2,7 @@
     <div class="modal-body">
         <div class="">
             <div class="galleryWrapper">
-                <div id="gallery" data-ng-if="loadingImages==false">
+                <div id="gallery" data-ng-if="loadingImages==false && croppingImages == false">
                     <div class="galleryControls">
                         <input type="text" ng-model="queryGallery" placeholder="Search" autofocus="autofocus" class="col-md-10"/>
                         <button upload-files="#uploadGallery" class="btn btn-default col-md-2">{{ 'GALLERY.UPLOAD' | translate }}</button>
@@ -23,7 +23,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="galleryLoader" data-ng-if="loadingImages==true">
+                <div id="galleryLoader" data-ng-if="loadingImages==true && croppingImages == false">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="loader-inner ball-grid-pulse center">
@@ -45,14 +45,15 @@
                         </div>
                     </div>
                 </div>
-                <div id="galleryCrop" data-ng-if="true">
+                <div id="galleryCrop" data-ng-if="loadingImages==false && croppingImages == true">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="panel">
                                 <div class="panel-heading">
                                     <a href="#" ng-click="reset()" class="pull-right">
                                         <small class="fa fa-refresh text-muted"></small>
-                                    </a>Select an image file</div>
+                                    </a>
+                                </div>
                                 <div class="panel-body">
                                     <!--<p class="pv">Crop type:</p>
                                     <div class="btn-group btn-group-justified mb">
@@ -76,17 +77,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <button data-ng-click="next()" class="btn btn-theme btn-sm">{{ 'GENERIC.APPLY' | translate }}</button>
-                        <button data-ng-click="uploadImage()" class="btn btn-theme btn-sm">{{ 'GENERIC.SAVE' | translate }}</button>
-                    </div>
-
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer" data-ng-if="loadingImages==false && croppingImages == false">
         <button ng-click="close()" class="btn btn-theme btn-sm">{{ 'GENERIC.CLOSE' | translate }}</button>
         <button ng-click="apply()" class="btn btn-theme btn-sm">{{ 'GENERIC.APPLY' | translate }}</button>
+    </div>
+    <div class="modal-footer" data-ng-if="loadingImages==false && croppingImages == true">
+        <button data-ng-click="uploadImageToServer()" class="btn btn-theme btn-sm">{{ 'GENERIC.APPLY' | translate }}</button>
     </div>
 </div>
