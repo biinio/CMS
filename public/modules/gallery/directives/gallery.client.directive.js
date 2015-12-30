@@ -84,7 +84,7 @@
                     }
                     scope.gallery=modalInfo.galleries;
                 }, function (modalInfo) {
-                    scope.gallery=modalInfo.galleries;
+                                        
                 });
             };
 
