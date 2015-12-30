@@ -39,6 +39,17 @@ angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope',
                     promise.then(function (result) {
                             service.organizationsList = result.data.data;
 
+                            // Filter deleted sites
+                            for (var orgIndex = 0; orgIndex < service.organizationsList.length; orgIndex++) {
+                                var siteList = [];
+                                for(var siteIndex = 0; siteIndex < service.organizationsList[orgIndex].sites.length; siteIndex++){
+                                    if (service.organizationsList[orgIndex].sites[siteIndex].isDeleted == 0) {
+                                        siteList.push(service.organizationsList[orgIndex].sites[siteIndex]);
+                                    }
+                                }
+                                service.organizationsList[orgIndex].sites = siteList;
+                            }
+
                             service.selectedOrganization = service.organizationsList[0];
 
                             // If last selected organization id has been retrieved

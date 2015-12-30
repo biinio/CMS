@@ -52,15 +52,10 @@ exports.organizationList = function (req, res) {
         media: 1,
         sites:1
     }, function (err, data) {
-        var siteList = [];
-       /* var index;
-        for (index = 0; index < data.sites.length; index++) {
-            if (data.sites[index].isDeleted == 0) {
-                siteList.push(data.sites[index]);
-            }
+        if (err) { throw err }
+        else {
+            res.json({data: data});
         }
-        data.sites = siteList;*/
-        res.json({data: data});
     });
 };
 
