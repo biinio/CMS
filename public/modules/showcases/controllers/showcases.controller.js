@@ -294,33 +294,6 @@
             $scope.objectsSidebarService.selectedObject.elements.splice(index, 1);
         };
 
-        //Add element to a showcase
-        /*$scope.insertElementAfter = function (indexElementToDrop, position) {
-
-            // Deep copy
-            //var elementToPush = jQuery.extend({}, $scope.elements[indexElementToDrop]);
-
-            var elementToPush = {};
-            jQuery.extend(elementToPush, $scope.elements[indexElementToDrop]);
-            var positionToGive = eval(position) + 1;
-            //Give the position of the next element
-            elementToPush.position = "" + positionToGive;
-            //Update the elements before
-            updateShowcaseObjectsPosition(positionToGive);
-
-            delete elementToPush._id;
-
-            //Push the element in he collection
-            $scope.showcases[$scope.selectedShowcase].elements.push(elementToPush);
-
-            $scope.validate();
-
-            //Apply the changes
-            $scope.$digest();
-            $scope.$apply();
-
-        };*/
-
         //Get the first element by position
         $scope.getFirstElementByPosition = function (element) {
             var foundPosition = 0;

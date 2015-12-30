@@ -11865,7 +11865,7 @@ label + .form-control + .parsley-errors-list + .form-control-feedback {
 .imgcrop-preview {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 100%;
   margin: 0 auto;
   background: #dde6e9;
   text-align: center;

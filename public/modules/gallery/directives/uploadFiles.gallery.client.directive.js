@@ -60,12 +60,22 @@
                     var file=files[0];
                     var reader = new FileReader();
                     reader.onload = function (evt) {
+                        var filename = "";
+                        var filenameSplitted = file.name.split(".");
+                        filenameSplitted.pop();
+                        for(var i = 0; i < filenameSplitted.length; i++){
+                            filename += filenameSplitted[i];
+                            if(i < filenameSplitted.length -1){
+                                filename += ".";
+                            }
+                        }
+
+
+                        evt.target.filename = filename;
                         $rootScope.$broadcast("Biin: on fileUploaded", evt);
                     };
                     if(file)
                         reader.readAsDataURL(file);
-                    //Upload The media information
-                    //scope.uploadMedia(scope, formData);
                 });
                 //Click event of the style button
                 $(element[0]).on('click touch', function (e) {

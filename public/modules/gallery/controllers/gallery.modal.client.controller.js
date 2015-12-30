@@ -3,11 +3,12 @@
 angular
     .module('gallery')
     .controller('GalleryController', GalleryController);
-GalleryController.$inject = ['$scope','$modalInstance','galleries','Organization'];
-function GalleryController($scope, $modalInstance, galleries,Organization) {
+GalleryController.$inject = ['$scope','$modalInstance','$http','galleries','Organization'];
+function GalleryController($scope, $modalInstance,$http, galleries,Organization) {
     $scope.organizationService = Organization;
     $scope.render = true;
     $scope.loadingImages = false;
+    $scope.croppingImages = false;
     $scope.galleries = galleries;
 
     $scope.reset = function() {
@@ -24,6 +25,9 @@ function GalleryController($scope, $modalInstance, galleries,Organization) {
 
     $scope.$on("Biin: on fileUploaded",function(scope,event){
         $scope.image.image=event.target.result;
+        $scope.filename = event.target.filename;
+        $scope.croppingImages = true;
+        $scope.loadingImages = false;
         $scope.$digest();
     });
 
@@ -37,7 +41,6 @@ function GalleryController($scope, $modalInstance, galleries,Organization) {
 
         //Do a callback logic by caller
         $scope.galleries = $scope.galleries.concat(obj);
-        $scope.$digest();
 
         //Insert the images to the preview
         if (autoInsert) {
@@ -54,11 +57,30 @@ function GalleryController($scope, $modalInstance, galleries,Organization) {
     $scope.uploadImage = function(){
 
         var myImage = $scope.image.cropImage;
-        //$http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/gallery',{}).success(function(){
 
-        //}).error(function(){
+    };
 
-        //})
+    $scope.uploadImageToServer = function(){
+        var myImage = $scope.image.cropImage;
+        var filename = $scope.filename;
+        $scope.croppingImages = false;
+        $scope.loadingImages = true;
+        $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/gallery/upload',
+            {
+                images:[
+                    {
+                        image:myImage,
+                        fileName:filename
+                    }
+                ]
+            }).success(function(data){
+                $scope.onGalleryChange(data);
+                $scope.croppingImages = false;
+                $scope.loadingImages = false;
+            }).error(function(){
+                $scope.croppingImages = false;
+                $scope.loadingImages = false;
+            });
     };
 
 
