@@ -181,15 +181,6 @@
                 missingMinData = true;
             }
 
-            if ($scope.objectsSidebarService.selectedObject.subTitle == null) {
-                missingMinData = true;
-                $scope.objectsSidebarService.selectedObject.subTitle = "";
-            }
-            else if ($scope.objectsSidebarService.selectedObject.subTitle.trim() === ''){
-                missingMinData = true;
-                $scope.objectsSidebarService.selectedObject.subTitle = "";
-            }
-
             if ($scope.objectsSidebarService.selectedObject.categories.length === 0) {
                 missingMinData = true;
             }
