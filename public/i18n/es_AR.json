@@ -81,7 +81,7 @@
     "DESCRIPTION": "Descripción breve",
     "DESCRIPTION_PLACEHOLDER": "Ingrese un poco más de detalle de tu producto u oferta",
     "DETAILS": "Detalles",
-    "DETAILS_INFO": "Agregue mas detalles sobre el elemento, por ejemplo: listas, listas de precios, acotaciones, entre otros."
+    "DETAILS_INFO": "Agregue mas detalles sobre el elemento, por ejemplo: listas, listas de precios, acotaciones, entre otros.",
     "ACTION": "Llamada de acción",
     "ACTION_INFO": "Agregue una acción que el usuario pueda realizar sobre el elemento.",
     "ACTION_TITLE": "Título de acción",
