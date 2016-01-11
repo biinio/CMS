@@ -82,6 +82,12 @@
     "DESCRIPTION_PLACEHOLDER": "Ingrese un poco más de detalle de tu producto u oferta",
     "DETAILS": "Detalles",
     "DETAILS_INFO": "Agregue mas detalles sobre el elemento, por ejemplo: listas, listas de precios, acotaciones, entre otros."
+    "ACTION": "Llamada de acción",
+    "ACTION_INFO": "Agregue una acción que el usuario pueda realizar sobre el elemento.",
+    "ACTION_TITLE": "Título de acción",
+    "ACTION_TITLE_PLACEHOLDER": "Agregue el nombre de la acción a realizar",
+    "ACTION_URL": "URL",
+    "ACTION_URL_PLACEHOLDER": "www.ejemplo.com"
   },
   "GENERIC":{
     "SEARCH_TAGS": "Etiquetas de búsqueda",

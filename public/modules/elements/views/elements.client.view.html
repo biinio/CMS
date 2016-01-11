@@ -100,6 +100,28 @@
                         </div>
                     </div>
                  </section>
+
+                <!-- Call to action Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <legend translate="ELEMENT.ACTION"></legend>
+                            <p translate="ELEMENT.ACTION_INFO"></p>
+                            <div class="form-group">
+                                <label for="actionTitle" translate="ELEMENT.ACTION_TITLE" class="control-label"></label>
+                                <input id="actionTitle" ng-model="objectsSidebarService.selectedObject.callToActionTitle" name="title"
+                                       type="text" placeholder="{{ 'ELEMENT.ACTION_TITLE_PLACEHOLDER' | translate }}"
+                                       class="form-control title-value"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="actionLink" translate="ELEMENT.ACTION_URL" class="control-label"></label>
+                                <input id="actionLink" ng-model="objectsSidebarService.selectedObject.callToActionURL" name="title"
+                                       type="text" placeholder="{{ 'ELEMENT.ACTION_URL_PLACEHOLDER' | translate }}"
+                                       class="form-control title-value"/>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 <!-- Highlights Section -->
                 <section>
                     <div class="panel panel-default">
