@@ -311,7 +311,7 @@
                 $scope.objectsSidebarService.selectedObject.isReady = 1;
             }
 
-            $scope.objectsSidebarService.selectedObject.isReady = 0;
+            //$scope.objectsSidebarService.selectedObject.isReady = 0;
 
             $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites/'+$scope.objectsSidebarService.selectedObject.identifier,{model:$scope.objectsSidebarService.selectedObject}).success(function(data,status){
                 if("replaceModel" in data){
