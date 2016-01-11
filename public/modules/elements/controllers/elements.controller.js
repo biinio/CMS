@@ -221,6 +221,13 @@
                 $scope.objectsSidebarService.selectedObject.isReady = 1;
             }
 
+            if ($scope.objectsSidebarService.selectedObject.callToActionTitle && $scope.objectsSidebarService.selectedObject.callToActionURL) {
+                $scope.objectsSidebarService.selectedObject.hasCallToAction = true;
+            }
+            else {
+                $scope.objectsSidebarService.selectedObject.hasCallToAction = false;
+            }
+
             $scope.objectsSidebarService.selectedObject.isDeleted = 0;
 
 

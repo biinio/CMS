@@ -81,7 +81,13 @@
     "DESCRIPTION": "Brief description",
     "DESCRIPTION_PLACEHOLDER": "Enter more details about your product or sale",
     "DETAILS": "Details",
-    "DETAILS_INFO": "Add more details about your element, i.e. lists, price lists, quotes, among others."
+    "DETAILS_INFO": "Add more details about your element, i.e. lists, price lists, quotes, among others.",
+    "ACTION": "User action",
+    "ACTION_INFO": "Add an action the user may perform towards the element.",
+    "ACTION_TITLE": "Action title",
+    "ACTION_TITLE_PLACEHOLDER": "Add the name of the action to be performed",
+    "ACTION_URL": "URL",
+    "ACTION_URL_PLACEHOLDER": "www.example.com"
   },
   "GENERIC":{
     "SEARCH_TAGS": "Search tags",
