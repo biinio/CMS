@@ -51,6 +51,7 @@
             scope.$watch('gallery', function(value){
                 if(value){
                     //console.log(value);
+                    scope.galleries = value;
                 }
             });
 
@@ -66,8 +67,9 @@
                     size:'lg',
                     resolve:{
                         loadingImages : function(){ return scope.loadingImages;},
-                        galleries : function(){ return scope.gallery;},
-                        organizationId : function(){ return scope.organizationId;}
+                        organizationId : function(){ return scope.organizationId;},
+                        galleries : function(){ return scope.gallery;}
+
                     }
                 });
                 mapInstance.result.then(function ( modalInfo ) {
@@ -82,9 +84,9 @@
                         newObj.vibrantLightColor = modalInfo.selectedImages[i].vibrantLightColor;
                         objectsSidebar.selectedObject.media.push(newObj);
                     }
-                    scope.gallery=modalInfo.galleries;
+                    //scope.gallery=modalInfo.galleries;
                 }, function (modalInfo) {
-                                        
+                    console.log("cancelado");
                 });
             };
 

@@ -70,6 +70,7 @@
                 $scope.objectsSidebarService.setObjects($scope.elements);
             });
 
+            $scope.galleries = [];
             Gallery.getList($scope.organizationId).then(function(promise){
                 $scope.galleries = promise.data.data;
             });
