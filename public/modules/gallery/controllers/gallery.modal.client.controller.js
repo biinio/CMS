@@ -10,6 +10,7 @@ function GalleryController($scope, $modalInstance,$http, galleries,Organization)
     $scope.loadingImages = false;
     $scope.croppingImages = false;
     $scope.galleries = galleries;
+    console.log($scope.galleries);
 
     $scope.reset = function() {
         $scope.myImage        = '';
@@ -29,6 +30,7 @@ function GalleryController($scope, $modalInstance,$http, galleries,Organization)
         $scope.croppingImages = true;
         $scope.loadingImages = false;
         $scope.$digest();
+        //$scope.reset();
     });
 
 

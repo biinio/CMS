@@ -30,6 +30,7 @@
                     var mapInstance = $modal.open({
                         templateUrl: '/modules/gmaps/views/partials/gmap.modal.client.partial.view.html',
                         controller: 'GmapController',
+                        backdrop: 'static',
                         size:'lg'
                     });
                     mapInstance.result.then(function ( position ) {

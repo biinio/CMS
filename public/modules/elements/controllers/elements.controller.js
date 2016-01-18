@@ -58,6 +58,10 @@
 
 
 
+        $scope.$on("Biin: galleryUpdate", function(a, modalInfo){
+            $scope.galleries=modalInfo.galleries;
+        });
+
         $scope.$on('$stateChangeStart', function(){
                 $scope.objectsSidebarService.reset();
             });
@@ -70,6 +74,7 @@
                 $scope.objectsSidebarService.setObjects($scope.elements);
             });
 
+            $scope.galleries = [];
             Gallery.getList($scope.organizationId).then(function(promise){
                 $scope.galleries = promise.data.data;
             });
