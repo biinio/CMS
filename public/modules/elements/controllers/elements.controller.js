@@ -58,6 +58,10 @@
 
 
 
+        $scope.$on("Biin: galleryUpdate", function(a, modalInfo){
+            $scope.galleries=modalInfo.galleries;
+        });
+
         $scope.$on('$stateChangeStart', function(){
                 $scope.objectsSidebarService.reset();
             });

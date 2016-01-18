@@ -92,6 +92,10 @@
             $scope.create();
         });
 
+        $scope.$on("Biin: galleryUpdate", function(a, modalInfo){
+            $scope.galleries=modalInfo.galleries;
+        });
+
         /**=============================================================================================================
          * Variables
          *
