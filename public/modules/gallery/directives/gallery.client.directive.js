@@ -13,8 +13,8 @@
         .module('gallery')
         .directive('gallery', Gallery);
 
-    Gallery.$inject = ['$modal','ObjectsSidebar'];
-    function Gallery ($modal,ObjectsSidebar) {
+    Gallery.$inject = ['$modal','ObjectsSidebar', '$rootScope'];
+    function Gallery ($modal,ObjectsSidebar, $rootScope) {
         var objectsSidebar  = ObjectsSidebar;
         var directive = {
             link: link,
@@ -64,6 +64,7 @@
                     scope:scope,
                     templateUrl: '/modules/gallery/views/partials/gallery.modal.html',
                     controller: 'GalleryController',
+                    backdrop: 'static',
                     size:'lg',
                     resolve:{
                         loadingImages : function(){ return scope.loadingImages;},
@@ -85,8 +86,9 @@
                         objectsSidebar.selectedObject.media.push(newObj);
                     }
                     //scope.gallery=modalInfo.galleries;
+                    $rootScope.$broadcast("Biin: galleryUpdate", modalInfo);
                 }, function (modalInfo) {
-                    console.log("cancelado");
+                    $rootScope.$broadcast("Biin: galleryUpdate", modalInfo);
                 });
             };
 
