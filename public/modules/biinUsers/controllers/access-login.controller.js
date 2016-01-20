@@ -40,19 +40,24 @@
                   // assumes if ok, response is an object with some data, if not, a string with error
                   // customize according to your api
                   if ( !response.data.account ) {
-                    vm.authMsg = 'Incorrect credentials.';
+                    vm.authMsg = 'Incorrect credentials';
                   }else{
                       $scope.authentication.user = response.data.account;
                       Organization.getSelectedOrganization().then(function() {
                           Organization.getOrganizations().then( function() {
-
                               $state.go('app.dashboard');
                           });
                       });
 
                   }
-                }, function() {
-                  vm.authMsg = 'Server Request Error';
+                }, function(reason) {
+                      console.log(reason);
+                      if (reason.status == "401") {
+                          vm.authMsg = 'Incorrect credentials';
+                      } else {
+                          vm.authMsg = 'Server Request Error';
+                      }
+                      $state.go('page.login');
                 });
             }
             else {
