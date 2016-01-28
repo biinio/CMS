@@ -13,7 +13,7 @@
         $locationProvider.html5Mode(false);
 
         // default route
-        $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise('/page/login');
 
         //
         // Application Routes
@@ -26,7 +26,7 @@
                 resolve: helper.resolveFor('modernizr', 'icons', 'filestyle')
             })
             .state('app.home', {
-                url: '/home',
+                //url: '/home',
                 templateUrl: 'modules/core/views/home.client.view.html',
                 resolve: {
                     permissions: function(Permission) {
