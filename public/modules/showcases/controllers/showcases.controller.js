@@ -199,14 +199,14 @@
                 missingMinData = true;
             }
 
-            if ($scope.objectsSidebarService.selectedObject.description == null) {
+            /*if ($scope.objectsSidebarService.selectedObject.description == null) {
                 $scope.objectsSidebarService.selectedObject.description = "";
                 missingMinData = true;
             }
 
             else if ($scope.objectsSidebarService.selectedObject.description.trim() === ''){
                 missingMinData = true;
-            }
+            }*/
 
             if ($scope.objectsSidebarService.selectedObject.elements.length === 0){
                 missingMinData = true;
