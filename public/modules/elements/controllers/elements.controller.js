@@ -98,16 +98,6 @@
             $scope.create();
         });
 
-        /*
-        $scope.$on("Biin: On Object Deleted", function(f,index){
-            $scope.removeElementAt(index);
-        });
-
-        $scope.$on("Biin: onGalleryChanged", function(){
-
-        });*/
-
-
         //Get the List of Objects
         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
             $scope.elements = data.data.elements;
@@ -129,8 +119,6 @@
             });
         };
 
-
-
         //Select Element Type function
         $scope.selectType=function(index){
             if($scope.objectsSidebarService.selectedObject.elementType!==''+index)
@@ -145,7 +133,6 @@
             if (confirm(message)) {
                 $scope.removeElementAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
             }
-
         };
 
         //Remove element at specific position
@@ -219,6 +206,11 @@
 
             if ($scope.objectsSidebarService.selectedObject.callToActionTitle && $scope.objectsSidebarService.selectedObject.callToActionURL) {
                 $scope.objectsSidebarService.selectedObject.hasCallToAction = true;
+                var httpRegex = /^http[s]?:\/\//;
+                if(!httpRegex.test($scope.objectsSidebarService.selectedObject.callToActionURL)){
+                    $scope.objectsSidebarService.selectedObject.callToActionURL = "http://" + $scope.objectsSidebarService.selectedObject.callToActionURL;
+                }
+
             }
             else {
                 $scope.objectsSidebarService.selectedObject.hasCallToAction = false;
