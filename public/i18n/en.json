@@ -197,16 +197,17 @@
     "LIMITEDQTY_PLACEHOLDER": "Quantity **"
   },
   "LOGIN": {
-    "SIGN_IN": "SIGN IN TO CONTINUE",
+    "SIGN_IN": "Sign in with your biin account",
     "EMAIL_PLACEHOLDER": "Enter your e-mail address",
     "REQUIRED": "This field is required",
     "VALID_EMAIL": "This field must be a valid email address",
     "PASSWORD": "Password",
     "REMEMBER_ME": "Remember Me",
     "FORGOT_PASSWORD": "Forgot your password?",
-    "LOGIN_BUTTON": "Login",
+    "LOGIN_BUTTON": "Continue",
     "SIGN_UP": "Need to sign up?",
     "REGISTER_NOW": "Register Now"
+    "NEED_HELP":"If you're having problems, let us know at "
   },
   "SHOWCASE": {
     "DETAILS": "Showcase details",
