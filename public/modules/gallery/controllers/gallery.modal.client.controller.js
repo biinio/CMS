@@ -86,6 +86,47 @@ function GalleryController($scope, $modalInstance,$http, galleries,Organization)
     };
 
 
+    $scope.confirmDeleteImage = function(message) {
+        if (confirm(message)) {
+            $scope.delete();
+        }
+    }
+
+    $scope.delete = function() {
+        var imagesToDelete = [];
+        var imageIndex = [];
+        $(".galleryImageWrapper").each(function (index, element) {
+            if ($(element).hasClass("selected")) {
+                imagesToDelete.push($scope.galleries[index]);
+                imageIndex.push(index);
+            }
+        });
+
+        //var imagesInUse = "";
+
+        for (var index = 0; index < imagesToDelete.length; index++) {
+
+            // Check if image is in use.
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/checkImage/' + imagesToDelete[index].identifier).success(function(data) {
+                    if (data.deleted == true ) // image deleted, remove from gallery
+                    {
+                        $scope.galleries.splice(imageIndex[index], 1);
+                        //$http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/' + imageItem.identifier );
+                    }
+
+                }).error (function(msg) {
+                console.log(msg)
+            });
+
+        }
+
+
+        var modalInfo = {};
+        //modalInfo.selectedImages = selectedImages;
+        modalInfo.galleries = $scope.galleries;
+        $modalInstance.dismiss(modalInfo);
+    };
+
     $scope.apply = function () {
         var selectedImages = [];
         $(".galleryImageWrapper").each(function (index, element) {
