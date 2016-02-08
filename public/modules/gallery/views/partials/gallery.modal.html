@@ -82,6 +82,7 @@
         </div>
     </div>
     <div class="modal-footer" data-ng-if="loadingImages==false && croppingImages == false">
+        <button ng-click="confirmDeleteImage(' {{'GENERIC.DELETE_IMAGES_CONFIRMATION' | translate}} ')" class="btn btn-theme btn-sm">{{ 'GENERIC.DELETE' | translate }}</button>
         <button ng-click="close()" class="btn btn-theme btn-sm">{{ 'GENERIC.CLOSE' | translate }}</button>
         <button ng-click="apply()" class="btn btn-theme btn-sm">{{ 'GENERIC.APPLY' | translate }}</button>
     </div>

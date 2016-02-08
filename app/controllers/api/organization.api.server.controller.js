@@ -50,7 +50,8 @@ exports.organizationList = function (req, res) {
         description: 1,
         extraInfo: 1,
         media: 1,
-        sites:1
+        sites:1,
+        isPublished : 1
     }, function (err, data) {
         if (err) { throw err }
         else {
