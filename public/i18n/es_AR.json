@@ -52,7 +52,8 @@
     "BRAND": "Marca",
     "INFORMATION": "Acerca de",
     "MORE_INFO": "Información Adicional",
-    "ORG_ID": "Identificador"
+    "ORG_ID": "Identificador",
+    "PUBLISHED": "Publicado"
   },
   "TYPE":{
     "TITLE":"Tipo de Elemento",
