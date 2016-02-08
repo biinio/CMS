@@ -99,6 +99,7 @@
     "CATEGORIES": "Categories",
     "CLOSE": "Close",
     "APPLY": "Apply",
+    "DELETE": "Delete",
     "UPLOAD_IMAGE": "Upload image",
     "CATEGORIES_REQUIRED_MESSAGE": "Select at least one category",
     "GALLERIES_REQUIRED_MESSAGE": "Add at least one image",
@@ -110,7 +111,8 @@
     "DELETE_SHOWCASE": "Delete showcase",
     "DELETE_SHOWCASE_CONFIRMATION": "Do you wish to delete this showcase?",
     "DELETE_ORGANIZATION": "Delete organization",
-    "DELETE_ORGANIZATION_CONFIRMATION": "Do you wish to delete this organization?"
+    "DELETE_ORGANIZATION_CONFIRMATION": "Do you wish to delete this organization?",
+    "DELETE_IMAGES_CONFIRMATION": "Do you wish to delete the selected images?"
   },
   "SITES":{
     "TITLE": "Establishment Details",
