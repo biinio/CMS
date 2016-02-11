@@ -125,6 +125,8 @@
     "EMAIL_PLACEHOLDER": "mi-sitio@ejemplo.com",
     "NUTSHELL": "Mini Descripción",
     "NUTSHELL_PLACEHOLDER": "Ingrese una descripción breve de su local",
+    "SCHEDULE":"Horario",
+    "SCHEDULE_PLACEHOLDER":"Ingrese el horario del sitio",
 
     "LOCATION":{
       "TITLE": "Ubicación del Local",
