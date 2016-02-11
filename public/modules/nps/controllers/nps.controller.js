@@ -169,7 +169,7 @@
         $scope.options = {
             chart: {
                 type: 'lineChart',
-                height: 138,
+                height: 150,
                 margin : {
                     top: 20,
                     right: 20,
@@ -186,16 +186,12 @@
                     tooltipHide: function(e){ console.log("tooltipHide"); }
                 },
                 xAxis: {
-                    axisLabel: 'Date',
                     tickFormat: function(d) {
                         return d3.time.format('%d-%m-%y')(new Date(d));
                     }
                 },
                 yAxis: {
                     axisLabel: 'NPS',
-                    tickFormat: function(d){
-                        return d3.format('.02f')(d);
-                    },
                     axisLabelDistance: -10
                 },
                 callback: function(chart){
