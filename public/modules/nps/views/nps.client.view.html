@@ -1,0 +1,81 @@
+<div ng-controller="NPSController as nps" class="block-center">
+    <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
+        <!-- START panel-->
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <legend>{{ 'NPS.TITLE' | translate }}</legend>
+                <!-- START row -->
+                <form role="form">
+                    <div class="form-group">
+                        <div class="checkbox c-checkbox">
+                            <label>
+                                <input type="checkbox"
+                                       ng-model="organizationService.selectedOrganization.hasNPS" ng-true-value="'1'" ng-false-value="'0'"/>
+                                <span class="fa fa-check"></span>
+                                {{ 'NPS.ACTIVATE_TITLE' | translate }}
+                            </label>
+                        </div>
+                        <span class="help-block" translate="NPS.ACTIVATE_HELP"></span>
+                    </div>
+                </form>
+                <!-- END row -->
+                <div data-ng-if="isLoadingNPSData">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="loader-inner ball-grid-pulse center">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="loading-text">
+                                <p>{{ 'NPS.LOADING' | translate }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" data-ng-if="!isLoadingNPSData">
+                    <div class="col-md-offset-1 col-md-4" style="border-style: solid">
+                        <div class="row text-center">
+                            <label>Esta semana</label>
+                        </div>
+                        <div class="row text-center text-success" data-ng-if="npsScore >= 90">
+                            <h2>{{npsScore}}</h2>
+                        </div>
+                        <div class="row text-center text-warning" data-ng-if="npsScore >= 70 && npsScore < 90">
+                            <h2>{{npsScore}}</h2>
+                        </div>
+                        <div class="row text-center text-danger" data-ng-if="npsScore < 70">
+                            <h2>{{npsScore}}</h2>
+                        </div>
+                        <div class="row text-center">
+                            <label>Indice de promotor neto</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 text-center text-success">
+                                {{promotersQuantity}} ({{promotersPercentage}}%)
+                            </div>
+                            <div class="col-md-4 text-center text-warning">
+                                {{passiveQuantity}} ({{passivePercentage}}%)
+                            </div>
+                            <div class="col-md-4 text-center text-danger">
+                                {{detractorsQuantity}} ({{detractorsPercentage}}%)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-offset-1 col-md-4" style="border-style: solid">
+                        <nvd3 options="options" data="data" class="visitsGraph with-3d-shadow with-transitions"></nvd3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END panel -->
+    </div>
+</div>

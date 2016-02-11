@@ -51,7 +51,8 @@ exports.organizationList = function (req, res) {
         extraInfo: 1,
         media: 1,
         sites:1,
-        isPublished : 1
+        isPublished : 1,
+        hasNPS : 1
     }, function (err, data) {
         if (err) { throw err }
         else {

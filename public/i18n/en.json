@@ -34,7 +34,8 @@
     "MENU_ADMINISTRATION": "Administration",
     "MENU_MAINTENANCE": "Maintenance",
     "MENU_PROFILE": "Profile",
-    "MENU_ORGANIZATIONS": "Organizations"
+    "MENU_ORGANIZATIONS": "Organizations",
+    "MENU_NPS": "NPS"
   },
   "PROFILE": {
     "FIRST_NAME": "First name",
@@ -224,5 +225,11 @@
     "SITES": "Enabled sites",
     "SITES_INFO": "Please select the showcases you wish to enable at each site.",
     "ELEMENTS_REQUIRED_MESSAGE": "Please assign at least one valid element to this showcase"
+  },
+  "NPS":{
+    "TITLE" : "NPS",
+    "ACTIVATE_TITLE":"Activate survey of net promoter score",
+    "ACTIVATE_HELP":"Al activar esta opción, los visitantes de sus locales recibirán una encuesta de satisfacción usando la herramienta del índice de promotor neto.",
+    "LOADING":"Recuperando la informacion para el calculo del NPS"
   }
 }
