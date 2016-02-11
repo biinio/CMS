@@ -69,6 +69,7 @@
         $scope.$on('organizationChanged',function(){
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Get the List of Objects
+            $scope.objectsSidebarService.selectedObject = null;
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
                 $scope.elements = data.data.elements;
                 $scope.objectsSidebarService.setObjects($scope.elements);
