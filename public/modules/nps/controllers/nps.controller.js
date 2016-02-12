@@ -25,7 +25,10 @@
         $scope.$on('organizationChanged', function () {
             $scope.isLoadingNPSData = true;
             $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/organization',{ headers:{organizationid:$scope.organizationService.selectedOrganization.identifier}}).success(function(data){
-                $scope.isLoadingNPSData = false;
+                if(data.result == "1"){
+                    updateNPSValues(data.data);
+                    $scope.isLoadingNPSData = false;
+                }
             });
         });
 
@@ -41,13 +44,13 @@
             return dat;
         };
 
-        Date.prototype.isSameDateAs = function(pDate) {
+        function isSameDateAs (pDate1, pDate2) {
             return (
-                this.getFullYear() === pDate.getFullYear() &&
-                this.getMonth() === pDate.getMonth() &&
-                this.getDate() === pDate.getDate()
+                pDate1.getFullYear() === pDate2.getFullYear() &&
+                pDate1.getMonth() === pDate2.getMonth() &&
+                pDate1.getDate() === pDate2.getDate()
             );
-        };
+        }
 
         function getDates(startDate, stopDate) {
             var dateArray = new Array();
@@ -90,10 +93,10 @@
             if(Array.isArray(data) && data.length > 0){
 
                 var dateArray = getDates((new Date()).addDays(-6),new Date() );
-
+                var totalCases = 0;
                 for(var i = 0; i < dateArray.length; i++ ) {
                     for(var j = 0; j< data.length; j++){
-                        if(data[j].date.isSameDateAs(dateArray[i])){
+                        if(isSameDateAs(new Date(data[j].date),dateArray[i])){
                             if(data[j].rating < 7){
                                 $scope.detractorsQuantity ++;
                             } else if(data[j].rating < 9){
@@ -101,13 +104,14 @@
                             }else{
                                 $scope.promotersQuantity ++;
                             }
+                            totalCases++;
                         }
                     }
                 }
 
-                $scope.promotersPercentage = ($scope.promotersQuantity/data.length) * 100;
-                $scope.passivePercentage = ($scope.passiveQuantity/data.length) * 100;
-                $scope.detractorsPercentage = ($scope.detractorsQuantity/data.length) * 100;
+                $scope.promotersPercentage = ($scope.promotersQuantity/totalCases) * 100;
+                $scope.passivePercentage = ($scope.passiveQuantity/totalCases) * 100;
+                $scope.detractorsPercentage = ($scope.detractorsQuantity/totalCases) * 100;
                 $scope.npsScore = $scope.promotersPercentage - $scope.detractorsPercentage;
             }
             generateChartData(data);
@@ -136,7 +140,7 @@
                 var tempnpspasive = 0;
                 var tempnpsdetractor = 0;
                 for(var j = 0; j< data.length; j++){
-                    if(data[j].date.isSameDateAs(dateArray[i])){
+                    if(isSameDateAs(new Date(data[j].date),dateArray[i])){
                         if(data[j].rating < 7){
                             tempnpsdetractor ++;
                         } else if(data[j].rating < 9){
