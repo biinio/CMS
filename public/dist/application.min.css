@@ -13655,6 +13655,12 @@ Component: elements.less
 .visitsvsretorning-graph {
   min-height: 95px;
 }
+.NPSScore {
+  font-size: 50px;
+  font-weight: bold;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');
 }

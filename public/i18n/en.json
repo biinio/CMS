@@ -34,7 +34,8 @@
     "MENU_ADMINISTRATION": "Administration",
     "MENU_MAINTENANCE": "Maintenance",
     "MENU_PROFILE": "Profile",
-    "MENU_ORGANIZATIONS": "Organizations"
+    "MENU_ORGANIZATIONS": "Organizations",
+    "MENU_NPS": "NPS"
   },
   "PROFILE": {
     "FIRST_NAME": "First name",
@@ -124,6 +125,8 @@
     "EMAIL_PLACEHOLDER": "my-site@example.com",
     "NUTSHELL": "Brief Description",
     "NUTSHELL_PLACEHOLDER": "Enter a short description of your establishment",
+    "SCHEDULE":"Schedule",
+    "SCHEDULE_PLACEHOLDER":"Enter site's schedule",
 
     "LOCATION":{
       "TITLE": "Establishment location",
@@ -224,5 +227,16 @@
     "SITES": "Enabled sites",
     "SITES_INFO": "Please select the showcases you wish to enable at each site.",
     "ELEMENTS_REQUIRED_MESSAGE": "Please assign at least one valid element to this showcase"
+  },
+  "NPS":{
+    "TITLE" : "NPS",
+    "ACTIVATE_TITLE":"Activate survey of net promoter score",
+    "ACTIVATE_HELP":"Activating this option, your visitants will receive a satisfaction survey using the Net Promoter Score tool.",
+    "LOADING":"Getting data for calculate the NPS",
+    "PROMOTERS":"PROMOTERS",
+    "DETRACTORS":"DETRACTORS",
+    "PASSIVE":"PASSIVE",
+    "THIS_WEEK":"This week",
+    "NPS":"Net Promoter Score"
   }
 }

@@ -34,7 +34,8 @@
     "MENU_ADMINISTRATION": "Administración",
     "MENU_MAINTENANCE": "Mantenimiento",
     "MENU_PROFILE": "Perfil",
-    "MENU_ORGANIZATIONS": "Organizaciones"
+    "MENU_ORGANIZATIONS": "Organizaciones",
+    "MENU_NPS": "NPS"
   },
   "PROFILE": {
     "FIRST_NAME": "Nombre",
@@ -124,6 +125,8 @@
     "EMAIL_PLACEHOLDER": "mi-sitio@ejemplo.com",
     "NUTSHELL": "Mini Descripción",
     "NUTSHELL_PLACEHOLDER": "Ingrese una descripción breve de su local",
+    "SCHEDULE":"Horario",
+    "SCHEDULE_PLACEHOLDER":"Ingrese el horario del sitio",
 
     "LOCATION":{
       "TITLE": "Ubicación del Local",
@@ -225,5 +228,16 @@
     "SITES": "Sitios habilitados",
     "SITES_INFO": "Por favor seleccione las vitrinas que se desean habilitar en cada sitio.",
     "ELEMENTS_REQUIRED_MESSAGE": "Por favor asigne al menos un elemento válido a esta vitrina"
+  },
+  "NPS":{
+    "TITLE" : "NPS",
+    "ACTIVATE_TITLE":"Activar encuesta de índice de promotor neto",
+    "ACTIVATE_HELP":"Al activar esta opción, los visitantes de sus locales recibirán una encuesta de satisfacción usando la herramienta del índice de promotor neto.",
+    "LOADING":"Recuperando la informacion para el calculo del NPS",
+    "PROMOTERS":"Promotores",
+    "DETRACTORS":"Detractores",
+    "PASSIVE":"Pasivos",
+    "THIS_WEEK":"Esta semana",
+    "NPS":"Indice de promotor neto"
   }
 }
