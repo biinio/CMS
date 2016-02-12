@@ -44,7 +44,7 @@
                 <div class="row" data-ng-if="!isLoadingNPSData && organizationService.selectedOrganization.hasNPS=='1'">
                     <div class="col-md-offset-1 col-md-4" style="border-style: solid">
                         <div class="row text-center">
-                            <label>Esta semana</label>
+                            <label>{{ 'NPS.THIS_WEEK' | translate }}</label>
                         </div>
                         <div class="row text-center text-success" data-ng-if="npsScore >= 90">
                             <h2 class="NPSScore">{{npsScore | number:0}}</h2>
@@ -56,19 +56,19 @@
                             <h2 class="NPSScore">{{npsScore | number:0}}</h2>
                         </div>
                         <div class="row text-center">
-                            <label>Indice de promotor neto</label>
+                            <label>{{ 'NPS.NPS' | translate }}</label>
                         </div>
                         <div class="row">
                             <div class="col-md-4 text-center text-success">
-                                <div class="row">Promotores</div>
+                                <div class="row">{{ 'NPS.PROMOTERS' | translate }}</div>
                                 <div class="row">{{promotersQuantity}} ({{promotersPercentage | number:0}}%)</div>
                             </div>
                             <div class="col-md-4 text-center text-warning">
-                                <div class="row">Pasivos</div>
+                                <div class="row">{{ 'NPS.PASSIVE' | translate }}</div>
                                 <div class="row">{{passiveQuantity}} ({{passivePercentage | number:0}}%)</div>
                             </div>
                             <div class="col-md-4 text-center text-danger">
-                                <div class="row">Detractores</div>
+                                <div class="row">{{ 'NPS.DETRACTORS' | translate }}</div>
                                 <div class="row">{{detractorsQuantity}} ({{detractorsPercentage | number:0}}%)</div>
                             </div>
                         </div>

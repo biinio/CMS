@@ -233,6 +233,11 @@
     "TITLE" : "NPS",
     "ACTIVATE_TITLE":"Activar encuesta de índice de promotor neto",
     "ACTIVATE_HELP":"Al activar esta opción, los visitantes de sus locales recibirán una encuesta de satisfacción usando la herramienta del índice de promotor neto.",
-    "LOADING":"Recuperando la informacion para el calculo del NPS"
+    "LOADING":"Recuperando la informacion para el calculo del NPS",
+    "PROMOTERS":"Promotores",
+    "DETRACTORS":"Detractores",
+    "PASSIVE":"Pasivos",
+    "THIS_WEEK":"Esta semana",
+    "NPS":"Indice de promotor neto"
   }
 }
