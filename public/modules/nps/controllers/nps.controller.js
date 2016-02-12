@@ -164,7 +164,8 @@
             $scope.data = [
                 {
                     values: graphData,
-                    color: '#7777ff',
+                    color: '#fe5621',
+                    key: 'NPS',
                     area: true      //area - set to true if you want this line to turn into a filled area chart.
                 }
             ];
