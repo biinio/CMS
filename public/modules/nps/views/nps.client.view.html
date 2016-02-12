@@ -10,7 +10,7 @@
                         <div class="checkbox c-checkbox">
                             <label>
                                 <input type="checkbox"
-                                       ng-model="organizationService.selectedOrganization.hasNPS" ng-true-value="'1'" ng-false-value="'0'"/>
+                                       ng-model="organizationService.selectedOrganization.hasNPS" ng-true-value="'1'" ng-false-value="'0'" data/>
                                 <span class="fa fa-check"></span>
                                 {{ 'NPS.ACTIVATE_TITLE' | translate }}
                             </label>
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" data-ng-if="!isLoadingNPSData">
+                <div class="row" data-ng-if="!isLoadingNPSData && organizationService.selectedOrganization.hasNPS=='1'">
                     <div class="col-md-offset-1 col-md-4" style="border-style: solid">
                         <div class="row text-center">
                             <label>Esta semana</label>
