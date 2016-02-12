@@ -35,7 +35,7 @@
                                         <label for="description" translate="ELEMENT.DESCRIPTION" class="control-label"></label>
                                         <input id="description" ng-model="objectsSidebarService.selectedObject.subTitle" name="subTitle"
                                                type="text" placeholder="{{ 'ELEMENT.DESCRIPTION_PLACEHOLDER' | translate }}" ng-blur="validate()"
-                                               required="required" class="form-control title-value"/>
+                                               class="form-control title-value"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -100,6 +100,28 @@
                         </div>
                     </div>
                  </section>
+
+                <!-- Call to action Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <legend translate="ELEMENT.ACTION"></legend>
+                            <p translate="ELEMENT.ACTION_INFO"></p>
+                            <div class="form-group">
+                                <label for="actionTitle" translate="ELEMENT.ACTION_TITLE" class="control-label"></label>
+                                <input id="actionTitle" ng-model="objectsSidebarService.selectedObject.callToActionTitle" name="title"
+                                       type="text" placeholder="{{ 'ELEMENT.ACTION_TITLE_PLACEHOLDER' | translate }}"
+                                       class="form-control title-value"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="actionLink" translate="ELEMENT.ACTION_URL" class="control-label"></label>
+                                <input id="actionLink" ng-model="objectsSidebarService.selectedObject.callToActionURL" name="title"
+                                       type="text" placeholder="{{ 'ELEMENT.ACTION_URL_PLACEHOLDER' | translate }}"
+                                       class="form-control title-value"/>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 <!-- Highlights Section -->
                 <section>
                     <div class="panel panel-default">
@@ -109,7 +131,7 @@
                                 <div class="row">
                                     <form class="form-inline novalidate">
                                         <div class="form-group col-md-4">
-                                            <label title="{{ 'HIGHLIGHT.PRICE_TOOLTIP' | translate }}">Precio</label>
+                                            <span title="{{ 'HIGHLIGHT.PRICE_TOOLTIP' | translate }}">Precio</span>
                                             <input type="number" ng-model="objectsSidebarService.selectedObject.price"
                                                    placeholder="0.00" ng-blur="validate()" required="required"
                                                    ng-paste="validate()" step="0.01"
@@ -118,7 +140,7 @@
 
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label title="{{ 'HIGHLIGHT.CURRENCY_TOOLTIP' | translate }}" translate="HIGHLIGHT.CURRENCY"></label>
+                                            <span title="{{ 'HIGHLIGHT.CURRENCY_TOOLTIP' | translate }}" translate="HIGHLIGHT.CURRENCY"></span>
                                             <select name="Currency"
                                                     ng-model="objectsSidebarService.selectedObject.currencyType" data-size="4"
                                                     class="form-control bootstrap-select">
@@ -251,7 +273,7 @@
                         </div>
                     </div>
                 </section>
-
+                <button  type="button" class="btn btn-oval btn-default align-right" ng-click="deleteElement(' {{'GENERIC.DELETE_ELEMENT_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">{{ 'GENERIC.DELETE_ELEMENT' | translate }}</button>
                 <code>IDENTIFIER: {{objectsSidebarService.selectedObject.elementIdentifier}}</code>
             </div>
         </div>

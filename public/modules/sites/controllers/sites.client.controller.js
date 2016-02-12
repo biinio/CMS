@@ -21,6 +21,15 @@
         function activate() {
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
+
+            $scope.deletePermit = false;
+
+            for (var permit = 0; permit < Authentication.user.permissions.length; permit++) {
+                if (Authentication.user.permissions[permit].permission == "delete") {
+                    $scope.deletePermit = true;
+                    break;
+                }
+            }
         }
 
         /**=============================================================================================================
@@ -37,12 +46,6 @@
             "<label class='moduleTitle'>{{item.title1}}</label>"+
             "<br/>"+
             "<label class='moduleTitle'>{{item.title2}}</label>"+
-            "<div class='btnShowcasePreview icon-round-control btn-on-hover'>"+
-            "<div class='icon icon-arrange-1'></div>"+
-            "</div>"+
-            "</div>"+
-            "<div ng-click=\"deleteItem(objectsSidebarService.objects.indexOf(item),$event)\" class=\"icon-round-control btnDelete  btn-danger btn-on-hover\">"+
-            "<i class=\"fa fa-close\"></i>"+
             "</div>";
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
@@ -89,8 +92,8 @@
             $scope.create();
         });
 
-        $scope.$on("Biin: On Object Deleted", function(event,index){
-            $scope.removeSiteAt(index);
+        $scope.$on("Biin: galleryUpdate", function(a, modalInfo){
+            $scope.galleries=modalInfo.galleries;
         });
 
         /**=============================================================================================================
@@ -179,6 +182,13 @@
                     displayErrorMessage(site,"Sites Creation",status);
                 }
             });
+        };
+
+        $scope.deleteSite = function(message, selectedObject) {
+            if (confirm(message)) {
+                $scope.removeSiteAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
+            }
+
         };
 
         //Remove site at specific position
@@ -304,6 +314,8 @@
             else {
                 $scope.objectsSidebarService.selectedObject.isReady = 1;
             }
+
+            //$scope.objectsSidebarService.selectedObject.isReady = 0;
 
             $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites/'+$scope.objectsSidebarService.selectedObject.identifier,{model:$scope.objectsSidebarService.selectedObject}).success(function(data,status){
                 if("replaceModel" in data){

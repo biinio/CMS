@@ -22,6 +22,7 @@
 
                 return promise;
             }
+            
         };
         return service;
     }

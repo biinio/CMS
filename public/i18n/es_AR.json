@@ -34,7 +34,8 @@
     "MENU_ADMINISTRATION": "Administración",
     "MENU_MAINTENANCE": "Mantenimiento",
     "MENU_PROFILE": "Perfil",
-    "MENU_ORGANIZATIONS": "Organizaciones"
+    "MENU_ORGANIZATIONS": "Organizaciones",
+    "MENU_NPS": "NPS"
   },
   "PROFILE": {
     "FIRST_NAME": "Nombre",
@@ -45,14 +46,15 @@
     "UPLOAD_IMAGE":"Subir imagen"
   },
   "ORGANIZATION":{
-    "TITLE": "Tus organizaciones",
+    "TITLE": "Organizaciones",
     "SUB_TITLE": "Aquí puedes administrar las organizaciones que manejas en Biin",
     "ADD_NEW": "Añadir nueva",
     "NAME": "Nombre",
     "BRAND": "Marca",
     "INFORMATION": "Acerca de",
     "MORE_INFO": "Información Adicional",
-    "ORG_ID": "Identificador"
+    "ORG_ID": "Identificador",
+    "PUBLISHED": "Publicado"
   },
   "TYPE":{
     "TITLE":"Tipo de Elemento",
@@ -81,7 +83,13 @@
     "DESCRIPTION": "Descripción breve",
     "DESCRIPTION_PLACEHOLDER": "Ingrese un poco más de detalle de tu producto u oferta",
     "DETAILS": "Detalles",
-    "DETAILS_INFO": "Agregue mas detalles sobre el elemento, por ejemplo: listas, listas de precios, acotaciones, entre otros."
+    "DETAILS_INFO": "Agregue mas detalles sobre el elemento, por ejemplo: listas, listas de precios, acotaciones, entre otros.",
+    "ACTION": "Llamada de acción",
+    "ACTION_INFO": "Agregue una acción que el usuario pueda realizar sobre el elemento.",
+    "ACTION_TITLE": "Título de acción",
+    "ACTION_TITLE_PLACEHOLDER": "Agregue el nombre de la acción a realizar",
+    "ACTION_URL": "URL",
+    "ACTION_URL_PLACEHOLDER": "www.ejemplo.com"
   },
   "GENERIC":{
     "SEARCH_TAGS": "Etiquetas de búsqueda",
@@ -92,9 +100,20 @@
     "CATEGORIES": "Categorías",
     "CLOSE": "Cerrar",
     "APPLY": "Aplicar",
+    "DELETE": "Eliminar",
+    "UPLOAD_IMAGE": "Subir imagen",
     "CATEGORIES_REQUIRED_MESSAGE": "Seleccione al menos una categoría",
     "GALLERIES_REQUIRED_MESSAGE": "Agregue al menos una imagen",
-    "MAP_REQUIRED_MESSAGE":"Indique la ubicacion de su local en el mapa"
+    "MAP_REQUIRED_MESSAGE":"Indique la ubicacion de su local en el mapa",
+    "DELETE_SITE": "Eliminar sitio",
+    "DELETE_SITE_CONFIRMATION": "¿Desea eliminar este sitio?",
+    "DELETE_ELEMENT": "Eliminar elemento",
+    "DELETE_ELEMENT_CONFIRMATION": "¿Desea eliminar este elemento?",
+    "DELETE_SHOWCASE": "Eliminar vitrina",
+    "DELETE_SHOWCASE_CONFIRMATION": "¿Desea eliminar esta vitrina?",
+    "DELETE_ORGANIZATION": "Eliminar organización",
+    "DELETE_ORGANIZATION_CONFIRMATION": "¿Desea eliminar esta organización?",
+    "DELETE_IMAGES_CONFIRMATION": "¿Desea eliminar las imágenes seleccionadas?"
   },
   "SITES":{
     "TITLE": "Detalles del Local",
@@ -106,6 +125,8 @@
     "EMAIL_PLACEHOLDER": "mi-sitio@ejemplo.com",
     "NUTSHELL": "Mini Descripción",
     "NUTSHELL_PLACEHOLDER": "Ingrese una descripción breve de su local",
+    "SCHEDULE":"Horario",
+    "SCHEDULE_PLACEHOLDER":"Ingrese el horario del sitio",
 
     "LOCATION":{
       "TITLE": "Ubicación del Local",
@@ -182,16 +203,17 @@
     "LIMITEDQTY_PLACEHOLDER": "Cantidad **"
   },
   "LOGIN": {
-    "SIGN_IN": "INICIA SESIÓN PARA CONTINUAR",
+    "SIGN_IN": "Acceder con su cuenta de Biin",
     "EMAIL_PLACEHOLDER": "Introduzca su correo electrónico",
     "REQUIRED": "Este campo es requerido",
     "VALID_EMAIL": "Este campo requiere un correo electrónico válido",
     "PASSWORD": "Contraseña",
     "REMEMBER_ME": "No cerrar sesión",
     "FORGOT_PASSWORD": "¿Has olvidado la contraseña?",
-    "LOGIN_BUTTON": "Iniciar sesión",
+    "LOGIN_BUTTON": "Continuar",
     "SIGN_UP": "¿Necesita registrarse?",
-    "REGISTER_NOW": "Regístrese ahora"
+    "REGISTER_NOW": "Regístrese ahora",
+    "NEED_HELP":"Si tiene problemas, escribanos a "
 
   },
   "SHOWCASE": {
@@ -206,5 +228,16 @@
     "SITES": "Sitios habilitados",
     "SITES_INFO": "Por favor seleccione las vitrinas que se desean habilitar en cada sitio.",
     "ELEMENTS_REQUIRED_MESSAGE": "Por favor asigne al menos un elemento válido a esta vitrina"
+  },
+  "NPS":{
+    "TITLE" : "NPS",
+    "ACTIVATE_TITLE":"Activar encuesta de índice de promotor neto",
+    "ACTIVATE_HELP":"Al activar esta opción, los visitantes de sus locales recibirán una encuesta de satisfacción usando la herramienta del índice de promotor neto.",
+    "LOADING":"Recuperando la informacion para el calculo del NPS",
+    "PROMOTERS":"Promotores",
+    "DETRACTORS":"Detractores",
+    "PASSIVE":"Pasivos",
+    "THIS_WEEK":"Esta semana",
+    "NPS":"Indice de promotor neto"
   }
 }

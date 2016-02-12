@@ -34,7 +34,8 @@
     "MENU_ADMINISTRATION": "Administration",
     "MENU_MAINTENANCE": "Maintenance",
     "MENU_PROFILE": "Profile",
-    "MENU_ORGANIZATIONS": "Organizations"
+    "MENU_ORGANIZATIONS": "Organizations",
+    "MENU_NPS": "NPS"
   },
   "PROFILE": {
     "FIRST_NAME": "First name",
@@ -45,14 +46,15 @@
     "UPLOAD_IMAGE": "Upload image"
   },
   "ORGANIZATION":{
-    "TITLE": "Your organizations",
+    "TITLE": "Organizations",
     "SUB_TITLE": "Manage your organizations that are handled by Biin",
     "ADD_NEW": "Add new",
     "NAME": "Name",
     "BRAND": "Brand",
     "INFORMATION": "About",
     "MORE_INFO": "Additional Information",
-    "ORG_ID": "Identifier"
+    "ORG_ID": "Identifier",
+    "PUBLISHED": "PUBLISHED"
   },
   "TYPE":{
     "TITLE":"Type of element",
@@ -81,7 +83,13 @@
     "DESCRIPTION": "Brief description",
     "DESCRIPTION_PLACEHOLDER": "Enter more details about your product or sale",
     "DETAILS": "Details",
-    "DETAILS_INFO": "Add more details about your element, i.e. lists, price lists, quotes, among others."
+    "DETAILS_INFO": "Add more details about your element, i.e. lists, price lists, quotes, among others.",
+    "ACTION": "User action",
+    "ACTION_INFO": "Add an action the user may perform towards the element.",
+    "ACTION_TITLE": "Action title",
+    "ACTION_TITLE_PLACEHOLDER": "Add the name of the action to be performed",
+    "ACTION_URL": "URL",
+    "ACTION_URL_PLACEHOLDER": "www.example.com"
   },
   "GENERIC":{
     "SEARCH_TAGS": "Search tags",
@@ -92,9 +100,20 @@
     "CATEGORIES": "Categories",
     "CLOSE": "Close",
     "APPLY": "Apply",
+    "DELETE": "Delete",
+    "UPLOAD_IMAGE": "Upload image",
     "CATEGORIES_REQUIRED_MESSAGE": "Select at least one category",
     "GALLERIES_REQUIRED_MESSAGE": "Add at least one image",
-    "MAP_REQUIRED_MESSAGE":"Mark your location on the map"
+    "MAP_REQUIRED_MESSAGE":"Mark your location on the map",
+    "DELETE_SITE": "Delete site",
+    "DELETE_SITE_CONFIRMATION": "Do you wish to delete this site?",
+    "DELETE_ELEMENT": "Delete element",
+    "DELETE_ELEMENT_CONFIRMATION": "Do you wish to delete this element?",
+    "DELETE_SHOWCASE": "Delete showcase",
+    "DELETE_SHOWCASE_CONFIRMATION": "Do you wish to delete this showcase?",
+    "DELETE_ORGANIZATION": "Delete organization",
+    "DELETE_ORGANIZATION_CONFIRMATION": "Do you wish to delete this organization?",
+    "DELETE_IMAGES_CONFIRMATION": "Do you wish to delete the selected images?"
   },
   "SITES":{
     "TITLE": "Establishment Details",
@@ -106,6 +125,8 @@
     "EMAIL_PLACEHOLDER": "my-site@example.com",
     "NUTSHELL": "Brief Description",
     "NUTSHELL_PLACEHOLDER": "Enter a short description of your establishment",
+    "SCHEDULE":"Schedule",
+    "SCHEDULE_PLACEHOLDER":"Enter site's schedule",
 
     "LOCATION":{
       "TITLE": "Establishment location",
@@ -152,23 +173,47 @@
   "HIGHLIGHT": {
     "INSERT": "Enter highlight details",
     "TITLE": "Title",
-    "TITLE_PLACEHOLDER": "Enter a title for the product on sale",
-    "TEXT": "Highlight",
-    "TEXT_PLACEHOLDER": "Enter text to be highlighted",
+    "TITLE_PLACEHOLDER": "Enter a title for your highlighted product",
+    "TEXT": "Highlighted text",
+    "TEXT_PLACEHOLDER": "Add text to highlight",
     "SUBTEXT": "Subtext",
-    "SUBTEXT_PLACEHOLDER": "Enter details of the highlighted product"
+    "SUBTEXT_PLACEHOLDER": "Add details about your sale",
+    "PRICE_TOOLTIP": "Listed price",
+    "CURRENCY": "Currency",
+    "CURRENCY_TOOLTIP": "Select currency",
+    "PRICESTART": "Set price 'Starting at'",
+    "PRICESTART_TOOLTIP": "Mark this option if the prices have a minimum value",
+    "PERCENT": "Percentage",
+    "PERCENT_TOOLTIP": "Enter the discounted percentage",
+    "PERCENT_PLACEHOLDER": "0%",
+    "DISCOUNT": "Discount amount",
+    "DISCOUNT_TOOLTIP": "Manually add the discounted amount",
+    "DISCOUNT_PLACEHOLDER": "Amount to be reduced",
+    "FINALPRICE": "Final price",
+    "FINALPRICE_TOOLTIP": "The final price after the sale",
+    "FINALPRICE_PLACEHOLDER": "Final price",
+    "VALIDSINCE": "Valid since",
+    "VALIDSINCE_TOOLTIP": "Start date of the sale",
+    "VALIDSINCE_PLACEHOLDER": "Start date **",
+    "VALIDUNTIL": "Valid until",
+    "VALIDUNTIL_TOOLTIP": "Date in which the sale ends",
+    "VALIDUNTIL_PLACEHOLDER": "Expiration date **",
+    "LIMITEDQTY": "Limited quantity",
+    "LIMITEDQTY_TOOLTIPT": "Allow promotions with limited quantities",
+    "LIMITEDQTY_PLACEHOLDER": "Quantity **"
   },
   "LOGIN": {
-    "SIGN_IN": "SIGN IN TO CONTINUE",
+    "SIGN_IN": "Sign in with your biin account",
     "EMAIL_PLACEHOLDER": "Enter your e-mail address",
     "REQUIRED": "This field is required",
     "VALID_EMAIL": "This field must be a valid email address",
     "PASSWORD": "Password",
     "REMEMBER_ME": "Remember Me",
     "FORGOT_PASSWORD": "Forgot your password?",
-    "LOGIN_BUTTON": "Login",
+    "LOGIN_BUTTON": "Continue",
     "SIGN_UP": "Need to sign up?",
     "REGISTER_NOW": "Register Now"
+    "NEED_HELP":"If you're having problems, let us know at "
   },
   "SHOWCASE": {
     "DETAILS": "Showcase details",
@@ -182,5 +227,16 @@
     "SITES": "Enabled sites",
     "SITES_INFO": "Please select the showcases you wish to enable at each site.",
     "ELEMENTS_REQUIRED_MESSAGE": "Please assign at least one valid element to this showcase"
+  },
+  "NPS":{
+    "TITLE" : "NPS",
+    "ACTIVATE_TITLE":"Activate survey of net promoter score",
+    "ACTIVATE_HELP":"Activating this option, your visitants will receive a satisfaction survey using the Net Promoter Score tool.",
+    "LOADING":"Getting data for calculate the NPS",
+    "PROMOTERS":"PROMOTERS",
+    "DETRACTORS":"DETRACTORS",
+    "PASSIVE":"PASSIVE",
+    "THIS_WEEK":"This week",
+    "NPS":"Net Promoter Score"
   }
 }

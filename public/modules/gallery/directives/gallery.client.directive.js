@@ -13,8 +13,8 @@
         .module('gallery')
         .directive('gallery', Gallery);
 
-    Gallery.$inject = ['$modal','ObjectsSidebar'];
-    function Gallery ($modal,ObjectsSidebar) {
+    Gallery.$inject = ['$modal','ObjectsSidebar', '$rootScope'];
+    function Gallery ($modal,ObjectsSidebar, $rootScope) {
         var objectsSidebar  = ObjectsSidebar;
         var directive = {
             link: link,
@@ -51,6 +51,7 @@
             scope.$watch('gallery', function(value){
                 if(value){
                     //console.log(value);
+                    scope.galleries = value;
                 }
             });
 
@@ -63,11 +64,13 @@
                     scope:scope,
                     templateUrl: '/modules/gallery/views/partials/gallery.modal.html',
                     controller: 'GalleryController',
+                    backdrop: 'static',
                     size:'lg',
                     resolve:{
                         loadingImages : function(){ return scope.loadingImages;},
-                        galleries : function(){ return scope.gallery;},
-                        organizationId : function(){ return scope.organizationId;}
+                        organizationId : function(){ return scope.organizationId;},
+                        galleries : function(){ return scope.gallery;}
+
                     }
                 });
                 mapInstance.result.then(function ( modalInfo ) {
@@ -82,9 +85,10 @@
                         newObj.vibrantLightColor = modalInfo.selectedImages[i].vibrantLightColor;
                         objectsSidebar.selectedObject.media.push(newObj);
                     }
-                    scope.gallery=modalInfo.galleries;
+                    //scope.gallery=modalInfo.galleries;
+                    $rootScope.$broadcast("Biin: galleryUpdate", modalInfo);
                 }, function (modalInfo) {
-                    scope.gallery=modalInfo.galleries;
+                    $rootScope.$broadcast("Biin: galleryUpdate", modalInfo);
                 });
             };
 

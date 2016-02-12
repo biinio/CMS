@@ -23,13 +23,8 @@
             "</div>"+
             "<div class='col-md-9 leftInformationArea'>"+
                 "<label class='moduleTitle'>{{item.title}}</label>"+
-                "<div class='btnShowcasePreview icon-round-control btn-on-hover'>"+
-                    "<div class='icon icon-arrange-1'></div>"+
-                "</div>"+
-            "</div>"+
-            "<div ng-click=\"deleteItem(objectsSidebarService.objects.indexOf(item),$event)\" class=\"icon-round-control btnDelete  btn-danger btn-on-hover\">"+
-                "<i class=\"fa fa-close\"></i>"+
             "</div>";
+
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
         ////////////////
@@ -63,6 +58,10 @@
 
 
 
+        $scope.$on("Biin: galleryUpdate", function(a, modalInfo){
+            $scope.galleries=modalInfo.galleries;
+        });
+
         $scope.$on('$stateChangeStart', function(){
                 $scope.objectsSidebarService.reset();
             });
@@ -70,11 +69,13 @@
         $scope.$on('organizationChanged',function(){
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Get the List of Objects
+            $scope.objectsSidebarService.selectedObject = null;
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
                 $scope.elements = data.data.elements;
                 $scope.objectsSidebarService.setObjects($scope.elements);
             });
 
+            $scope.galleries = [];
             Gallery.getList($scope.organizationId).then(function(promise){
                 $scope.galleries = promise.data.data;
             });
@@ -98,22 +99,11 @@
             $scope.create();
         });
 
-        $scope.$on("Biin: On Object Deleted", function(f,index){
-            $scope.removeElementAt(index);
-        });
-
-        /*$scope.$on("Biin: onGalleryChanged", function(){
-
-        });*/
-
-
         //Get the List of Objects
         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
             $scope.elements = data.data.elements;
             $scope.objectsSidebarService.setObjects($scope.elements);
         });
-
-
 
         //Push a new showcase in the list
         $scope.create = function(){
@@ -130,8 +120,6 @@
             });
         };
 
-
-
         //Select Element Type function
         $scope.selectType=function(index){
             if($scope.objectsSidebarService.selectedObject.elementType!==''+index)
@@ -140,6 +128,12 @@
                 $scope.objectsSidebarService.selectedObject.elementType="";
 
             $scope.validate(true);
+        };
+
+        $scope.deleteElement = function(message, selectedObject) {
+            if (confirm(message)) {
+                $scope.removeElementAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
+            }
         };
 
         //Remove element at specific position
@@ -180,15 +174,6 @@
                 missingMinData = true;
             }
 
-            if ($scope.objectsSidebarService.selectedObject.subTitle == null) {
-                missingMinData = true;
-                $scope.objectsSidebarService.selectedObject.subTitle = "";
-            }
-            else if ($scope.objectsSidebarService.selectedObject.subTitle.trim() === ''){
-                missingMinData = true;
-                $scope.objectsSidebarService.selectedObject.subTitle = "";
-            }
-
             if ($scope.objectsSidebarService.selectedObject.categories.length === 0) {
                 missingMinData = true;
             }
@@ -219,6 +204,21 @@
             else {
                 $scope.objectsSidebarService.selectedObject.isReady = 1;
             }
+
+            if ($scope.objectsSidebarService.selectedObject.callToActionTitle && $scope.objectsSidebarService.selectedObject.callToActionURL) {
+                $scope.objectsSidebarService.selectedObject.hasCallToAction = true;
+                var httpRegex = /^http[s]?:\/\//;
+                if(!httpRegex.test($scope.objectsSidebarService.selectedObject.callToActionURL)){
+                    $scope.objectsSidebarService.selectedObject.callToActionURL = "http://" + $scope.objectsSidebarService.selectedObject.callToActionURL;
+                }
+
+            }
+            else {
+                $scope.objectsSidebarService.selectedObject.hasCallToAction = false;
+            }
+
+            $scope.objectsSidebarService.selectedObject.isDeleted = 0;
+
 
             $scope.objectsSidebarService.selectedObject.hasPrice = $scope.objectsSidebarService.selectedObject.price > 0?'1':'0';
 

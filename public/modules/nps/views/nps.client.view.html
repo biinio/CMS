@@ -1,0 +1,84 @@
+<div ng-controller="NPSController as nps" class="block-center">
+    <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
+        <!-- START panel-->
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <legend>{{ 'NPS.TITLE' | translate }}</legend>
+                <!-- START row -->
+                <form role="form">
+                    <div class="form-group">
+                        <div class="checkbox c-checkbox">
+                            <label>
+                                <input type="checkbox"
+                                       ng-model="organizationService.selectedOrganization.hasNPS" ng-true-value="'1'" ng-false-value="'0'" data/>
+                                <span class="fa fa-check"></span>
+                                {{ 'NPS.ACTIVATE_TITLE' | translate }}
+                            </label>
+                        </div>
+                        <span class="help-block" translate="NPS.ACTIVATE_HELP"></span>
+                    </div>
+                </form>
+                <!-- END row -->
+                <div data-ng-if="isLoadingNPSData">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="loader-inner ball-grid-pulse center">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="loading-text">
+                                <p>{{ 'NPS.LOADING' | translate }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" data-ng-if="!isLoadingNPSData && organizationService.selectedOrganization.hasNPS=='1'">
+                    <div class="col-md-offset-1 col-md-4" style="border-style: solid">
+                        <div class="row text-center">
+                            <label>{{ 'NPS.THIS_WEEK' | translate }}</label>
+                        </div>
+                        <div class="row text-center text-success" data-ng-if="npsScore >= 90">
+                            <h2 class="NPSScore">{{npsScore | number:0}}</h2>
+                        </div>
+                        <div class="row text-center text-warning" data-ng-if="npsScore >= 70 && npsScore < 90">
+                            <h2 class="NPSScore">{{npsScore | number:0}}</h2>
+                        </div>
+                        <div class="row text-center text-danger" data-ng-if="npsScore < 70">
+                            <h2 class="NPSScore">{{npsScore | number:0}}</h2>
+                        </div>
+                        <div class="row text-center">
+                            <label>{{ 'NPS.NPS' | translate }}</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 text-center text-success">
+                                <div class="row">{{ 'NPS.PROMOTERS' | translate }}</div>
+                                <div class="row">{{promotersQuantity}} ({{promotersPercentage | number:0}}%)</div>
+                            </div>
+                            <div class="col-md-4 text-center text-warning">
+                                <div class="row">{{ 'NPS.PASSIVE' | translate }}</div>
+                                <div class="row">{{passiveQuantity}} ({{passivePercentage | number:0}}%)</div>
+                            </div>
+                            <div class="col-md-4 text-center text-danger">
+                                <div class="row">{{ 'NPS.DETRACTORS' | translate }}</div>
+                                <div class="row">{{detractorsQuantity}} ({{detractorsPercentage | number:0}}%)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-offset-1 col-md-4" style="border-style: solid">
+                        <nvd3 options="options" data="data" class="visitsGraph with-3d-shadow with-transitions"></nvd3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END panel -->
+    </div>
+</div>

@@ -3,7 +3,7 @@
    <div class="panel panel-dark panel-flat">
       <div class="panel-heading text-center">
          <a href="#">
-            <img src="modules/core/img/brand/biinLogo85x34.png" alt="Image" class="block-center img-rounded" />
+            <img src="modules/core/img/brand/logo-biin-dark.png" alt="Image" class="block-center img-rounded" />
          </a>
       </div>
       <div class="panel-body">
@@ -26,12 +26,13 @@
                      <input type="checkbox" value="" name="account_remember" ng-model="login.account.remember" />
                      <span class="fa fa-check"></span>{{ 'LOGIN.REMEMBER_ME' | translate }}</label>
                </div>
-               <div class="pull-right"><a ui-sref="page.recover" class="text-muted">{{ 'LOGIN.FORGOT_PASSWORD' | translate }}</a>
-               </div>
+               <!--<div class="pull-right"><a ui-sref="page.recover" class="text-muted">{{ 'LOGIN.FORGOT_PASSWORD' | translate }}</a>
+               </div>-->
             </div>
             <button type="submit" class="btn btn-block btn-primary mt-lg">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
          </form>
          <div ng-show="login.authMsg" class="alert alert-danger text-center">{{login.authMsg}}</div>
+         <p>{{'LOGIN.NEED_HELP' | translate}} <a href="mailto:contact@biin.io">contact@biin.io</a></p>
          <!-- SIGN UP SECTION -->
          <!--
          <p class="pt-lg text-center">{{ 'LOGIN.SIGN_UP' | translate }}</p><a ui-sref="page.register" class="btn btn-block btn-default">{{ 'LOGIN.REGISTER_NOW' | translate }}</a>
@@ -45,6 +46,6 @@
       <span>-</span>
       <span ng-bind="app.name"></span>
       <br/>
-      <span ng-bind="app.description"></span>
+      <!--<span ng-bind="app.description"></span>-->
    </div>
 </div>

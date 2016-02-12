@@ -4,13 +4,13 @@
 'use strict';
 
 // Setting up route
-angular.module('dashboard').config(['$stateProvider',
+angular.module('nps').config(['$stateProvider',
     function($stateProvider) {
         // Users state routing
         $stateProvider.
-            state('app.profile', {
-                url: '/profile',
-                templateUrl: 'modules/profile/views/profile.client.view.html',
+            state('app.nps', {
+                url: '/nps',
+                templateUrl: 'modules/nps/views/nps.client.view.html',
                 resolve: {
                     permissions: function(Permission) {
                         return Permission.getPermissions();

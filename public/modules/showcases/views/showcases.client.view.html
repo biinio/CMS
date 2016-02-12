@@ -23,7 +23,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="description" class="control-label">{{ 'SHOWCASE.DESCRIPTION' | translate }}</label>
-                                            <input id="description" ng-model="objectsSidebarService.selectedObject.description" name="description" type="text"  ng-blur="validate()" placeholder="{{'SHOWCASE.DESCRIPTION_PLACEHOLDER'|translate}}" class="form-control title-value"/>
+                                            <input id="description" ng-model="objectsSidebarService.selectedObject.description"  name="description" type="text"  ng-blur="validate()" placeholder="{{'SHOWCASE.DESCRIPTION_PLACEHOLDER'|translate}}" class="form-control title-value"/>
                                         </div>
                                     </div>
                                     <!--<div class="col-md-12">
@@ -145,6 +145,7 @@
                     </div>
 
                 </section>
+                <button  type="button" class="btn btn-oval btn-default align-right" ng-click="deleteShowcase(' {{'GENERIC.DELETE_SHOWCASE_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">{{ 'GENERIC.DELETE_SHOWCASE' | translate }}</button>
                 <code>IDENTIFIER: {{objectsSidebarService.selectedObject.identifier}}</code>
             </div>
         </div>

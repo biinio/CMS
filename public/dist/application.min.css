@@ -11865,7 +11865,7 @@ label + .form-control + .parsley-errors-list + .form-control-feedback {
 .imgcrop-preview {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 100%;
   margin: 0 auto;
   background: #dde6e9;
   text-align: center;
@@ -13317,6 +13317,9 @@ Component: sidemenu.less
 /* ========================================================================
 Component: elements.less
  ========================================================================== */
+.align-right {
+  float: right;
+}
 .enlarge-icon {
   font-size: 18px !important;
   float: right;
@@ -13651,6 +13654,12 @@ Component: elements.less
 }
 .visitsvsretorning-graph {
   min-height: 95px;
+}
+.NPSScore {
+  font-size: 50px;
+  font-weight: bold;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');

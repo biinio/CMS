@@ -5,7 +5,7 @@
                 <!-- START panel-->
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <legend>Organizations</legend>
+                        <legend>{{ 'ORGANIZATION.TITLE' | translate }}</legend>
                         <!-- START row -->
                         <form ng-if="selectedOrganization!==''" ng-mouseleave="saveOrganization()" role="form">
                             <div class="img-organization">
@@ -14,6 +14,17 @@
                             </div>
                             <a upload-organization-image="#organizationInput" translate="GENERIC.UPLOAD_IMAGE" class="btn btn-default"></a>
                             <input id="organizationInput" type="file" class="hidden"/>
+
+                            <div class="form-group">
+                                <div class="checkbox c-checkbox">
+                                    <label title="{{ 'HIGHLIGHT.LIMITEDQTY_TOOLTIP' | translate }}">
+                                        <input type="checkbox"
+                                               ng-model="objectsSidebarService.selectedObject.isPublished" ng-true-value="true" ng-false-value="false"/>
+                                        <span class="fa fa-check"></span>
+                                        {{ 'ORGANIZATION.PUBLISHED' | translate }}
+                                    </label>
+                                </div>
+                            </div>
 
                             <div class="form-group">
                                 <label translate="ORGANIZATION.NAME"></label>
@@ -31,12 +42,12 @@
                                 <label for="extraInfo" translate="ORGANIZATION.MORE_INFO"></label>
                                 <input id="extraInfo" type="text" placeholder="Extra Information **" ng-model="objectsSidebarService.selectedObject.extraInfo" class="form-control"/>
                             </div>
-                            <label translate="ORGANIZATION.ORG_ID" class="organizationId">{{objectsSidebarService.selectedObject.identifier}}</label>
-
                         </form>
                         <!-- END row -->
                     </div>
                 </div>
+                <button  type="button" ng-if="deletePermit" class="btn btn-oval btn-default align-right" ng-click="deleteOrganization(' {{'GENERIC.DELETE_ORGANIZATION_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">{{ 'GENERIC.DELETE_ORGANIZATION' | translate }}</button>
+                <code>IDENTIFIER: {{objectsSidebarService.selectedObject.identifier}}</code>
                 <!-- END panel -->
             </div>
         </div>

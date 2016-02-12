@@ -12,7 +12,7 @@
           prefix : '/i18n/',
           suffix : '.json'
       });
-      $translateProvider.preferredLanguage('en');
+      $translateProvider.preferredLanguage('es_AR');
       $translateProvider.useLocalStorage();
       $translateProvider.usePostCompiling(true);
 
