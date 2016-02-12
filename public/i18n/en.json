@@ -231,7 +231,12 @@
   "NPS":{
     "TITLE" : "NPS",
     "ACTIVATE_TITLE":"Activate survey of net promoter score",
-    "ACTIVATE_HELP":"Al activar esta opción, los visitantes de sus locales recibirán una encuesta de satisfacción usando la herramienta del índice de promotor neto.",
-    "LOADING":"Recuperando la informacion para el calculo del NPS"
+    "ACTIVATE_HELP":"Activating this option, your visitants will receive a satisfaction survey using the Net Promoter Score tool.",
+    "LOADING":"Getting data for calculate the NPS",
+    "PROMOTERS":"PROMOTERS",
+    "DETRACTORS":"DETRACTORS",
+    "PASSIVE":"PASSIVE",
+    "THIS_WEEK":"This week",
+    "NPS":"Net Promoter Score"
   }
 }
