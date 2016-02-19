@@ -1,4 +1,4 @@
-<div ng-controller="LoginFormController as login" class="block-center mt-xl wd-xl">
+<div data-ng-controller="LoginFormController as login" class="block-center mt-xl wd-xl">
    <!-- START panel-->
    <div class="panel panel-dark panel-flat">
       <div class="panel-heading text-center">
@@ -8,22 +8,22 @@
       </div>
       <div class="panel-body">
          <p class="text-center pv" translate="LOGIN.SIGN_IN"></p>
-         <form role="form" ng-submit="login.login()" name="login.loginForm" novalidate="" class="form-validate mb-lg">
+         <form role="form" data-ng-submit="login.login()" name="login.loginForm" novalidate="" class="form-validate mb-lg">
             <div class="form-group has-feedback">
-               <input id="exampleInputEmail1" type="email" name="account_email" placeholder="{{ 'LOGIN.EMAIL_PLACEHOLDER' | translate }}" autocomplete="off" ng-model="login.account.email" required="" class="form-control" />
+               <input id="exampleInputEmail1" type="email" name="account_email" placeholder="{{ 'LOGIN.EMAIL_PLACEHOLDER' | translate }}" autocomplete="off" data-ng-model="login.account.email" required="" class="form-control" />
                <span class="fa fa-envelope form-control-feedback text-muted"></span>
-               <span ng-show="login.loginForm.account_email.$dirty &amp;&amp; login.loginForm.account_email.$error.required" class="text-danger">{{ 'LOGIN.REQUIRED' | translate }}</span>
-               <span ng-show="login.loginForm.account_email.$dirty &amp;&amp; login.loginForm.account_email.$error.email" class="text-danger">{{ 'LOGIN.VALID_EMAIL' | translate }}</span>
+               <span data-ng-show="login.loginForm.account_email.$dirty &amp;&amp; login.loginForm.account_email.$error.required" class="text-danger">{{ 'LOGIN.REQUIRED' | translate }}</span>
+               <span data-ng-show="login.loginForm.account_email.$dirty &amp;&amp; login.loginForm.account_email.$error.email" class="text-danger">{{ 'LOGIN.VALID_EMAIL' | translate }}</span>
             </div>
             <div class="form-group has-feedback">
-               <input id="exampleInputPassword1" type="password" name="account_password" placeholder="{{ 'LOGIN.PASSWORD' | translate }}" ng-model="login.account.password" required="" class="form-control" />
+               <input id="exampleInputPassword1" type="password" name="account_password" placeholder="{{ 'LOGIN.PASSWORD' | translate }}" data-ng-model="login.account.password" required="" class="form-control" />
                <span class="fa fa-lock form-control-feedback text-muted"></span>
-               <span ng-show="login.loginForm.account_password.$dirty &amp;&amp; login.loginForm.account_password.$error.required" class="text-danger">{{ 'LOGIN.REQUIRED' | translate }}</span>
+               <span data-ng-show="login.loginForm.account_password.$dirty &amp;&amp; login.loginForm.account_password.$error.required" class="text-danger">{{ 'LOGIN.REQUIRED' | translate }}</span>
             </div>
             <div class="clearfix">
                <div class="checkbox c-checkbox pull-left mt0">
                   <label>
-                     <input type="checkbox" value="" name="account_remember" ng-model="login.account.remember" />
+                     <input type="checkbox" value="" name="account_remember" data-ng-model="login.account.remember" />
                      <span class="fa fa-check"></span>{{ 'LOGIN.REMEMBER_ME' | translate }}</label>
                </div>
                <!--<div class="pull-right"><a ui-sref="page.recover" class="text-muted">{{ 'LOGIN.FORGOT_PASSWORD' | translate }}</a>
@@ -31,7 +31,7 @@
             </div>
             <button type="submit" class="btn btn-block btn-primary mt-lg">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
          </form>
-         <div ng-show="login.authMsg" class="alert alert-danger text-center">{{login.authMsg}}</div>
+         <div data-ng-show="login.authMsg" class="alert alert-danger text-center">{{login.authMsg}}</div>
          <p>{{'LOGIN.NEED_HELP' | translate}} <a href="mailto:contact@biin.io">contact@biin.io</a></p>
          <!-- SIGN UP SECTION -->
          <!--
@@ -42,9 +42,9 @@
    <!-- END panel-->
    <div class="p-lg text-center">
       <span>&copy;</span>
-      <span ng-bind="app.year"></span>
+      <span data-ng-bind="app.year"></span>
       <span>-</span>
-      <span ng-bind="app.name"></span>
+      <span data-ng-bind="app.name"></span>
       <br/>
       <!--<span ng-bind="app.description"></span>-->
    </div>
