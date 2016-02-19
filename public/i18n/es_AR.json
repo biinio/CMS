@@ -30,12 +30,12 @@
     "MENU_SITES": "Sitios",
     "MENU_ELEMENTS": "Elementos",
     "MENU_SHOWCASES": "Vitrinas",
-    "MENU_BIINS": "Biins",
+    "MENU_BIINS": "Beacons",
     "MENU_ADMINISTRATION": "Administración",
     "MENU_MAINTENANCE": "Mantenimiento",
     "MENU_PROFILE": "Perfil",
     "MENU_ORGANIZATIONS": "Organizaciones",
-    "MENU_NPS": "NPS"
+    "MENU_NPS": "Senso de Clientes"
   },
   "PROFILE": {
     "FIRST_NAME": "Nombre",
@@ -72,6 +72,7 @@
     "TITLE": "Galería de imagenes",
     "SUB_TITLE": "Agregue y use las imagenes de su marca para darle identidad a su local.",
     "UPLOAD": "Subir",
+    "APPLY": "Aplicar",
     "LOADING": "Subiendo imágenes, por favor espere..."
   },
   "ELEMENT":{
