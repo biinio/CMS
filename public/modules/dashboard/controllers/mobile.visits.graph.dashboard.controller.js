@@ -62,7 +62,8 @@
             filters.dateRange = $scope.globalFilters.dateRange;
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/newsvsreturning',{ headers:{
-                filters : JSON.stringify(filters) } } ).success(function(data) {
+                filters : JSON.stringify(filters),
+                offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                 var information  = data.data;
                 $scope.enoughData = information.news || information.returning;
                 if($scope.enoughData){

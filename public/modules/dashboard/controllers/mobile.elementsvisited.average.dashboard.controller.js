@@ -43,7 +43,8 @@
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/visitedelements',
                 { headers:{
-                    filters : JSON.stringify(filters) } } ).success(function(data) {
+                    filters : JSON.stringify(filters),
+                    offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                     $scope.value = data.data;
                 });
         };
