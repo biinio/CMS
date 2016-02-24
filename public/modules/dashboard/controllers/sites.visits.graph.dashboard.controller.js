@@ -67,7 +67,8 @@
             filters.siteId = $scope.globalFilters.selectedSite.identifier;
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/newsvsreturning',{ headers:{
-                filters : JSON.stringify(filters) } } ).success(function(data) {
+                filters : JSON.stringify(filters),
+                offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                 var information  = data.data;
                 $scope.enoughData = information.news || information.returning;
                 if($scope.enoughData){
