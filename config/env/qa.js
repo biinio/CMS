@@ -5,6 +5,30 @@ module.exports = {
 	app: {
 		title: 'Biin'
 	},
+	assets: {
+		lib: {
+			css: [
+				// 'public/lib/bootstrap/dist/css/bootstrap.css',
+				// 'public/lib/bootstrap/dist/css/bootstrap-theme.css',
+			],
+			js: [
+				"public/dist/vendor.min.js"
+			]
+		},
+		css: [
+			'public/dist/application.min.css',
+			'public/lib/angularjs-toaster/toaster.css',
+			'public/lib/animo.js/animate+animo.css',
+			'public/lib/textAngular/dist/textAngular.css',
+			'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.css',
+			'public/lib/angular-datepicker/dist/angular-datepicker.css',
+			'public/lib/loaders.css/loaders.css',
+			'public/lib/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css',
+			'public/lib/nvd3/build/nv.d3.css',
+			'public/lib/ng-img-crop/compile/minified/ng-img-crop.css'
+		],
+		js: 'public/dist/application.min.js'
+	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',
 		clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
