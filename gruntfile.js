@@ -14,6 +14,7 @@ module.exports = function(grunt) {
 	};
 
 	grunt.loadNpmTasks('grunt-contrib-less');
+	grunt.loadNpmTasks('grunt-contrib-concat');
 
 	// Project Configuration
 	grunt.initConfig({
@@ -174,6 +175,16 @@ module.exports = function(grunt) {
 			unit: {
 				configFile: 'karma.conf.js'
 			}
+		},
+		concat: {
+			production: {
+				options: {
+					stripBanners: true
+				},
+				files: {
+					"public/dist/vendor.min.js": "<%= vendorJavaScriptFiles %>"
+				}
+			}
 		}
 	});
 
@@ -190,6 +201,7 @@ module.exports = function(grunt) {
 
 		grunt.config.set('applicationJavaScriptFiles', config.assets.js);
 		grunt.config.set('applicationCSSFiles', config.assets.css);
+		grunt.config.set('vendorJavaScriptFiles', config.assets.lib.js);
 	});
 
 	// Default task(s).
@@ -205,7 +217,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('lint', ['jshint', 'csslint']);
 
 	// Build task(s).
-	grunt.registerTask('build', ['lint', 'loadConfig', 'ngAnnotate', 'uglify', /*'cssmin'*/ 'less' ]);
+	grunt.registerTask('build', ['lint', 'loadConfig', 'ngAnnotate', 'uglify','concat', /*'cssmin'*/ 'less' ]);
 
 	// Test task.
 	grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);

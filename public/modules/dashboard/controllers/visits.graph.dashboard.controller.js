@@ -74,13 +74,15 @@
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/notifications', {
                 headers: {
-                    filters : JSON.stringify(filters)
+                    filters : JSON.stringify(filters),
+                    offset : new Date().getTimezoneOffset()
                 }
             }).success(function(dataNotifications) {
 
                 $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/visits', {
                     headers: {
-                        filters : JSON.stringify(filters)
+                        filters : JSON.stringify(filters),
+                        offset : new Date().getTimezoneOffset()
                     }
                 }).success(function(data) {
                     var visits = [];
