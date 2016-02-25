@@ -51,7 +51,8 @@
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/newvisits',
                 { headers:{
-                    filters : JSON.stringify(filters) } } ).success(function(data) {
+                    filters : JSON.stringify(filters),
+                    offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                     $scope.value = data.data;
                 });
         };

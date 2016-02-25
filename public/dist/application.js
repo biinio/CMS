@@ -58,10 +58,6 @@ angular.element(document).ready(function() {
 'use strict';
 
 // Use Applicaion configuration module to register a new module
-ApplicationConfiguration.registerModule('articles');
-'use strict';
-
-// Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('biinUsers');
 
 /**
@@ -254,116 +250,6 @@ ApplicationConfiguration.registerModule('users');
 
 'use strict';
 
-// Configuring the Articles module
-angular.module('articles').run(['Menus',
-	function(Menus) {
-	}
-]);
-
-'use strict';
-
-// Setting up route
-angular.module('articles').config(['$stateProvider',
-	function($stateProvider) {
-		// Articles state routing
-		$stateProvider.
-		state('app.listArticles', {
-			url: '/articles',
-			title: 'List Articles',
-			templateUrl: 'modules/articles/views/list-articles.client.view.html'
-		}).
-		state('app.createArticle', {
-			url: '/articles/create',
-			title: 'New Article',
-			templateUrl: 'modules/articles/views/create-article.client.view.html'
-		}).
-		state('app.viewArticle', {
-			url: '/articles/:articleId',
-			title: 'View Article',
-			templateUrl: 'modules/articles/views/view-article.client.view.html',
-			controller: 'ArticlesController'
-		}).
-		state('app.editArticle', {
-			title: 'Edit Article',
-			url: '/articles/:articleId/edit',
-			templateUrl: 'modules/articles/views/edit-article.client.view.html'
-		});
-	}
-]);
-'use strict';
-
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
-	function($scope, $stateParams, $location, Authentication, Articles) {
-		$scope.authentication = Authentication;
-
-		$scope.create = function() {
-			var article = new Articles({
-				title: this.title,
-				content: this.content
-			});
-			article.$save(function(response) {
-				$location.path('articles/' + response._id);
-
-				$scope.title = '';
-				$scope.content = '';
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-
-		$scope.remove = function(article) {
-			if (article) {
-				article.$remove();
-
-				for (var i in $scope.articles) {
-					if ($scope.articles[i] === article) {
-						$scope.articles.splice(i, 1);
-					}
-				}
-			} else {
-				$scope.article.$remove(function() {
-					$location.path('articles');
-				});
-			}
-		};
-
-		$scope.update = function() {
-			var article = $scope.article;
-
-			article.$update(function() {
-				$location.path('articles/' + article._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-
-		$scope.find = function() {
-			$scope.articles = Articles.query();
-		};
-
-		$scope.findOne = function() {
-			$scope.article = Articles.get({
-				articleId: $stateParams.articleId
-			});
-		};
-	}
-]);
-'use strict';
-
-//Articles service used for communicating with the articles REST endpoints
-angular.module('articles').factory('Articles', ['$resource',
-	function($resource) {
-		return $resource('articles/:articleId', {
-			articleId: '@_id'
-		}, {
-			update: {
-				method: 'PUT'
-			}
-		});
-	}
-]);
-'use strict';
-
 // Setting up route
 angular.module('biinUsers').config(['$stateProvider',
 	function($stateProvider) {
@@ -373,39 +259,6 @@ angular.module('biinUsers').config(['$stateProvider',
 			url: '/login',
 			templateUrl: 'modules/biinUsers/views/login.client.view.html'
 		});
-		/*.
-		state('page.signup', {
-			url: '/signup',
-			templateUrl: 'modules/users/views/authentication/signup.client.view.html'
-		}).
-		state('page.forgot', {
-			url: '/password/forgot',
-			templateUrl: 'modules/users/views/password/forgot-password.client.view.html'
-		}).
-		state('page.reset-invalid', {
-			url: '/password/reset/invalid',
-			templateUrl: 'modules/users/views/password/reset-password-invalid.client.view.html'
-		}).
-		state('page.reset-success', {
-			url: '/password/reset/success',
-			templateUrl: 'modules/users/views/password/reset-password-success.client.view.html'
-		}).
-		state('page.reset', {
-			url: '/password/reset/:token',
-			templateUrl: 'modules/users/views/password/reset-password.client.view.html'
-		}).
-		state('app.password', {
-			url: '/settings/password',
-			templateUrl: 'modules/users/views/settings/change-password.client.view.html'
-		}).
-		state('app.profile', {
-			url: '/settings/profile',
-			templateUrl: 'modules/users/views/settings/edit-profile.client.view.html'
-		}).
-		state('app.accounts', {
-			url: '/settings/accounts',
-			templateUrl: 'modules/users/views/settings/social-accounts.client.view.html'
-		});*/
 	}
 ]);
 
@@ -1725,7 +1578,8 @@ angular.module('dashboard').config(['$stateProvider',
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/totalbiined',
                 { headers:{
-                    filters : JSON.stringify(filters) } } ).success(function(data) {
+                    filters : JSON.stringify(filters),
+                    offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                     $scope.value = data.data;
                 });
         };
@@ -1783,7 +1637,8 @@ angular.module('dashboard').config(['$stateProvider',
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/visitedelements',
                 { headers:{
-                    filters : JSON.stringify(filters) } } ).success(function(data) {
+                    filters : JSON.stringify(filters),
+                    offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                     $scope.value = data.data;
                 });
         };
@@ -1841,7 +1696,8 @@ angular.module('dashboard').config(['$stateProvider',
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/newvisits',
                 { headers:{
-                filters : JSON.stringify(filters) } } ).success(function(data) {
+                    filters : JSON.stringify(filters),
+                    offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                 $scope.value = data.data;
             });
         };
@@ -1900,7 +1756,8 @@ angular.module('dashboard').config(['$stateProvider',
             filters.dateRange = $scope.globalFilters.dateRange;
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/sessions',{ headers:{
-                filters : JSON.stringify(filters) } } ).success(function(data) {
+                filters : JSON.stringify(filters),
+                offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                 $scope.value = data.data;
             });
         };
@@ -1978,7 +1835,8 @@ angular.module('dashboard').config(['$stateProvider',
             filters.dateRange = $scope.globalFilters.dateRange;
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/newsvsreturning',{ headers:{
-                filters : JSON.stringify(filters) } } ).success(function(data) {
+                filters : JSON.stringify(filters),
+                offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                 var information  = data.data;
                 $scope.enoughData = information.news || information.returning;
                 if($scope.enoughData){
@@ -2058,7 +1916,8 @@ angular.module('dashboard').config(['$stateProvider',
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/newvisits',
                 { headers:{
-                    filters : JSON.stringify(filters) } } ).success(function(data) {
+                    filters : JSON.stringify(filters),
+                    offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                     $scope.value = data.data;
                 });
         };
@@ -2210,7 +2069,8 @@ angular.module('dashboard').config(['$stateProvider',
             filters.dateRange = $scope.globalFilters.dateRange;
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/sessions',{ headers:{
-                filters : JSON.stringify(filters) } } ).success(function(data) {
+                filters : JSON.stringify(filters),
+                offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                 $scope.value = data.data;
             });
         };
@@ -2293,7 +2153,8 @@ angular.module('dashboard').config(['$stateProvider',
             filters.siteId = $scope.globalFilters.selectedSite.identifier;
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/newsvsreturning',{ headers:{
-                filters : JSON.stringify(filters) } } ).success(function(data) {
+                filters : JSON.stringify(filters),
+                offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                 var information  = data.data;
                 $scope.enoughData = information.news || information.returning;
                 if($scope.enoughData){
@@ -2396,13 +2257,15 @@ angular.module('dashboard').config(['$stateProvider',
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/notifications', {
                 headers: {
-                    filters : JSON.stringify(filters)
+                    filters : JSON.stringify(filters),
+                    offset : new Date().getTimezoneOffset()
                 }
             }).success(function(dataNotifications) {
 
                 $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/visits', {
                     headers: {
-                        filters : JSON.stringify(filters)
+                        filters : JSON.stringify(filters),
+                        offset : new Date().getTimezoneOffset()
                     }
                 }).success(function(data) {
                     var visits = [];

@@ -102,8 +102,6 @@ module.exports = {
             'public/modules/*/*[!tests]*/*.js'
         ],
         tests: [
-            'public/lib/angular-mocks/angular-mocks.js',
-            'public/modules/*/tests/*.js'
         ]
     }
 };
