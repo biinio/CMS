@@ -12,7 +12,8 @@ module.exports = {
 				// 'public/lib/bootstrap/dist/css/bootstrap-theme.css',
 			],
 			js: [
-				"public/dist/vendor.min.js"
+				"public/dist/vendor.min.js",
+				'//maps.googleapis.com/maps/api/js'
 			]
 		},
 		css: [
