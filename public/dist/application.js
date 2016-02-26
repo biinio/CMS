@@ -3725,6 +3725,7 @@ function GalleryController($scope, $modalInstance,$http, galleries,Organization)
     $scope.galleries = galleries;
     console.log($scope.galleries);
 
+
     $scope.reset = function() {
         $scope.myImage        = '';
         $scope.myCroppedImage = '';
@@ -3803,7 +3804,7 @@ function GalleryController($scope, $modalInstance,$http, galleries,Organization)
         if (confirm(message)) {
             $scope.delete();
         }
-    }
+    };
 
     $scope.delete = function() {
         var imagesToDelete = [];
@@ -3927,12 +3928,12 @@ function GalleryController($scope, $modalInstance,$http, galleries,Organization)
                     templateUrl: '/modules/gallery/views/partials/gallery.modal.html',
                     controller: 'GalleryController',
                     backdrop: 'static',
+                    keyboard: false,
                     size:'lg',
                     resolve:{
                         loadingImages : function(){ return scope.loadingImages;},
                         organizationId : function(){ return scope.organizationId;},
                         galleries : function(){ return scope.gallery;}
-
                     }
                 });
                 mapInstance.result.then(function ( modalInfo ) {
