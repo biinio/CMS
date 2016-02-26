@@ -65,12 +65,12 @@
                     templateUrl: '/modules/gallery/views/partials/gallery.modal.html',
                     controller: 'GalleryController',
                     backdrop: 'static',
+                    keyboard: false,
                     size:'lg',
                     resolve:{
                         loadingImages : function(){ return scope.loadingImages;},
                         organizationId : function(){ return scope.organizationId;},
                         galleries : function(){ return scope.gallery;}
-
                     }
                 });
                 mapInstance.result.then(function ( modalInfo ) {
