@@ -5,7 +5,9 @@
 
 <div class="row sidebar-filter col-center-block">
     <div class="btn-add" ng-hide="!objectsSidebarService.enableAddButton">
-        <button ng-click="create()" class="btn btnAdd">&#43;</button>
+        <button ng-click="create()" class="btn btnAdd">
+            <i class="fa fa-plus"></i>
+        </button>
     </div>
     <div class="searchBox-wrapper">
         <input type="text" placeholder="filter" ng-model="query" autofocus="autofocus"
