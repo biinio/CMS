@@ -3893,7 +3893,7 @@ function GalleryController($scope, $modalInstance,$http, galleries,Organization)
                         '<div class="moduleWrapper img-block-buttons">'+
                             '<img ng-src="{{item.url}}" pending-indicator="pending-indicator" class="imagegallery img-responsive"/>'+
                             '<div ng-click="removeMediaAt(media.indexOf(item))" class="btnShowcasePreview icon-round-control btnDelete btn-danger btn-on-hover">'+
-                                '<i class="fa fa-close"></i>'+
+                                '<i class="fa fa-trash fa-2x"></i>'+
                             '</div>'+
                         '</div>'+
                     '</div>'+
