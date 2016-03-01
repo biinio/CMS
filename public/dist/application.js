@@ -575,15 +575,11 @@ angular.module('biins').config(['$stateProvider',
          =============================================================================================================*/
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.sidebarTemplate =
-            "<div class='col-md-12 leftInformationArea'>" +
-            "<label class='title-sidebar-object moduleTitle'>{{item.name}}</label>" +
-            "<div class='body-sidebar-object'>" +
-            "<localization class='moduleTitle' style='display: block'></localization>" +
-            "<p class='moduleTitle'>{{item.status}}</p>" +
-            "</div>" +
+            "<div class='col-md-12 leftInformationArea' style='padding-left: 10px'>" +
+                "<label class='threeRowTitle'>{{item.name}}</label>" +
+                "<localization class='threeRowSubTitle' style='display: block'></localization>" +
+                "<p class='threeRowThirdLine'>{{item.status}}</p>" +
             "</div>";
-
-
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
 
         /**=============================================================================================================
@@ -5354,7 +5350,7 @@ angular.module('organization').config(['$stateProvider',
 
         $scope.sidebarTemplate =
             "<div class='col-md-3 thumbListImage'>" +
-            "<img ng-if='item.elements.length == 0  || item.elements[0].media.length == 0 ' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
+            "<img ng-if='item.media.length == 0  || item.media[0].media.length == 0 ' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
             "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}'/>" +
             "</div>" +
             "<div class='col-md-9 leftInformationArea'>" +

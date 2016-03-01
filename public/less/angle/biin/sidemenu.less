@@ -34,17 +34,17 @@ Component: sidemenu.less
   -webkit-overflow-scrolling: touch;
 
   // draw a divider for the sidebar
-  &:before {
-    content:"";
-    background: rgba(0,0,0,.15);
-    position: absolute;
-    display: block;
-    top:0;
-    bottom: 0;
-    right: 0;
-    width: 1px;
-    -webkit-transform: translateZ(0px);
-  }
+  //&:before {
+  //  content:"";
+  //  background: rgba(0,0,0,.15);
+  //  position: absolute;
+  //  display: block;
+  //  top:0;
+  //  bottom: 0;
+  //  right: 0;
+  //  width: 1px;
+  //  -webkit-transform: translateZ(0px);
+  //}
 }
 
 .list-items-side-menu{
@@ -79,7 +79,7 @@ Component: sidemenu.less
 }
 
 .thumbListImage{
-  padding-left: 5px;
+  padding-left: 7px;
   padding-top: 6px;
   margin-top: 2px;
   position: relative;
@@ -171,7 +171,7 @@ Component: sidemenu.less
 
 .container-scroll {
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 /*.sidebar-filter {
@@ -187,7 +187,7 @@ Component: sidemenu.less
 
 .btnAdd {
   height: 35px;
-  padding: 6px 14px;
+  padding: 8px 14px 6px 14px;
   background-color: #fe5621;
   color: #FFFFFF;
   border-radius: 5px;
@@ -209,7 +209,6 @@ Component: sidemenu.less
   margin-bottom: 6px;
   margin-left: 6px;
   margin-right: 6px;
-  border: 5px solid @content-object-bg;
 }
 
 .object-item:hover{
@@ -228,6 +227,16 @@ Component: sidemenu.less
         color: #fe5621;
       }
       .oneRowTitle{
+        color: #fe5621;
+      }
+      .threeRowTitle{
+        color: #fe5621;
+      }
+
+      .threeRowSubTitle{
+        color: #fe5621;
+      }
+      .threeRowThirdLine{
         color: #fe5621;
       }
     }
@@ -249,6 +258,14 @@ Component: sidemenu.less
   }
 }
 
+.searchBox-wrapper-without-add-button{
+  margin-right: 6px;
+  margin-left: 6px;
+  > input{
+    border-radius: 6px;
+  }
+}
+
 .sidebar-filter{
   margin-bottom: 6px;
 }
@@ -259,9 +276,9 @@ Component: sidemenu.less
       white-space:nowrap;
       text-overflow:ellipsis;
       color: #000011;
-      font-size: 24px;
+      font-size: 18px;
       line-height: 24px;
-      font-weight: normal;
+      font-weight: 200;
       padding-top: 13px;
       margin-bottom: 0;
       display: block;
@@ -284,10 +301,46 @@ Component: sidemenu.less
       white-space: nowrap;
       text-overflow: ellipsis;
       color: #000011;
-      font-size: 19px;
-      line-height: 19px;
+      font-size: 15px;
+      line-height: 15px;
       font-weight: normal;
       padding-top: 24px;
+      margin-bottom: 0;
+      display: block;
+    }
+
+    .threeRowTitle{
+      overflow:hidden;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+      color: #000011;
+      font-size: 18px;
+      line-height: 20px;
+      font-weight: bold;
+      padding-top: 6px;
+      margin-bottom: 0;
+      display: block;
+    }
+
+    .threeRowSubTitle{
+      overflow:hidden;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+      color: #000011;
+      font-size: 15px;
+      font-weight: normal;
+      line-height: 18px;
+      margin-bottom: 0;
+      display: block;
+    }
+    .threeRowThirdLine{
+      overflow:hidden;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+      color: #000011;
+      font-size: 15px;
+      font-weight: normal;
+      line-height: 18px;
       margin-bottom: 0;
       display: block;
     }
