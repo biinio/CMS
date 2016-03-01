@@ -2440,7 +2440,7 @@ angular.module('elements').config(['$stateProvider',
                 "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}' pending-indicator='pending-indicator'/>"+
             "</div>"+
             "<div class='col-md-9 leftInformationArea'>"+
-                "<label class='moduleTitle'>{{item.title}}</label>"+
+                "<label class='oneRowTitle'>{{item.title}}</label>"+
             "</div>";
 
 
@@ -5358,7 +5358,7 @@ angular.module('organization').config(['$stateProvider',
             "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}'/>" +
             "</div>" +
             "<div class='col-md-9 leftInformationArea'>" +
-            "<label class='moduleTitle'>{{item.name}}</label>" +
+            "<label class='oneRowTitle'>{{item.name}}</label>" +
             "</div>";
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
         $scope.objectsSidebarService.setObjects($scope.organizationService.organizationsList);
@@ -6515,7 +6515,7 @@ angular.module('showcases').config(['$stateProvider',
             "<img ng-if='item.elements[0].media.length>0' ng-src='{{item.elements[0].media[0].url}}'/>" +
             "</div>" +
             "<div class='col-md-9 leftInformationArea'>" +
-            "<label class='moduleTitle'>{{item.name}}</label>" +
+            "<label class='oneRowTitle'>{{item.name}}</label>" +
             /*"<div class='btnShowcasePreview icon-round-control btn-on-hover'>" +
             "<div class='icon icon-arrange-1'></div>" +
             "</div>" +*/
@@ -7365,9 +7365,8 @@ angular.module('sites').config(['$stateProvider',
             "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}' pending-indicator='pending-indicator'/>"+
             "</div>"+
             "<div class='col-md-9 leftInformationArea'>"+
-            "<label class='moduleTitle'>{{item.title1}}</label>"+
-            "<br/>"+
-            "<label class='moduleTitle'>{{item.title2}}</label>"+
+            "<label class='twoRowTitle'>{{item.title1}}</label>"+
+            "<label class='twoRowSubtitle'>{{item.title2}}</label>"+
             "</div>";
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;

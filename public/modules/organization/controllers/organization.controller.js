@@ -29,7 +29,7 @@
             "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}'/>" +
             "</div>" +
             "<div class='col-md-9 leftInformationArea'>" +
-            "<label class='moduleTitle'>{{item.name}}</label>" +
+            "<label class='oneRowTitle'>{{item.name}}</label>" +
             "</div>";
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
         $scope.objectsSidebarService.setObjects($scope.organizationService.organizationsList);

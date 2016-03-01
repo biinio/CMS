@@ -13146,7 +13146,6 @@ Component: sidemenu.less
  ========================================================================== */
 .sidemenu-object {
   height: 100%;
-  padding-top: 5px;
   padding-bottom: 5px;
   background-color: #cccccc;
   overflow-x: hidden;
@@ -13184,12 +13183,6 @@ Component: sidemenu.less
   margin-left: 3px;
   margin-top: 1px;
 }
-.list-items-side-menu:hover {
-  background: #23b7e5;
-}
-.list-items-side-menu:hover .btnDelete {
-  display: block;
-}
 @media only screen and (min-width: 1025px) {
   .sidebar-object {
     margin-right: -17px;
@@ -13198,9 +13191,8 @@ Component: sidemenu.less
 }
 .thumbListImage {
   padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 6px;
+  margin-top: 2px;
   position: relative;
   max-height: 100%;
   min-height: 100%;
@@ -13301,21 +13293,70 @@ Component: sidemenu.less
 }
 .object-item {
   background-color: #f5f7fa;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+  margin-left: 6px;
+  margin-right: 6px;
   border: 5px solid #f5f7fa;
 }
-.object-item:hover {
-  background: #23b7e5;
+.object-item.active .list-items-side-menu div .twoRowTitle {
+  color: #fe5621;
 }
-.object-item.active {
-  border: 5px solid #23b7e5;
+.object-item.active .list-items-side-menu div .twoRowSubtitle {
+  color: #fe5621;
+}
+.object-item.active .list-items-side-menu div .oneRowTitle {
+  color: #fe5621;
 }
 .btn-add {
-  margin-left: 7px;
+  margin-left: 6px;
   display: inline-block;
+  float: left;
 }
 .searchBox-wrapper {
   display: inline-block;
+  float: right;
+  margin-right: 6px;
+}
+.searchBox-wrapper > input {
+  border-radius: 6px;
+}
+.sidebar-filter {
+  margin-bottom: 6px;
+}
+.list-items-side-menu div .twoRowTitle {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #000011;
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: normal;
+  padding-top: 13px;
+  margin-bottom: 0;
+  display: block;
+}
+.list-items-side-menu div .twoRowSubtitle {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #000011;
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 18px;
+  margin-bottom: 0;
+  display: block;
+}
+.list-items-side-menu div .oneRowTitle {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #000011;
+  font-size: 19px;
+  line-height: 19px;
+  font-weight: normal;
+  padding-top: 24px;
+  margin-bottom: 0;
+  display: block;
 }
 /* ========================================================================
 Component: elements.less
