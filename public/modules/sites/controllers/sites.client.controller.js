@@ -43,9 +43,8 @@
             "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}' pending-indicator='pending-indicator'/>"+
             "</div>"+
             "<div class='col-md-9 leftInformationArea'>"+
-            "<label class='moduleTitle'>{{item.title1}}</label>"+
-            "<br/>"+
-            "<label class='moduleTitle'>{{item.title2}}</label>"+
+            "<label class='twoRowTitle'>{{item.title1}}</label>"+
+            "<label class='twoRowSubtitle'>{{item.title2}}</label>"+
             "</div>";
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;

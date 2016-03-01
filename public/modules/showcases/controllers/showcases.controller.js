@@ -34,7 +34,7 @@
             "<img ng-if='item.elements[0].media.length>0' ng-src='{{item.elements[0].media[0].url}}'/>" +
             "</div>" +
             "<div class='col-md-9 leftInformationArea'>" +
-            "<label class='moduleTitle'>{{item.name}}</label>" +
+            "<label class='oneRowTitle'>{{item.name}}</label>" +
             /*"<div class='btnShowcasePreview icon-round-control btn-on-hover'>" +
             "<div class='icon icon-arrange-1'></div>" +
             "</div>" +*/

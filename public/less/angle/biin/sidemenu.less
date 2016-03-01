@@ -27,7 +27,6 @@ Component: sidemenu.less
 
 .sidemenu-object {
   height: 100%;
-  padding-top: 5px;
   padding-bottom: 5px;
   background-color: @sidebar-object-bg;
   overflow-x: hidden;
@@ -35,17 +34,17 @@ Component: sidemenu.less
   -webkit-overflow-scrolling: touch;
 
   // draw a divider for the sidebar
-  &:before {
-    content:"";
-    background: rgba(0,0,0,.15);
-    position: absolute;
-    display: block;
-    top:0;
-    bottom: 0;
-    right: 0;
-    width: 1px;
-    -webkit-transform: translateZ(0px);
-  }
+  //&:before {
+  //  content:"";
+  //  background: rgba(0,0,0,.15);
+  //  position: absolute;
+  //  display: block;
+  //  top:0;
+  //  bottom: 0;
+  //  right: 0;
+  //  width: 1px;
+  //  -webkit-transform: translateZ(0px);
+  //}
 }
 
 .list-items-side-menu{
@@ -70,13 +69,6 @@ Component: sidemenu.less
   }
 }
 
-.list-items-side-menu:hover{
-  background: @sidebar-object-icon-color-active;
-  .btnDelete{
-    display: block;
-  }
-}
-
 // Hides the scrollbar only on desktops
 @tablet-landscape: ~"only screen and (min-width: 1025px)";
 @media @tablet-landscape {
@@ -87,10 +79,9 @@ Component: sidemenu.less
 }
 
 .thumbListImage{
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-left: 7px;
+  padding-top: 6px;
+  margin-top: 2px;
   position: relative;
   max-height: 100%;
   min-height: 100%;
@@ -180,7 +171,7 @@ Component: sidemenu.less
 
 .container-scroll {
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 /*.sidebar-filter {
@@ -196,7 +187,7 @@ Component: sidemenu.less
 
 .btnAdd {
   height: 35px;
-  padding: 6px 14px;
+  padding: 8px 14px 6px 14px;
   background-color: #fe5621;
   color: #FFFFFF;
   border-radius: 5px;
@@ -215,23 +206,145 @@ Component: sidemenu.less
 }
 .object-item{
   background-color: @content-object-bg;
-  margin-bottom: 5px;
-  border: 5px solid @content-object-bg;
+  margin-bottom: 6px;
+  margin-left: 6px;
+  margin-right: 6px;
 }
 
 .object-item:hover{
-  background: @sidebar-object-icon-color-active;
+  //background: @sidebar-object-icon-color-active;
 }
 
 .object-item.active{
-  border: 5px solid @sidebar-object-icon-color-active;
+  //border: 5px solid @sidebar-object-icon-color-active;
+  .list-items-side-menu{
+    div{
+      .twoRowTitle{
+        color: #fe5621;
+      }
+
+      .twoRowSubtitle{
+        color: #fe5621;
+      }
+      .oneRowTitle{
+        color: #fe5621;
+      }
+      .threeRowTitle{
+        color: #fe5621;
+      }
+
+      .threeRowSubTitle{
+        color: #fe5621;
+      }
+      .threeRowThirdLine{
+        color: #fe5621;
+      }
+    }
+  }
 }
 
 .btn-add{
-  margin-left: 7px;
+  margin-left: 6px;
   display: inline-block;
+  float: left;
 }
 
 .searchBox-wrapper{
   display: inline-block;
+  float: right;
+  margin-right: 6px;
+  > input{
+    border-radius: 6px;
+  }
 }
+
+.searchBox-wrapper-without-add-button{
+  margin-right: 6px;
+  margin-left: 6px;
+  > input{
+    border-radius: 6px;
+  }
+}
+
+.sidebar-filter{
+  margin-bottom: 6px;
+}
+.list-items-side-menu{
+  div{
+    .twoRowTitle{
+      overflow:hidden;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+      color: #000011;
+      font-size: 18px;
+      line-height: 24px;
+      font-weight: 200;
+      padding-top: 13px;
+      margin-bottom: 0;
+      display: block;
+    }
+
+    .twoRowSubtitle{
+      overflow:hidden;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+      color: #000011;
+      font-size: 18px;
+      font-weight: normal;
+      line-height: 18px;
+      margin-bottom: 0;
+      display: block;
+    }
+
+    .oneRowTitle{
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: #000011;
+      font-size: 15px;
+      line-height: 15px;
+      font-weight: normal;
+      padding-top: 24px;
+      margin-bottom: 0;
+      display: block;
+    }
+
+    .threeRowTitle{
+      overflow:hidden;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+      color: #000011;
+      font-size: 18px;
+      line-height: 20px;
+      font-weight: bold;
+      padding-top: 6px;
+      margin-bottom: 0;
+      display: block;
+    }
+
+    .threeRowSubTitle{
+      overflow:hidden;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+      color: #000011;
+      font-size: 15px;
+      font-weight: normal;
+      line-height: 18px;
+      margin-bottom: 0;
+      display: block;
+    }
+    .threeRowThirdLine{
+      overflow:hidden;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+      color: #000011;
+      font-size: 15px;
+      font-weight: normal;
+      line-height: 18px;
+      margin-bottom: 0;
+      display: block;
+    }
+  }
+}
+
+

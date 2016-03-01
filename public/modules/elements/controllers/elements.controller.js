@@ -22,7 +22,7 @@
                 "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}' pending-indicator='pending-indicator'/>"+
             "</div>"+
             "<div class='col-md-9 leftInformationArea'>"+
-                "<label class='moduleTitle'>{{item.title}}</label>"+
+                "<label class='oneRowTitle'>{{item.title}}</label>"+
             "</div>";
 
 

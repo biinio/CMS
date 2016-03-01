@@ -86,15 +86,11 @@
          =============================================================================================================*/
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.sidebarTemplate =
-            "<div class='col-md-12 leftInformationArea'>" +
-            "<label class='title-sidebar-object moduleTitle'>{{item.name}}</label>" +
-            "<div class='body-sidebar-object'>" +
-            "<localization class='moduleTitle' style='display: block'></localization>" +
-            "<p class='moduleTitle'>{{item.status}}</p>" +
-            "</div>" +
+            "<div class='col-md-12 leftInformationArea' style='padding-left: 10px'>" +
+                "<label class='threeRowTitle'>{{item.name}}</label>" +
+                "<localization class='threeRowSubTitle' style='display: block'></localization>" +
+                "<p class='threeRowThirdLine'>{{item.status}}</p>" +
             "</div>";
-
-
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
 
         /**=============================================================================================================
