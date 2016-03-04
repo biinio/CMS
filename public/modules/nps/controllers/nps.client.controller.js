@@ -13,11 +13,12 @@
         .module('nps')
         .controller('NPSController', NPSController);
 
-    NPSController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar'];
-    function NPSController($http, $state, $scope, Authentication, toaster, $location, Organization,ObjectsSidebar) {
+    NPSController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar','Loading'];
+    function NPSController($http, $state, $scope, Authentication, toaster, $location, Organization,ObjectsSidebar,Loading) {
         var vm = this;
         $scope.organizationService = Organization;
-
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
         /**=============================================================================================================
          * Events Listeners
          *
@@ -27,7 +28,8 @@
             $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/organization',{ headers:{organizationid:$scope.organizationService.selectedOrganization.identifier}}).success(function(data){
                 if(data.result == "1"){
                     updateNPSValues(data.data);
-                    $scope.isLoadingNPSData = false;
+                    $scope.loadingService.isLoading = false;
+
                 }
             });
         });
@@ -63,7 +65,6 @@
         }
 
         activate();
-        $scope.isLoadingNPSData = true;
 
         $scope.save = function(){
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationService.selectedOrganization.identifier, {model: $scope.organizationService.selectedOrganization}).success(function (data, status) {
@@ -80,7 +81,7 @@
             $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/organization',{ headers:{organizationid:$scope.organizationService.selectedOrganization.identifier}}).success(function(data){
                 if(data.result == "1"){
                     updateNPSValues(data.data);
-                    $scope.isLoadingNPSData = false;
+                    $scope.loadingService.isLoading = false;
                 }
             });
             resetNPS();

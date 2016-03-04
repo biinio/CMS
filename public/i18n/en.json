@@ -75,6 +75,9 @@
     "APPLY": "Apply",
     "LOADING": "Loading images, please wait..."
   },
+  "LOADER":{
+    "LOADING": "Loading your information, please wait..."
+  },
   "ELEMENT":{
     "TITLE": "About the element",
     "NAME": "Name",

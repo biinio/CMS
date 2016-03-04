@@ -10,8 +10,8 @@
         .module('showcases')
         .controller('ShowcasesController', ShowcasesController);
 
-    ShowcasesController.$inject = ['$http', '$scope', 'Authentication', 'Organization', 'ObjectsSidebar','ElementsService','BiinsService'];
-    function ShowcasesController($http, $scope, Authentication, Organization, ObjectsSidebar,ElementsService,BiinsService) {
+    ShowcasesController.$inject = ['$http', '$scope', 'Authentication', 'Organization', 'ObjectsSidebar','ElementsService','BiinsService','Loading'];
+    function ShowcasesController($http, $scope, Authentication, Organization, ObjectsSidebar,ElementsService,BiinsService,Loading) {
         activate();
 
         ////////////////
@@ -21,6 +21,8 @@
             $scope.organizationService = Organization;
             $scope.objectsSidebarService = ObjectsSidebar;
         }
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
 
 
 
@@ -42,7 +44,6 @@
             /*"<div ng-click=\"deleteItem(objectsSidebarService.objects.indexOf(item),$event)\" class=\"icon-round-control btnDelete  btn-danger btn-on-hover\">" +
             "<i class=\"fa fa-close\"></i>" +
             "</div>";*/
-
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
 
         /**=============================================================================================================
@@ -50,14 +51,16 @@
          *
          =============================================================================================================*/
 
-        $scope.$on('$stateChangeStart', function () {
+        $scope.$on('$stateChangeStart', function(){
             $scope.objectsSidebarService.reset();
+            $scope.loadingService.isLoading = false;
         });
 
         $scope.$on('organizationChanged', function () {
             //Get list of showcases
             $http.get(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/showcases').success(function (data) {
                 $scope.objectsSidebarService.setObjects(data.data);
+                $scope.objectsSidebarService.loadedInformation = true;
                 $scope.showcasePrototype = data.prototypeObj;
                 $scope.showcasePrototypeBkp = $.extend(true, {}, data.prototypeObj);
             });
@@ -109,6 +112,7 @@
             $scope.objectsSidebarService.setObjects(data.data);
             $scope.showcasePrototype = data.prototypeObj;
             $scope.showcasePrototypeBkp = $.extend(true, {}, data.prototypeObj);
+            $scope.loadingService.isLoading = false;
         });
 
         $http.get(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/sites').success(function (data) {

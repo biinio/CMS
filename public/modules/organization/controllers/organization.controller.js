@@ -13,11 +13,13 @@
         .module('organization')
         .controller('OrganizationController', OrganizationController);
 
-    OrganizationController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar'];
-    function OrganizationController($http, $state, $scope, Authentication, toaster, $location, Organization,ObjectsSidebar) {
+    OrganizationController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar','Loading'];
+    function OrganizationController($http, $state, $scope, Authentication, toaster, $location, Organization,ObjectsSidebar,Loading) {
         var vm = this;
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.organizationService = Organization;
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
 
         /**=============================================================================================================
          * ObjectsSidebar Configuration
@@ -158,5 +160,6 @@
             $scope.authentication = Authentication;
             $scope.editOrganization(0);
         }
+        $scope.loadingService.isLoading = false;
     }
 })();

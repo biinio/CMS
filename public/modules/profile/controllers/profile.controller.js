@@ -13,13 +13,15 @@
         .module('profile')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization'];
-    function ProfileController($http, $state, $scope, Authentication, toaster, $location, Organization) {
+    ProfileController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','Loading'];
+    function ProfileController($http, $state, $scope, Authentication, toaster, $location, Organization,Loading) {
         var vm = this;
         $scope.organizationService = Organization;
         if (!Authentication.user) {
             $location.path('/');
         }
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
 
         $scope.saveInformation = function () {
             if (typeof($scope.profile) !== 'undefined' && isProfileDirty()) {//If is Profile Dirty
@@ -59,6 +61,7 @@
             $scope.authentication = Authentication;
             $http.get("/api/account").success(function (data) {
                 $scope.profile = data.data;
+                $scope.loadingService.isLoading = false;
             });
         }
     }

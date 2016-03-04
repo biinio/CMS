@@ -29,12 +29,7 @@ module.exports = {
 			'public/lib/nvd3/build/nv.d3.css',
 			'public/lib/ng-img-crop/compile/minified/ng-img-crop.css'
 		],
-		js: [
-			'public/config.js',
-			'public/application.js',
-			'public/modules/*/*.js',
-			'public/modules/*/*[!tests]*/*.js'
-		],
+		js: 'public/dist/application.min.js',
 		tests: [
 		]
 	},

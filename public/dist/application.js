@@ -499,8 +499,8 @@ angular.module('biins').config(['$stateProvider',
         .module('biins')
         .controller('BiinsController', BiinsController);
 
-    BiinsController.$inject = ['$http', '$state', '$scope','$modal', 'Authentication', 'Organization', 'ObjectsSidebar'];
-    function BiinsController($http, $state, $scope,$modal, Authentication, Organization, ObjectsSidebar) {
+    BiinsController.$inject = ['$http', '$state', '$scope','$modal', 'Authentication', 'Organization', 'ObjectsSidebar','Loading'];
+    function BiinsController($http, $state, $scope,$modal, Authentication, Organization, ObjectsSidebar,Loading) {
 
 
         /**=============================================================================================================
@@ -581,6 +581,8 @@ angular.module('biins').config(['$stateProvider',
                 "<p class='threeRowThirdLine'>{{item.status}}</p>" +
             "</div>";
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
 
         /**=============================================================================================================
          * Events Listeners
@@ -589,6 +591,7 @@ angular.module('biins').config(['$stateProvider',
 
         $scope.$on('$stateChangeStart', function () {
             $scope.objectsSidebarService.reset();
+            $scope.objectsSidebarService.loadedInformation = false;
         });
 
         $scope.$on('organizationChanged', function () {
@@ -608,6 +611,7 @@ angular.module('biins').config(['$stateProvider',
                         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
                             $scope.biins = data.data;
                             $scope.objectsSidebarService.setObjects(data.data);
+                            $scope.loadingService.isLoading = false;
                         }).error(function (err) {
                             console.log(err);
                         });
@@ -651,6 +655,7 @@ angular.module('biins').config(['$stateProvider',
                     $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
                         $scope.biins = data.data;
                         $scope.objectsSidebarService.setObjects(data.data);
+                        $scope.loadingService.isLoading = false;
                     }).error(function (err) {
                         console.log(err);
                     });
@@ -1066,6 +1071,17 @@ angular.module('app.core').controller('HeaderController', ['$scope', 'Authentica
 	}
 ]);
 
+/**
+ * Created by Ivan on 3/4/16.
+ */
+'use strict';
+
+angular.module('app.core').controller('LoadingController', ['$scope','Loading',
+    function($scope, LoadingService) {
+        $scope.loading = LoadingService;
+    }
+]);
+
 'use strict';
 
 angular.module('app.core').service('Categories', ['$http', function (async) {
@@ -1081,6 +1097,14 @@ angular.module('app.core').service('Categories', ['$http', function (async) {
             return promise;
         }
 
+    };
+}]);
+
+'use strict';
+
+angular.module('app.core').service('Loading', [ function () {
+    return {
+        isLoading : false
     };
 }]);
 
@@ -2424,9 +2448,9 @@ angular.module('elements').config(['$stateProvider',
         .module('elements')
         .controller('ElementsController', ElementsController);
 
-    ElementsController.$inject = ['$http', '$state','$timeout','$scope', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery'];
+    ElementsController.$inject = ['$http', '$state','$timeout','$scope', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading'];
 
-    function ElementsController($http, $state, $timeout, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery) {
+    function ElementsController($http, $state, $timeout, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
         activate();
 
         $scope.objectsSidebarService = ObjectsSidebar;
@@ -2441,6 +2465,8 @@ angular.module('elements').config(['$stateProvider',
 
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
         ////////////////
 
         function activate() {
@@ -2478,6 +2504,7 @@ angular.module('elements').config(['$stateProvider',
 
         $scope.$on('$stateChangeStart', function(){
                 $scope.objectsSidebarService.reset();
+                $scope.objectsSidebarService.loadedInformation = false;
             });
 
         $scope.$on('organizationChanged',function(){
@@ -2487,6 +2514,7 @@ angular.module('elements').config(['$stateProvider',
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
                 $scope.elements = data.data.elements;
                 $scope.objectsSidebarService.setObjects($scope.elements);
+                $scope.loadingService.isLoading = false;
             });
 
             $scope.galleries = [];
@@ -2517,6 +2545,7 @@ angular.module('elements').config(['$stateProvider',
         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
             $scope.elements = data.data.elements;
             $scope.objectsSidebarService.setObjects($scope.elements);
+            $scope.loadingService.isLoading = false;
         });
 
         //Push a new showcase in the list
@@ -4445,13 +4474,15 @@ angular.module('maintenance').config(['$stateProvider',
         .module('maintenance')
         .controller('MaintenanceController', MaintenanceController);
 
-    MaintenanceController.$inject = ['$http', '$state', '$timeout', '$scope', '$modal', 'Authentication', 'ObjectsSidebar'];
-    function MaintenanceController($http, $state, $timeout, $scope, $modal, Authentication, ObjectsSidebar) {
+    MaintenanceController.$inject = ['$http', '$state', '$timeout', '$scope', '$modal', 'Authentication', 'ObjectsSidebar','Loading'];
+    function MaintenanceController($http, $state, $timeout, $scope, $modal, Authentication, ObjectsSidebar,Loading) {
         var vm = this;
         activate();
 
         function activate() {
             $scope.authentication = Authentication;
+            $scope.loadingService = Loading;
+            $scope.loadingService.isLoading = true;
         }
 
         /**=============================================================================================================
@@ -4460,11 +4491,9 @@ angular.module('maintenance').config(['$stateProvider',
          =============================================================================================================*/
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.objectsSidebarService.template =
-            "<div class='sidebar-padding'>" +
-                "<h5>{{item.name}}</h5>" +
-
-            "<label>{{item.assignedBeacons}}</label> Beacons" +
-            "<br/>" +
+            "<div class='maintenanceList leftInformationArea'>" +
+                "<label class='twoRowTitle'>{{item.name}}</label>" +
+                "<label class='twoRowSubtitle'>{{item.assignedBeacons}} Beacons</label> " +
             "</div>";
 
         $scope.objectsSidebarService.enableAddButton = false;
@@ -4498,6 +4527,7 @@ angular.module('maintenance').config(['$stateProvider',
 
         $http.get(ApplicationConfiguration.applicationBackendURL + 'maintenance/organizations').success(function(data){
             $scope.objectsSidebarService.setObjects(data);
+            $scope.loadingService.isLoading = false;
             //console.log($scope.objectsSidebarService.getObjects());
 
             for (var i = 0; i < $scope.objectsSidebarService.objects.length ; i++) {
@@ -4970,11 +5000,12 @@ angular.module('nps').config(['$stateProvider',
         .module('nps')
         .controller('NPSController', NPSController);
 
-    NPSController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar'];
-    function NPSController($http, $state, $scope, Authentication, toaster, $location, Organization,ObjectsSidebar) {
+    NPSController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar','Loading'];
+    function NPSController($http, $state, $scope, Authentication, toaster, $location, Organization,ObjectsSidebar,Loading) {
         var vm = this;
         $scope.organizationService = Organization;
-
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
         /**=============================================================================================================
          * Events Listeners
          *
@@ -4984,7 +5015,8 @@ angular.module('nps').config(['$stateProvider',
             $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/organization',{ headers:{organizationid:$scope.organizationService.selectedOrganization.identifier}}).success(function(data){
                 if(data.result == "1"){
                     updateNPSValues(data.data);
-                    $scope.isLoadingNPSData = false;
+                    $scope.loadingService.isLoading = false;
+
                 }
             });
         });
@@ -5020,7 +5052,6 @@ angular.module('nps').config(['$stateProvider',
         }
 
         activate();
-        $scope.isLoadingNPSData = true;
 
         $scope.save = function(){
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationService.selectedOrganization.identifier, {model: $scope.organizationService.selectedOrganization}).success(function (data, status) {
@@ -5037,7 +5068,7 @@ angular.module('nps').config(['$stateProvider',
             $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/organization',{ headers:{organizationid:$scope.organizationService.selectedOrganization.identifier}}).success(function(data){
                 if(data.result == "1"){
                     updateNPSValues(data.data);
-                    $scope.isLoadingNPSData = false;
+                    $scope.loadingService.isLoading = false;
                 }
             });
             resetNPS();
@@ -5232,11 +5263,11 @@ angular.module('nps').config(['$stateProvider',
 
     ObjectsSidebar.$inject = [];
     function ObjectsSidebar() {
-        var service = {
+        return  {
             objects: [],
             selectedObject: null,
             template: "",
-
+            loadedInformation:false,
             enableAddButton: true,
 
             setObjects: function (objects) {
@@ -5258,7 +5289,6 @@ angular.module('nps').config(['$stateProvider',
                 this.enableAddButton = true;
             }
         };
-        return service;
     }
 })();
 
@@ -5338,11 +5368,13 @@ angular.module('organization').config(['$stateProvider',
         .module('organization')
         .controller('OrganizationController', OrganizationController);
 
-    OrganizationController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar'];
-    function OrganizationController($http, $state, $scope, Authentication, toaster, $location, Organization,ObjectsSidebar) {
+    OrganizationController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar','Loading'];
+    function OrganizationController($http, $state, $scope, Authentication, toaster, $location, Organization,ObjectsSidebar,Loading) {
         var vm = this;
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.organizationService = Organization;
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
 
         /**=============================================================================================================
          * ObjectsSidebar Configuration
@@ -5483,6 +5515,7 @@ angular.module('organization').config(['$stateProvider',
             $scope.authentication = Authentication;
             $scope.editOrganization(0);
         }
+        $scope.loadingService.isLoading = false;
     }
 })();
 
@@ -6187,13 +6220,15 @@ angular.module('dashboard').config(['$stateProvider',
         .module('profile')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization'];
-    function ProfileController($http, $state, $scope, Authentication, toaster, $location, Organization) {
+    ProfileController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','Loading'];
+    function ProfileController($http, $state, $scope, Authentication, toaster, $location, Organization,Loading) {
         var vm = this;
         $scope.organizationService = Organization;
         if (!Authentication.user) {
             $location.path('/');
         }
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
 
         $scope.saveInformation = function () {
             if (typeof($scope.profile) !== 'undefined' && isProfileDirty()) {//If is Profile Dirty
@@ -6233,6 +6268,7 @@ angular.module('dashboard').config(['$stateProvider',
             $scope.authentication = Authentication;
             $http.get("/api/account").success(function (data) {
                 $scope.profile = data.data;
+                $scope.loadingService.isLoading = false;
             });
         }
     }
@@ -6487,8 +6523,8 @@ angular.module('showcases').config(['$stateProvider',
         .module('showcases')
         .controller('ShowcasesController', ShowcasesController);
 
-    ShowcasesController.$inject = ['$http', '$scope', 'Authentication', 'Organization', 'ObjectsSidebar','ElementsService','BiinsService'];
-    function ShowcasesController($http, $scope, Authentication, Organization, ObjectsSidebar,ElementsService,BiinsService) {
+    ShowcasesController.$inject = ['$http', '$scope', 'Authentication', 'Organization', 'ObjectsSidebar','ElementsService','BiinsService','Loading'];
+    function ShowcasesController($http, $scope, Authentication, Organization, ObjectsSidebar,ElementsService,BiinsService,Loading) {
         activate();
 
         ////////////////
@@ -6498,6 +6534,8 @@ angular.module('showcases').config(['$stateProvider',
             $scope.organizationService = Organization;
             $scope.objectsSidebarService = ObjectsSidebar;
         }
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
 
 
 
@@ -6519,7 +6557,6 @@ angular.module('showcases').config(['$stateProvider',
             /*"<div ng-click=\"deleteItem(objectsSidebarService.objects.indexOf(item),$event)\" class=\"icon-round-control btnDelete  btn-danger btn-on-hover\">" +
             "<i class=\"fa fa-close\"></i>" +
             "</div>";*/
-
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
 
         /**=============================================================================================================
@@ -6527,14 +6564,16 @@ angular.module('showcases').config(['$stateProvider',
          *
          =============================================================================================================*/
 
-        $scope.$on('$stateChangeStart', function () {
+        $scope.$on('$stateChangeStart', function(){
             $scope.objectsSidebarService.reset();
+            $scope.loadingService.isLoading = false;
         });
 
         $scope.$on('organizationChanged', function () {
             //Get list of showcases
             $http.get(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/showcases').success(function (data) {
                 $scope.objectsSidebarService.setObjects(data.data);
+                $scope.objectsSidebarService.loadedInformation = true;
                 $scope.showcasePrototype = data.prototypeObj;
                 $scope.showcasePrototypeBkp = $.extend(true, {}, data.prototypeObj);
             });
@@ -6586,6 +6625,7 @@ angular.module('showcases').config(['$stateProvider',
             $scope.objectsSidebarService.setObjects(data.data);
             $scope.showcasePrototype = data.prototypeObj;
             $scope.showcasePrototypeBkp = $.extend(true, {}, data.prototypeObj);
+            $scope.loadingService.isLoading = false;
         });
 
         $http.get(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/sites').success(function (data) {
@@ -7331,16 +7371,17 @@ angular.module('sites').config(['$stateProvider',
         .module('sites')
         .controller('SitesController', SitesController);
 
-    SitesController.$inject = ['$http', '$state','$timeout' ,'$scope', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery'];
-    function SitesController($http, $state, $timeout, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery) {
-        var vm = this;
+    SitesController.$inject = ['$http', '$state','$timeout' ,'$scope', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery','Loading'];
+    function SitesController($http, $state, $timeout, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
         activate();
 
         function activate() {
+
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
-
             $scope.deletePermit = false;
+            $scope.loadingService = Loading;
+            $scope.loadingService.isLoading = true;
 
             for (var permit = 0; permit < Authentication.user.permissions.length; permit++) {
                 if (Authentication.user.permissions[permit].permission == "delete") {
@@ -7348,6 +7389,7 @@ angular.module('sites').config(['$stateProvider',
                     break;
                 }
             }
+
         }
 
         /**=============================================================================================================
@@ -7366,7 +7408,6 @@ angular.module('sites').config(['$stateProvider',
             "</div>";
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
-
         /**=============================================================================================================
          * Events Listeners
          *
@@ -7382,6 +7423,7 @@ angular.module('sites').config(['$stateProvider',
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites').success(function(data){
                 var sites = data.data.sites;
                 $scope.objectsSidebarService.setObjects(sites);
+                $scope.loadingService.isLoading = false;
                 if(sites.length > 0)
                     selectFirstSite(sites);
             });
@@ -7440,6 +7482,7 @@ angular.module('sites').config(['$stateProvider',
         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationService.selectedOrganization.identifier +'/sites').success(function(data){
             if(data.data) {
                 $scope.objectsSidebarService.setObjects(data.data.sites);
+                $scope.loadingService.isLoading = false;
                 if(data.data.sites.length>0){
                     selectFirstSite(data.data.sites);
                 }

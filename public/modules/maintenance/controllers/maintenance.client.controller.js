@@ -10,13 +10,15 @@
         .module('maintenance')
         .controller('MaintenanceController', MaintenanceController);
 
-    MaintenanceController.$inject = ['$http', '$state', '$timeout', '$scope', '$modal', 'Authentication', 'ObjectsSidebar'];
-    function MaintenanceController($http, $state, $timeout, $scope, $modal, Authentication, ObjectsSidebar) {
+    MaintenanceController.$inject = ['$http', '$state', '$timeout', '$scope', '$modal', 'Authentication', 'ObjectsSidebar','Loading'];
+    function MaintenanceController($http, $state, $timeout, $scope, $modal, Authentication, ObjectsSidebar,Loading) {
         var vm = this;
         activate();
 
         function activate() {
             $scope.authentication = Authentication;
+            $scope.loadingService = Loading;
+            $scope.loadingService.isLoading = true;
         }
 
         /**=============================================================================================================
@@ -25,11 +27,9 @@
          =============================================================================================================*/
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.objectsSidebarService.template =
-            "<div class='sidebar-padding'>" +
-                "<h5>{{item.name}}</h5>" +
-
-            "<label>{{item.assignedBeacons}}</label> Beacons" +
-            "<br/>" +
+            "<div class='maintenanceList leftInformationArea'>" +
+                "<label class='twoRowTitle'>{{item.name}}</label>" +
+                "<label class='twoRowSubtitle'>{{item.assignedBeacons}} Beacons</label> " +
             "</div>";
 
         $scope.objectsSidebarService.enableAddButton = false;
@@ -63,6 +63,7 @@
 
         $http.get(ApplicationConfiguration.applicationBackendURL + 'maintenance/organizations').success(function(data){
             $scope.objectsSidebarService.setObjects(data);
+            $scope.loadingService.isLoading = false;
             //console.log($scope.objectsSidebarService.getObjects());
 
             for (var i = 0; i < $scope.objectsSidebarService.objects.length ; i++) {
