@@ -10,9 +10,9 @@
         .module('elements')
         .controller('ElementsController', ElementsController);
 
-    ElementsController.$inject = ['$http', '$state','$timeout','$scope', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery'];
+    ElementsController.$inject = ['$http', '$state','$timeout','$scope', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading'];
 
-    function ElementsController($http, $state, $timeout, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery) {
+    function ElementsController($http, $state, $timeout, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
         activate();
 
         $scope.objectsSidebarService = ObjectsSidebar;
@@ -27,6 +27,8 @@
 
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
         ////////////////
 
         function activate() {
@@ -64,6 +66,7 @@
 
         $scope.$on('$stateChangeStart', function(){
                 $scope.objectsSidebarService.reset();
+                $scope.objectsSidebarService.loadedInformation = false;
             });
 
         $scope.$on('organizationChanged',function(){
@@ -73,6 +76,7 @@
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
                 $scope.elements = data.data.elements;
                 $scope.objectsSidebarService.setObjects($scope.elements);
+                $scope.loadingService.isLoading = false;
             });
 
             $scope.galleries = [];
@@ -103,6 +107,7 @@
         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
             $scope.elements = data.data.elements;
             $scope.objectsSidebarService.setObjects($scope.elements);
+            $scope.loadingService.isLoading = false;
         });
 
         //Push a new showcase in the list

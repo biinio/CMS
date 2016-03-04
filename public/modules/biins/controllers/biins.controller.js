@@ -10,8 +10,8 @@
         .module('biins')
         .controller('BiinsController', BiinsController);
 
-    BiinsController.$inject = ['$http', '$state', '$scope','$modal', 'Authentication', 'Organization', 'ObjectsSidebar'];
-    function BiinsController($http, $state, $scope,$modal, Authentication, Organization, ObjectsSidebar) {
+    BiinsController.$inject = ['$http', '$state', '$scope','$modal', 'Authentication', 'Organization', 'ObjectsSidebar','Loading'];
+    function BiinsController($http, $state, $scope,$modal, Authentication, Organization, ObjectsSidebar,Loading) {
 
 
         /**=============================================================================================================
@@ -92,6 +92,8 @@
                 "<p class='threeRowThirdLine'>{{item.status}}</p>" +
             "</div>";
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
 
         /**=============================================================================================================
          * Events Listeners
@@ -100,6 +102,7 @@
 
         $scope.$on('$stateChangeStart', function () {
             $scope.objectsSidebarService.reset();
+            $scope.objectsSidebarService.loadedInformation = false;
         });
 
         $scope.$on('organizationChanged', function () {
@@ -119,6 +122,7 @@
                         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
                             $scope.biins = data.data;
                             $scope.objectsSidebarService.setObjects(data.data);
+                            $scope.loadingService.isLoading = false;
                         }).error(function (err) {
                             console.log(err);
                         });
@@ -162,6 +166,7 @@
                     $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
                         $scope.biins = data.data;
                         $scope.objectsSidebarService.setObjects(data.data);
+                        $scope.loadingService.isLoading = false;
                     }).error(function (err) {
                         console.log(err);
                     });

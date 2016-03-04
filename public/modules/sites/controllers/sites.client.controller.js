@@ -13,16 +13,17 @@
         .module('sites')
         .controller('SitesController', SitesController);
 
-    SitesController.$inject = ['$http', '$state','$timeout' ,'$scope', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery'];
-    function SitesController($http, $state, $timeout, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery) {
-        var vm = this;
+    SitesController.$inject = ['$http', '$state','$timeout' ,'$scope', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery','Loading'];
+    function SitesController($http, $state, $timeout, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
         activate();
 
         function activate() {
+
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
-
             $scope.deletePermit = false;
+            $scope.loadingService = Loading;
+            $scope.loadingService.isLoading = true;
 
             for (var permit = 0; permit < Authentication.user.permissions.length; permit++) {
                 if (Authentication.user.permissions[permit].permission == "delete") {
@@ -30,6 +31,7 @@
                     break;
                 }
             }
+
         }
 
         /**=============================================================================================================
@@ -48,7 +50,6 @@
             "</div>";
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
-
         /**=============================================================================================================
          * Events Listeners
          *
@@ -64,6 +65,7 @@
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites').success(function(data){
                 var sites = data.data.sites;
                 $scope.objectsSidebarService.setObjects(sites);
+                $scope.loadingService.isLoading = false;
                 if(sites.length > 0)
                     selectFirstSite(sites);
             });
@@ -122,6 +124,7 @@
         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationService.selectedOrganization.identifier +'/sites').success(function(data){
             if(data.data) {
                 $scope.objectsSidebarService.setObjects(data.data.sites);
+                $scope.loadingService.isLoading = false;
                 if(data.data.sites.length>0){
                     selectFirstSite(data.data.sites);
                 }
