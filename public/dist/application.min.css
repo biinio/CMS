@@ -13398,6 +13398,9 @@ Component: sidemenu.less
   margin-bottom: 0;
   display: block;
 }
+.maintenanceList {
+  padding-left: 15px;
+}
 /* ========================================================================
 Component: elements.less
  ========================================================================== */

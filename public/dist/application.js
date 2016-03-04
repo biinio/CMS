@@ -4491,11 +4491,9 @@ angular.module('maintenance').config(['$stateProvider',
          =============================================================================================================*/
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.objectsSidebarService.template =
-            "<div class='sidebar-padding'>" +
-                "<h5>{{item.name}}</h5>" +
-
-            "<label>{{item.assignedBeacons}}</label> Beacons" +
-            "<br/>" +
+            "<div class='maintenanceList leftInformationArea'>" +
+                "<label class='twoRowTitle'>{{item.name}}</label>" +
+                "<label class='twoRowSubtitle'>{{item.assignedBeacons}} Beacons</label> " +
             "</div>";
 
         $scope.objectsSidebarService.enableAddButton = false;
