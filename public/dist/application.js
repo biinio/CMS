@@ -5002,11 +5002,12 @@ angular.module('nps').config(['$stateProvider',
         .module('nps')
         .controller('NPSController', NPSController);
 
-    NPSController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar'];
-    function NPSController($http, $state, $scope, Authentication, toaster, $location, Organization,ObjectsSidebar) {
+    NPSController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar','Loading'];
+    function NPSController($http, $state, $scope, Authentication, toaster, $location, Organization,ObjectsSidebar,Loading) {
         var vm = this;
         $scope.organizationService = Organization;
-
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
         /**=============================================================================================================
          * Events Listeners
          *
@@ -5016,7 +5017,8 @@ angular.module('nps').config(['$stateProvider',
             $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/organization',{ headers:{organizationid:$scope.organizationService.selectedOrganization.identifier}}).success(function(data){
                 if(data.result == "1"){
                     updateNPSValues(data.data);
-                    $scope.isLoadingNPSData = false;
+                    $scope.loadingService.isLoading = false;
+
                 }
             });
         });
@@ -5052,7 +5054,6 @@ angular.module('nps').config(['$stateProvider',
         }
 
         activate();
-        $scope.isLoadingNPSData = true;
 
         $scope.save = function(){
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationService.selectedOrganization.identifier, {model: $scope.organizationService.selectedOrganization}).success(function (data, status) {
@@ -5069,7 +5070,7 @@ angular.module('nps').config(['$stateProvider',
             $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/organization',{ headers:{organizationid:$scope.organizationService.selectedOrganization.identifier}}).success(function(data){
                 if(data.result == "1"){
                     updateNPSValues(data.data);
-                    $scope.isLoadingNPSData = false;
+                    $scope.loadingService.isLoading = false;
                 }
             });
             resetNPS();
@@ -6221,13 +6222,15 @@ angular.module('dashboard').config(['$stateProvider',
         .module('profile')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization'];
-    function ProfileController($http, $state, $scope, Authentication, toaster, $location, Organization) {
+    ProfileController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','Loading'];
+    function ProfileController($http, $state, $scope, Authentication, toaster, $location, Organization,Loading) {
         var vm = this;
         $scope.organizationService = Organization;
         if (!Authentication.user) {
             $location.path('/');
         }
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
 
         $scope.saveInformation = function () {
             if (typeof($scope.profile) !== 'undefined' && isProfileDirty()) {//If is Profile Dirty
@@ -6267,6 +6270,7 @@ angular.module('dashboard').config(['$stateProvider',
             $scope.authentication = Authentication;
             $http.get("/api/account").success(function (data) {
                 $scope.profile = data.data;
+                $scope.loadingService.isLoading = false;
             });
         }
     }
