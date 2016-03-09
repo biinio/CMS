@@ -33,7 +33,17 @@
         $scope.getObjectName = function (identifier, type) {
             if (identifier && type) {
                 if (type === "1") {
-                    var el = _.findWhere($scope.elements, {elementIdentifier: identifier});
+                    var el = null;
+                    for(var i = 0; i< $scope.sites.length; i++ ){
+                        for(var j= 0; j<$scope.sites[i].showcases.length;j++){
+                            for(var k = 0; k<$scope.sites[i].showcases[j].elements.length;k++){
+                                if($scope.sites[i].showcases[j].elements[k]._id == identifier){
+                                    var elementIdentifier = $scope.sites[i].showcases[j].elements[k].identifier;
+                                    el = _.findWhere($scope.elements, {elementIdentifier: elementIdentifier});
+                                }
+                            }
+                        }
+                    }
                     if (el)
                         return el.title;
                 }
@@ -92,6 +102,7 @@
                 "<p class='threeRowThirdLine'>{{item.status}}</p>" +
             "</div>";
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
+        $scope.objectsSidebarService.isHidden = false;
         $scope.loadingService = Loading;
         $scope.loadingService.isLoading = true;
 
@@ -222,16 +233,26 @@
                 resolve: {
                     selectedObj: function () {
                         if (type === 'create')
-                            return {type: type};//name:$scope.sites[selectedIndex].title1,index:selectedIndex};
+                            return {type: type};
                         else
-                            return {type: type, obj: obj};//name:$scope.sites[selectedIndex].title1,index:selectedIndex};
+                            return {type: type, obj: obj};
                     },
                     elements: function () {
                         return $scope.elements;
                     },
                     showcases: function () {
                         return $scope.showcases;
+                    },
+                    site: function(){
+                        for(var i = 0; i< $scope.sites.length; i++){
+                            if($scope.objectsSidebarService.selectedObject.siteIdentifier == $scope.sites[i].identifier){
+                                return $scope.sites[i];
+                            }
+                        }
+                        return null;
                     }
+
+
                 }
             });
 

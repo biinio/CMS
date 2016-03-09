@@ -38,6 +38,7 @@
 	{% for cssFile in cssFiles %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
 	<!--Theme-->
   <link rel="stylesheet" ng-href="{% raw %}{{app.layout.theme}}{% endraw %}" data-ng-if="app.layout.theme">
+    {% if process.env.NODE_ENV != 'development' %}
 	<script>
 		var _rollbarConfig = {
 			accessToken: "857e67b838024d2283be0fad391f188a",
@@ -51,6 +52,8 @@
 		// End Rollbar Snippet
 	</script>
 
+
+    {% endif %}
 	<!-- HTML5 Shim -->
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -58,7 +61,7 @@
 </head>
 
 <body class="ng-cloak" data-ng-class="{ 'layout-fixed' : app.layout.isFixed, 'aside-collapsed' : app.layout.isCollapsed, 'layout-boxed' : app.layout.isBoxed, 'layout-fs': app.useFullLayout, 'hidden-footer': app.hiddenFooter, 'layout-h': app.layout.horizontal, 'aside-float': app.layout.isFloat, 'offsidebar-open': app.offsidebarOpen, 'aside-toggled': app.asideToggled}">
-	
+
 	{% block content %}{% endblock %}
 
 	<!--Embedding The User Object-->
@@ -67,12 +70,13 @@
 	</script>
 
 	<!--Application JavaScript Files-->
-	{% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %} 
+	{% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %}
 
 	{% if process.env.NODE_ENV === 'development' %}
 	<!--Livereload script rendered -->
 	<script type="text/javascript" src="http://{{request.hostname}}:35729/livereload.js"></script>
-	{% endif %}
+
+    {% if process.env.NODE_ENV != 'development' %}
 	<!-- Start of LiveChat (www.livechatinc.com) code -->
 	<script type="text/javascript">
 		window.__lc = window.__lc || {};
@@ -84,6 +88,7 @@
 		})();
 	</script>
 	<!-- End of LiveChat code -->
+    {% endif %}
 </body>
 
 </html>

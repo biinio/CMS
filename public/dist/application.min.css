@@ -13751,6 +13751,10 @@ Component: elements.less
   font-size: 100%;
   background-color: #fe5621;
 }
+html,
+body {
+  height: 100%;
+}
 .loader {
   margin: 60px auto;
   font-size: 10px;
@@ -13791,6 +13795,10 @@ Component: elements.less
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+.loading-container {
+  height: 100%;
+  width: 100%;
 }
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');
