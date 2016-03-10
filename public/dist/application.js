@@ -380,54 +380,16 @@ angular.module('biins').config(['$stateProvider',
         .module('biins')
         .controller('biinsModalController', BiinModalController);
 
-    BiinModalController.$inject = ['$scope', '$modalInstance', 'selectedObj', 'elements', 'showcases','site'];
-    function BiinModalController($scope, $modalInstance, selectedObj,elements,showcases,site) {
+    BiinModalController.$inject = ['$scope', '$modalInstance', 'selectedObj', 'elements', 'showcases'];
+    function BiinModalController($scope, $modalInstance, selectedObj,elements,showcases) {
 
         $scope.type = selectedObj.type;
         $scope.elements=elements;
         $scope.showcases=showcases;
-        $scope.site = site;
-        var elementsAvailable = [];
-
-        var showcasesThatAreReady = _.filter($scope.showcases,function(showcase){
-            return showcase.isReady;
-        });
-
-        for(var i= 0; i< $scope.site.showcases.length; i++){
-            if(_.find(showcasesThatAreReady,function(showcase){
-                    return showcase.identifier == $scope.site.showcases[i].showcaseIdentifier}) != null){
-                for(var j = 0; j<$scope.site.showcases[i].elements.length;j++){
-                    elementsAvailable.push($scope.site.showcases[i].elements[j]);
-                }
-            }
-        }
-        var elementsFiltered = [];
-        for(i = 0; i< elementsAvailable.length; i++){
-            if(_.find($scope.elements, function(element){ return element.elementIdentifier == elementsAvailable[i].identifier;}) != null &&
-                _.find(elementsFiltered, function(element){ return element.identifier == elementsAvailable[i].identifier;}) == null){
-                elementsFiltered.push(elementsAvailable[i]);
-            }
-        }
-        //var elementsAvailable = _.filter(elementsAvailable, function(elementToFilter){
-        //    return _.find($scope.elements, function(element){
-        //            return element.elementIdentifier == elementToFilter.identifier;
-        //        }) != null;
-        //});
-        elementsAvailable = elementsFiltered;
-
-        for(i = 0; i< elementsAvailable.length; i++){
-            var elementData = _.find($scope.elements,function(element){ return element.elementIdentifier == elementsAvailable[i].identifier});
-            elementsAvailable[i].title = elementData.title;
-        }
-        $scope.elementsAvailable = elementsAvailable;
-
-
-
         $scope.timeEnabled = [0,24];
         //Create the modal for the creation Model
         if($scope.type==='create'){
             var obj={objectType:'1',notification:'', hasNotification:'0', isNew:true};
-            obj.identifier = $scope.elementsAvailable.length > 0 ? $scope.elementsAvailable[0]._id : "";
             var time = moment();
             time.minutes(0);
             time.hours(0);
@@ -519,7 +481,8 @@ angular.module('biins').config(['$stateProvider',
                     $scope.timeEnabled = [value[0], value[0]+0.5];
                 }
             }
-        }
+        };
+
     }
 })();
 
@@ -559,17 +522,7 @@ angular.module('biins').config(['$stateProvider',
         $scope.getObjectName = function (identifier, type) {
             if (identifier && type) {
                 if (type === "1") {
-                    var el = null;
-                    for(var i = 0; i< $scope.sites.length; i++ ){
-                        for(var j= 0; j<$scope.sites[i].showcases.length;j++){
-                            for(var k = 0; k<$scope.sites[i].showcases[j].elements.length;k++){
-                                if($scope.sites[i].showcases[j].elements[k]._id == identifier){
-                                    var elementIdentifier = $scope.sites[i].showcases[j].elements[k].identifier;
-                                    el = _.findWhere($scope.elements, {elementIdentifier: elementIdentifier});
-                                }
-                            }
-                        }
-                    }
+                    var el = _.findWhere($scope.elements, {elementIdentifier: identifier});
                     if (el)
                         return el.title;
                 }
@@ -628,7 +581,6 @@ angular.module('biins').config(['$stateProvider',
                 "<p class='threeRowThirdLine'>{{item.status}}</p>" +
             "</div>";
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
-        $scope.objectsSidebarService.isHidden = false;
         $scope.loadingService = Loading;
         $scope.loadingService.isLoading = true;
 
@@ -759,26 +711,16 @@ angular.module('biins').config(['$stateProvider',
                 resolve: {
                     selectedObj: function () {
                         if (type === 'create')
-                            return {type: type};
+                            return {type: type};//name:$scope.sites[selectedIndex].title1,index:selectedIndex};
                         else
-                            return {type: type, obj: obj};
+                            return {type: type, obj: obj};//name:$scope.sites[selectedIndex].title1,index:selectedIndex};
                     },
                     elements: function () {
                         return $scope.elements;
                     },
                     showcases: function () {
                         return $scope.showcases;
-                    },
-                    site: function(){
-                        for(var i = 0; i< $scope.sites.length; i++){
-                            if($scope.objectsSidebarService.selectedObject.siteIdentifier == $scope.sites[i].identifier){
-                                return $scope.sites[i];
-                            }
-                        }
-                        return null;
                     }
-
-
                 }
             });
 
@@ -6600,9 +6542,14 @@ angular.module('showcases').config(['$stateProvider',
             "</div>" +
             "<div class='col-md-9 leftInformationArea'>" +
             "<label class='oneRowTitle'>{{item.name}}</label>" +
+            /*"<div class='btnShowcasePreview icon-round-control btn-on-hover'>" +
+            "<div class='icon icon-arrange-1'></div>" +
+            "</div>" +*/
             "</div>";
+            /*"<div ng-click=\"deleteItem(objectsSidebarService.objects.indexOf(item),$event)\" class=\"icon-round-control btnDelete  btn-danger btn-on-hover\">" +
+            "<i class=\"fa fa-close\"></i>" +
+            "</div>";*/
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
-        $scope.objectsSidebarService.isHidden = false;
 
         /**=============================================================================================================
          * Events Listeners
@@ -6625,7 +6572,6 @@ angular.module('showcases').config(['$stateProvider',
 
             $http.get(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/sites').success(function (data) {
                 $scope.sites = data.data.sites;
-                $scope.oldSitesData = $.extend(true,[],data.data.sites);
                 $scope.sitesBooleanArray = [];
                 for(var i= 0; i < $scope.sites.length; i++){
                     $scope.sitesBooleanArray.push(false);
@@ -6654,6 +6600,10 @@ angular.module('showcases').config(['$stateProvider',
             $scope.create();
         });
 
+        /*$scope.$on("Biin: On Object Deleted", function (event, index) {
+            $scope.removeShowcaseAt(index);
+        });*/
+
         /**=============================================================================================================
          * Variables
          =============================================================================================================*/
@@ -6672,7 +6622,6 @@ angular.module('showcases').config(['$stateProvider',
 
         $http.get(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/sites').success(function (data) {
             $scope.sites = data.data.sites;
-            $scope.oldSitesData = $.extend(true,[],data.data.sites);
             $scope.sitesBooleanArray = [];
             for(var i= 0; i < $scope.sites.length; i++){
                 $scope.sitesBooleanArray.push(false);
@@ -6734,8 +6683,11 @@ angular.module('showcases').config(['$stateProvider',
 
         $scope.hasValidElements = function(selectedShowcase) {
             var validElement = _.findWhere(selectedShowcase, {isReady: 1});
-            return !!validElement;
-        };
+            if (validElement)
+                return true;
+            else
+                return false;
+        }
 
         //Check min data has been filled
         $scope.hasMissingData = function() {
@@ -6750,17 +6702,31 @@ angular.module('showcases').config(['$stateProvider',
             if ($scope.objectsSidebarService.selectedObject.name == null) {
                 $scope.objectsSidebarService.selectedObject.name = "";
                 missingMinData = true;
-            } else if ($scope.objectsSidebarService.selectedObject.name.trim() === ''){
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.name.trim() === ''){
                 missingMinData = true;
             }
 
+            /*if ($scope.objectsSidebarService.selectedObject.description == null) {
+                $scope.objectsSidebarService.selectedObject.description = "";
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.description.trim() === ''){
+                missingMinData = true;
+            }*/
+
             if ($scope.objectsSidebarService.selectedObject.elements.length === 0){
                 missingMinData = true;
-            } else if (!$scope.hasValidElements($scope.objectsSidebarService.selectedObject.elements)) {
+            }
+
+            else if (!$scope.hasValidElements($scope.objectsSidebarService.selectedObject.elements)) {
                 missingMinData = true;
             }
 
             return missingMinData;
+
         };
 
         //Save detail model object
@@ -6768,80 +6734,34 @@ angular.module('showcases').config(['$stateProvider',
 
 
             //save sites
-            var _idUsed = [];
-            for(var i = 0; i< $scope.sites.length; i++){
 
+            for(var i = 0; i< $scope.sites.length; i++){
                 for(var j = 0; j<$scope.sites[i].showcases.length;j++){
+
                     var showcaseIdentifier = $scope.sites[i].showcases[j].showcaseIdentifier;
                     var elements = [];
-                    var currentShowcaseObject = _.find($scope.objectsSidebarService.objects,function(showcase){
-                        return showcase.identifier == showcaseIdentifier;
-                    });
-                    if(currentShowcaseObject){
-                        for(var k = 0; k < currentShowcaseObject.elements.length; k++) {
-                            elements.push({identifier:currentShowcaseObject.elements[k].elementIdentifier});
+                    var index = -1;
+
+                    for(var k = 0; k < $scope.objectsSidebarService.objects.length; k++){
+                        if($scope.objectsSidebarService.objects[k].identifier == showcaseIdentifier){
+                            index = k;
+                            break;
+                        }
+                    }
+                    if(index > -1){
+                        for(k = 0; k < $scope.objectsSidebarService.objects[index].elements.length; k++) {
+                            elements.push({identifier:$scope.objectsSidebarService.objects[index].elements[k].elementIdentifier});
                         }
                     }
                     $scope.sites[i].showcases[j].elements=elements;
                 }
-
-                var modifiedSiteData = $scope.sites[i];
-                var oldSiteData = $scope.oldSitesData[i];
-                //If it is a new assigned showcase there is nothing much to do with the _id
-                var newAssignedShowcases = _.filter(modifiedSiteData.showcases,function(showcase){
-                    return _.find(oldSiteData.showcases,function(oldShowcase){
-                        return showcase.showcaseIdentifier == oldShowcase.showcaseIdentifier;
-                    }) == null;
-                });
-                //This showcases have to check if there are new or old elements assigned
-                var alreadyAssignedShowcases = _.filter(modifiedSiteData.showcases,function(showcase){
-                    return _.find(oldSiteData.showcases,function(oldShowcase){
-                            return showcase.showcaseIdentifier == oldShowcase.showcaseIdentifier;
-                        }) != null;
-                });
-
-                for(j = 0; j< alreadyAssignedShowcases.length;j++){
-                    var currentShowcase = alreadyAssignedShowcases[j];
-                    var oldShowcaseData = _.find(oldSiteData.showcases,function(showcase){
-                       return showcase.showcaseIdentifier == currentShowcase.showcaseIdentifier;
-                    });
-                    for(k=0;k<currentShowcase.elements.length;k++){
-                        var oldElement = _.find(oldShowcaseData.elements,function(element){
-                            return currentShowcase.elements[k].identifier == element.identifier;
-                        });
-                        if(oldElement){
-                            currentShowcase.elements[k]._id = oldElement._id;
-                            _idUsed.push(oldElement._id);
-                        }
-                    }
-                    alreadyAssignedShowcases[j] = currentShowcase;
-                }
-                var validatedShowcases = alreadyAssignedShowcases.concat(newAssignedShowcases);
-                validatedShowcases = _.sortBy(validatedShowcases,function(showcase){
-                    return _.findIndex(modifiedSiteData.showcases,function(originalShowcase){
-                        return originalShowcase.showcaseIdentifier == showcase.showcaseIdentifier;
-                    });
-                });
-                console.log("Already Assigned of site: " + modifiedSiteData.title + " lenght: " + alreadyAssignedShowcases.length);
-                console.log("New Assigned of site: " + modifiedSiteData.title + " lenght: " + newAssignedShowcases.length);
-
-                modifiedSiteData.showcases = validatedShowcases;
-                $scope.sites[i] = modifiedSiteData;
-            }
-
-            //removing biins that identifier was removed
-            _idUsed = _.uniq(_idUsed);
-            for(i = 0; i< $scope.biinSite.length;i++){
-                var biinToCheck = $scope.biinSite[i];
-                biinToCheck.objects = _.filter(biinToCheck.objects,function(object){
-                    return object.objectType != "1" || _.contains(_idUsed, object.identifier)
-                });
-                $scope.biinSite[i] = biinToCheck;
             }
 
             if ($scope.hasMissingData()) {
                 $scope.objectsSidebarService.selectedObject.isReady = 0;
-            } else {
+            }
+
+            else {
                 $scope.objectsSidebarService.selectedObject.isReady = 1;
             }
 
@@ -6857,15 +6777,6 @@ angular.module('showcases').config(['$stateProvider',
                 model: {
                     identifier: $scope.organizationService.selectedOrganization.identifier,
                     sites: $scope.sites
-                }
-            }).success(function (data, status) {
-                $scope.sites = data.sites;
-                $scope.oldSitesData = $.extend(true,[],data.sites);
-            });
-
-            $http.post(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/biins/showcases', {
-                model: {
-                    biins: $scope.biinSite
                 }
             }).success(function (data, status) {
 
@@ -6908,7 +6819,6 @@ angular.module('showcases').config(['$stateProvider',
             }
             return element.objects[foundPosition];
         };
-
         $scope.isShowcaseAssigned = function( site, showcase ){
             var index = -1;
             for (var i = 0; i < site.showcases.length; i++) {

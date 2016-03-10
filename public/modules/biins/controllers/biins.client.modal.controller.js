@@ -13,54 +13,16 @@
         .module('biins')
         .controller('biinsModalController', BiinModalController);
 
-    BiinModalController.$inject = ['$scope', '$modalInstance', 'selectedObj', 'elements', 'showcases','site'];
-    function BiinModalController($scope, $modalInstance, selectedObj,elements,showcases,site) {
+    BiinModalController.$inject = ['$scope', '$modalInstance', 'selectedObj', 'elements', 'showcases'];
+    function BiinModalController($scope, $modalInstance, selectedObj,elements,showcases) {
 
         $scope.type = selectedObj.type;
         $scope.elements=elements;
         $scope.showcases=showcases;
-        $scope.site = site;
-        var elementsAvailable = [];
-
-        var showcasesThatAreReady = _.filter($scope.showcases,function(showcase){
-            return showcase.isReady;
-        });
-
-        for(var i= 0; i< $scope.site.showcases.length; i++){
-            if(_.find(showcasesThatAreReady,function(showcase){
-                    return showcase.identifier == $scope.site.showcases[i].showcaseIdentifier}) != null){
-                for(var j = 0; j<$scope.site.showcases[i].elements.length;j++){
-                    elementsAvailable.push($scope.site.showcases[i].elements[j]);
-                }
-            }
-        }
-        var elementsFiltered = [];
-        for(i = 0; i< elementsAvailable.length; i++){
-            if(_.find($scope.elements, function(element){ return element.elementIdentifier == elementsAvailable[i].identifier;}) != null &&
-                _.find(elementsFiltered, function(element){ return element.identifier == elementsAvailable[i].identifier;}) == null){
-                elementsFiltered.push(elementsAvailable[i]);
-            }
-        }
-        //var elementsAvailable = _.filter(elementsAvailable, function(elementToFilter){
-        //    return _.find($scope.elements, function(element){
-        //            return element.elementIdentifier == elementToFilter.identifier;
-        //        }) != null;
-        //});
-        elementsAvailable = elementsFiltered;
-
-        for(i = 0; i< elementsAvailable.length; i++){
-            var elementData = _.find($scope.elements,function(element){ return element.elementIdentifier == elementsAvailable[i].identifier});
-            elementsAvailable[i].title = elementData.title;
-        }
-        $scope.elementsAvailable = elementsAvailable;
-
-
-
         $scope.timeEnabled = [0,24];
         //Create the modal for the creation Model
         if($scope.type==='create'){
             var obj={objectType:'1',notification:'', hasNotification:'0', isNew:true};
-            obj.identifier = $scope.elementsAvailable.length > 0 ? $scope.elementsAvailable[0]._id : "";
             var time = moment();
             time.minutes(0);
             time.hours(0);
@@ -152,7 +114,8 @@
                     $scope.timeEnabled = [value[0], value[0]+0.5];
                 }
             }
-        }
+        };
+
     }
 })();
 
