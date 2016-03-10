@@ -13756,6 +13756,7 @@ Component: elements.less
 html,
 body {
   height: 100%;
+  position: relative;
 }
 .loader {
   margin: 60px auto;

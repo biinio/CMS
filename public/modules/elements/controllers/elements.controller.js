@@ -66,11 +66,12 @@
 
         $scope.$on('$stateChangeStart', function(){
                 $scope.objectsSidebarService.reset();
-                $scope.objectsSidebarService.loadedInformation = false;
+                $scope.objectsSidebarService.loadedInformation = true;
             });
 
         $scope.$on('organizationChanged',function(){
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.loadingService.isLoading = true;
             //Get the List of Objects
             $scope.objectsSidebarService.selectedObject = null;
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
@@ -107,7 +108,7 @@
         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
             $scope.elements = data.data.elements;
             $scope.objectsSidebarService.setObjects($scope.elements);
-            $scope.loadingService.isLoading = false;
+            //$scope.loadingService.isLoading = false;
         });
 
         //Push a new showcase in the list
