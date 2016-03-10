@@ -13206,6 +13206,8 @@ Component: sidemenu.less
   -webkit-transition: width 0.3s;
   /* For Safari 3.1 to 6.0 */
   transition: width 0.3s;
+  margin-left: -20px;
+  margin-top: -20px;
 }
 .objects-sidebar > .hide-button > .fa-chevron-right,
 .objects-sidebar > .hide-button > .glyphicon.glyphicon-chevron-right {

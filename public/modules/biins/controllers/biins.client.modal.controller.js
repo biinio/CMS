@@ -27,15 +27,26 @@
         });
 
         for(var i= 0; i< $scope.site.showcases.length; i++){
-            if(_.find(showcasesThatAreReady,function(showcase){ return showcase.identifier == $scope.site.showcases[i].showcaseIdentifier}) != null){
+            if(_.find(showcasesThatAreReady,function(showcase){
+                    return showcase.identifier == $scope.site.showcases[i].showcaseIdentifier}) != null){
                 for(var j = 0; j<$scope.site.showcases[i].elements.length;j++){
                     elementsAvailable.push($scope.site.showcases[i].elements[j]);
                 }
             }
         }
-        var elementsAvailable = _.filter(elementsAvailable, function(elementToFilter){
-            return _.find($scope.elements,function(element){ return element.elementIdentifier == elementToFilter.identifier}) != null;
-        });
+        var elementsFiltered = [];
+        for(i = 0; i< elementsAvailable.length; i++){
+            if(_.find($scope.elements, function(element){ return element.elementIdentifier == elementsAvailable[i].identifier;}) != null &&
+                _.find(elementsFiltered, function(element){ return element.identifier == elementsAvailable[i].identifier;}) == null){
+                elementsFiltered.push(elementsAvailable[i]);
+            }
+        }
+        //var elementsAvailable = _.filter(elementsAvailable, function(elementToFilter){
+        //    return _.find($scope.elements, function(element){
+        //            return element.elementIdentifier == elementToFilter.identifier;
+        //        }) != null;
+        //});
+        elementsAvailable = elementsFiltered;
 
         for(i = 0; i< elementsAvailable.length; i++){
             var elementData = _.find($scope.elements,function(element){ return element.elementIdentifier == elementsAvailable[i].identifier});

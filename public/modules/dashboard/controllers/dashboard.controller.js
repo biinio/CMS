@@ -10,13 +10,15 @@
         .module('dashboard')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function DashboardController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','ObjectsSidebar','GlobalFilters'];
+    function DashboardController($http, $state, $scope, Authentication, Organization,ObjectsSidebar,GlobalFilters) {
         var vm = this;
         $scope.authentication = Authentication;
         $scope.organizationService = Organization;
         $scope.globalFilters = GlobalFilters;
+        $scope.objectsSidebar = ObjectsSidebar;
 
+        $scope.objectsSidebar.isHidden = true;
 
         activate();
 
