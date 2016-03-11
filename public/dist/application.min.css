@@ -13194,7 +13194,9 @@ Component: sidemenu.less
 }
 .objects-left-bar {
   overflow-x: hidden;
-  height: 88%;
+  min-height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
 }
 .objects-sidebar {
   width: 220px;
@@ -13802,6 +13804,7 @@ body {
 .loading-container {
   height: 100%;
   width: 100%;
+  position: relative;
 }
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');

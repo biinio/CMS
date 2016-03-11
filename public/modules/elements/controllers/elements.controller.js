@@ -108,7 +108,7 @@
         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
             $scope.elements = data.data.elements;
             $scope.objectsSidebarService.setObjects($scope.elements);
-            //$scope.loadingService.isLoading = false;
+            $scope.loadingService.isLoading = false;
         });
 
         //Push a new showcase in the list

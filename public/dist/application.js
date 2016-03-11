@@ -2496,11 +2496,12 @@ angular.module('elements').config(['$stateProvider',
 
         $scope.$on('$stateChangeStart', function(){
                 $scope.objectsSidebarService.reset();
-                $scope.objectsSidebarService.loadedInformation = false;
+                $scope.objectsSidebarService.loadedInformation = true;
             });
 
         $scope.$on('organizationChanged',function(){
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.loadingService.isLoading = true;
             //Get the List of Objects
             $scope.objectsSidebarService.selectedObject = null;
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
@@ -6557,8 +6558,8 @@ angular.module('showcases').config(['$stateProvider',
          =============================================================================================================*/
 
         $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
             $scope.objectsSidebarService.reset();
-            $scope.loadingService.isLoading = false;
         });
 
         $scope.$on('organizationChanged', function () {
