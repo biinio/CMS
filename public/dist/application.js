@@ -347,7 +347,7 @@ angular.module('biins').config(['$stateProvider',
     function($stateProvider) {
         // Users state routing
         $stateProvider.
-            state('appleftbar.biins', {
+            state('app.biins', {
                 url: '/biins',
                 templateUrl: 'modules/biins/views/biins.client.view.html',
                 resolve: {
@@ -481,7 +481,7 @@ angular.module('biins').config(['$stateProvider',
                     $scope.timeEnabled = [value[0], value[0]+0.5];
                 }
             }
-        }
+        };
 
     }
 })();
@@ -950,16 +950,6 @@ angular.module('biins').config(['$stateProvider',
                 templateUrl: 'modules/core/views/coreleftbar.client.view.html',
                 resolve: helper.resolveFor('modernizr', 'icons', 'filestyle')
             })
-            /*.state('app.biinUsers', {
-                url: '/login',
-                templateUrl: 'modules/biinUsers/views/login.client.view.html',
-                resolve: helper.resolveFor('biinUsers')
-            })
-            .state('app.dashboard', {
-                url: '/dashboard',
-                templateUrl: 'modules/dashboard/views/dashboard.client.view.html',
-                resolve: helper.resolveFor('dashboard')
-            })*/
             //
             // CUSTOM RESOLVES
             //   Add your own resolves properties
@@ -1516,13 +1506,15 @@ angular.module('dashboard').config(['$stateProvider',
         .module('dashboard')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function DashboardController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','ObjectsSidebar','GlobalFilters'];
+    function DashboardController($http, $state, $scope, Authentication, Organization,ObjectsSidebar,GlobalFilters) {
         var vm = this;
         $scope.authentication = Authentication;
         $scope.organizationService = Organization;
         $scope.globalFilters = GlobalFilters;
+        $scope.objectsSidebar = ObjectsSidebar;
 
+        $scope.objectsSidebar.isHidden = true;
 
         activate();
 
@@ -2418,7 +2410,7 @@ angular.module('elements').config(['$stateProvider',
     function($stateProvider) {
         // Users state routing
         $stateProvider.
-            state('appleftbar.elements', {
+            state('app.elements', {
                 url: '/elements',
                 templateUrl: 'modules/elements/views/elements.client.view.html',
                 resolve:{
@@ -2504,11 +2496,12 @@ angular.module('elements').config(['$stateProvider',
 
         $scope.$on('$stateChangeStart', function(){
                 $scope.objectsSidebarService.reset();
-                $scope.objectsSidebarService.loadedInformation = false;
+                $scope.objectsSidebarService.loadedInformation = true;
             });
 
         $scope.$on('organizationChanged',function(){
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.loadingService.isLoading = true;
             //Get the List of Objects
             $scope.objectsSidebarService.selectedObject = null;
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
@@ -4444,7 +4437,7 @@ angular.module('maintenance').config(['$stateProvider',
     function($stateProvider) {
         // Users state routing
         $stateProvider.
-            state('appleftbar.maintenance', {
+            state('app.maintenance', {
                 url: '/maintenance',
                 templateUrl: 'modules/maintenance/views/maintenance.client.view.html',
                 resolve: {
@@ -5302,7 +5295,7 @@ angular.module('organization').config(['$stateProvider',
     function($stateProvider) {
         // Users state routing
         $stateProvider.
-            state('appleftbar.organization', {
+            state('app.organization', {
                 url: '/organization',
                 templateUrl: 'modules/organization/views/organization.client.view.html',
                 resolve: {
@@ -6493,7 +6486,7 @@ angular.module('showcases').config(['$stateProvider',
     function($stateProvider) {
         // Users state routing
         $stateProvider.
-            state('appleftbar.showcases', {
+            state('app.showcases', {
                 url: '/showcases',
                 templateUrl: 'modules/showcases/views/showcases.client.view.html',
                 resolve: {
@@ -6565,8 +6558,8 @@ angular.module('showcases').config(['$stateProvider',
          =============================================================================================================*/
 
         $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
             $scope.objectsSidebarService.reset();
-            $scope.loadingService.isLoading = false;
         });
 
         $scope.$on('organizationChanged', function () {
@@ -7338,7 +7331,7 @@ angular.module('sites').config(['$stateProvider',
     function($stateProvider) {
         // Users state routing
         $stateProvider.
-            state('appleftbar.sites', {
+            state('app.sites', {
                 url: '/sites',
                 templateUrl: 'modules/sites/views/sites.client.view.html',
                 resolve: {
@@ -7408,6 +7401,7 @@ angular.module('sites').config(['$stateProvider',
             "</div>";
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
+        $scope.objectsSidebarService.isHidden = false;
         /**=============================================================================================================
          * Events Listeners
          *

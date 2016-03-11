@@ -50,6 +50,7 @@
             "</div>";
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
+        $scope.objectsSidebarService.isHidden = false;
         /**=============================================================================================================
          * Events Listeners
          *

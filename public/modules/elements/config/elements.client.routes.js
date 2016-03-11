@@ -8,7 +8,7 @@ angular.module('elements').config(['$stateProvider',
     function($stateProvider) {
         // Users state routing
         $stateProvider.
-            state('appleftbar.elements', {
+            state('app.elements', {
                 url: '/elements',
                 templateUrl: 'modules/elements/views/elements.client.view.html',
                 resolve:{

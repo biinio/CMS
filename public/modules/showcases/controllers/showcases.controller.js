@@ -52,8 +52,8 @@
          =============================================================================================================*/
 
         $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
             $scope.objectsSidebarService.reset();
-            $scope.loadingService.isLoading = false;
         });
 
         $scope.$on('organizationChanged', function () {

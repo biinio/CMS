@@ -2,7 +2,7 @@
     <em class="fa fa-chevron-left"></em>
     <em class="fa fa-chevron-right"></em>
 </div>-->
-<div>
+<div class="objects-sidebar">
     <div class="row sidebar-filter col-center-block" ng-hide="!objectsSidebarService.enableAddButton">
         <div class="btn-add">
             <!--<button ng-click="create()" class="btn btnAdd form-control">
@@ -25,14 +25,11 @@
     </div>
     <div class="objects-left-bar">
         <div class="container-fluid sidemenu-object">
-
-            <div class="row container-scroll">
-                <div ng-repeat="item in objectsSidebarService.getObjects() | orderBy: '+title' | filter: query"
-                     ng-click="onObjectClick(objectsSidebarService.objects.indexOf(item))" class="object-item"
-                     ng-class="{active: item == objectsSidebarService.getSelectedObject()}">
-                    <div class="list-items-side-menu">
-                        <div bind-html-compile="objectsSidebarService.template"></div>
-                    </div>
+            <div ng-repeat="item in objectsSidebarService.getObjects() | orderBy: '+title' | filter: query"
+                 ng-click="onObjectClick(objectsSidebarService.objects.indexOf(item))" class="object-item"
+                 ng-class="{active: item == objectsSidebarService.getSelectedObject()}">
+                <div class="list-items-side-menu">
+                    <div bind-html-compile="objectsSidebarService.template"></div>
                 </div>
             </div>
         </div>
