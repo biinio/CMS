@@ -58,6 +58,7 @@
 
         $scope.$on('organizationChanged', function () {
             //Get list of showcases
+            $scope.loadingService.isLoading = true;
             $http.get(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/showcases').success(function (data) {
                 $scope.objectsSidebarService.setObjects(data.data);
                 $scope.objectsSidebarService.loadedInformation = true;

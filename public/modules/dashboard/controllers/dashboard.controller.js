@@ -10,8 +10,8 @@
         .module('dashboard')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','ObjectsSidebar','GlobalFilters'];
-    function DashboardController($http, $state, $scope, Authentication, Organization,ObjectsSidebar,GlobalFilters) {
+    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','ObjectsSidebar','GlobalFilters','Loading'];
+    function DashboardController($http, $state, $scope, Authentication, Organization,ObjectsSidebar,GlobalFilters,Loading) {
         var vm = this;
         $scope.authentication = Authentication;
         $scope.organizationService = Organization;
@@ -19,6 +19,8 @@
         $scope.objectsSidebar = ObjectsSidebar;
 
         $scope.objectsSidebar.isHidden = true;
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = false;
 
         activate();
 
@@ -30,6 +32,11 @@
             //$scope.globalFilters.selectedSite = $scope.organizationService.selectedOrganization.sites[0];
 
         }
+
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
+            $scope.objectsSidebarService.reset();
+        });
 
 
         $scope.changeChartRange = function (numberDays) {

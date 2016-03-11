@@ -589,14 +589,15 @@ angular.module('biins').config(['$stateProvider',
          *
          =============================================================================================================*/
 
-        $scope.$on('$stateChangeStart', function () {
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
             $scope.objectsSidebarService.reset();
-            $scope.objectsSidebarService.loadedInformation = false;
         });
 
         $scope.$on('organizationChanged', function () {
             $scope.objectsSidebarService.selectedObject = null;
             $scope.objectsSidebarService.objects = [];
+            $scope.loadingService.isLoading = true;
 
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Get the Sites Information
@@ -1506,8 +1507,8 @@ angular.module('dashboard').config(['$stateProvider',
         .module('dashboard')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','ObjectsSidebar','GlobalFilters'];
-    function DashboardController($http, $state, $scope, Authentication, Organization,ObjectsSidebar,GlobalFilters) {
+    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','ObjectsSidebar','GlobalFilters','Loading'];
+    function DashboardController($http, $state, $scope, Authentication, Organization,ObjectsSidebar,GlobalFilters,Loading) {
         var vm = this;
         $scope.authentication = Authentication;
         $scope.organizationService = Organization;
@@ -1515,6 +1516,8 @@ angular.module('dashboard').config(['$stateProvider',
         $scope.objectsSidebar = ObjectsSidebar;
 
         $scope.objectsSidebar.isHidden = true;
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = false;
 
         activate();
 
@@ -1526,6 +1529,11 @@ angular.module('dashboard').config(['$stateProvider',
             //$scope.globalFilters.selectedSite = $scope.organizationService.selectedOrganization.sites[0];
 
         }
+
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
+            $scope.objectsSidebarService.reset();
+        });
 
 
         $scope.changeChartRange = function (numberDays) {
@@ -4496,7 +4504,8 @@ angular.module('maintenance').config(['$stateProvider',
          *
          =============================================================================================================*/
 
-        $scope.$on('$stateChangeStart', function () {
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
             $scope.objectsSidebarService.reset();
         });
 
@@ -5004,7 +5013,8 @@ angular.module('nps').config(['$stateProvider',
          *
          =============================================================================================================*/
         $scope.$on('organizationChanged', function () {
-            $scope.isLoadingNPSData = true;
+            //$scope.isLoadingNPSData = true;
+            $scope.loadingService.isLoading = true;
             $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/organization',{ headers:{organizationid:$scope.organizationService.selectedOrganization.identifier}}).success(function(data){
                 if(data.result == "1"){
                     updateNPSValues(data.data);
@@ -5012,6 +5022,11 @@ angular.module('nps').config(['$stateProvider',
 
                 }
             });
+        });
+
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
+            $scope.objectsSidebarService.reset();
         });
 
 
@@ -5397,7 +5412,8 @@ angular.module('organization').config(['$stateProvider',
          =============================================================================================================*/
 
 
-        $scope.$on('$stateChangeStart', function () {
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
             $scope.objectsSidebarService.reset();
         });
 
@@ -6223,6 +6239,11 @@ angular.module('dashboard').config(['$stateProvider',
         $scope.loadingService = Loading;
         $scope.loadingService.isLoading = true;
 
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
+            $scope.objectsSidebarService.reset();
+        });
+
         $scope.saveInformation = function () {
             if (typeof($scope.profile) !== 'undefined' && isProfileDirty()) {//If is Profile Dirty
                 $http.put('api/account', {model: $scope.profile}).success(function (data, status) {
@@ -6564,6 +6585,7 @@ angular.module('showcases').config(['$stateProvider',
 
         $scope.$on('organizationChanged', function () {
             //Get list of showcases
+            $scope.loadingService.isLoading = true;
             $http.get(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/showcases').success(function (data) {
                 $scope.objectsSidebarService.setObjects(data.data);
                 $scope.objectsSidebarService.loadedInformation = true;
@@ -7408,10 +7430,12 @@ angular.module('sites').config(['$stateProvider',
          =============================================================================================================*/
 
         $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
             $scope.objectsSidebarService.reset();
         });
 
         $scope.$on('organizationChanged',function(){
+            $scope.loadingService.isLoading = true;
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Get the List of Objects
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites').success(function(data){
