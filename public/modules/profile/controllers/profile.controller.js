@@ -23,6 +23,11 @@
         $scope.loadingService = Loading;
         $scope.loadingService.isLoading = true;
 
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
+            $scope.objectsSidebarService.reset();
+        });
+
         $scope.saveInformation = function () {
             if (typeof($scope.profile) !== 'undefined' && isProfileDirty()) {//If is Profile Dirty
                 $http.put('api/account', {model: $scope.profile}).success(function (data, status) {

@@ -24,7 +24,8 @@
          *
          =============================================================================================================*/
         $scope.$on('organizationChanged', function () {
-            $scope.isLoadingNPSData = true;
+            //$scope.isLoadingNPSData = true;
+            $scope.loadingService.isLoading = true;
             $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/organization',{ headers:{organizationid:$scope.organizationService.selectedOrganization.identifier}}).success(function(data){
                 if(data.result == "1"){
                     updateNPSValues(data.data);
@@ -32,6 +33,11 @@
 
                 }
             });
+        });
+
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
+            $scope.objectsSidebarService.reset();
         });
 
 

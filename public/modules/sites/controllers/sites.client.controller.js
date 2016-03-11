@@ -57,10 +57,12 @@
          =============================================================================================================*/
 
         $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
             $scope.objectsSidebarService.reset();
         });
 
         $scope.$on('organizationChanged',function(){
+            $scope.loadingService.isLoading = true;
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Get the List of Objects
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites').success(function(data){

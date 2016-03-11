@@ -100,14 +100,15 @@
          *
          =============================================================================================================*/
 
-        $scope.$on('$stateChangeStart', function () {
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
             $scope.objectsSidebarService.reset();
-            $scope.objectsSidebarService.loadedInformation = false;
         });
 
         $scope.$on('organizationChanged', function () {
             $scope.objectsSidebarService.selectedObject = null;
             $scope.objectsSidebarService.objects = [];
+            $scope.loadingService.isLoading = true;
 
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Get the Sites Information
