@@ -18,12 +18,45 @@
 
                             <div class="form-group">
                                 <div class="checkbox c-checkbox">
-                                    <label title="{{ 'HIGHLIGHT.LIMITEDQTY_TOOLTIP' | translate }}">
+                                    <label title="{{ 'ORGANIZATION.PUBLISHED_TOOLTIP' | translate }}">
                                         <input type="checkbox"
                                                ng-model="objectsSidebarService.selectedObject.isPublished" ng-true-value="true" ng-false-value="false"/>
                                         <span class="fa fa-check"></span>
                                         {{ 'ORGANIZATION.PUBLISHED' | translate }}
                                     </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox c-checkbox">
+                                    <label title="{{ 'ORGANIZATION.USECOLORBRAND_TOOLTIP' | translate }}">
+                                        <input type="checkbox"
+                                               ng-model="objectsSidebarService.selectedObject.useColorBrand" ng-true-value="'1'" ng-false-value="'0'"/>
+                                        <span class="fa fa-check"></span>
+                                        {{ 'ORGANIZATION.USEBRANDCOLOR' | translate }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-if="objectsSidebarService.selectedObject.useColorBrand=='1'">
+                                <div class="col-md-6">
+                                    <label translate="ORGANIZATION.PRIMARYCOLOR"></label>
+                                    <color-picker ng-model="objectsSidebarService.selectedObject.brandPrimaryColor"
+                                        color-picker-format="'rgb'"
+                                        color-picker-alpha="false"
+                                        color-picker-swatch="true"
+                                        color-picker-swatch-only="false"
+                                        color-picker-case="lower">
+                                    </color-picker>
+                                </div>
+                                <div class="col-md-6">
+                                    <label translate="ORGANIZATION.SECONDARYCOLOR"></label>
+                                    <color-picker ng-model="objectsSidebarService.selectedObject.brandSecundaryColor"
+                                                  color-picker-format="'rgb'"
+                                                  color-picker-alpha="false"
+                                                  color-picker-swatch="true"
+                                                  color-picker-swatch-only="false"
+                                                  color-picker-case="lower">
+
+                                    </color-picker>
                                 </div>
                             </div>
 

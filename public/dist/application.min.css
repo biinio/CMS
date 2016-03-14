@@ -13806,6 +13806,32 @@ body {
   width: 100%;
   position: relative;
 }
+.template-cell {
+  position: relative;
+  display: table;
+  margin: 0 auto;
+}
+.template-site {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: darkblue;
+}
+.basic-screen-preview {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  background-color: aliceblue;
+  width: 80%;
+  height: 85%;
+}
+.basic-preview {
+  width: 100%;
+  height: 100%;
+}
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');
 }

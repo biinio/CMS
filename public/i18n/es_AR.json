@@ -54,7 +54,12 @@
     "INFORMATION": "Acerca de",
     "MORE_INFO": "Información Adicional",
     "ORG_ID": "Identificador",
-    "PUBLISHED": "Publicado"
+    "PUBLISHED": "Publicado",
+    "PUBLISHED_TOOLTIP":"Marcar esta casilla si esta la organizacion lista para ser puesta al público",
+    "USECOLORBRAND_TOOLTIP":"Marcar esta casilla para poner sus colores como prioridad en sus productos",
+    "USEBRANDCOLOR":"Usar Colores de Marca",
+    "PRIMARYCOLOR":"Color Primario",
+    "SECONDARYCOLOR":" Color Secundario"
   },
   "TYPE":{
     "TITLE":"Tipo de Elemento",

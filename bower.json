@@ -56,7 +56,8 @@
     "oclazyload": "0.6.3",
     "seiyria-bootstrap-slider": "~5.2.4",
     "simple-line-icons": "0.1.1",
-    "ng-img-crop": "ngImgCrop#~0.3.2"
+    "ng-img-crop": "ngImgCrop#~0.3.2",
+    "angular-color-picker": "angularjs-color-picker#~1.0.2"
   },
   "resolutions": {
     "angular": "1.4.2",
