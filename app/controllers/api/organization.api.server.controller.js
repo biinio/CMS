@@ -66,13 +66,13 @@ exports.organizationList = function (req, res) {
                 }
 
                 if(!data[i].primaryColor){
-                    data[i].primaryColor = "rgb(0,0,0)";
+                    data[i].primaryColor = "rgb(170,171,171)";
                 }else{
                     data[i].primaryColor = "rgb("+data[i].primaryColor+")";
                 }
 
                 if(!data[i].secondaryColor){
-                    data[i].secondaryColor = "rgb(0,0,0)";
+                    data[i].secondaryColor = "rgb(85,86,86)";
                 }else{
                     data[i].secondaryColor = "rgb("+data[i].secondaryColor+")";
                 }
@@ -98,16 +98,16 @@ exports.setOrganization = function (req, res) {
         newModel.identifier = organizationIdentifier;
         newModel.accountIdentifier = req.user.accountIdentifier;
         newModel.isUsingBrandColors = "0";
-        newModel.primaryColor = "0,0,0";
-        newModel.secondaryColor = "0,0,0";
+        newModel.primaryColor = "170,171,171";
+        newModel.secondaryColor = "85,86,86";
         //Perform an create
         newModel.save(function (err) {
             if (err)
                 res.send(err, 500);
             else {
                 //Return the state and the object
-                newModel.primaryColor = "rgb(0,0,0)";
-                newModel.secondaryColor = "rgb(0,0,0)";
+                newModel.primaryColor = "rgb(170,171,171)";
+                newModel.secondaryColor = "rgb(85,86,86)";
                 res.send(newModel, 201);
             }
         });
@@ -120,13 +120,13 @@ exports.setOrganization = function (req, res) {
         }
 
         if(!model.primaryColor){
-            model.primaryColor = "0,0,0";
+            model.primaryColor = "170,171,171";
         }else{
             model.primaryColor = model.primaryColor.replace("rgb(","").replace(")","");
         }
 
         if(!model.secondaryColor){
-            model.secondaryColor = "0,0,0";
+            model.secondaryColor = "85,86,86";
         }else{
             model.secondaryColor = model.secondaryColor.replace("rgb(","").replace(")","");
         }
