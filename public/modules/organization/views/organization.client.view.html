@@ -30,16 +30,16 @@
                                 <div class="checkbox c-checkbox">
                                     <label title="{{ 'ORGANIZATION.USECOLORBRAND_TOOLTIP' | translate }}">
                                         <input type="checkbox"
-                                               ng-model="objectsSidebarService.selectedObject.useColorBrand" ng-true-value="'1'" ng-false-value="'0'"/>
+                                               ng-model="objectsSidebarService.selectedObject.isUsingBrandColors" ng-true-value="'1'" ng-false-value="'0'"/>
                                         <span class="fa fa-check"></span>
                                         {{ 'ORGANIZATION.USEBRANDCOLOR' | translate }}
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group" data-ng-if="objectsSidebarService.selectedObject.useColorBrand=='1'">
+                            <div class="form-group" >
                                 <div class="col-md-6">
                                     <label translate="ORGANIZATION.PRIMARYCOLOR"></label>
-                                    <color-picker ng-model="objectsSidebarService.selectedObject.brandPrimaryColor"
+                                    <color-picker ng-model="objectsSidebarService.selectedObject.primaryColor"
                                         color-picker-format="'rgb'"
                                         color-picker-alpha="false"
                                         color-picker-swatch="true"
@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label translate="ORGANIZATION.SECONDARYCOLOR"></label>
-                                    <color-picker ng-model="objectsSidebarService.selectedObject.brandSecundaryColor"
+                                    <color-picker ng-model="objectsSidebarService.selectedObject.secondaryColor"
                                                   color-picker-format="'rgb'"
                                                   color-picker-alpha="false"
                                                   color-picker-swatch="true"
@@ -59,7 +59,6 @@
                                     </color-picker>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label translate="ORGANIZATION.NAME"></label>
                                 <input type="text" placeholder="Name **" ng-model="objectsSidebarService.selectedObject.name" class="form-control"/>
