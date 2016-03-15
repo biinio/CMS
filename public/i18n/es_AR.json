@@ -59,7 +59,7 @@
     "USECOLORBRAND_TOOLTIP":"Marcar esta casilla para poner sus colores como prioridad en sus productos",
     "USEBRANDCOLOR":"Usar Colores de Marca",
     "PRIMARYCOLOR":"Color Primario",
-    "SECONDARYCOLOR":" Color Secundario"
+    "SECONDARYCOLOR":" Color De Texto"
   },
   "TYPE":{
     "TITLE":"Tipo de Elemento",
