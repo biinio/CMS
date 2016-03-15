@@ -52,10 +52,32 @@ exports.organizationList = function (req, res) {
         media: 1,
         sites:1,
         isPublished : 1,
-        hasNPS : 1
-    }, function (err, data) {
+        hasNPS : 1,
+        isUsingBrandColors: 1,
+        primaryColor : 1,
+        secondaryColor:1
+    }).lean().exec(function (err, data) {
         if (err) { throw err }
         else {
+            for(var i = 0; i<data.length; i++){
+
+                if(!data[i].isUsingBrandColors){
+                    data[i].isUsingBrandColors = "0";
+                }
+
+                if(!data[i].primaryColor){
+                    data[i].primaryColor = "rgb(170,171,171)";
+                }else{
+                    data[i].primaryColor = "rgb("+data[i].primaryColor+")";
+                }
+
+                if(!data[i].secondaryColor){
+                    data[i].secondaryColor = "rgb(85,86,86)";
+                }else{
+                    data[i].secondaryColor = "rgb("+data[i].secondaryColor+")";
+                }
+
+            }
             res.json({data: data});
         }
     });
@@ -75,13 +97,17 @@ exports.setOrganization = function (req, res) {
         //Set the account and de user identifier
         newModel.identifier = organizationIdentifier;
         newModel.accountIdentifier = req.user.accountIdentifier;
-
+        newModel.isUsingBrandColors = "0";
+        newModel.primaryColor = "170,171,171";
+        newModel.secondaryColor = "85,86,86";
         //Perform an create
         newModel.save(function (err) {
             if (err)
                 res.send(err, 500);
             else {
                 //Return the state and the object
+                newModel.primaryColor = "rgb(170,171,171)";
+                newModel.secondaryColor = "rgb(85,86,86)";
                 res.send(newModel, 201);
             }
         });
@@ -89,6 +115,21 @@ exports.setOrganization = function (req, res) {
         var model = req.body.model;
         delete model._id;
         delete model.identifier;
+        if(!model.isUsingBrandColors){
+            model.isUsingBrandColors = "0";
+        }
+
+        if(!model.primaryColor){
+            model.primaryColor = "170,171,171";
+        }else{
+            model.primaryColor = model.primaryColor.replace("rgb(","").replace(")","");
+        }
+
+        if(!model.secondaryColor){
+            model.secondaryColor = "85,86,86";
+        }else{
+            model.secondaryColor = model.secondaryColor.replace("rgb(","").replace(")","");
+        }
         organization.update(
             {identifier: organizationIdentifier},
             {$set: model},
@@ -98,6 +139,8 @@ exports.setOrganization = function (req, res) {
                     res.send(err, 500);
                 else
                 //Return the state
+                    model.primaryColor = model.primaryColor.replace("rgb(","").replace(")","");
+                    model.secondaryColor = model.secondaryColor.replace("rgb(","").replace(")","");
                     res.send(model, 200);
             }
         );

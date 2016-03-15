@@ -17,7 +17,7 @@ var ApplicationConfiguration = (function() {
 	var applicationModuleVendorDependencies = ['ngRoute', 'ngAnimate', 'ngStorage', 'ngTouch', 'ngCookies',
         'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize',
         'ngResource', 'ui.utils','ngAnimate', 'toaster','textAngular','bootstrap-tagsinput','angular-bind-html-compile',
-		'datePicker','ui.bootstrap-slider','ngDragDrop','nvd3','ngImgCrop'];
+		'datePicker','ui.bootstrap-slider','ngDragDrop','nvd3','ngImgCrop','color.picker'];
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
 		// Create angular module
@@ -55,6 +55,14 @@ angular.element(document).ready(function() {
 	//Then init the app
 	angular.bootstrap(document, [ApplicationConfiguration.applicationModuleName]);
 });
+/**
+ * Created by Ivan on 8/17/15.
+ */
+'use strict';
+
+// Use Applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('basiccms');
+
 'use strict';
 
 // Use Applicaion configuration module to register a new module
@@ -245,6 +253,283 @@ ApplicationConfiguration.registerModule('users');
     ApplicationConfiguration.registerModule('app.utils', [
           'app.colors'
           ]);
+
+})();
+
+/**
+ * Created by Ivan on 8/27/15.
+ */
+'use strict';
+
+// Setting up route
+angular.module('basiccms').config(['$stateProvider',
+    function($stateProvider) {
+        // Users state routing
+        $stateProvider.
+            state('app.basiccms', {
+                url: '/basiccms',
+                templateUrl: 'modules/basiccms/views/basic.client.view.html',
+                resolve: {
+                    permissions: function(Permission) {
+                        return Permission.getPermissions();
+                    },
+                    selectedOrganization: function (Organization) {
+                        return Organization.getSelectedOrganization();
+                    },
+                    organization: function (Organization) {
+                        return Organization.getOrganizations();
+                    }
+                }
+            });
+    }
+]);
+
+/**=========================================================
+ * Module: biins.controller.js
+ * Controller for biins section
+ =========================================================*/
+
+(function () {
+    'use strict';
+
+    angular
+        .module('basiccms')
+        .controller('BasicCMSController', BasicCMSController);
+
+    BasicCMSController.$inject = ['$http', '$state', '$scope','$modal', 'Authentication', 'Organization', 'ObjectsSidebar','Loading'];
+    function BasicCMSController($http, $state, $scope,$modal, Authentication, Organization, ObjectsSidebar,Loading) {
+
+
+        /**=============================================================================================================
+         *  Functions
+         =============================================================================================================*/
+
+        $scope.objectsSidebarService = ObjectsSidebar;
+        $scope.objectsSidebarService.enableAddButton = false;
+
+        $scope.getSiteName = function (identifier) {
+            var site = _.findWhere($scope.sites, {identifier: identifier});
+            if (site) {
+                return site.title1 + " " + site.title2;
+            } else {
+                return "";
+            }
+        };
+
+        $scope.getObjectName = function (identifier, type) {
+            if (identifier && type) {
+                if (type === "1") {
+                    var el = _.findWhere($scope.elements, {elementIdentifier: identifier});
+                    if (el)
+                        return el.title;
+                }
+                else {
+                    var sh = _.findWhere($scope.showcases, {identifier: identifier});
+                    if (sh)
+                        return sh.name;
+                }
+            }
+            return "name not available";
+        };
+
+        $scope.removeObject = function (index) {
+            $scope.objectsSidebarService.selectedObject.objects.splice(index, 1);
+            $scope.biins = $scope.objectsSidebarService.getObjects();
+        };
+
+        //Save The Biin Objects Changes
+        $scope.save = function () {
+
+            if ($scope.objectsSidebarService.selectedObject != null) {
+                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/venues/create', null, {
+                    headers: {
+                        name: $scope.objectsSidebarService.selectedObject.venue,
+                        orgidentifier: $scope.organizationId
+                    }
+                }).success(function () {
+                    $http.post(ApplicationConfiguration.applicationBackendURL + 'api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.objectsSidebarService.selectedObject).success(function () {
+                        console.log("success");
+                    }).error(function (err) {
+                       console.log(err);
+                    });
+                });
+            }
+        };
+
+        var vm = this;
+        activate();
+
+        ////////////////
+
+        function activate() {
+            $scope.authentication = Authentication;
+            $scope.organizationService = Organization;
+        }
+
+        /**=============================================================================================================
+         * ObjectsSidebar Configuration
+         *
+         =============================================================================================================*/
+        $scope.objectsSidebarService = ObjectsSidebar;
+        $scope.sidebarTemplate =
+            "<div class='col-md-12 leftInformationArea' style='padding-left: 10px'>" +
+                "<label class='threeRowTitle'>{{item.name}}</label>" +
+                "<localization class='threeRowSubTitle' style='display: block'></localization>" +
+                "<p class='threeRowThirdLine'>{{item.status}}</p>" +
+            "</div>";
+        $scope.objectsSidebarService.template = $scope.sidebarTemplate;
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
+
+        /**=============================================================================================================
+         * Events Listeners
+         *
+         =============================================================================================================*/
+
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
+            $scope.objectsSidebarService.reset();
+        });
+
+        $scope.$on('organizationChanged', function () {
+            $scope.objectsSidebarService.selectedObject = null;
+            $scope.objectsSidebarService.objects = [];
+            $scope.loadingService.isLoading = true;
+
+            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            //Get the Sites Information
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/').success(function (data) {
+                $scope.sites = data.data.sites;
+                //Get the elements
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElementser/').success(function (data) {
+                    $scope.elements = data.data.elements;
+                    //Get the showcases
+                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/showcases/').success(function (data) {
+                        $scope.showcases = data.data;
+                        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
+                            $scope.biins = data.data;
+                            $scope.objectsSidebarService.setObjects(data.data);
+                            $scope.loadingService.isLoading = false;
+                        }).error(function (err) {
+                            console.log(err);
+                        });
+                    }).error(function (err) {
+                        console.log(err);
+                    });
+                }).error(function (err) {
+                    console.log(err);
+                });
+            }).error(function (err) {
+                console.log(err);
+            });
+        });
+
+        $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
+
+        });
+
+        /**=============================================================================================================
+         * Variables
+         *
+         =============================================================================================================*/
+
+            //Init the the sites
+        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+
+        /**=============================================================================================================
+         * Self called functions
+         *
+         =============================================================================================================*/
+
+            //Get the Sites Information
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/').success(function (data) {
+            $scope.sites = data.data.sites;
+            //Get the elements
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function (data) {
+                $scope.elements = data.data.elements;
+                //Get the showcases
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/showcases/').success(function (data) {
+                    $scope.showcases = data.data;
+                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
+                        $scope.biins = data.data;
+                        $scope.objectsSidebarService.setObjects(data.data);
+                        $scope.loadingService.isLoading = false;
+                    }).error(function (err) {
+                        console.log(err);
+                    });
+                }).error(function (err) {
+                    console.log(err);
+                });
+            }).error(function (err) {
+                console.log(err);
+            });
+        }).error(function (err) {
+            console.log(err);
+        });
+
+
+        //Add an object to the objects collection
+        $scope.saveObject = function (obj) {
+            if (obj)
+                if ('isNew' in obj) {
+                    delete obj.isNew;
+                    $scope.objectsSidebarService.selectedObject.objects.push(obj);
+                    $scope.biins = $scope.objectsSidebarService.getObjects();
+                }
+            //$scope.biins.push(obj);
+            //Todo Do the method to save the save the data
+        };
+
+        $scope.getVenues = function (val) {
+            return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/venues/search', {
+                headers: {
+                    regex: val,
+                    orgidentifier: $scope.organizationId
+                }
+            }).then(function (response) {
+                return response.data;
+            });
+        };
+
+        $scope.convertTime = function (time) {
+            var hours = parseInt(time);
+            var min = ( parseFloat(time) - hours )*60;
+            var hoursString = hours < 10 ? "0"+hours : ""+ hours;
+            var minString = min < 10 ? "0"+min : ""+ min;
+            return hoursString+":"+minString;
+        };
+
+        //Modal to edit or create an Object
+        $scope.biinObject = function (size, type, obj) {
+
+            var modalInstance = $modal.open({
+                templateUrl: '/modules/biins/views/partials/biin.client.modal.view.html',
+                controller: 'biinsModalController',
+                size: size,
+                resolve: {
+                    selectedObj: function () {
+                        if (type === 'create')
+                            return {type: type};//name:$scope.sites[selectedIndex].title1,index:selectedIndex};
+                        else
+                            return {type: type, obj: obj};//name:$scope.sites[selectedIndex].title1,index:selectedIndex};
+                    },
+                    elements: function () {
+                        return $scope.elements;
+                    },
+                    showcases: function () {
+                        return $scope.showcases;
+                    }
+                }
+            });
+
+
+            modalInstance.result.then(function (objectToCreate) {
+                $scope.saveObject(objectToCreate);
+            }, function () {
+                //$log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+    }
 
 })();
 
@@ -5506,7 +5791,7 @@ angular.module('organization').config(['$stateProvider',
         //Indicate if an organization data is changed
         var isOrganizationDirty = function () {
             $scope.isAnalazingOrg = true;
-            var propertiesToCheck = ["name", "brand", "description", "extraInfo","isPublished"];
+            var propertiesToCheck = ["name", "brand", "description", "extraInfo","isPublished","isUsingBrandColors","primaryColor","secondaryColor"];
             var foundChange = false;
             if ($scope.prevSaveOrganization !== null) {
                 for (var i = 0; i < propertiesToCheck.length && !foundChange; i++) {
