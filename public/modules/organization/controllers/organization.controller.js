@@ -107,12 +107,13 @@
         //Push a new organization in the list
         $scope.createOrganization = function () {
             //Get the Mayor from server
-
+            swal({   title: "Su organización se esta creando",  type: "info",   showConfirmButton: false });
             $http.put(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + Authentication.user.accountIdentifier).success(function (org, status) {
                 if (status == 201 || status == 200) {
                     $scope.organizationService.organizationsList.push(org);
                     //$scope.objectsSidebarService.objects.push(org);
                     $scope.objectsSidebarService.selectedObject = org;
+                    swal.close();
                 } else {
                     displayErrorMessage(org, "Organizations Creation", status);
                 }

@@ -71,7 +71,8 @@ module.exports = {
                 'public/lib/angular-nvd3/dist/angular-nvd3.js',
                 'public/lib/ng-img-crop/compile/minified/ng-img-crop.js',
                 'public/lib/tinycolor/dist/tinycolor-min.js',
-                'public/lib/angular-color-picker/dist/angularjs-color-picker.min.js'
+                'public/lib/angular-color-picker/dist/angularjs-color-picker.min.js',
+                'public/lib/sweetalert/dist/sweetalert.min.js'
 
                 // 'public/lib/jquery/dist/jquery.js',
                 // 'public/lib/angular/angular.js',
@@ -97,7 +98,8 @@ module.exports = {
             'public/lib/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css',
             'public/lib/nvd3/build/nv.d3.css',
             'public/lib/ng-img-crop/compile/minified/ng-img-crop.css',
-            'public/lib/angular-color-picker/dist/angularjs-color-picker.min.css'
+            'public/lib/angular-color-picker/dist/angularjs-color-picker.min.css',
+            'public/lib/sweetalert/dist/sweetalert.css'
         ],
         js: [
             'public/config.js',

@@ -144,9 +144,11 @@
         //Push a new showcase in the list
         $scope.create = function () {
             //Create a new Showcase
+            swal({   title: "Su vitrina se esta creando",  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + "/showcases").success(function (showcase, status) {
                 if (status == 201) {
                     $scope.objectsSidebarService.objects.push(showcase);
+                    swal.close();
                 }
             });
 

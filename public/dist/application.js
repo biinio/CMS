@@ -2825,6 +2825,7 @@ angular.module('elements').config(['$stateProvider',
 
         $scope.$on("Biin: On Object Created", function(){
             $scope.create();
+
         });
 
         //Get the List of Objects
@@ -2836,6 +2837,7 @@ angular.module('elements').config(['$stateProvider',
 
         //Push a new showcase in the list
         $scope.create = function(){
+            swal({   title: "Su elemento se esta creando",  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/elements").success(function(element,status){
                 if(status==201){
                     var elemSearchTag =$('#elemSearchTag');
@@ -2843,6 +2845,7 @@ angular.module('elements').config(['$stateProvider',
                     $scope.elements.push(element);
                     $scope.objectsSidebarService.setObjects($scope.elements);
                     $scope.objectsSidebarService.setSelectedObject(element);
+                    swal.close();
                 }else{
                     displayErrorMessage(element,"Element Creation",status);
                 }
@@ -5755,12 +5758,13 @@ angular.module('organization').config(['$stateProvider',
         //Push a new organization in the list
         $scope.createOrganization = function () {
             //Get the Mayor from server
-
+            swal({   title: "Su organización se esta creando",  type: "info",   showConfirmButton: false });
             $http.put(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + Authentication.user.accountIdentifier).success(function (org, status) {
                 if (status == 201 || status == 200) {
                     $scope.organizationService.organizationsList.push(org);
                     //$scope.objectsSidebarService.objects.push(org);
                     $scope.objectsSidebarService.selectedObject = org;
+                    swal.close();
                 } else {
                     displayErrorMessage(org, "Organizations Creation", status);
                 }
@@ -6956,9 +6960,11 @@ angular.module('showcases').config(['$stateProvider',
         //Push a new showcase in the list
         $scope.create = function () {
             //Create a new Showcase
+            swal({   title: "Su vitrina se esta creando",  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + "/showcases").success(function (showcase, status) {
                 if (status == 201) {
                     $scope.objectsSidebarService.objects.push(showcase);
+                    swal.close();
                 }
             });
 
@@ -7829,6 +7835,7 @@ angular.module('sites').config(['$stateProvider',
         //Create a new Site
         $scope.create = function(){
             //Get the Mayor from server
+            swal({   title: "Su local se esta creando",  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/sites").success(function(site,status){
                 if(status==201){
 
@@ -7839,6 +7846,7 @@ angular.module('sites').config(['$stateProvider',
                     sites.push(site);
                     $scope.objectsSidebarService.setObjects(sites);
                     $scope.objectsSidebarService.setSelectedObject(site);
+                    swal.close();
                 }
                 else
                 {

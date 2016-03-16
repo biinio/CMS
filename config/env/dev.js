@@ -28,7 +28,8 @@ module.exports = {
 			'public/lib/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css',
 			'public/lib/nvd3/build/nv.d3.css',
 			'public/lib/ng-img-crop/compile/minified/ng-img-crop.css',
-			'public/lib/angular-color-picker/dist/angularjs-color-picker.min.css'
+			'public/lib/angular-color-picker/dist/angularjs-color-picker.min.css',
+			'public/lib/sweetalert/dist/sweetalert.css'
 		],
 		js: 'public/dist/application.min.js',
 		tests: [
