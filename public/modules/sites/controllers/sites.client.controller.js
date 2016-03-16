@@ -171,6 +171,7 @@
         //Create a new Site
         $scope.create = function(){
             //Get the Mayor from server
+            swal({   title: "Su local se esta creando",  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/sites").success(function(site,status){
                 if(status==201){
 
@@ -181,6 +182,7 @@
                     sites.push(site);
                     $scope.objectsSidebarService.setObjects(sites);
                     $scope.objectsSidebarService.setSelectedObject(site);
+                    swal.close();
                 }
                 else
                 {

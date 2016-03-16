@@ -102,6 +102,7 @@
 
         $scope.$on("Biin: On Object Created", function(){
             $scope.create();
+
         });
 
         //Get the List of Objects
@@ -113,6 +114,7 @@
 
         //Push a new showcase in the list
         $scope.create = function(){
+            swal({   title: "Su elemento se esta creando",  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/elements").success(function(element,status){
                 if(status==201){
                     var elemSearchTag =$('#elemSearchTag');
@@ -120,6 +122,7 @@
                     $scope.elements.push(element);
                     $scope.objectsSidebarService.setObjects($scope.elements);
                     $scope.objectsSidebarService.setSelectedObject(element);
+                    swal.close();
                 }else{
                     displayErrorMessage(element,"Element Creation",status);
                 }
