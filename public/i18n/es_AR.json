@@ -209,7 +209,9 @@
     "VALIDUNTIL_PLACEHOLDER": "Fecha de expiración **",
     "LIMITEDQTY": "Cantidad limitada",
     "LIMITEDQTY_TOOLTIPT": "Permita hacer promociones con cantidades limitadas",
-    "LIMITEDQTY_PLACEHOLDER": "Cantidad **"
+    "LIMITEDQTY_PLACEHOLDER": "Cantidad **",
+    "TAXINCLUDED": "Impuestos Incluidos",
+    "TAXINCLUDED_TOOLTIP":"El precio incluye los impuestos"
   },
   "LOGIN": {
     "SIGN_IN": "Acceder con su cuenta de Biin",
