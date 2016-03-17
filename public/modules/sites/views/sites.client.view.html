@@ -2,7 +2,7 @@
 <div ng-controller="SitesController as sites" class="">
     <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
         <div class="right-section-content nopadding">
-            <div ng-if="objectsSidebarService.selectedObject!=null">
+            <div ng-if="objectsSidebarService.selectedObject!=null && objectsSidebarService.selectedObject != {}">
                 <!-- NutShell Section -->
                 <section>
                     <div class="panel panel-default">
@@ -197,6 +197,11 @@
                 <!--code ng-hide="true">{{'GENERIC.IDENTIFIER' | translate}} :
                     {{objectsSidebarService.selectedObject.identifier }}</code-->
                 <code>IDENTIFIER: {{objectsSidebarService.selectedObject.identifier}}</code>
+            </div>
+            <div ng-if="objectsSidebarService.selectedObject==null || objectsSidebarService.selectedObject == {}">
+                <section class="text-center">
+                    <h4>Por favor seleccione un local en la barra lateral o cree uno presionando el botón de crear nuevo.</h4>
+                </section>
             </div>
         </div>
     </div>

@@ -78,7 +78,8 @@
     "SUB_TITLE": "Agregue y use las imagenes de su marca para darle identidad a su local.",
     "UPLOAD": "Subir",
     "APPLY": "Aplicar",
-    "LOADING": "Subiendo imágenes, por favor espere..."
+    "LOADING": "Subiendo imágenes, por favor espere...",
+    "NOIMAGEUPLOADED":"No tienes ninguna imagen subida en este momento"
   },
   "LOADER":{
     "LOADING": "Cargando la información, por favor espere..."

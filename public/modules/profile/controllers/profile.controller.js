@@ -66,6 +66,7 @@
             $scope.authentication = Authentication;
             $http.get("/api/account").success(function (data) {
                 $scope.profile = data.data;
+                $scope.profileCopy = $.extend(true,{},data.data);
                 $scope.loadingService.isLoading = false;
             });
         }

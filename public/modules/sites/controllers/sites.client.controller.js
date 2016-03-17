@@ -182,7 +182,9 @@
                     sites.push(site);
                     $scope.objectsSidebarService.setObjects(sites);
                     $scope.objectsSidebarService.setSelectedObject(site);
-                    swal.close();
+                    setTimeout(function(){
+                        swal.close();
+                    },2000);
                 }
                 else
                 {

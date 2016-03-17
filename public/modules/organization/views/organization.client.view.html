@@ -1,8 +1,8 @@
 <div ng-include="'/modules/core/views/partials/objectssidebar.html'" ng-controller="ObjectsSideBar" class=""></div>
 <div ng-controller="OrganizationController as organization" class="block-center">
-<div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
-    <div class="right-section-content">
-        <div ng-if="objectsSidebarService.selectedObject!=null && objectsSidebarService.selectedObject != {}">
+    <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
+        <div class="right-section-content">
+            <div ng-if="objectsSidebarService.selectedObject!=null && objectsSidebarService.selectedObject != {}">
                 <!-- START panel-->
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -85,6 +85,11 @@
                 <button  type="button" ng-if="deletePermit" class="btn btn-oval btn-danger align-right" ng-click="deleteOrganization(' {{'GENERIC.DELETE_ORGANIZATION_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">{{ 'GENERIC.DELETE_ORGANIZATION' | translate }}</button>
                 <code>IDENTIFIER: {{objectsSidebarService.selectedObject.identifier}}</code>
                 <!-- END panel -->
+            </div>
+            <div ng-if="objectsSidebarService.selectedObject==null || objectsSidebarService.selectedObject == {}">
+                <section class="text-center">
+                    <h4>Por favor seleccione un elemento en la barra lateral o cree uno presionando el botón de crear nuevo.</h4>
+                </section>
             </div>
         </div>
     </div>

@@ -122,7 +122,9 @@
                     $scope.elements.push(element);
                     $scope.objectsSidebarService.setObjects($scope.elements);
                     $scope.objectsSidebarService.setSelectedObject(element);
-                    swal.close();
+                    setTimeout(function(){
+                        swal.close();
+                    },2000);
                 }else{
                     displayErrorMessage(element,"Element Creation",status);
                 }
