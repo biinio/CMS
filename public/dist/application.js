@@ -2845,7 +2845,9 @@ angular.module('elements').config(['$stateProvider',
                     $scope.elements.push(element);
                     $scope.objectsSidebarService.setObjects($scope.elements);
                     $scope.objectsSidebarService.setSelectedObject(element);
-                    swal.close();
+                    setTimeout(function(){
+                        swal.close();
+                    },2000);
                 }else{
                     displayErrorMessage(element,"Element Creation",status);
                 }
@@ -5764,7 +5766,9 @@ angular.module('organization').config(['$stateProvider',
                     $scope.organizationService.organizationsList.push(org);
                     //$scope.objectsSidebarService.objects.push(org);
                     $scope.objectsSidebarService.selectedObject = org;
-                    swal.close();
+                    setTimeout(function(){
+                        swal.close();
+                    },2000);
                 } else {
                     displayErrorMessage(org, "Organizations Creation", status);
                 }
@@ -6571,6 +6575,7 @@ angular.module('dashboard').config(['$stateProvider',
             $scope.authentication = Authentication;
             $http.get("/api/account").success(function (data) {
                 $scope.profile = data.data;
+                $scope.profileCopy = $.extend(true,{},data.data);
                 $scope.loadingService.isLoading = false;
             });
         }
@@ -6964,7 +6969,9 @@ angular.module('showcases').config(['$stateProvider',
             $http.post(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + "/showcases").success(function (showcase, status) {
                 if (status == 201) {
                     $scope.objectsSidebarService.objects.push(showcase);
-                    swal.close();
+                    setTimeout(function(){
+                        swal.close();
+                    },2000);
                 }
             });
 
@@ -7846,7 +7853,9 @@ angular.module('sites').config(['$stateProvider',
                     sites.push(site);
                     $scope.objectsSidebarService.setObjects(sites);
                     $scope.objectsSidebarService.setSelectedObject(site);
-                    swal.close();
+                    setTimeout(function(){
+                        swal.close();
+                    },2000);
                 }
                 else
                 {

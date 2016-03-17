@@ -113,7 +113,9 @@
                     $scope.organizationService.organizationsList.push(org);
                     //$scope.objectsSidebarService.objects.push(org);
                     $scope.objectsSidebarService.selectedObject = org;
-                    swal.close();
+                    setTimeout(function(){
+                        swal.close();
+                    },2000);
                 } else {
                     displayErrorMessage(org, "Organizations Creation", status);
                 }

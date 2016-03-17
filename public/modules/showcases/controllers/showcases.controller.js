@@ -148,7 +148,9 @@
             $http.post(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + "/showcases").success(function (showcase, status) {
                 if (status == 201) {
                     $scope.objectsSidebarService.objects.push(showcase);
-                    swal.close();
+                    setTimeout(function(){
+                        swal.close();
+                    },2000);
                 }
             });
 

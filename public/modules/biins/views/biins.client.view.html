@@ -115,6 +115,11 @@
                     </div>
                 </section>
             </div>
+            <div ng-if="objectsSidebarService.selectedObject==null || objectsSidebarService.selectedObject == {}">
+                <section class="text-center">
+                    <h4>No tienes beacons asignados a tu organización por favor contacta a Biin para mas información.</h4>
+                </section>
+            </div>
         </div>
     </div>
 </div>
