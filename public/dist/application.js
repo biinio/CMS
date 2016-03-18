@@ -5732,6 +5732,9 @@ angular.module('organization').config(['$stateProvider',
         }
 
         $scope.saveOrganization = function () {
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
+
             if (!$scope.isAnalazingOrg) {
                 if (isOrganizationDirty()) {
                     var currentOrganization = $scope.objectsSidebarService.selectedObject;
@@ -7978,6 +7981,9 @@ angular.module('sites').config(['$stateProvider',
 
         //Save detail model object
         $scope.save= function(){
+
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
 
             var tags = $("#siteSearchTag").tagsinput('items');
 
