@@ -6546,8 +6546,10 @@ angular.module('dashboard').config(['$stateProvider',
                     if (status === 200) {
                         if (data.needToRelog)
                             window.location.href = '/auth/signout';
-                        else
+                        else{
+                            $scope.profileCopy = $.extend(true,{},$scope.profile);
                             toaster.pop('success', '', 'Your information has been saved');
+                        }
                     } else
                         toaster.pop('error', 'Error', 'Your information has not been saved');
                 }).error(function () {
@@ -6557,9 +6559,7 @@ angular.module('dashboard').config(['$stateProvider',
         };
 
         var isProfileDirty = function () {
-            var propertiesToCheck = ["displayName", "lastName", "name", "phoneNumber"];
-            //emails[0]
-            return true;
+            return !_.isEqual($scope.profile, $scope.profileCopy);
         };
 
         $scope.$on('changeProfileImage', function(scope,image){
