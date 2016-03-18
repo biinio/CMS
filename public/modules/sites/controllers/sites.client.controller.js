@@ -308,6 +308,9 @@
         //Save detail model object
         $scope.save= function(){
 
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
+
             var tags = $("#siteSearchTag").tagsinput('items');
 
             $scope.objectsSidebarService.selectedObject.searchTags = [];

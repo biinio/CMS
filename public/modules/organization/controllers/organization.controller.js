@@ -79,6 +79,9 @@
         }
 
         $scope.saveOrganization = function () {
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
+
             if (!$scope.isAnalazingOrg) {
                 if (isOrganizationDirty()) {
                     var currentOrganization = $scope.objectsSidebarService.selectedObject;
