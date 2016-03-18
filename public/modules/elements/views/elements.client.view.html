@@ -285,9 +285,9 @@
                 <button  type="button" class="btn btn-oval btn-danger align-right" ng-click="deleteElement(' {{'GENERIC.DELETE_ELEMENT_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">{{ 'GENERIC.DELETE_ELEMENT' | translate }}</button>
                 <code>IDENTIFIER: {{objectsSidebarService.selectedObject.elementIdentifier}}</code>
             </div>
-            <div ng-if="objectsSidebarService.selectedObject==null || objectsSidebarService.selectedObject == {}">
-                <section class="text-center">
-                    <h4>Por favor seleccione un elemento en la barra lateral o cree uno presionando el botón de crear nuevo.</h4>
+            <div ng-if="objectsSidebarService.selectedObject==null || objectsSidebarService.selectedObject == {}" class="no-object-container">
+                <section class="text-center on-no-object-selected">
+                    <span>Por favor seleccione un elemento en la barra lateral o cree uno presionando el botón de crear nuevo.</span>
                 </section>
             </div>
         </div>
