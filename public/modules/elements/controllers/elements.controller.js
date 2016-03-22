@@ -10,9 +10,9 @@
         .module('elements')
         .controller('ElementsController', ElementsController);
 
-    ElementsController.$inject = ['$http', '$state','$timeout','$scope', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading'];
+    ElementsController.$inject = ['$http', '$state','$timeout','$scope','$translate', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading'];
 
-    function ElementsController($http, $state, $timeout, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
+    function ElementsController($http, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
         activate();
 
         $scope.objectsSidebarService = ObjectsSidebar;
@@ -114,7 +114,8 @@
 
         //Push a new showcase in the list
         $scope.create = function(){
-            swal({   title: "Su elemento se esta creando",  type: "info",   showConfirmButton: false });
+            var titleText = $translate.instant("ELEMENT.CREATING");
+            swal({   title: titleText,  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/elements").success(function(element,status){
                 if(status==201){
                     var elemSearchTag =$('#elemSearchTag');
@@ -142,19 +143,33 @@
         };
 
         $scope.deleteElement = function(message, selectedObject) {
-            if (confirm(message)) {
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_ELEMENT","GENERIC.DELETE_ELEMENT_CONFIRMATION","ELEMENT.DELETED","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.DELETE_ELEMENT"],
+                text: translatedTexts["GENERIC.DELETE_ELEMENT_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
                 $scope.removeElementAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
-            }
+            });
         };
 
         //Remove element at specific position
         $scope.removeElementAt = function(index){
-            if($scope.objectsSidebarService.selectedObject==$scope.objectsSidebarService.objects[index]){
-                $scope.objectsSidebarService.selectedObject = null;
-            }
+            var translatedTexts  = $translate.instant(["ELEMENT.DELETED_TEXT","GENERIC.DELETED"]);
             var elementId = $scope.objectsSidebarService.objects[index].elementIdentifier;
             $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationId+'/elements/'+elementId).success(function(data){
+                    if($scope.objectsSidebarService.selectedObject==$scope.objectsSidebarService.objects[index]){
+                        $scope.objectsSidebarService.selectedObject = null;
+                    }
                     $scope.objectsSidebarService.objects.splice(index,1);
+                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["ELEMENT.DELETED_TEXT"], "success");
                 }
             );
         };

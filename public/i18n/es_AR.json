@@ -99,7 +99,9 @@
     "ACTION_TITLE": "Título de acción",
     "ACTION_TITLE_PLACEHOLDER": "Agregue el nombre de la acción a realizar",
     "ACTION_URL": "URL",
-    "ACTION_URL_PLACEHOLDER": "www.ejemplo.com"
+    "ACTION_URL_PLACEHOLDER": "www.ejemplo.com",
+    "CREATING" : "Su elemento se está creando.",
+    "DELETED_TEXT" : "Su elemento fue eliminado con éxito."
   },
   "GENERIC":{
     "SEARCH_TAGS": "Etiquetas de búsqueda",
@@ -123,7 +125,9 @@
     "DELETE_SHOWCASE_CONFIRMATION": "¿Desea eliminar esta vitrina?",
     "DELETE_ORGANIZATION": "Eliminar organización",
     "DELETE_ORGANIZATION_CONFIRMATION": "¿Desea eliminar esta organización?",
-    "DELETE_IMAGES_CONFIRMATION": "¿Desea eliminar las imágenes seleccionadas?"
+    "DELETE_IMAGES_CONFIRMATION": "¿Desea eliminar las imágenes seleccionadas?",
+    "CANCEL": "Cancelar",
+    "DELETED" : "Eliminado"
   },
   "SITES":{
     "TITLE": "Detalles del Local",
