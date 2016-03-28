@@ -13,8 +13,8 @@
         .module('organization')
         .controller('OrganizationController', OrganizationController);
 
-    OrganizationController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar','Loading'];
-    function OrganizationController($http, $state, $scope, Authentication, toaster, $location, Organization,ObjectsSidebar,Loading) {
+    OrganizationController.$inject = ['$http', '$state', '$scope','$translate', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar','Loading'];
+    function OrganizationController($http, $state, $scope,$translate, Authentication, toaster, $location, Organization,ObjectsSidebar,Loading) {
         var vm = this;
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.organizationService = Organization;
@@ -114,8 +114,8 @@
             $http.put(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + Authentication.user.accountIdentifier).success(function (org, status) {
                 if (status == 201 || status == 200) {
                     $scope.organizationService.organizationsList.push(org);
-                    //$scope.objectsSidebarService.objects.push(org);
-                    $scope.objectsSidebarService.selectedObject = org;
+                    $scope.objectsSidebarService.setObjects($scope.organizationService.organizationsList);
+                    $scope.objectsSidebarService.selectedObject = $scope.organizationService.organizationsList[$scope.organizationService.organizationsList.indexOf(org)];
                     setTimeout(function(){
                         swal.close();
                     },2000);
@@ -128,17 +128,31 @@
 
         // Confirm before deleting organization
         $scope.deleteOrganization = function(message, selectedObject) {
-            if (confirm(message)) {
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_ORGANIZATION_TITLE","GENERIC.DELETE_ORGANIZATION_CONFIRMATION","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.DELETE_ORGANIZATION_TITLE"],
+                text: translatedTexts["GENERIC.DELETE_ORGANIZATION_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
                 $scope.removeOrganization($scope.objectsSidebarService.objects.indexOf(selectedObject));
-            }
+            });
         };
 
         //Remove showcase at specific position
         $scope.removeOrganization = function (index) {
+            var translatedTexts  = $translate.instant(["ORGANIZATION.DELETED_TEXT","GENERIC.DELETED"]);
             var id = $scope.objectsSidebarService.objects[index].identifier;
             $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + id).success(function (data) {
                 $scope.organizationService.removeOrganization(id);
                 $scope.objectsSidebarService.objects.splice(index,1);
+                swal(translatedTexts["GENERIC.DELETED"], translatedTexts["ORGANIZATION.DELETED_TEXT"], "success");
                 /*if($scope.objectsSidebarService.selectedObject.identifier == id){
                     $scope.objectsSidebarService.selectedObject = null;
                 }*/

@@ -10,8 +10,8 @@
         .module('showcases')
         .controller('ShowcasesController', ShowcasesController);
 
-    ShowcasesController.$inject = ['$http', '$scope', 'Authentication', 'Organization', 'ObjectsSidebar','ElementsService','BiinsService','Loading'];
-    function ShowcasesController($http, $scope, Authentication, Organization, ObjectsSidebar,ElementsService,BiinsService,Loading) {
+    ShowcasesController.$inject = ['$http', '$scope', '$translate', 'Authentication', 'Organization', 'ObjectsSidebar','ElementsService','BiinsService','Loading'];
+    function ShowcasesController($http, $scope, $translate, Authentication, Organization, ObjectsSidebar,ElementsService,BiinsService,Loading) {
         activate();
 
         ////////////////
@@ -157,20 +157,36 @@
         };
 
         $scope.deleteShowcase = function(message, selectedObject) {
-            if (confirm(message)) {
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_SHOWCASE_TITLE","GENERIC.DELETE_SHOWCASE_CONFIRMATION","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.DELETE_SHOWCASE_TITLE"],
+                text: translatedTexts["GENERIC.DELETE_SHOWCASE_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
                 $scope.removeShowcaseAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
-            }
+            });
 
         };
 
         //Remove showcase at specific position
         $scope.removeShowcaseAt = function (index) {
+
+            var translatedTexts  = $translate.instant(["SHOWCASE.DELETED_TEXT","GENERIC.DELETED"]);
+            var showcaseId = $scope.objectsSidebarService.objects[index].identifier;
             if ($scope.objectsSidebarService.selectedObject == $scope.objectsSidebarService.objects[index]) {
                 $scope.objectsSidebarService.selectedObject = null;
             }
 
-            var showcaseId = $scope.objectsSidebarService.objects[index].identifier;
             $scope.objectsSidebarService.objects.splice(index, 1);
+            swal(translatedTexts["GENERIC.DELETED"], translatedTexts["SHOWCASE.DELETED_TEXT"], "success");
+            //TODO: BUG THIS METHOD IS RETURNING ERROR
             $http.delete(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/showcases/' + showcaseId).success(function (data) {
                     if (data.state == "success") {
                         //Todo: implement a pull of messages

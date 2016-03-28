@@ -2733,9 +2733,9 @@ angular.module('elements').config(['$stateProvider',
         .module('elements')
         .controller('ElementsController', ElementsController);
 
-    ElementsController.$inject = ['$http', '$state','$timeout','$scope', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading'];
+    ElementsController.$inject = ['$http', '$state','$timeout','$scope','$translate', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading'];
 
-    function ElementsController($http, $state, $timeout, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
+    function ElementsController($http, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
         activate();
 
         $scope.objectsSidebarService = ObjectsSidebar;
@@ -2837,7 +2837,8 @@ angular.module('elements').config(['$stateProvider',
 
         //Push a new showcase in the list
         $scope.create = function(){
-            swal({   title: "Su elemento se esta creando",  type: "info",   showConfirmButton: false });
+            var titleText = $translate.instant("ELEMENT.CREATING");
+            swal({   title: titleText,  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/elements").success(function(element,status){
                 if(status==201){
                     var elemSearchTag =$('#elemSearchTag');
@@ -2865,19 +2866,33 @@ angular.module('elements').config(['$stateProvider',
         };
 
         $scope.deleteElement = function(message, selectedObject) {
-            if (confirm(message)) {
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_ELEMENT_TITLE","GENERIC.DELETE_ELEMENT_CONFIRMATION","ELEMENT.DELETED","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.DELETE_ELEMENT_TITLE"],
+                text: translatedTexts["GENERIC.DELETE_ELEMENT_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
                 $scope.removeElementAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
-            }
+            });
         };
 
         //Remove element at specific position
         $scope.removeElementAt = function(index){
-            if($scope.objectsSidebarService.selectedObject==$scope.objectsSidebarService.objects[index]){
-                $scope.objectsSidebarService.selectedObject = null;
-            }
+            var translatedTexts  = $translate.instant(["ELEMENT.DELETED_TEXT","GENERIC.DELETED"]);
             var elementId = $scope.objectsSidebarService.objects[index].elementIdentifier;
             $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationId+'/elements/'+elementId).success(function(data){
+                    if($scope.objectsSidebarService.selectedObject==$scope.objectsSidebarService.objects[index]){
+                        $scope.objectsSidebarService.selectedObject = null;
+                    }
                     $scope.objectsSidebarService.objects.splice(index,1);
+                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["ELEMENT.DELETED_TEXT"], "success");
                 }
             );
         };
@@ -5666,8 +5681,8 @@ angular.module('organization').config(['$stateProvider',
         .module('organization')
         .controller('OrganizationController', OrganizationController);
 
-    OrganizationController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar','Loading'];
-    function OrganizationController($http, $state, $scope, Authentication, toaster, $location, Organization,ObjectsSidebar,Loading) {
+    OrganizationController.$inject = ['$http', '$state', '$scope','$translate', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar','Loading'];
+    function OrganizationController($http, $state, $scope,$translate, Authentication, toaster, $location, Organization,ObjectsSidebar,Loading) {
         var vm = this;
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.organizationService = Organization;
@@ -5767,8 +5782,8 @@ angular.module('organization').config(['$stateProvider',
             $http.put(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + Authentication.user.accountIdentifier).success(function (org, status) {
                 if (status == 201 || status == 200) {
                     $scope.organizationService.organizationsList.push(org);
-                    //$scope.objectsSidebarService.objects.push(org);
-                    $scope.objectsSidebarService.selectedObject = org;
+                    $scope.objectsSidebarService.setObjects($scope.organizationService.organizationsList);
+                    $scope.objectsSidebarService.selectedObject = $scope.organizationService.organizationsList[$scope.organizationService.organizationsList.indexOf(org)];
                     setTimeout(function(){
                         swal.close();
                     },2000);
@@ -5781,17 +5796,31 @@ angular.module('organization').config(['$stateProvider',
 
         // Confirm before deleting organization
         $scope.deleteOrganization = function(message, selectedObject) {
-            if (confirm(message)) {
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_ORGANIZATION_TITLE","GENERIC.DELETE_ORGANIZATION_CONFIRMATION","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.DELETE_ORGANIZATION_TITLE"],
+                text: translatedTexts["GENERIC.DELETE_ORGANIZATION_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
                 $scope.removeOrganization($scope.objectsSidebarService.objects.indexOf(selectedObject));
-            }
+            });
         };
 
         //Remove showcase at specific position
         $scope.removeOrganization = function (index) {
+            var translatedTexts  = $translate.instant(["ORGANIZATION.DELETED_TEXT","GENERIC.DELETED"]);
             var id = $scope.objectsSidebarService.objects[index].identifier;
             $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + id).success(function (data) {
                 $scope.organizationService.removeOrganization(id);
                 $scope.objectsSidebarService.objects.splice(index,1);
+                swal(translatedTexts["GENERIC.DELETED"], translatedTexts["ORGANIZATION.DELETED_TEXT"], "success");
                 /*if($scope.objectsSidebarService.selectedObject.identifier == id){
                     $scope.objectsSidebarService.selectedObject = null;
                 }*/
@@ -6834,8 +6863,8 @@ angular.module('showcases').config(['$stateProvider',
         .module('showcases')
         .controller('ShowcasesController', ShowcasesController);
 
-    ShowcasesController.$inject = ['$http', '$scope', 'Authentication', 'Organization', 'ObjectsSidebar','ElementsService','BiinsService','Loading'];
-    function ShowcasesController($http, $scope, Authentication, Organization, ObjectsSidebar,ElementsService,BiinsService,Loading) {
+    ShowcasesController.$inject = ['$http', '$scope', '$translate', 'Authentication', 'Organization', 'ObjectsSidebar','ElementsService','BiinsService','Loading'];
+    function ShowcasesController($http, $scope, $translate, Authentication, Organization, ObjectsSidebar,ElementsService,BiinsService,Loading) {
         activate();
 
         ////////////////
@@ -6981,20 +7010,36 @@ angular.module('showcases').config(['$stateProvider',
         };
 
         $scope.deleteShowcase = function(message, selectedObject) {
-            if (confirm(message)) {
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_SHOWCASE_TITLE","GENERIC.DELETE_SHOWCASE_CONFIRMATION","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.DELETE_SHOWCASE_TITLE"],
+                text: translatedTexts["GENERIC.DELETE_SHOWCASE_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
                 $scope.removeShowcaseAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
-            }
+            });
 
         };
 
         //Remove showcase at specific position
         $scope.removeShowcaseAt = function (index) {
+
+            var translatedTexts  = $translate.instant(["SHOWCASE.DELETED_TEXT","GENERIC.DELETED"]);
+            var showcaseId = $scope.objectsSidebarService.objects[index].identifier;
             if ($scope.objectsSidebarService.selectedObject == $scope.objectsSidebarService.objects[index]) {
                 $scope.objectsSidebarService.selectedObject = null;
             }
 
-            var showcaseId = $scope.objectsSidebarService.objects[index].identifier;
             $scope.objectsSidebarService.objects.splice(index, 1);
+            swal(translatedTexts["GENERIC.DELETED"], translatedTexts["SHOWCASE.DELETED_TEXT"], "success");
+            //TODO: BUG THIS METHOD IS RETURNING ERROR
             $http.delete(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/showcases/' + showcaseId).success(function (data) {
                     if (data.state == "success") {
                         //Todo: implement a pull of messages
@@ -7687,8 +7732,8 @@ angular.module('sites').config(['$stateProvider',
         .module('sites')
         .controller('SitesController', SitesController);
 
-    SitesController.$inject = ['$http', '$state','$timeout' ,'$scope', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery','Loading'];
-    function SitesController($http, $state, $timeout, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
+    SitesController.$inject = ['$http', '$state','$timeout' ,'$scope','$translate', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery','Loading'];
+    function SitesController($http, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
         activate();
 
         function activate() {
@@ -7868,9 +7913,22 @@ angular.module('sites').config(['$stateProvider',
         };
 
         $scope.deleteSite = function(message, selectedObject) {
-            if (confirm(message)) {
+
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_SITE_TITLE","GENERIC.DELETE_SITE_CONFIRMATION","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.DELETE_SITE_TITLE"],
+                text: translatedTexts["GENERIC.DELETE_SITE_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
                 $scope.removeSiteAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
-            }
+            });
 
         };
 
@@ -7880,10 +7938,11 @@ angular.module('sites').config(['$stateProvider',
             var sites = $scope.objectsSidebarService.getObjects();
             var siteIdToDelete = sites[index].identifier;
             var deleteSelectedObject = siteIdToDelete == $scope.objectsSidebarService.selectedObject.identifier;
-
+            var translatedTexts  = $translate.instant(["SITES.DELETED_TEXT","GENERIC.DELETED"]);
             $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationId+'/sites/'+siteIdToDelete).success(
                 function(data){
                     if(data.state=="success"){
+                        swal(translatedTexts["GENERIC.DELETED"], translatedTexts["SITES.DELETED_TEXT"], "success");
                         sites.splice(index,1);
                         if(deleteSelectedObject){
                             $scope.objectsSidebarService.selectedObject = null;
