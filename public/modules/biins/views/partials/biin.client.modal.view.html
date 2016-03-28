@@ -23,7 +23,6 @@
                     <div ng-if="obj.objectType==='1'" class="row">
                         <h5>Element:</h5>
                         <select ng-model="obj.identifier" class="form-control">
-                            <option value="">Select an option</option>
                             <option ng-repeat="objEl in elements" value="{{objEl.elementIdentifier}}"
                                     ng-selected="objEl.elementIdentifier === obj.identifier">{{objEl.title}}
                             </option>
@@ -176,7 +175,7 @@
     <div class="modal-footer">
         <div class="col-md-12">
             <div class="row">
-                <button ng-click="save()" ng-if="type=='create'" class="btn btn-danger btn-md">Salvar</button>
+                <button ng-click="save()" ng-if="type=='create'" ng-disabled='elements.lenght > 0'class="btn btn-danger btn-md">Salvar</button>
                 <button ng-click="cancel()" ng-if="type=='create'" class="btn btn-theme btn-md">Cancelar</button>
                 <button ng-click="save()" ng-if="type=='edit'" class="btn btn-danger btn-md">Listo</button>
             </div>
