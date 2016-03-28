@@ -45,16 +45,6 @@
                 templateUrl: 'modules/core/views/coreleftbar.client.view.html',
                 resolve: helper.resolveFor('modernizr', 'icons', 'filestyle')
             })
-            /*.state('app.biinUsers', {
-                url: '/login',
-                templateUrl: 'modules/biinUsers/views/login.client.view.html',
-                resolve: helper.resolveFor('biinUsers')
-            })
-            .state('app.dashboard', {
-                url: '/dashboard',
-                templateUrl: 'modules/dashboard/views/dashboard.client.view.html',
-                resolve: helper.resolveFor('dashboard')
-            })*/
             //
             // CUSTOM RESOLVES
             //   Add your own resolves properties

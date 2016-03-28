@@ -1,21 +1,30 @@
-<div class="hide-button" ng-click="hideObjectsMenu()">
+<!--<div class="hide-button" ng-click="hideObjectsMenu()">
     <em class="fa fa-chevron-left"></em>
     <em class="fa fa-chevron-right"></em>
-</div>
-
-<div class="row sidebar-filter col-center-block">
-    <div class="btn-add" ng-hide="!objectsSidebarService.enableAddButton">
-        <button ng-click="create()" class="btn btnAdd">&#43;</button>
+</div>-->
+<div class="objects-sidebar">
+    <div class="row sidebar-filter col-center-block" ng-hide="!objectsSidebarService.enableAddButton">
+        <div class="btn-add">
+            <!--<button ng-click="create()" class="btn btnAdd form-control">
+                <i class="fa fa-plus"></i>
+            </button>-->
+            <div class="btnAdd" ng-click="create()">
+                <i class="fa fa-plus"></i>
+            </div>
+        </div>
+        <div class="searchBox-wrapper">
+            <input type="text" placeholder="filter" ng-model="query" autofocus="autofocus"
+                   class="form-control"/>
+        </div>
     </div>
-    <div class="searchBox-wrapper">
-        <input type="text" placeholder="filter" ng-model="query" autofocus="autofocus"
-               class="form-control"/>
+    <div class="row sidebar-filter col-center-block" ng-hide="objectsSidebarService.enableAddButton">
+        <div class="searchBox-wrapper-without-add-button">
+            <input type="text" placeholder="filter" ng-model="query" autofocus="autofocus"
+                   class="form-control"/>
+        </div>
     </div>
-</div>
-<div class="objects-left-bar">
-    <div class="container-fluid sidemenu-object">
-
-        <div class="row container-scroll">
+    <div class="objects-left-bar">
+        <div class="container-fluid sidemenu-object">
             <div ng-repeat="item in objectsSidebarService.getObjects() | orderBy: '+title' | filter: query"
                  ng-click="onObjectClick(objectsSidebarService.objects.indexOf(item))" class="object-item"
                  ng-class="{active: item == objectsSidebarService.getSelectedObject()}">

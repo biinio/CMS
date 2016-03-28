@@ -10,8 +10,8 @@
         .module('biins')
         .controller('BiinsController', BiinsController);
 
-    BiinsController.$inject = ['$http', '$state', '$scope','$modal', 'Authentication', 'Organization', 'ObjectsSidebar'];
-    function BiinsController($http, $state, $scope,$modal, Authentication, Organization, ObjectsSidebar) {
+    BiinsController.$inject = ['$http', '$state', '$scope','$modal', 'Authentication', 'Organization', 'ObjectsSidebar','Loading'];
+    function BiinsController($http, $state, $scope,$modal, Authentication, Organization, ObjectsSidebar,Loading) {
 
 
         /**=============================================================================================================
@@ -86,29 +86,29 @@
          =============================================================================================================*/
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.sidebarTemplate =
-            "<div class='col-md-12 leftInformationArea'>" +
-            "<label class='title-sidebar-object moduleTitle'>{{item.name}}</label>" +
-            "<div class='body-sidebar-object'>" +
-            "<localization class='moduleTitle' style='display: block'></localization>" +
-            "<p class='moduleTitle'>{{item.status}}</p>" +
-            "</div>" +
+            "<div class='col-md-12 leftInformationArea' style='padding-left: 10px'>" +
+                "<label class='threeRowTitle'>{{item.name}}</label>" +
+                "<localization class='threeRowSubTitle' style='display: block'></localization>" +
+                "<p class='threeRowThirdLine'>{{item.status}}</p>" +
             "</div>";
-
-
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
 
         /**=============================================================================================================
          * Events Listeners
          *
          =============================================================================================================*/
 
-        $scope.$on('$stateChangeStart', function () {
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
             $scope.objectsSidebarService.reset();
         });
 
         $scope.$on('organizationChanged', function () {
             $scope.objectsSidebarService.selectedObject = null;
             $scope.objectsSidebarService.objects = [];
+            $scope.loadingService.isLoading = true;
 
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Get the Sites Information
@@ -123,6 +123,7 @@
                         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
                             $scope.biins = data.data;
                             $scope.objectsSidebarService.setObjects(data.data);
+                            $scope.loadingService.isLoading = false;
                         }).error(function (err) {
                             console.log(err);
                         });
@@ -166,6 +167,7 @@
                     $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
                         $scope.biins = data.data;
                         $scope.objectsSidebarService.setObjects(data.data);
+                        $scope.loadingService.isLoading = false;
                     }).error(function (err) {
                         console.log(err);
                     });

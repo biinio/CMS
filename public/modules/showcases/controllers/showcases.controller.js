@@ -10,8 +10,8 @@
         .module('showcases')
         .controller('ShowcasesController', ShowcasesController);
 
-    ShowcasesController.$inject = ['$http', '$scope', 'Authentication', 'Organization', 'ObjectsSidebar','ElementsService','BiinsService'];
-    function ShowcasesController($http, $scope, Authentication, Organization, ObjectsSidebar,ElementsService,BiinsService) {
+    ShowcasesController.$inject = ['$http', '$scope', '$translate', 'Authentication', 'Organization', 'ObjectsSidebar','ElementsService','BiinsService','Loading'];
+    function ShowcasesController($http, $scope, $translate, Authentication, Organization, ObjectsSidebar,ElementsService,BiinsService,Loading) {
         activate();
 
         ////////////////
@@ -21,6 +21,8 @@
             $scope.organizationService = Organization;
             $scope.objectsSidebarService = ObjectsSidebar;
         }
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
 
 
 
@@ -34,7 +36,7 @@
             "<img ng-if='item.elements[0].media.length>0' ng-src='{{item.elements[0].media[0].url}}'/>" +
             "</div>" +
             "<div class='col-md-9 leftInformationArea'>" +
-            "<label class='moduleTitle'>{{item.name}}</label>" +
+            "<label class='oneRowTitle'>{{item.name}}</label>" +
             /*"<div class='btnShowcasePreview icon-round-control btn-on-hover'>" +
             "<div class='icon icon-arrange-1'></div>" +
             "</div>" +*/
@@ -42,7 +44,6 @@
             /*"<div ng-click=\"deleteItem(objectsSidebarService.objects.indexOf(item),$event)\" class=\"icon-round-control btnDelete  btn-danger btn-on-hover\">" +
             "<i class=\"fa fa-close\"></i>" +
             "</div>";*/
-
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
 
         /**=============================================================================================================
@@ -50,14 +51,17 @@
          *
          =============================================================================================================*/
 
-        $scope.$on('$stateChangeStart', function () {
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
             $scope.objectsSidebarService.reset();
         });
 
         $scope.$on('organizationChanged', function () {
             //Get list of showcases
+            $scope.loadingService.isLoading = true;
             $http.get(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/showcases').success(function (data) {
                 $scope.objectsSidebarService.setObjects(data.data);
+                $scope.objectsSidebarService.loadedInformation = true;
                 $scope.showcasePrototype = data.prototypeObj;
                 $scope.showcasePrototypeBkp = $.extend(true, {}, data.prototypeObj);
             });
@@ -109,6 +113,7 @@
             $scope.objectsSidebarService.setObjects(data.data);
             $scope.showcasePrototype = data.prototypeObj;
             $scope.showcasePrototypeBkp = $.extend(true, {}, data.prototypeObj);
+            $scope.loadingService.isLoading = false;
         });
 
         $http.get(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/sites').success(function (data) {
@@ -139,29 +144,49 @@
         //Push a new showcase in the list
         $scope.create = function () {
             //Create a new Showcase
+            swal({   title: "Su vitrina se esta creando",  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + "/showcases").success(function (showcase, status) {
                 if (status == 201) {
                     $scope.objectsSidebarService.objects.push(showcase);
+                    setTimeout(function(){
+                        swal.close();
+                    },2000);
                 }
             });
 
         };
 
         $scope.deleteShowcase = function(message, selectedObject) {
-            if (confirm(message)) {
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_SHOWCASE_TITLE","GENERIC.DELETE_SHOWCASE_CONFIRMATION","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.DELETE_SHOWCASE_TITLE"],
+                text: translatedTexts["GENERIC.DELETE_SHOWCASE_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
                 $scope.removeShowcaseAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
-            }
+            });
 
         };
 
         //Remove showcase at specific position
         $scope.removeShowcaseAt = function (index) {
+
+            var translatedTexts  = $translate.instant(["SHOWCASE.DELETED_TEXT","GENERIC.DELETED"]);
+            var showcaseId = $scope.objectsSidebarService.objects[index].identifier;
             if ($scope.objectsSidebarService.selectedObject == $scope.objectsSidebarService.objects[index]) {
                 $scope.objectsSidebarService.selectedObject = null;
             }
 
-            var showcaseId = $scope.objectsSidebarService.objects[index].identifier;
             $scope.objectsSidebarService.objects.splice(index, 1);
+            swal(translatedTexts["GENERIC.DELETED"], translatedTexts["SHOWCASE.DELETED_TEXT"], "success");
+            //TODO: BUG THIS METHOD IS RETURNING ERROR
             $http.delete(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + '/showcases/' + showcaseId).success(function (data) {
                     if (data.state == "success") {
                         //Todo: implement a pull of messages

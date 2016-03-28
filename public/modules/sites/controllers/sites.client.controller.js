@@ -13,16 +13,17 @@
         .module('sites')
         .controller('SitesController', SitesController);
 
-    SitesController.$inject = ['$http', '$state','$timeout' ,'$scope', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery'];
-    function SitesController($http, $state, $timeout, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery) {
-        var vm = this;
+    SitesController.$inject = ['$http', '$state','$timeout' ,'$scope','$translate', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery','Loading'];
+    function SitesController($http, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
         activate();
 
         function activate() {
+
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
-
             $scope.deletePermit = false;
+            $scope.loadingService = Loading;
+            $scope.loadingService.isLoading = true;
 
             for (var permit = 0; permit < Authentication.user.permissions.length; permit++) {
                 if (Authentication.user.permissions[permit].permission == "delete") {
@@ -30,6 +31,7 @@
                     break;
                 }
             }
+
         }
 
         /**=============================================================================================================
@@ -43,28 +45,30 @@
             "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}' pending-indicator='pending-indicator'/>"+
             "</div>"+
             "<div class='col-md-9 leftInformationArea'>"+
-            "<label class='moduleTitle'>{{item.title1}}</label>"+
-            "<br/>"+
-            "<label class='moduleTitle'>{{item.title2}}</label>"+
+            "<label class='twoRowTitle'>{{item.title1}}</label>"+
+            "<label class='twoRowSubtitle'>{{item.title2}}</label>"+
             "</div>";
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
-
+        $scope.objectsSidebarService.isHidden = false;
         /**=============================================================================================================
          * Events Listeners
          *
          =============================================================================================================*/
 
         $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
             $scope.objectsSidebarService.reset();
         });
 
         $scope.$on('organizationChanged',function(){
+            $scope.loadingService.isLoading = true;
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Get the List of Objects
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites').success(function(data){
                 var sites = data.data.sites;
                 $scope.objectsSidebarService.setObjects(sites);
+                $scope.loadingService.isLoading = false;
                 if(sites.length > 0)
                     selectFirstSite(sites);
             });
@@ -123,6 +127,7 @@
         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationService.selectedOrganization.identifier +'/sites').success(function(data){
             if(data.data) {
                 $scope.objectsSidebarService.setObjects(data.data.sites);
+                $scope.loadingService.isLoading = false;
                 if(data.data.sites.length>0){
                     selectFirstSite(data.data.sites);
                 }
@@ -166,6 +171,7 @@
         //Create a new Site
         $scope.create = function(){
             //Get the Mayor from server
+            swal({   title: "Su local se esta creando",  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/sites").success(function(site,status){
                 if(status==201){
 
@@ -176,6 +182,9 @@
                     sites.push(site);
                     $scope.objectsSidebarService.setObjects(sites);
                     $scope.objectsSidebarService.setSelectedObject(site);
+                    setTimeout(function(){
+                        swal.close();
+                    },2000);
                 }
                 else
                 {
@@ -185,9 +194,22 @@
         };
 
         $scope.deleteSite = function(message, selectedObject) {
-            if (confirm(message)) {
+
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_SITE_TITLE","GENERIC.DELETE_SITE_CONFIRMATION","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.DELETE_SITE_TITLE"],
+                text: translatedTexts["GENERIC.DELETE_SITE_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
                 $scope.removeSiteAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
-            }
+            });
 
         };
 
@@ -197,10 +219,11 @@
             var sites = $scope.objectsSidebarService.getObjects();
             var siteIdToDelete = sites[index].identifier;
             var deleteSelectedObject = siteIdToDelete == $scope.objectsSidebarService.selectedObject.identifier;
-
+            var translatedTexts  = $translate.instant(["SITES.DELETED_TEXT","GENERIC.DELETED"]);
             $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationId+'/sites/'+siteIdToDelete).success(
                 function(data){
                     if(data.state=="success"){
+                        swal(translatedTexts["GENERIC.DELETED"], translatedTexts["SITES.DELETED_TEXT"], "success");
                         sites.splice(index,1);
                         if(deleteSelectedObject){
                             $scope.objectsSidebarService.selectedObject = null;
@@ -298,6 +321,9 @@
 
         //Save detail model object
         $scope.save= function(){
+
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
 
             var tags = $("#siteSearchTag").tagsinput('items');
 

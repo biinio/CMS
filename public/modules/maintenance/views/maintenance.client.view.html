@@ -1,4 +1,5 @@
-<div ng-controller="MaintenanceController as maintenance" class="">
+<div ng-include="'/modules/core/views/partials/objectssidebar.html'" ng-controller="ObjectsSideBar" class=""></div>
+<div ng-controller="MaintenanceController as maintenance" class="block-center">
     <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
         <div class="right-section-content">
             <div > <!--ng-if="objectsSidebarService.selectedObject!=null">-->

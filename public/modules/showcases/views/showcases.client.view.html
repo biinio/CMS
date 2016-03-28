@@ -1,3 +1,4 @@
+<div ng-include="'/modules/core/views/partials/objectssidebar.html'" ng-controller="ObjectsSideBar" class=""></div>
 <div ng-controller="ShowcasesController as showcasesCtrl" class="">
     <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
         <div class="right-section-content">
@@ -145,8 +146,13 @@
                     </div>
 
                 </section>
-                <button  type="button" class="btn btn-oval btn-default align-right" ng-click="deleteShowcase(' {{'GENERIC.DELETE_SHOWCASE_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">{{ 'GENERIC.DELETE_SHOWCASE' | translate }}</button>
+                <button  type="button" class="btn btn-oval btn-danger align-right" ng-click="deleteShowcase(' {{'GENERIC.DELETE_SHOWCASE_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">{{ 'GENERIC.DELETE_SHOWCASE' | translate }}</button>
                 <code>IDENTIFIER: {{objectsSidebarService.selectedObject.identifier}}</code>
+            </div>
+            <div ng-if="objectsSidebarService.selectedObject==null || objectsSidebarService.selectedObject == {}" class="no-object-container">
+                <section class="text-center on-no-object-selected">
+                    <span>Por favor seleccione una vitrina en la barra lateral o cree uno presionando el botón de crear nuevo.</span>
+                </section>
             </div>
         </div>
     </div>

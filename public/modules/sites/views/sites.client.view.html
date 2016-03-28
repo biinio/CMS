@@ -1,7 +1,8 @@
+<div ng-include="'/modules/core/views/partials/objectssidebar.html'" ng-controller="ObjectsSideBar" class=""></div>
 <div ng-controller="SitesController as sites" class="">
     <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
         <div class="right-section-content nopadding">
-            <div ng-if="objectsSidebarService.selectedObject!=null">
+            <div ng-if="objectsSidebarService.selectedObject!=null && objectsSidebarService.selectedObject != {}">
                 <!-- NutShell Section -->
                 <section>
                     <div class="panel panel-default">
@@ -192,10 +193,15 @@
                         </div>
                     </div>
                 </section>
-                <button  type="button" ng-if="deletePermit" class="btn btn-oval btn-default align-right" ng-click="deleteSite(' {{'GENERIC.DELETE_SITE_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">{{ 'GENERIC.DELETE_SITE' | translate }}</button>
+                <button  type="button" ng-if="deletePermit" class="btn btn-oval btn-danger align-right" ng-click="deleteSite(' {{'GENERIC.DELETE_SITE_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">{{ 'GENERIC.DELETE_SITE' | translate }}</button>
                 <!--code ng-hide="true">{{'GENERIC.IDENTIFIER' | translate}} :
                     {{objectsSidebarService.selectedObject.identifier }}</code-->
                 <code>IDENTIFIER: {{objectsSidebarService.selectedObject.identifier}}</code>
+            </div>
+            <div ng-if="objectsSidebarService.selectedObject==null || objectsSidebarService.selectedObject == {}" class="no-object-container">
+                <section class="text-center on-no-object-selected">
+                    <span>Por favor seleccione un local en la barra lateral o cree uno presionando el botón de crear nuevo.</span>
+                </section>
             </div>
         </div>
     </div>

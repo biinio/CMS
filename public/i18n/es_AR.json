@@ -27,7 +27,7 @@
   "sidebar": {
     "WELCOME": "Bienvenido",
     "MENU_DASHBOARD": "Resumen",
-    "MENU_SITES": "Sitios",
+    "MENU_SITES": "Locales",
     "MENU_ELEMENTS": "Elementos",
     "MENU_SHOWCASES": "Vitrinas",
     "MENU_BIINS": "Beacons",
@@ -54,7 +54,13 @@
     "INFORMATION": "Acerca de",
     "MORE_INFO": "Información Adicional",
     "ORG_ID": "Identificador",
-    "PUBLISHED": "Publicado"
+    "PUBLISHED": "Publicado",
+    "PUBLISHED_TOOLTIP":"Marcar esta casilla si esta la organizacion lista para ser puesta al público",
+    "USECOLORBRAND_TOOLTIP":"Marcar esta casilla para poner sus colores como prioridad en sus productos",
+    "USEBRANDCOLOR":"Usar Colores de Marca",
+    "PRIMARYCOLOR":"Color Primario",
+    "SECONDARYCOLOR":" Color De Texto",
+    "DELETED_TEXT" : "Su organización ha sido eliminado correctamente."
   },
   "TYPE":{
     "TITLE":"Tipo de Elemento",
@@ -73,7 +79,11 @@
     "SUB_TITLE": "Agregue y use las imagenes de su marca para darle identidad a su local.",
     "UPLOAD": "Subir",
     "APPLY": "Aplicar",
-    "LOADING": "Subiendo imágenes, por favor espere..."
+    "LOADING": "Subiendo imágenes, por favor espere...",
+    "NOIMAGEUPLOADED":"No tienes ninguna imagen subida en este momento"
+  },
+  "LOADER":{
+    "LOADING": "Cargando la información, por favor espere..."
   },
   "ELEMENT":{
     "TITLE": "Información del elemento",
@@ -90,7 +100,9 @@
     "ACTION_TITLE": "Título de acción",
     "ACTION_TITLE_PLACEHOLDER": "Agregue el nombre de la acción a realizar",
     "ACTION_URL": "URL",
-    "ACTION_URL_PLACEHOLDER": "www.ejemplo.com"
+    "ACTION_URL_PLACEHOLDER": "www.ejemplo.com",
+    "CREATING" : "Su elemento se está creando.",
+    "DELETED_TEXT" : "Su elemento fue eliminado con éxito."
   },
   "GENERIC":{
     "SEARCH_TAGS": "Etiquetas de búsqueda",
@@ -106,15 +118,21 @@
     "CATEGORIES_REQUIRED_MESSAGE": "Seleccione al menos una categoría",
     "GALLERIES_REQUIRED_MESSAGE": "Agregue al menos una imagen",
     "MAP_REQUIRED_MESSAGE":"Indique la ubicacion de su local en el mapa",
-    "DELETE_SITE": "Eliminar sitio",
-    "DELETE_SITE_CONFIRMATION": "¿Desea eliminar este sitio?",
+    "DELETE_SITE": "Eliminar local",
+    "DELETE_SITE_TITLE": "¿Desea eliminar este local?",
+    "DELETE_SITE_CONFIRMATION": "Cuando se elimina un local dejará de estar disponible para los usuarios.",
     "DELETE_ELEMENT": "Eliminar elemento",
-    "DELETE_ELEMENT_CONFIRMATION": "¿Desea eliminar este elemento?",
+    "DELETE_ELEMENT_TITLE": "¿Desea eliminar este elemento?",
+    "DELETE_ELEMENT_CONFIRMATION": "Cuando se elimina un elemento se borra de todos las vitrinas y no estará dispoible para los usuarios.",
     "DELETE_SHOWCASE": "Eliminar vitrina",
-    "DELETE_SHOWCASE_CONFIRMATION": "¿Desea eliminar esta vitrina?",
+    "DELETE_SHOWCASE_TITLE": "¿Desea eliminar esta vitrina?",
+    "DELETE_SHOWCASE_CONFIRMATION": "Al eliminar esta vitrina dejará de estar disponible en todos los locales.",
     "DELETE_ORGANIZATION": "Eliminar organización",
-    "DELETE_ORGANIZATION_CONFIRMATION": "¿Desea eliminar esta organización?",
-    "DELETE_IMAGES_CONFIRMATION": "¿Desea eliminar las imágenes seleccionadas?"
+    "DELETE_ORGANIZATION_TITLE": "¿Desea eliminar esta organización?",
+    "DELETE_ORGANIZATION_CONFIRMATION": "Al eliminar la organizacion todos los locales, sitios y vitrinas asignados a este se borrarán.",
+    "DELETE_IMAGES_CONFIRMATION": "¿Desea eliminar las imágenes seleccionadas?",
+    "CANCEL": "Cancelar",
+    "DELETED" : "Eliminado"
   },
   "SITES":{
     "TITLE": "Detalles del Local",
@@ -128,6 +146,7 @@
     "NUTSHELL_PLACEHOLDER": "Ingrese una descripción breve de su local",
     "SCHEDULE":"Horario",
     "SCHEDULE_PLACEHOLDER":"Ingrese el horario del sitio",
+    "DELETED_TEXT":"Su local ha sido eliminado correctamente",
 
     "LOCATION":{
       "TITLE": "Ubicación del Local",
@@ -201,7 +220,9 @@
     "VALIDUNTIL_PLACEHOLDER": "Fecha de expiración **",
     "LIMITEDQTY": "Cantidad limitada",
     "LIMITEDQTY_TOOLTIPT": "Permita hacer promociones con cantidades limitadas",
-    "LIMITEDQTY_PLACEHOLDER": "Cantidad **"
+    "LIMITEDQTY_PLACEHOLDER": "Cantidad **",
+    "TAXINCLUDED": "Impuestos Incluidos",
+    "TAXINCLUDED_TOOLTIP":"El precio incluye los impuestos"
   },
   "LOGIN": {
     "SIGN_IN": "Acceder con su cuenta de Biin",
@@ -228,7 +249,8 @@
     "ELEMENTS_INFO": "Agregue elementos a su vitrina.",
     "SITES": "Sitios habilitados",
     "SITES_INFO": "Por favor seleccione las vitrinas que se desean habilitar en cada sitio.",
-    "ELEMENTS_REQUIRED_MESSAGE": "Por favor asigne al menos un elemento válido a esta vitrina"
+    "ELEMENTS_REQUIRED_MESSAGE": "Por favor asigne al menos un elemento válido a esta vitrina",
+    "DELETED_TEXT" : "Su vitrina ha sido eliminado correctamente"
   },
   "NPS":{
     "TITLE" : "NPS",

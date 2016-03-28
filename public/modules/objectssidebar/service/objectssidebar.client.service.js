@@ -7,11 +7,11 @@
 
     ObjectsSidebar.$inject = [];
     function ObjectsSidebar() {
-        var service = {
+        return  {
             objects: [],
             selectedObject: null,
             template: "",
-
+            loadedInformation:false,
             enableAddButton: true,
 
             setObjects: function (objects) {
@@ -33,6 +33,5 @@
                 this.enableAddButton = true;
             }
         };
-        return service;
     }
 })();

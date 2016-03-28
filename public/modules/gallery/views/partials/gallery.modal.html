@@ -19,6 +19,11 @@
                                         <div class="moduleTitle"><span>{{galleItem.originalName}}</span></div>
                                     </div>
                                 </div>
+                                <div data-ng-if="galleries.length == 0" class="text-center no-images-gallery-container">
+                                    <span>
+                                        {{ 'GALLERY.NOIMAGEUPLOADED' | translate }}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>

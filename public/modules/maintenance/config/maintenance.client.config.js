@@ -8,7 +8,7 @@ angular.module('maintenance').config(['$stateProvider',
     function($stateProvider) {
         // Users state routing
         $stateProvider.
-            state('appleftbar.maintenance', {
+            state('app.maintenance', {
                 url: '/maintenance',
                 templateUrl: 'modules/maintenance/views/maintenance.client.view.html',
                 resolve: {

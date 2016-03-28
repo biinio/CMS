@@ -12,6 +12,7 @@ function GalleryController($scope, $modalInstance,$http, galleries,Organization)
     $scope.galleries = galleries;
     console.log($scope.galleries);
 
+
     $scope.reset = function() {
         $scope.myImage        = '';
         $scope.myCroppedImage = '';
@@ -90,7 +91,7 @@ function GalleryController($scope, $modalInstance,$http, galleries,Organization)
         if (confirm(message)) {
             $scope.delete();
         }
-    }
+    };
 
     $scope.delete = function() {
         var imagesToDelete = [];

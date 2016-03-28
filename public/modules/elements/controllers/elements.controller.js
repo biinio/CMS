@@ -10,9 +10,9 @@
         .module('elements')
         .controller('ElementsController', ElementsController);
 
-    ElementsController.$inject = ['$http', '$state','$timeout','$scope', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery'];
+    ElementsController.$inject = ['$http', '$state','$timeout','$scope','$translate', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading'];
 
-    function ElementsController($http, $state, $timeout, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery) {
+    function ElementsController($http, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
         activate();
 
         $scope.objectsSidebarService = ObjectsSidebar;
@@ -22,11 +22,13 @@
                 "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}' pending-indicator='pending-indicator'/>"+
             "</div>"+
             "<div class='col-md-9 leftInformationArea'>"+
-                "<label class='moduleTitle'>{{item.title}}</label>"+
+                "<label class='oneRowTitle'>{{item.title}}</label>"+
             "</div>";
 
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
         ////////////////
 
         function activate() {
@@ -64,15 +66,18 @@
 
         $scope.$on('$stateChangeStart', function(){
                 $scope.objectsSidebarService.reset();
+                $scope.objectsSidebarService.loadedInformation = true;
             });
 
         $scope.$on('organizationChanged',function(){
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.loadingService.isLoading = true;
             //Get the List of Objects
             $scope.objectsSidebarService.selectedObject = null;
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
                 $scope.elements = data.data.elements;
                 $scope.objectsSidebarService.setObjects($scope.elements);
+                $scope.loadingService.isLoading = false;
             });
 
             $scope.galleries = [];
@@ -97,16 +102,20 @@
 
         $scope.$on("Biin: On Object Created", function(){
             $scope.create();
+
         });
 
         //Get the List of Objects
         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
             $scope.elements = data.data.elements;
             $scope.objectsSidebarService.setObjects($scope.elements);
+            $scope.loadingService.isLoading = false;
         });
 
         //Push a new showcase in the list
         $scope.create = function(){
+            var titleText = $translate.instant("ELEMENT.CREATING");
+            swal({   title: titleText,  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/elements").success(function(element,status){
                 if(status==201){
                     var elemSearchTag =$('#elemSearchTag');
@@ -114,6 +123,9 @@
                     $scope.elements.push(element);
                     $scope.objectsSidebarService.setObjects($scope.elements);
                     $scope.objectsSidebarService.setSelectedObject(element);
+                    setTimeout(function(){
+                        swal.close();
+                    },2000);
                 }else{
                     displayErrorMessage(element,"Element Creation",status);
                 }
@@ -131,19 +143,33 @@
         };
 
         $scope.deleteElement = function(message, selectedObject) {
-            if (confirm(message)) {
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_ELEMENT_TITLE","GENERIC.DELETE_ELEMENT_CONFIRMATION","ELEMENT.DELETED","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.DELETE_ELEMENT_TITLE"],
+                text: translatedTexts["GENERIC.DELETE_ELEMENT_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
                 $scope.removeElementAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
-            }
+            });
         };
 
         //Remove element at specific position
         $scope.removeElementAt = function(index){
-            if($scope.objectsSidebarService.selectedObject==$scope.objectsSidebarService.objects[index]){
-                $scope.objectsSidebarService.selectedObject = null;
-            }
+            var translatedTexts  = $translate.instant(["ELEMENT.DELETED_TEXT","GENERIC.DELETED"]);
             var elementId = $scope.objectsSidebarService.objects[index].elementIdentifier;
             $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationId+'/elements/'+elementId).success(function(data){
+                    if($scope.objectsSidebarService.selectedObject==$scope.objectsSidebarService.objects[index]){
+                        $scope.objectsSidebarService.selectedObject = null;
+                    }
                     $scope.objectsSidebarService.objects.splice(index,1);
+                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["ELEMENT.DELETED_TEXT"], "success");
                 }
             );
         };
