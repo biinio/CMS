@@ -143,10 +143,10 @@
         };
 
         $scope.deleteElement = function(message, selectedObject) {
-            var translatedTexts  = $translate.instant(["GENERIC.DELETE_ELEMENT","GENERIC.DELETE_ELEMENT_CONFIRMATION","ELEMENT.DELETED","GENERIC.DELETE","GENERIC.CANCEL"]);
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_ELEMENT_TITLE","GENERIC.DELETE_ELEMENT_CONFIRMATION","ELEMENT.DELETED","GENERIC.DELETE","GENERIC.CANCEL"]);
 
             swal({
-                title: translatedTexts["GENERIC.DELETE_ELEMENT"],
+                title: translatedTexts["GENERIC.DELETE_ELEMENT_TITLE"],
                 text: translatedTexts["GENERIC.DELETE_ELEMENT_CONFIRMATION"],
                 type: "warning",
                 showCancelButton: true,

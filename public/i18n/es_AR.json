@@ -59,7 +59,8 @@
     "USECOLORBRAND_TOOLTIP":"Marcar esta casilla para poner sus colores como prioridad en sus productos",
     "USEBRANDCOLOR":"Usar Colores de Marca",
     "PRIMARYCOLOR":"Color Primario",
-    "SECONDARYCOLOR":" Color De Texto"
+    "SECONDARYCOLOR":" Color De Texto",
+    "DELETED_TEXT" : "Su organización ha sido eliminado correctamente."
   },
   "TYPE":{
     "TITLE":"Tipo de Elemento",
@@ -117,14 +118,18 @@
     "CATEGORIES_REQUIRED_MESSAGE": "Seleccione al menos una categoría",
     "GALLERIES_REQUIRED_MESSAGE": "Agregue al menos una imagen",
     "MAP_REQUIRED_MESSAGE":"Indique la ubicacion de su local en el mapa",
-    "DELETE_SITE": "Eliminar sitio",
-    "DELETE_SITE_CONFIRMATION": "¿Desea eliminar este sitio?",
+    "DELETE_SITE": "Eliminar local",
+    "DELETE_SITE_TITLE": "¿Desea eliminar este local?",
+    "DELETE_SITE_CONFIRMATION": "Cuando se elimina un local dejará de estar disponible para los usuarios.",
     "DELETE_ELEMENT": "Eliminar elemento",
-    "DELETE_ELEMENT_CONFIRMATION": "¿Desea eliminar este elemento?",
+    "DELETE_ELEMENT_TITLE": "¿Desea eliminar este elemento?",
+    "DELETE_ELEMENT_CONFIRMATION": "Cuando se elimina un elemento se borra de todos las vitrinas y no estará dispoible para los usuarios.",
     "DELETE_SHOWCASE": "Eliminar vitrina",
-    "DELETE_SHOWCASE_CONFIRMATION": "¿Desea eliminar esta vitrina?",
+    "DELETE_SHOWCASE_TITLE": "¿Desea eliminar esta vitrina?",
+    "DELETE_SHOWCASE_CONFIRMATION": "Al eliminar esta vitrina dejará de estar disponible en todos los locales.",
     "DELETE_ORGANIZATION": "Eliminar organización",
-    "DELETE_ORGANIZATION_CONFIRMATION": "¿Desea eliminar esta organización?",
+    "DELETE_ORGANIZATION_TITLE": "¿Desea eliminar esta organización?",
+    "DELETE_ORGANIZATION_CONFIRMATION": "Al eliminar la organizacion todos los locales, sitios y vitrinas asignados a este se borrarán.",
     "DELETE_IMAGES_CONFIRMATION": "¿Desea eliminar las imágenes seleccionadas?",
     "CANCEL": "Cancelar",
     "DELETED" : "Eliminado"
@@ -141,6 +146,7 @@
     "NUTSHELL_PLACEHOLDER": "Ingrese una descripción breve de su local",
     "SCHEDULE":"Horario",
     "SCHEDULE_PLACEHOLDER":"Ingrese el horario del sitio",
+    "DELETED_TEXT":"Su local ha sido eliminado correctamente",
 
     "LOCATION":{
       "TITLE": "Ubicación del Local",
@@ -243,7 +249,8 @@
     "ELEMENTS_INFO": "Agregue elementos a su vitrina.",
     "SITES": "Sitios habilitados",
     "SITES_INFO": "Por favor seleccione las vitrinas que se desean habilitar en cada sitio.",
-    "ELEMENTS_REQUIRED_MESSAGE": "Por favor asigne al menos un elemento válido a esta vitrina"
+    "ELEMENTS_REQUIRED_MESSAGE": "Por favor asigne al menos un elemento válido a esta vitrina",
+    "DELETED_TEXT" : "Su vitrina ha sido eliminado correctamente"
   },
   "NPS":{
     "TITLE" : "NPS",

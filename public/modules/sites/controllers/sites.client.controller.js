@@ -13,8 +13,8 @@
         .module('sites')
         .controller('SitesController', SitesController);
 
-    SitesController.$inject = ['$http', '$state','$timeout' ,'$scope', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery','Loading'];
-    function SitesController($http, $state, $timeout, $scope, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
+    SitesController.$inject = ['$http', '$state','$timeout' ,'$scope','$translate', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery','Loading'];
+    function SitesController($http, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
         activate();
 
         function activate() {
@@ -194,9 +194,22 @@
         };
 
         $scope.deleteSite = function(message, selectedObject) {
-            if (confirm(message)) {
+
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_SITE_TITLE","GENERIC.DELETE_SITE_CONFIRMATION","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.DELETE_SITE_TITLE"],
+                text: translatedTexts["GENERIC.DELETE_SITE_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
                 $scope.removeSiteAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
-            }
+            });
 
         };
 
@@ -206,10 +219,11 @@
             var sites = $scope.objectsSidebarService.getObjects();
             var siteIdToDelete = sites[index].identifier;
             var deleteSelectedObject = siteIdToDelete == $scope.objectsSidebarService.selectedObject.identifier;
-
+            var translatedTexts  = $translate.instant(["SITES.DELETED_TEXT","GENERIC.DELETED"]);
             $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationId+'/sites/'+siteIdToDelete).success(
                 function(data){
                     if(data.state=="success"){
+                        swal(translatedTexts["GENERIC.DELETED"], translatedTexts["SITES.DELETED_TEXT"], "success");
                         sites.splice(index,1);
                         if(deleteSelectedObject){
                             $scope.objectsSidebarService.selectedObject = null;
