@@ -586,6 +586,12 @@ angular.module('textAngularSetup', [])
 
                         $rootScope.priceListTitle = "";
 
+                        $rootScope.defaultCurrency = "1";
+
+                        $rootScope.onChangeCurrency = function (currency) {
+                            $rootScope.defaultCurrency = currency;
+                        };
+
                         $rootScope.editTitle = function(newTitle) {
                             $rootScope.priceListTitle = newTitle;
                         };
@@ -640,7 +646,7 @@ angular.module('textAngularSetup', [])
 
                             var newPricedItem = {
                                 id: $rootScope.count,
-                                currency : "1",
+                                currency : $rootScope.defaultCurrency,
                                 name: "",
                                 description: "",
                                 price: 0
