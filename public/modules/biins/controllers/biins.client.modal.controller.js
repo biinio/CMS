@@ -36,7 +36,9 @@
             obj.onSunday='1';
             obj.startTime=time.format();
             obj.endTime=time.format();
+            obj.identifier = elements.length>0? elements[0].elementIdentifier : '';
             $scope.obj= obj;
+
         }else
         {
             $scope.obj =selectedObj.obj;
