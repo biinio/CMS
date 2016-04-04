@@ -77,10 +77,10 @@
   "GALLERY":{
     "TITLE": "Galería de imagenes",
     "SUB_TITLE": "Agregue y use las imagenes de su marca para darle identidad a su local.",
-    "UPLOAD": "Subir",
+    "UPLOAD": "Agregar Imagen",
     "APPLY": "Aplicar",
     "LOADING": "Subiendo imágenes, por favor espere...",
-    "NOIMAGEUPLOADED":"No tienes ninguna imagen subida en este momento"
+    "NOIMAGEUPLOADED":"En este momento no hay ninguna imagen en la galería, puedes subir imagenes con el botón de agregar."
   },
   "LOADER":{
     "LOADING": "Cargando la información, por favor espere..."
