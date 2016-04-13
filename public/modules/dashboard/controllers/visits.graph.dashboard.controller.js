@@ -92,77 +92,21 @@
                     var maxValue = 1;
                     for (var i = 0; i < keys.length; i++) {
                         var s = new Date(keys[i]);
-                        visits.push({
-                            x: s.getTime(),
-                            y: data[keys[i]]
-                        });
-                        notifications.push({
-                            x: s.getTime(),
-                            y: dataNotifications[keys[i]]
-                        });
-                        if(data[keys[i]] > maxValue )
-                            maxValue = data[keys[i]];
+                        visits.push([s.getTime(), data[keys[i]]]);
+                        notifications.push([s.getTime(), dataNotifications[keys[i]]]);
                     }
-                        $scope.data = [{
-                            values: visits,
-                            key: 'visits',
-                            color: '#006699',
-                            area: true
-                        },
-                        {
-                            values: notifications,
-                            key: 'Notifications',
-                            color: '#ffa500',
-                            area: true
-                        }];
+                    visits = visits.reverse();
+                    notifications = notifications.reverse();
 
-                    $scope.options = {
-                        chart: {
-                            type: 'lineChart',
-                            height: 250,
-                            margin: {
-                                top: 20,
-                                right: 20,
-                                bottom: 40,
-                                left: 55
-                            },
-                            x: function(d) {
-                                return d.x;
-                            },
-                            y: function(d) {
-                                return d.y;
-                            },
-                            //useInteractiveGuideline: true,
-                           /* dispatch: {
-                                stateChange: function(e) {
-                                    console.log("stateChange");
-                                },
-                                changeState: function(e) {
-                                    console.log("changeState");
-                                },
-                                tooltipShow: function(e) {
-                                    console.log("tooltipShow");
-                                },
-                                tooltipHide: function(e) {
-                                    console.log("tooltipHide");
-                                }
-                            }, */
-                            xAxis: {
-                                axisLabel: 'Date',
-                                tickFormat: function(d) {
-                                    return d3.time.format('%d-%m-%y')(new Date(d));
-                                },
-                                showMaxMin:false,
-                                axisLabelDistance: 30
-                            },
-                            yAxis: {
-                            },
-                            callback: function(chart) {
-                                //console.log("!!! lineChart callback !!!");
-                            },
-                            forceY:[0,maxValue]
-                        }
-                    };
+                    $scope.areaData = [{
+                        "label": "Visitas",
+                        "color": "#ff902b",
+                        "data": visits
+                    }, {
+                        "label": "Notificaciones",
+                        "color": "#7dc7df",
+                        "data": notifications
+                    }];
                 });
 
             });
@@ -172,6 +116,43 @@
             $scope.getChartData($scope.globalFilters.dateRange);
         };
         $scope.changeChartRange($scope.globalFilters.dateRange);
+
+        $scope.areaOptions = {
+            series: {
+                lines: {
+                    show: true,
+                    fill: 0.8
+                },
+                points: {
+                    show: true,
+                    radius: 4
+                }
+            },
+            grid: {
+                borderColor: '#eee',
+                borderWidth: 1,
+                hoverable: true,
+                backgroundColor: '#fcfcfc'
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: function (label, x, y) { return getDateString(new Date(x)) + ' : ' + y; }
+            },
+            xaxis: {
+                tickColor: '#fcfcfc',
+                mode: 'time',
+                timeformat: '%d-%m-%y'
+            },
+            yaxis: {
+                min: 0,
+                tickColor: '#eee',
+                position: ($scope.app.layout.isRTL ? 'right' : 'left')
+                //tickFormatter: function (v) {
+                  //  return v + ' visitors';
+               // }
+            },
+            shadowSize: 0
+        };
 
     }
 })();
