@@ -72,7 +72,14 @@ module.exports = {
                 'public/lib/ng-img-crop/compile/minified/ng-img-crop.js',
                 'public/lib/tinycolor/dist/tinycolor-min.js',
                 'public/lib/angular-color-picker/dist/angularjs-color-picker.min.js',
-                'public/lib/sweetalert/dist/sweetalert.min.js'
+                'public/lib/sweetalert/dist/sweetalert.min.js',
+                'public/lib/Flot/jquery.flot.js',
+                'public/lib/flot.tooltip/js/jquery.flot.tooltip.min.js',
+                'public/lib/Flot/jquery.flot.resize.js',
+                'public/lib/Flot/jquery.flot.pie.js',
+                'public/lib/Flot/jquery.flot.time.js',
+                'public/lib/Flot/jquery.flot.categories.js',
+                'public/lib/flot-spline/js/jquery.flot.spline.min.js'
 
                 // 'public/lib/jquery/dist/jquery.js',
                 // 'public/lib/angular/angular.js',
