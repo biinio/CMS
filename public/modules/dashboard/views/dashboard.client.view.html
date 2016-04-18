@@ -25,14 +25,6 @@
                         <select ng-model="globalFilters.selectedSite" ng-change="changeSelectedSite()" ng-options="(site.title1 + ' ' + site.title2) for site in organizationService.selectedOrganization.sites">
 
                         </select>
-                        <!--<div dropdown="" is-open="language.listIsOpen" class="btn-group">
-                            <button type="button" dropdown-toggle="" class="btn btn-default">{{language.selected}}<span class="caret"></span></button>
-                            <ul role="menu" class="dropdown-menu dropdown-menu-right animated fadeInUpShort">
-                                <li ng-repeat="(localeId, langName) in language.available">
-                                    <a ng-click="language.set(localeId, $event)" href="#">{{langName}}</a>
-                                </li>
-                            </ul>
-                        </div>-->
 
                         <buttons class="pull-right">
                             <button ng-click="changeChartRange(7)" class="btn-default">{{ 'dashboard.FILTER_7DAYS' | translate }}</button>
@@ -43,72 +35,196 @@
                 </div>
             </div>
         </div>
-        <div class="visitsGraph">
-            <ng-include src="'modules/dashboard/views/partials/visits.graph.partial.client.view.html'"/>
+
+
+        <div class="presentialSection panel panel-default">
+            <div class="panel-wrapper">
+                <div class="panel-heading">
+                    <legend>Interacciones presenciales en Cartago</legend>
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-4">
+                        <!-- START List group-->
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="row row-table pv-xs">
+                                    <div class="col-xs-4 text-center text-info">
+                                        <em class="fa fa-users fa-2x"></em>
+                                    </div>
+                                    <div class="col-xs-8 text-center">
+                                        <p class="m0 lead">755</p>
+                                        <p class="m0">
+                                            <small>Visitas Totales</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row row-table pv-xs">
+                                    <div class="col-xs-4 text-center text-info">
+                                        <em class="fa fa-user-plus fa-2x"></em>
+                                    </div>
+                                    <div class="col-xs-8 text-center">
+                                        <p class="m0 lead">455</p>
+                                        <p class="m0">
+                                            <small>Nuevas Visitas</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row row-table pv-xs">
+                                    <div class="col-xs-4 text-center text-info">
+                                        <em class="fa fa-refresh fa-2x"></em>
+                                    </div>
+                                    <div class="col-xs-8 text-center">
+                                        <p class="m0 lead">300</p>
+                                        <p class="m0">
+                                            <small>Visitas Recurrentes</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- END List group-->
+                    </div>
+
+                    <!--<div class="col-md-3">
+                        <ng-include src="'modules/dashboard/views/partials/site.sessions.counter.partial.client.view.html'"/>
+                    </div>
+                    <div class="col-md-3">
+                        <ng-include src="'modules/dashboard/views/partials/mobile.visits.graph.partial.client.view.html'"/>
+                    </div> -->
+                    <div class="col-lg-8">
+                        <ng-include src="'modules/dashboard/views/partials/visits.graph.partial.client.view.html'"/>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="mobileGraph">
-            <legend>{{ 'dashboard.MOBILE_TITLE' | translate }}</legend>
-            <div class="row">
-                <div class="col-md-8">
+        <div class="virtualSection panel panel-default">
+            <div class="panel-wrapper">
+                <div class="panel-heading">
+                    <legend>Interacciones virtuales en Cartago</legend>
+                </div>
+                <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-6">
-                            <ng-include src="'modules/dashboard/views/partials/mobile.session.counter.partial.client.view.html'"/>
-                        </div>
-                        <div class="col-md-6">
+                        <div class="col-lg-4">
                             <ng-include src="'modules/dashboard/views/partials/mobile.biined.counter.partial.client.view.html'"/>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ng-include src="'modules/dashboard/views/partials/mobile.newvisits.average.partial.client.view.html'"/>
-                        </div>
-                        <div class="col-md-6">
+                        <div class="col-lg-4">
                             <ng-include src="'modules/dashboard/views/partials/mobile.elementsvisited.average.partial.client.view.html'"/>
                         </div>
+                        <div class="col-lg-4">
+                            <!-- START List group-->
+                            <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="row row-table pv-xs">
+                                    <div class="col-xs-4 text-center text-success">
+                                        <em class="fa fa-users fa-2x"></em>
+                                    </div>
+                                    <div class="col-xs-8 text-center">
+                                        <p class="m0 lead">1204</p>
+                                        <p class="m0">
+                                            <small>Visitas Totales</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row row-table pv-xs">
+                                    <div class="col-xs-4 text-center text-success">
+                                        <em class="fa fa-user-plus fa-2x"></em>
+                                    </div>
+                                    <div class="col-xs-8 text-center">
+                                        <p class="m0 lead">800</p>
+                                        <p class="m0">
+                                            <small>Nuevas Visitas</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row row-table pv-xs">
+                                    <div class="col-xs-4 text-center text-success">
+                                        <em class="fa fa-refresh fa-2x"></em>
+                                    </div>
+                                    <div class="col-xs-8 text-center">
+                                        <p class="m0 lead">404</p>
+                                        <p class="m0">
+                                            <small>Visitas Recurrentes</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                            <!-- END List group-->
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <ng-include src="'modules/dashboard/views/partials/mobile.visits.graph.partial.client.view.html'"/>
+
+                    <!--<div class="col-md-3">
+                        <ng-include src="'modules/dashboard/views/partials/mobile.session.counter.partial.client.view.html'"/>
+                    </div>
+                    <div class="col-md-3">
+                        <ng-include src="'modules/dashboard/views/partials/site.visits.graph.partial.client.view.html'"/>
+                    </div>-->
                 </div>
             </div>
         </div>
-        <div class="localGraph">
-            <legend>{{ 'dashboard.LOCAL_TITLE' | translate }}</legend>
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ng-include src="'modules/dashboard/views/partials/site.sessions.counter.partial.client.view.html'"/>
-                        </div>
-                        <div class="col-md-6">
-                            <ng-include src="'modules/dashboard/views/partials/site.newvisits.average.partial.client.view.html'"/>
-                        </div>
-                        <!--<div class="col-md-6">
-                            <ng-include src="'modules/dashboard/views/partials/site.fromvisits.graph.partial.client.view.html'"/>
-                        </div>-->
-                    </div>
+        <div class="nps panel panel-default">
+            <div class="panel-wrapper">
+                <div class="panel-heading">
+                    <h4>Índice de promotor neto</h4>
                 </div>
-                <div class="col-md-4">
-                    <ng-include src="'modules/dashboard/views/partials/site.visits.graph.partial.client.view.html'"/>
+            <div class="panel-body">
+                <ng-include src="'modules/dashboard/views/partials/nps.partial.client.view.html'"/>
+            </div>
+
+
+
+            <!--<div class="mobileGraph">
+                <legend>{{ 'dashboard.MOBILE_TITLE' | translate }}</legend>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ng-include src="'modules/dashboard/views/partials/mobile.session.counter.partial.client.view.html'"/>
+                            </div>
+                            <div class="col-md-6">
+                                <ng-include src="'modules/dashboard/views/partials/mobile.biined.counter.partial.client.view.html'"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ng-include src="'modules/dashboard/views/partials/mobile.newvisits.average.partial.client.view.html'"/>
+                            </div>
+                            <div class="col-md-6">
+                                <ng-include src="'modules/dashboard/views/partials/mobile.elementsvisited.average.partial.client.view.html'"/>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-        </div>
-        <!--<div class="localTable">
-            <div class="row">
-                <div class="col-md-12">
-                    <table class="table dashboardTable">
-                        <thead>
-                        <tr>
-                            <th>Locales</th>
-                            <th>Visitas En Biin</th>
-                            <th>Visitas A Locales</th>
-                            <th>Biined</th>
-                            <th>Notificaciones</th>
-                        </tr>
-                        </thead>
-                    </table>
+            <div class="localGraph">
+                <legend>{{ 'dashboard.LOCAL_TITLE' | translate }}</legend>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ng-include src="'modules/dashboard/views/partials/site.sessions.counter.partial.client.view.html'"/>
+                            </div>
+                            <div class="col-md-6">
+                                <ng-include src="'modules/dashboard/views/partials/site.newvisits.average.partial.client.view.html'"/>
+                            </div>
+                            <!--<div class="col-md-6">
+                                <ng-include src="'modules/dashboard/views/partials/site.fromvisits.graph.partial.client.view.html'"/>
+                            </div>-->
+                        <!--</div>
+                    </div>
+                    <div class="col-md-4">
+                        <ng-include src="'modules/dashboard/views/partials/site.visits.graph.partial.client.view.html'"/>
+                    </div>
                 </div>
             </div>-->
-        </div>
     </div>
 </div>

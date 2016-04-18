@@ -100,7 +100,7 @@
 
                     $scope.areaData = [{
                         "label": "Visitas",
-                        "color": "#ff902b",
+                        "color": "#FFAC60",
                         "data": visits
                     }, {
                         "label": "Notificaciones",

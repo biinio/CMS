@@ -1,11 +1,32 @@
-<div ng-controller="siteSessionsController" class="panel widget bg-primary">
-    <div class="row row-table">
-        <div class="col-xs-4 text-center bg-primary-dark pv-lg">
-            <i class="fa fa-users fa-3x"></i>
+<div ng-controller="siteSessionsController" class="panel panel-warning ">
+    <!--<div class="row row-table row-flush">
+        <div class="col-xs-4 bg-info text-center">
+            <em class="fa fa-users fa-2x"></em>
         </div>
-        <div class="col-xs-8 pv-lg">
-            <div class="h2 mt0">{{value | number:0}}</div>
-            <div class="text-uppercase">{{ 'dashboard.SESSIONS' | translate}}</div>
+        <div class="col-xs-8">
+            <div class="panel-body text-center">
+                <h4 class="mt0">{{value | number:0}}</h4>
+                <p class="mb0 text-muted">{{ 'dashboard.SESSIONS' | translate}}</p>
+            </div>
         </div>
+    </div>
+    <div class="panel-body bg-info text-center">
+        <div class="text-lg m0">{{value | number:0}}</div>
+        <p>{{ 'dashboard.SESSIONS' | translate}}</p>
+        <div class="mb-lg"></div>
+        <em class="fa fa-users text-alpha"></em>
+    </div>-->
+
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-xs-3">
+                <em class="fa fa-users fa-5x"></em>
+            </div>
+            <div class="col-xs-9 text-right">
+                <div class="text-lg">{{value | number:0}}</div>
+                <p class="m0">{{ 'dashboard.SESSIONS' | translate}}</p>
+            </div>
+        </div>
+        <!-- END panel-->
     </div>
 </div>

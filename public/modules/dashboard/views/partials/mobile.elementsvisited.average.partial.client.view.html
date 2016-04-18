@@ -1,11 +1,34 @@
-<div ng-controller="mobileAverageVisitedElementsController" class="panel widget bg-green">
-    <div class="row row-table">
-        <div class="col-xs-4 text-center bg-green-dark pv-lg">
-            <i class="fa fa-bar-chart fa-3x"></i>
+<div ng-controller="mobileAverageVisitedElementsController">
+    <!--<div class="row row-table row-flush">
+        <div class="col-xs-4 bg-green text-center">
+            <em class="fa fa-bar-chart fa-2x"></em>
         </div>
-        <div class="col-xs-8 pv-lg">
-            <div class="h2 mt0">{{value | number:2}}</div>
-            <div class="text-uppercase">{{ 'dashboard.AVERAGE_VISITED' | translate }}</div>
+        <div class="col-xs-8">
+            <div class="panel-body text-center">
+                <h4 class="mt0">{{value | number:0}}</h4>
+                <p class="mb0 text-muted">Shares</p>
+            </div>
         </div>
+    </div>
+    <div class="panel-body bg-info text-center">
+        <div class="text-lg m0">{{value | number:0}}</div>
+        <p>Compartidos</p>
+        <div class="mb-lg"></div>
+        <em class="fa fa-share-alt text-alpha"></em>
+    </div>-->
+
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <div class="row col-same-height-of-table">
+                <div class="col-xs-3">
+                    <em class="fa fa-share-alt fa-5x"></em>
+                </div>
+                <div class="col-xs-9 text-right">
+                    <div class="text-lg">{{value | number:0}}</div>
+                    <p class="m0">Compartidos</p>
+                </div>
+            </div>
+        </div>
+        <!-- END panel-->
     </div>
 </div>

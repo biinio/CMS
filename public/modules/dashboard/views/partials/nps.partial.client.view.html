@@ -1,0 +1,63 @@
+<div data-ng-controller="npsController">
+    <form role="form">
+        <div class="form-group">
+            <div class="checkbox c-checkbox">
+                <label>
+                    <input type="checkbox"
+                           ng-model="organizationService.selectedOrganization.hasNPS" ng-true-value="'1'" ng-false-value="'0'" data/>
+                    <span class="fa fa-check"></span>
+                    {{ 'NPS.ACTIVATE_TITLE' | translate }}
+                </label>
+            </div>
+            <span class="help-block" translate="NPS.ACTIVATE_HELP"></span>
+        </div>
+    </form>
+    <div class="col-lg-6">
+        <!-- START widget-->
+        <div class="panel widget">
+            <div class="panel-body">
+                <div class="row row-table">
+                    <div class="row text-center">
+                        <label>{{ 'NPS.THIS_WEEK' | translate }}</label>
+                    </div>
+                    <div class="row text-center text-success" data-ng-if="npsScore >= 90">
+                        <h2 class="NPSScore">{{npsScore | number:0}}</h2>
+                    </div>
+                    <div class="row text-center text-warning" data-ng-if="npsScore >= 70 && npsScore < 90">
+                        <h2 class="NPSScore">{{npsScore | number:0}}</h2>
+                    </div>
+                    <div class="row text-center text-danger" data-ng-if="npsScore < 70">
+                        <h2 class="NPSScore">{{npsScore | number:0}}</h2>
+                    </div>
+                    <div class="row text-center">
+                        <label>{{ 'NPS.NPS' | translate }}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body bg-inverse">
+                <div class="row row-table text-center">
+                    <div class="col-xs-4">
+                        <p class="m0 h3">{{promotersQuantity}} ({{promotersPercentage | number:0}}%)</p>
+                        <p class="m0 text-muted">{{ 'NPS.PROMOTERS' | translate }}</p>
+                    </div>
+                    <div class="col-xs-4">
+                        <p class="m0 h3">{{passiveQuantity}} ({{passivePercentage | number:0}}%)</p>
+                        <p class="m0 text-muted">{{ 'NPS.PASSIVE' | translate }}</p>
+                    </div>
+                    <div class="col-xs-4">
+                        <p class="m0 h3">{{detractorsQuantity}} ({{detractorsPercentage | number:0}}%)</p>
+                        <p class="m0 text-muted">{{ 'NPS.DETRACTORS' | translate }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <!-- START widget-->
+        <div class="panel widget">
+            <div class="panel-body">
+                <nvd3 options="options" data="data" class="visitsGraph with-3d-shadow with-transitions"></nvd3>
+            </div>
+        </div>
+    </div>
+</div>

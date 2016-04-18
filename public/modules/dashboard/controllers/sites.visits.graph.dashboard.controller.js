@@ -72,16 +72,15 @@
                 var information  = data.data;
                 $scope.enoughData = information.news || information.returning;
                 if($scope.enoughData){
-                    $scope.data = [
-                        {
-                            key: "New Visits",
-                            y: information.news
-                        },
-                        {
-                            key: "Frecuent Client",
-                            y: information.returning
-                        }
-                    ];
+                    $scope.pieData = [{
+                        "label": "Visits",
+                        "color": "#ff902b",
+                        "data": information.news
+                    }, {
+                        "label": "Returning",
+                        "color": "#7dc7df",
+                        "data": information.returning
+                    }];
                 }
             });
         };
@@ -92,5 +91,36 @@
 
         $scope.changeChartRange($scope.globalFilters.dateRange);
 
+        $scope.pieData = [{
+            "label": "Visits",
+            "color": "#ff902b",
+            "data": 30
+        }, {
+            "label": "Returning",
+            "color": "#7dc7df",
+            "data": 40
+        }];
+        $scope.pieOptions = {
+            series: {
+                pie: {
+                    show: true,
+                    innerRadius: 0,
+                    label: {
+                        show: true,
+                        radius: 0.8,
+                        formatter: function (label, series) {
+                            return '<div class="flot-pie-label">' +
+                                    //label + ' : ' +
+                                Math.round(series.percent) +
+                                '%</div>';
+                        },
+                        background: {
+                            opacity: 0.8,
+                            color: '#222'
+                        }
+                    }
+                }
+            }
+        };
     }
 })();

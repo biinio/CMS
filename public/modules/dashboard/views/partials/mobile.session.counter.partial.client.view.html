@@ -1,11 +1,20 @@
-<div ng-controller="mobileSessionsController" class="panel widget bg-primary">
-    <div class="row row-table">
-        <div class="col-xs-4 text-center bg-primary-dark pv-lg">
-            <i class="fa fa-mobile fa-4x"></i>
+<div ng-controller="mobileSessionsController" class="panel widget">
+    <!--<div class="row row-table row-flush">
+        <div class="col-xs-4 bg-primary-dark text-center">
+            <em class="fa fa-mobile fa-3x"></em>
         </div>
-        <div class="col-xs-8 pv-lg">
-            <div class="h2 mt0">{{value | number:0}}</div>
-            <div class="text-uppercase">{{ 'dashboard.MOBILE_SESSIONS' | translate }}</div>
+        <div class="col-xs-8">
+            <div class="panel-body text-center">
+                <h4 class="mt0">{{value | number:0}}</h4>
+                <p class="mb0 text-muted">{{ 'dashboard.MOBILE_SESSIONS' | translate }}</p>
+            </div>
         </div>
+    </div>-->
+    <div class="panel-body bg-info text-center">
+        <div class="text-lg m0">{{value | number:0}}</div>
+        <p>{{ 'dashboard.MOBILE_SESSIONS' | translate }}</p>
+        <div class="mb-lg"></div>
+        <em class="fa fa-mobile fa-3x text-alpha"></em>
     </div>
 </div>
+

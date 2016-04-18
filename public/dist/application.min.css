@@ -13782,6 +13782,11 @@ body {
   margin-left: 15%;
   margin-right: 15%;
 }
+.col-same-height-of-table {
+  height: 185px;
+  display: flex;
+  align-items: center;
+}
 .loader {
   margin: 60px auto;
   font-size: 10px;

@@ -1,7 +1,7 @@
 <div ng-controller="sitesPieVisitsController" ngCloack="ngCloack" class="panel visitsvsretorning-graph">
     <div collapse="" class="panel-wrapper">
         <div data-ng-if="enoughData">
-            <nvd3 options="options" data="data" class="with-3d-shadow with-transitions"></nvd3>
+            <flot dataset="pieData" options="pieOptions" height="150px" ></flot>
         </div>
         <div data-ng-if="!enoughData" class="text-center">
             {{ 'dashboard.NOT_ENOUGH_DATA' | translate }}
