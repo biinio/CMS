@@ -16,19 +16,15 @@
         <div class="mb-lg"></div>
         <em class="fa fa-share-alt text-alpha"></em>
     </div>-->
-
-    <div class="panel panel-success">
-        <div class="panel-heading">
-            <div class="row col-same-height-of-table">
-                <div class="col-xs-3">
-                    <em class="fa fa-share-alt fa-5x"></em>
-                </div>
-                <div class="col-xs-9 text-right">
-                    <div class="text-lg">{{value | number:0}}</div>
-                    <p class="m0">Compartidos</p>
-                </div>
+    <div class="panel widget bg-success col-same-height-of-table">
+        <div class="row row-table">
+            <div class="col-xs-4 text-center bg-success-dark pv-lg">
+                <em class="icon-share fa-3x"></em>
+            </div>
+            <div class="col-xs-8 pv-lg">
+                <div class="h1 m0 text-bold">{{value | number:0}}</div>
+                <div class="text-uppercase">Compartidos</div>
             </div>
         </div>
-        <!-- END panel-->
     </div>
 </div>

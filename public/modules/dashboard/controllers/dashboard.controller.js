@@ -52,6 +52,11 @@
             $scope.globalFilters.changeSelectedSite($scope.organizationService.selectedOrganization.sites[0]);
         });
 
+        $scope.setSelectedSite = function(site){
+            $scope.globalFilters.selectedSite = site;
+            $scope.globalFilters.changeSelectedSite($scope.globalFilters.selectedSite);
+        }
+
 
     }
 })();

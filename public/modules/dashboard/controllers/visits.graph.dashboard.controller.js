@@ -100,7 +100,7 @@
 
                     $scope.areaData = [{
                         "label": "Visitas",
-                        "color": "#FFAC60",
+                        "color": "#FE5621",
                         "data": visits
                     }, {
                         "label": "Notificaciones",
@@ -120,12 +120,17 @@
         $scope.areaOptions = {
             series: {
                 lines: {
-                    show: true,
-                    fill: 0.8
+                    show: false
                 },
                 points: {
                     show: true,
                     radius: 4
+                },
+                splines: {
+                    show: true,
+                    tension: 0.4,
+                    lineWidth: 1,
+                    fill: 0.5
                 }
             },
             grid: {

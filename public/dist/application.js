@@ -1761,6 +1761,39 @@ angular.module('app.core').controller('LoadingController', ['$scope','Loading',
     }
 ]);
 
+/**=========================================================
+ * Module: scroll.js
+ * Make a content box scrollable
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.core')
+        .directive('scrollable', scrollable);
+
+    function scrollable () {
+        var directive = {
+            link: link,
+            restrict: 'EA'
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+          var defaultHeight = 250;
+          element.slimScroll({
+              //height: (attrs.height || defaultHeight)
+              position: 'right',
+              height: '150px',
+              railVisible: true,
+              alwaysVisible: true
+          });
+        }
+    }
+
+})();
+
 'use strict';
 
 angular.module('app.core').service('Categories', ['$http', function (async) {
@@ -2236,6 +2269,11 @@ angular.module('dashboard').config(['$stateProvider',
             $scope.globalFilters.selectedSite = $scope.organizationService.selectedOrganization.sites[0];
             $scope.globalFilters.changeSelectedSite($scope.organizationService.selectedOrganization.sites[0]);
         });
+
+        $scope.setSelectedSite = function(site){
+            $scope.globalFilters.selectedSite = site;
+            $scope.globalFilters.changeSelectedSite($scope.globalFilters.selectedSite);
+        }
 
 
     }
@@ -2734,6 +2772,22 @@ angular.module('dashboard').config(['$stateProvider',
             $scope.passivePercentage = 0;
             $scope.detractorsPercentage = 0;
         }
+        function getDateString(date) {
+            var dd = date.getDate();
+            var mm = date.getMonth() + 1; //January is 0!
+            var yyyy = date.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+
+            var stringDate = yyyy + '-' + mm + '-' + dd;
+            return stringDate;
+        }
 
         function generateChartData(data){
 
@@ -2766,50 +2820,51 @@ angular.module('dashboard').config(['$stateProvider',
             }
             var graphData = [];
             for( i = 0; i < npsDataForChart.length; i++){
-                graphData.push({x:npsDataForChart[i].date,y:npsDataForChart[i].nps});
+                graphData.push([npsDataForChart[i].date,npsDataForChart[i].nps]);
             }
-            $scope.data = [
+            $scope.lineData = [
                 {
-                    values: graphData,
-                    color: '#fe5621',
-                    key: 'NPS',
-                    area: true      //area - set to true if you want this line to turn into a filled area chart.
+                    "label": "NPS",
+                    "color": "#FE5621",
+                    "data": graphData
                 }
             ];
         }
-
-        $scope.options = {
-            chart: {
-                type: 'lineChart',
-                height: 200,
-                margin : {
-                    top: 20,
-                    right: 20,
-                    bottom: 40,
-                    left: 55
+        $scope.lineOptions = {
+            series: {
+                lines: {
+                    show: false
                 },
-                x: function(d){ return d.x; },
-                y: function(d){ return d.y; },
-                useInteractiveGuideline: true,
-                dispatch: {
-                    stateChange: function(e){ console.log("stateChange"); },
-                    changeState: function(e){ console.log("changeState"); },
-                    tooltipShow: function(e){ console.log("tooltipShow"); },
-                    tooltipHide: function(e){ console.log("tooltipHide"); }
+                points: {
+                    show: true,
+                    radius: 4
                 },
-                xAxis: {
-                    tickFormat: function(d) {
-                        return d3.time.format('%d-%m-%y')(new Date(d));
-                    }
-                },
-                yAxis: {
-                    axisLabel: 'NPS',
-                    axisLabelDistance: -10
-                },
-                callback: function(chart){
-                    //console.log("!!! lineChart callback !!!");
+                splines: {
+                    show: true,
+                    tension: 0.4,
+                    lineWidth: 1
                 }
-            }
+            },
+            grid: {
+                borderColor: '#eee',
+                borderWidth: 1,
+                hoverable: true,
+                backgroundColor: '#fcfcfc'
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: function (label, x, y) { return getDateString(new Date(x)) + ' : ' + y; }
+            },
+            xaxis: {
+                tickColor: '#eee',
+                mode: 'time',
+                timeformat: '%d-%m-%y'
+            },
+            yaxis: {
+                position: ($scope.app.layout.isRTL ? 'right' : 'left'),
+                tickColor: '#eee'
+            },
+            shadowSize: 0
         };
     }
 })();
@@ -3264,7 +3319,7 @@ angular.module('dashboard').config(['$stateProvider',
 
                     $scope.areaData = [{
                         "label": "Visitas",
-                        "color": "#FFAC60",
+                        "color": "#FE5621",
                         "data": visits
                     }, {
                         "label": "Notificaciones",
@@ -3284,12 +3339,17 @@ angular.module('dashboard').config(['$stateProvider',
         $scope.areaOptions = {
             series: {
                 lines: {
-                    show: true,
-                    fill: 0.8
+                    show: false
                 },
                 points: {
                     show: true,
                     radius: 4
+                },
+                splines: {
+                    show: true,
+                    tension: 0.4,
+                    lineWidth: 1,
+                    fill: 0.5
                 }
             },
             grid: {
