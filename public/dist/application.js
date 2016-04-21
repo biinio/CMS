@@ -2316,11 +2316,16 @@ angular.module('dashboard').config(['$stateProvider',
             $scope.changeChartRange($scope.globalFilters.dateRange);
         });
 
+        $scope.$on('Biin: Site Changed',function(scope,site){
+            $scope.getChartData($scope.globalFilters.dateRange);
+        });
+
         $scope.getChartData = function ( days )
         {
             var filters = {};
             filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
             filters.dateRange = $scope.globalFilters.dateRange;
+            filters.siteId = $scope.globalFilters.selectedSite.identifier;
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/totalbiined',
                 { headers:{
@@ -2375,13 +2380,18 @@ angular.module('dashboard').config(['$stateProvider',
             $scope.changeChartRange($scope.globalFilters.dateRange);
         });
 
+        $scope.$on('Biin: Site Changed',function(scope,site){
+            $scope.getChartData($scope.globalFilters.dateRange);
+        });
+
         $scope.getChartData = function ( days )
         {
             var filters = {};
             filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
             filters.dateRange = $scope.globalFilters.dateRange;
+            filters.siteId = $scope.globalFilters.selectedSite.identifier;
 
-            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/visitedelements',
+            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/sharedelements',
                 { headers:{
                     filters : JSON.stringify(filters),
                     offset : new Date().getTimezoneOffset() } } ).success(function(data) {
@@ -2410,126 +2420,6 @@ angular.module('dashboard').config(['$stateProvider',
 
     angular
         .module('dashboard')
-        .controller('mobileNewVisitsPercentageController', mobileNewVisitsPercentageController);
-
-    mobileNewVisitsPercentageController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function mobileNewVisitsPercentageController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
-        var vm = this;
-        $scope.value = 0;
-
-        activate();
-
-        ////////////////
-        function activate() {
-            $scope.authentication = Authentication;
-            $scope.organizationService = Organization;
-            $scope.globalFilters = GlobalFilters;
-        }
-
-        $scope.$on('organizationChanged',function(){
-            $scope.getChartData($scope.globalFilters.dateRange);
-        });
-
-        $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
-            $scope.changeChartRange($scope.globalFilters.dateRange);
-        });
-
-        $scope.getChartData = function ( days )
-        {
-            var filters = {};
-            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
-            filters.dateRange = $scope.globalFilters.dateRange;
-
-            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/newvisits',
-                { headers:{
-                    filters : JSON.stringify(filters),
-                    offset : new Date().getTimezoneOffset() } } ).success(function(data) {
-                $scope.value = data.data;
-            });
-        };
-
-        $scope.changeChartRange = function( days ){
-            $scope.getChartData(days);
-        };
-
-        $scope.changeChartRange($scope.globalFilters.dateRange);
-    }
-})();
-
-/**
- * Created by Ivan on 10/26/15.
- */
-/**=========================================================
- * Module: dashboard.js
- * Dashboard for biin
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('dashboard')
-        .controller('mobileSessionsController', mobileSessionsController);
-
-    mobileSessionsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization'];
-    function mobileSessionsController($http, $state, $scope, Authentication, Organization) {
-        var vm = this;
-        $scope.value = 0;
-
-        $scope.currentDays = 0;
-
-        activate();
-
-        ////////////////
-        function activate() {
-            $scope.authentication = Authentication;
-            $scope.organizationService = Organization;
-        }
-
-
-        $scope.$on('organizationChanged',function(){
-            $scope.getChartData($scope.currentDays);
-        });
-
-
-        $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
-            $scope.changeChartRange($scope.currentDays);
-        });
-        $scope.getChartData = function ( days )
-        {
-            var filters = {};
-            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
-            filters.dateRange = $scope.globalFilters.dateRange;
-
-            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/sessions',{ headers:{
-                filters : JSON.stringify(filters),
-                offset : new Date().getTimezoneOffset() } } ).success(function(data) {
-                $scope.value = data.data;
-            });
-        };
-
-        $scope.changeChartRange = function( days ){
-            $scope.getChartData(days);
-            $scope.currentDays = days;
-        };
-
-        $scope.changeChartRange(30);
-    }
-})();
-
-/**
- * Created by Ivan on 10/26/15.
- */
-/**=========================================================
- * Module: dashboard.js
- * Dashboard for biin
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('dashboard')
         .controller('mobilePieVisitsController', mobilePieVisitsController);
 
     mobilePieVisitsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
@@ -2538,6 +2428,9 @@ angular.module('dashboard').config(['$stateProvider',
         var vm = this;
         $scope.value = 0;
         $scope.enoughData = false;
+        $scope.news = 0;
+        $scope.returning = 0;
+        $scope.total = 0;
         activate();
 
         ////////////////
@@ -2551,27 +2444,12 @@ angular.module('dashboard').config(['$stateProvider',
             $scope.getChartData($scope.globalFilters.dateRange);
         });
 
-        $scope.options = {
-            chart: {
-                type: 'pieChart',
-                x: function(d){return d.key;},
-                y: function(d){return d.y;},
-                showLabels: true,
-                transitionDuration: 500,
-                labelThreshold: 0.01,
-                legend: {
-                    margin: {
-                        top: 5,
-                        right: 35,
-                        bottom: 5,
-                        left: 0
-                    }
-                }
-            }
-        };
-
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
             $scope.changeChartRange($scope.globalFilters.dateRange);
+        });
+
+        $scope.$on('Biin: Site Changed',function(scope,site){
+            $scope.getChartData($scope.globalFilters.dateRange);
         });
 
         $scope.getChartData = function ( days )
@@ -2579,23 +2457,18 @@ angular.module('dashboard').config(['$stateProvider',
             var filters = {};
             filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
             filters.dateRange = $scope.globalFilters.dateRange;
+            filters.siteId = $scope.globalFilters.selectedSite.identifier;
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/newsvsreturning',{ headers:{
                 filters : JSON.stringify(filters),
-                offset : new Date().getTimezoneOffset() } } ).success(function(data) {
+                offset : new Date().getTimezoneOffset() }
+                } ).success(function(data) {
                 var information  = data.data;
                 $scope.enoughData = information.news || information.returning;
-                if($scope.enoughData){
-                    $scope.pieData = [{
-                        "label": "Visits",
-                        "color": "#ff902b",
-                        "data": information.news
-                    }, {
-                        "label": "Returning",
-                        "color": "#7dc7df",
-                        "data": information.returning
-                    }];
-                }
+
+                $scope.news = information.news || 0;
+                $scope.returning = information.returning || 0;
+                $scope.total = $scope.news + $scope.returning;
             });
         };
 
@@ -2604,41 +2477,6 @@ angular.module('dashboard').config(['$stateProvider',
         };
 
         $scope.changeChartRange($scope.globalFilters.dateRange);
-
-
-        $scope.pieData = [{
-            "label": "Visits",
-            "color": "#ff902b",
-            "data": 0
-        }, {
-            "label": "Returning",
-            "color": "#7dc7df",
-            "data": 0
-        }];
-        $scope.pieOptions = {
-            series: {
-                pie: {
-                    show: true,
-                    innerRadius: 0,
-                    label: {
-                        show: true,
-                        radius: 0.8,
-                        formatter: function (label, series) {
-                            return '<div class="flot-pie-label">' +
-                                    //label + ' : ' +
-                                Math.round(series.percent) +
-                                '%</div>';
-                        },
-                        background: {
-                            opacity: 0.8,
-                            color: '#222'
-                        }
-                    }
-                }
-            }
-        };
-
-
     }
 })();
 
@@ -2650,32 +2488,30 @@ angular.module('dashboard').config(['$stateProvider',
  * Dashboard for biin
  =========================================================*/
 
-(function() {
+(function () {
     'use strict';
 
     angular
         .module('dashboard')
         .controller('npsController', NPSController);
 
-    NPSController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function NPSController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
-        var vm = this;
-        $scope.organizationService = Organization;
+    NPSController.$inject = ['$http', '$state', '$scope', 'Authentication', 'Organization', 'GlobalFilters'];
+    function NPSController($http, $state, $scope, Authentication, Organization, GlobalFilters) {
+
         /**=============================================================================================================
          * Events Listeners
          *
          =============================================================================================================*/
         $scope.$on('organizationChanged', function () {
-            $scope.isLoadingNPSData = true;
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/organization',{ headers:{organizationid:$scope.organizationService.selectedOrganization.identifier}}).success(function(data){
-                if(data.result == "1"){
-                    updateNPSValues(data.data);
-                }
-            });
+            getNPSData();
         });
 
-        $scope.$on('$stateChangeStart', function(){
-            $scope.objectsSidebarService.reset();
+        $scope.$on('Biin: Days Range Changed', function (scope, numberdays) {
+            getNPSData();
+        });
+
+        $scope.$on('Biin: Site Changed', function (scope, site) {
+            getNPSData();
         });
 
 
@@ -2683,14 +2519,13 @@ angular.module('dashboard').config(['$stateProvider',
             $location.path('/');
         }
 
-
-        Date.prototype.addDays = function(days) {
+        Date.prototype.addDays = function (days) {
             var dat = new Date(this.valueOf());
             dat.setDate(dat.getDate() + days);
             return dat;
         };
 
-        function isSameDateAs (pDate1, pDate2) {
+        function isSameDateAs(pDate1, pDate2) {
             return (
                 pDate1.getFullYear() === pDate2.getFullYear() &&
                 pDate1.getMonth() === pDate2.getMonth() &&
@@ -2710,7 +2545,7 @@ angular.module('dashboard').config(['$stateProvider',
 
         activate();
 
-        $scope.save = function(){
+        $scope.save = function () {
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationService.selectedOrganization.identifier, {model: $scope.organizationService.selectedOrganization}).success(function (data, status) {
                 if (status === 200) {
                     $scope.succesSaveShow = true;
@@ -2722,48 +2557,104 @@ angular.module('dashboard').config(['$stateProvider',
 
         function activate() {
             $scope.authentication = Authentication;
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/organization',{ headers:{organizationid:$scope.organizationService.selectedOrganization.identifier}}).success(function(data){
-                if(data.result == "1"){
-                    updateNPSValues(data.data);
-                }
-            });
+            $scope.organizationService = Organization;
+            $scope.globalFilters = GlobalFilters;
+            getNPSData();
             resetNPS();
         }
 
-        function updateNPSValues(data){
+        function getNPSData() {
+            var filters = {};
+            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            filters.dateRange = $scope.globalFilters.dateRange;
+            filters.siteId = $scope.globalFilters.selectedSite.identifier;
+
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/nps', {
+                    headers: {
+                        organizationid: $scope.organizationService.selectedOrganization.identifier,
+                        filters : JSON.stringify(filters),
+                        offset : new Date().getTimezoneOffset()
+                    }
+                }).success(function (data) {
+                if (data.result == "1") {
+                    updateNPSValues(data.data);
+                }
+            });
+        }
+
+        function updateNPSValues(data) {
 
             resetNPS();
 
-            if(Array.isArray(data) && data.length > 0){
+            if (Array.isArray(data) && data.length > 0) {
 
-                var dateArray = getDates((new Date()).addDays(-6),new Date() );
+
+                var dateArray = getDates((new Date()).addDays(-($scope.globalFilters.dateRange-1)), new Date());
                 var totalCases = 0;
-                for(var i = 0; i < dateArray.length; i++ ) {
-                    for(var j = 0; j< data.length; j++){
-                        if(isSameDateAs(new Date(data[j].date),dateArray[i])){
-                            if(data[j].rating < 7){
-                                $scope.detractorsQuantity ++;
-                            } else if(data[j].rating < 9){
-                                $scope.passiveQuantity ++;
-                            }else{
-                                $scope.promotersQuantity ++;
+                for (var i = 0; i < dateArray.length; i++) {
+                    for (var j = 0; j < data.length; j++) {
+                        if (isSameDateAs(new Date(data[j].date), dateArray[i])) {
+                            if (data[j].rating < 7) {
+                                $scope.detractorsQuantity++;
+                            } else if (data[j].rating < 9) {
+                                $scope.passiveQuantity++;
+                            } else {
+                                $scope.promotersQuantity++;
                             }
                             totalCases++;
                         }
                     }
                 }
-                if(totalCases>0){
-                    $scope.promotersPercentage = ($scope.promotersQuantity/totalCases) * 100;
-                    $scope.passivePercentage = ($scope.passiveQuantity/totalCases) * 100;
-                    $scope.detractorsPercentage = ($scope.detractorsQuantity/totalCases) * 100;
+                if (totalCases > 0) {
+                    $scope.promotersPercentage = ($scope.promotersQuantity / totalCases) * 100;
+                    $scope.passivePercentage = ($scope.passiveQuantity / totalCases) * 100;
+                    $scope.detractorsPercentage = ($scope.detractorsQuantity / totalCases) * 100;
                     $scope.npsScore = $scope.promotersPercentage - $scope.detractorsPercentage;
                 }
+
+                generateLastComments(data);
             }
             generateChartData(data);
 
         }
 
-        function resetNPS(){
+        function generateLastComments(data){
+
+            $scope.lastComments = [];
+            if (Array.isArray(data)) {
+                for(var i = 0; i < data.length; i++){
+                    var newComment = {};
+                    newComment.date = generateElapsedTimeString(data[i].date);
+                    newComment.user = data[i].userIdentifier;
+                    newComment.comment = data[i].comment == "Optional" || data[i].comment.trim() == ""  ? "No hay comentario" : data[i].comment;
+                    newComment.rating = data[i].rating;
+                    $scope.lastComments.push(newComment);
+                }
+                $scope.lastComments.reverse();
+                $scope.lastComments = $scope.lastComments.splice(0,10);
+            }
+        }
+
+        function generateElapsedTimeString( stringDate ){
+            var startDate = new Date(stringDate);
+            var currentDate = Date.now();
+
+            var diffDate = currentDate-startDate.getTime();
+
+            diffDate = diffDate/1000;
+
+            if(diffDate < 60){
+                return parseInt(diffDate) + "sec";
+            } else if(diffDate/60 < 60 ) {
+                return parseInt(diffDate/60) + "min";
+            } else if(diffDate/60/60 < 60 ) {
+                return parseInt(diffDate/60/60) + "h";
+            } else {
+                return parseInt(diffDate/60/60/24) + "d";
+            }
+        }
+
+        function resetNPS() {
             $scope.promotersQuantity = 0;
             $scope.passiveQuantity = 0;
             $scope.detractorsQuantity = 0;
@@ -2771,7 +2662,9 @@ angular.module('dashboard').config(['$stateProvider',
             $scope.promotersPercentage = 0;
             $scope.passivePercentage = 0;
             $scope.detractorsPercentage = 0;
+            $scope.lastComments = [];
         }
+
         function getDateString(date) {
             var dd = date.getDate();
             var mm = date.getMonth() + 1; //January is 0!
@@ -2789,38 +2682,38 @@ angular.module('dashboard').config(['$stateProvider',
             return stringDate;
         }
 
-        function generateChartData(data){
+        function generateChartData(data) {
 
-            var dateArray = getDates((new Date()).addDays(-6),new Date() );
+            var dateArray = getDates((new Date()).addDays(-($scope.globalFilters.dateRange-1)), new Date());
             var npsDataForChart = [];
-            for(var i = 0; i < dateArray.length; i++ ){
+            for (var i = 0; i < dateArray.length; i++) {
                 var npsObject = {};
                 npsObject.date = dateArray[i];
                 npsObject.nps = 0;
                 var tempnpspromoter = 0;
                 var tempnpspasive = 0;
                 var tempnpsdetractor = 0;
-                for(var j = 0; j< data.length; j++){
-                    if(isSameDateAs(new Date(data[j].date),dateArray[i])){
-                        if(data[j].rating < 7){
-                            tempnpsdetractor ++;
-                        } else if(data[j].rating < 9){
-                            tempnpspasive ++;
-                        }else{
-                            tempnpspromoter ++;
+                for (var j = 0; j < data.length; j++) {
+                    if (isSameDateAs(new Date(data[j].date), dateArray[i])) {
+                        if (data[j].rating < 7) {
+                            tempnpsdetractor++;
+                        } else if (data[j].rating < 9) {
+                            tempnpspasive++;
+                        } else {
+                            tempnpspromoter++;
                         }
                     }
                 }
                 var totalnps = tempnpsdetractor + tempnpspasive + tempnpspromoter;
-                if(totalnps > 0){
-                    var nps = (tempnpspromoter/totalnps * 100) - (tempnpsdetractor/totalnps*100);
+                if (totalnps > 0) {
+                    var nps = (tempnpspromoter / totalnps * 100) - (tempnpsdetractor / totalnps * 100);
                     npsObject.nps = nps;
                 }
                 npsDataForChart.push(npsObject);
             }
             var graphData = [];
-            for( i = 0; i < npsDataForChart.length; i++){
-                graphData.push([npsDataForChart[i].date,npsDataForChart[i].nps]);
+            for (i = 0; i < npsDataForChart.length; i++) {
+                graphData.push([npsDataForChart[i].date, npsDataForChart[i].nps]);
             }
             $scope.lineData = [
                 {
@@ -2830,6 +2723,7 @@ angular.module('dashboard').config(['$stateProvider',
                 }
             ];
         }
+
         $scope.lineOptions = {
             series: {
                 lines: {
@@ -2853,7 +2747,9 @@ angular.module('dashboard').config(['$stateProvider',
             },
             tooltip: true,
             tooltipOpts: {
-                content: function (label, x, y) { return getDateString(new Date(x)) + ' : ' + y; }
+                content: function (label, x, y) {
+                    return getDateString(new Date(x)) + ' : ' + y;
+                }
             },
             xaxis: {
                 tickColor: '#eee',
@@ -2882,227 +2778,6 @@ angular.module('dashboard').config(['$stateProvider',
 
     angular
         .module('dashboard')
-        .controller('siteNewVisitsPercentageController', siteNewVisitsPercentageController);
-
-    siteNewVisitsPercentageController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function siteNewVisitsPercentageController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
-        var vm = this;
-        $scope.value = 0;
-
-        activate();
-
-
-        function activate() {
-            $scope.authentication = Authentication;
-            $scope.organizationService = Organization;
-            $scope.globalFilters = GlobalFilters;
-        }
-
-        $scope.$on('organizationChanged',function(){
-            $scope.getChartData();
-        });
-
-        $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
-            $scope.changeChartRange($scope.globalFilters.dateRange);
-        });
-
-        $scope.$on('Biin: Site Changed', function(){
-            $scope.getChartData();
-        });
-
-
-
-        $scope.getChartData = function ()
-        {
-            var filters = {};
-            filters.siteId = $scope.globalFilters.selectedSite.identifier;
-            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
-            filters.dateRange = $scope.globalFilters.dateRange;
-
-
-            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/newvisits',
-                { headers:{
-                    filters : JSON.stringify(filters),
-                    offset : new Date().getTimezoneOffset() } } ).success(function(data) {
-                    $scope.value = data.data;
-                });
-        };
-
-        $scope.changeChartRange = function( days ){
-            $scope.getChartData(days);
-        };
-
-        $scope.changeChartRange($scope.globalFilters.dateRange);
-    }
-})();
-
-/**
- * Created by Ivan on 10/26/15.
- */
-/**=========================================================
- * Module: dashboard.js
- * Dashboard for biin
- =========================================================*/
-
-/*(function() {
-    'use strict';
-
-    angular
-        .module('dashboard')
-        .controller('siteFromVisitsBarController', siteFromVisitsBarController);
-
-    siteFromVisitsBarController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization'];
-    function siteFromVisitsBarController($http, $state, $scope, Authentication, Organization) {
-        var vm = this;
-        activate();
-
-        ////////////////
-
-        function activate() {
-            $scope.authentication = Authentication;
-            $scope.organizationService = Organization;
-        }
-
-        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-        $scope.currentDays = 0;
-
-        $scope.$on('organizationsChanged', function(orgId) {
-            $scope.getChartData($scope.currentDays);
-        });
-
-        $scope.getChartData = function ( days )
-        {
-            $scope.options = {
-                chart: {
-                    type: 'multiBarHorizontalChart',
-                    x: function(d){return d.label;},
-                    y: function(d){return d.value;},
-                    showControls: false,
-                    showValues: true,
-                    transitionDuration: 500,
-                    xAxis: {
-                        showMaxMin: false
-                    },
-                    yAxis: {
-                        axisLabel: 'Values',
-                        tickFormat: function(d){
-                            return d3.format(',.2f')(d);
-                        }
-                    }
-                }
-            };
-
-            $scope.data = [
-                {
-                    "key": "Series1",
-                    "values":
-                        [
-                            {
-                                "value" : 25.307646510375
-                            }
-                        ]
-                },
-                {
-                    "key": "Series2",
-                    "values":
-                        [
-                            {
-                                "value" : 25.307646510375
-                            }
-                        ]
-                }
-            ];
-        }
-
-        $scope.changeChartRange = function( days ){
-            $scope.getChartData(days);
-            $scope.currentDays = days;
-        }
-        $scope.changeChartRange(30);
-
-    }
-})();
-*/
-
-/**
- * Created by Ivan on 10/26/15.
- */
-/**=========================================================
- * Module: dashboard.js
- * Dashboard for biin
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('dashboard')
-        .controller('siteSessionsController', siteSessionsController);
-
-    siteSessionsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization'];
-    function siteSessionsController($http, $state, $scope, Authentication, Organization) {
-        var vm = this;
-        $scope.value = 0;
-        $scope.currentDays = 0;
-
-        activate();
-
-        ////////////////
-        function activate() {
-            $scope.authentication = Authentication;
-            $scope.organizationService = Organization;
-        }
-
-
-        $scope.$on('organizationChanged',function(){
-            $scope.getChartData($scope.currentDays);
-        });
-
-
-        $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
-            $scope.changeChartRange(numberdays);
-        });
-
-        $scope.$on('Biin: Site Changed', function(){
-            $scope.getChartData($scope.globalFilters.dateRange);
-        });
-
-        $scope.getChartData = function ( days )
-        {
-            var filters = {};
-            filters.siteId = $scope.globalFilters.selectedSite.identifier;
-            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
-            filters.dateRange = $scope.globalFilters.dateRange;
-
-            $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/local/sessions',{ headers:{
-                filters : JSON.stringify(filters),
-                offset : new Date().getTimezoneOffset() } } ).success(function(data) {
-                $scope.value = data.data;
-            });
-        };
-
-        $scope.changeChartRange = function( days ){
-            $scope.getChartData(days);
-            $scope.currentDays = days;
-        };
-
-        $scope.changeChartRange(30);
-    }
-})();
-
-/**
- * Created by Ivan on 10/26/15.
- */
-/**=========================================================
- * Module: dashboard.js
- * Dashboard for biin
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('dashboard')
         .controller('sitesPieVisitsController', sitesPieVisitsController);
 
     sitesPieVisitsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
@@ -3111,6 +2786,11 @@ angular.module('dashboard').config(['$stateProvider',
         var vm = this;
         $scope.value = 0;
         $scope.enoughData = false;
+
+        $scope.news = 0;
+        $scope.returning = 0;
+        $scope.total = 0;
+
         activate();
 
         ////////////////
@@ -3123,25 +2803,6 @@ angular.module('dashboard').config(['$stateProvider',
         $scope.$on('organizationChanged',function(){
             $scope.getChartData($scope.globalFilters.dateRange);
         });
-
-        $scope.options = {
-            chart: {
-                type: 'pieChart',
-                x: function(d){return d.key;},
-                y: function(d){return d.y;},
-                showLabels: true,
-                transitionDuration: 500,
-                labelThreshold: 0.01,
-                legend: {
-                    margin: {
-                        top: 5,
-                        right: 35,
-                        bottom: 5,
-                        left: 0
-                    }
-                }
-            }
-        };
 
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
             $scope.changeChartRange($scope.globalFilters.dateRange);
@@ -3162,18 +2823,10 @@ angular.module('dashboard').config(['$stateProvider',
                 filters : JSON.stringify(filters),
                 offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                 var information  = data.data;
-                $scope.enoughData = information.news || information.returning;
-                if($scope.enoughData){
-                    $scope.pieData = [{
-                        "label": "Visits",
-                        "color": "#ff902b",
-                        "data": information.news
-                    }, {
-                        "label": "Returning",
-                        "color": "#7dc7df",
-                        "data": information.returning
-                    }];
-                }
+
+                $scope.news = information.news || 0;
+                $scope.returning = information.returning || 0;
+                $scope.total = $scope.news + $scope.returning;
             });
         };
 
@@ -3182,38 +2835,6 @@ angular.module('dashboard').config(['$stateProvider',
         };
 
         $scope.changeChartRange($scope.globalFilters.dateRange);
-
-        $scope.pieData = [{
-            "label": "Visits",
-            "color": "#ff902b",
-            "data": 30
-        }, {
-            "label": "Returning",
-            "color": "#7dc7df",
-            "data": 40
-        }];
-        $scope.pieOptions = {
-            series: {
-                pie: {
-                    show: true,
-                    innerRadius: 0,
-                    label: {
-                        show: true,
-                        radius: 0.8,
-                        formatter: function (label, series) {
-                            return '<div class="flot-pie-label">' +
-                                    //label + ' : ' +
-                                Math.round(series.percent) +
-                                '%</div>';
-                        },
-                        background: {
-                            opacity: 0.8,
-                            color: '#222'
-                        }
-                    }
-                }
-            }
-        };
     }
 })();
 
@@ -3251,6 +2872,10 @@ angular.module('dashboard').config(['$stateProvider',
 
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
             $scope.changeChartRange($scope.globalFilters.dateRange);
+        });
+
+        $scope.$on('Biin: Site Changed',function(scope,site){
+            $scope.getChartData($scope.globalFilters.dateRange);
         });
 
         $scope.secondCriteriaChange = function(value)

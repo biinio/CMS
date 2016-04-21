@@ -6,32 +6,30 @@
  * Dashboard for biin
  =========================================================*/
 
-(function() {
+(function () {
     'use strict';
 
     angular
         .module('dashboard')
         .controller('npsController', NPSController);
 
-    NPSController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function NPSController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
-        var vm = this;
-        $scope.organizationService = Organization;
+    NPSController.$inject = ['$http', '$state', '$scope', 'Authentication', 'Organization', 'GlobalFilters'];
+    function NPSController($http, $state, $scope, Authentication, Organization, GlobalFilters) {
+
         /**=============================================================================================================
          * Events Listeners
          *
          =============================================================================================================*/
         $scope.$on('organizationChanged', function () {
-            $scope.isLoadingNPSData = true;
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/organization',{ headers:{organizationid:$scope.organizationService.selectedOrganization.identifier}}).success(function(data){
-                if(data.result == "1"){
-                    updateNPSValues(data.data);
-                }
-            });
+            getNPSData();
         });
 
-        $scope.$on('$stateChangeStart', function(){
-            $scope.objectsSidebarService.reset();
+        $scope.$on('Biin: Days Range Changed', function (scope, numberdays) {
+            getNPSData();
+        });
+
+        $scope.$on('Biin: Site Changed', function (scope, site) {
+            getNPSData();
         });
 
 
@@ -39,14 +37,13 @@
             $location.path('/');
         }
 
-
-        Date.prototype.addDays = function(days) {
+        Date.prototype.addDays = function (days) {
             var dat = new Date(this.valueOf());
             dat.setDate(dat.getDate() + days);
             return dat;
         };
 
-        function isSameDateAs (pDate1, pDate2) {
+        function isSameDateAs(pDate1, pDate2) {
             return (
                 pDate1.getFullYear() === pDate2.getFullYear() &&
                 pDate1.getMonth() === pDate2.getMonth() &&
@@ -66,7 +63,7 @@
 
         activate();
 
-        $scope.save = function(){
+        $scope.save = function () {
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationService.selectedOrganization.identifier, {model: $scope.organizationService.selectedOrganization}).success(function (data, status) {
                 if (status === 200) {
                     $scope.succesSaveShow = true;
@@ -78,48 +75,104 @@
 
         function activate() {
             $scope.authentication = Authentication;
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/organization',{ headers:{organizationid:$scope.organizationService.selectedOrganization.identifier}}).success(function(data){
-                if(data.result == "1"){
-                    updateNPSValues(data.data);
-                }
-            });
+            $scope.organizationService = Organization;
+            $scope.globalFilters = GlobalFilters;
+            getNPSData();
             resetNPS();
         }
 
-        function updateNPSValues(data){
+        function getNPSData() {
+            var filters = {};
+            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            filters.dateRange = $scope.globalFilters.dateRange;
+            filters.siteId = $scope.globalFilters.selectedSite.identifier;
+
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/nps', {
+                    headers: {
+                        organizationid: $scope.organizationService.selectedOrganization.identifier,
+                        filters : JSON.stringify(filters),
+                        offset : new Date().getTimezoneOffset()
+                    }
+                }).success(function (data) {
+                if (data.result == "1") {
+                    updateNPSValues(data.data);
+                }
+            });
+        }
+
+        function updateNPSValues(data) {
 
             resetNPS();
 
-            if(Array.isArray(data) && data.length > 0){
+            if (Array.isArray(data) && data.length > 0) {
 
-                var dateArray = getDates((new Date()).addDays(-6),new Date() );
+
+                var dateArray = getDates((new Date()).addDays(-($scope.globalFilters.dateRange-1)), new Date());
                 var totalCases = 0;
-                for(var i = 0; i < dateArray.length; i++ ) {
-                    for(var j = 0; j< data.length; j++){
-                        if(isSameDateAs(new Date(data[j].date),dateArray[i])){
-                            if(data[j].rating < 7){
-                                $scope.detractorsQuantity ++;
-                            } else if(data[j].rating < 9){
-                                $scope.passiveQuantity ++;
-                            }else{
-                                $scope.promotersQuantity ++;
+                for (var i = 0; i < dateArray.length; i++) {
+                    for (var j = 0; j < data.length; j++) {
+                        if (isSameDateAs(new Date(data[j].date), dateArray[i])) {
+                            if (data[j].rating < 7) {
+                                $scope.detractorsQuantity++;
+                            } else if (data[j].rating < 9) {
+                                $scope.passiveQuantity++;
+                            } else {
+                                $scope.promotersQuantity++;
                             }
                             totalCases++;
                         }
                     }
                 }
-                if(totalCases>0){
-                    $scope.promotersPercentage = ($scope.promotersQuantity/totalCases) * 100;
-                    $scope.passivePercentage = ($scope.passiveQuantity/totalCases) * 100;
-                    $scope.detractorsPercentage = ($scope.detractorsQuantity/totalCases) * 100;
+                if (totalCases > 0) {
+                    $scope.promotersPercentage = ($scope.promotersQuantity / totalCases) * 100;
+                    $scope.passivePercentage = ($scope.passiveQuantity / totalCases) * 100;
+                    $scope.detractorsPercentage = ($scope.detractorsQuantity / totalCases) * 100;
                     $scope.npsScore = $scope.promotersPercentage - $scope.detractorsPercentage;
                 }
+
+                generateLastComments(data);
             }
             generateChartData(data);
 
         }
 
-        function resetNPS(){
+        function generateLastComments(data){
+
+            $scope.lastComments = [];
+            if (Array.isArray(data)) {
+                for(var i = 0; i < data.length; i++){
+                    var newComment = {};
+                    newComment.date = generateElapsedTimeString(data[i].date);
+                    newComment.user = data[i].userIdentifier;
+                    newComment.comment = data[i].comment == "Optional" || data[i].comment.trim() == ""  ? "No hay comentario" : data[i].comment;
+                    newComment.rating = data[i].rating;
+                    $scope.lastComments.push(newComment);
+                }
+                $scope.lastComments.reverse();
+                $scope.lastComments = $scope.lastComments.splice(0,10);
+            }
+        }
+
+        function generateElapsedTimeString( stringDate ){
+            var startDate = new Date(stringDate);
+            var currentDate = Date.now();
+
+            var diffDate = currentDate-startDate.getTime();
+
+            diffDate = diffDate/1000;
+
+            if(diffDate < 60){
+                return parseInt(diffDate) + "sec";
+            } else if(diffDate/60 < 60 ) {
+                return parseInt(diffDate/60) + "min";
+            } else if(diffDate/60/60 < 60 ) {
+                return parseInt(diffDate/60/60) + "h";
+            } else {
+                return parseInt(diffDate/60/60/24) + "d";
+            }
+        }
+
+        function resetNPS() {
             $scope.promotersQuantity = 0;
             $scope.passiveQuantity = 0;
             $scope.detractorsQuantity = 0;
@@ -127,7 +180,9 @@
             $scope.promotersPercentage = 0;
             $scope.passivePercentage = 0;
             $scope.detractorsPercentage = 0;
+            $scope.lastComments = [];
         }
+
         function getDateString(date) {
             var dd = date.getDate();
             var mm = date.getMonth() + 1; //January is 0!
@@ -145,38 +200,38 @@
             return stringDate;
         }
 
-        function generateChartData(data){
+        function generateChartData(data) {
 
-            var dateArray = getDates((new Date()).addDays(-6),new Date() );
+            var dateArray = getDates((new Date()).addDays(-($scope.globalFilters.dateRange-1)), new Date());
             var npsDataForChart = [];
-            for(var i = 0; i < dateArray.length; i++ ){
+            for (var i = 0; i < dateArray.length; i++) {
                 var npsObject = {};
                 npsObject.date = dateArray[i];
                 npsObject.nps = 0;
                 var tempnpspromoter = 0;
                 var tempnpspasive = 0;
                 var tempnpsdetractor = 0;
-                for(var j = 0; j< data.length; j++){
-                    if(isSameDateAs(new Date(data[j].date),dateArray[i])){
-                        if(data[j].rating < 7){
-                            tempnpsdetractor ++;
-                        } else if(data[j].rating < 9){
-                            tempnpspasive ++;
-                        }else{
-                            tempnpspromoter ++;
+                for (var j = 0; j < data.length; j++) {
+                    if (isSameDateAs(new Date(data[j].date), dateArray[i])) {
+                        if (data[j].rating < 7) {
+                            tempnpsdetractor++;
+                        } else if (data[j].rating < 9) {
+                            tempnpspasive++;
+                        } else {
+                            tempnpspromoter++;
                         }
                     }
                 }
                 var totalnps = tempnpsdetractor + tempnpspasive + tempnpspromoter;
-                if(totalnps > 0){
-                    var nps = (tempnpspromoter/totalnps * 100) - (tempnpsdetractor/totalnps*100);
+                if (totalnps > 0) {
+                    var nps = (tempnpspromoter / totalnps * 100) - (tempnpsdetractor / totalnps * 100);
                     npsObject.nps = nps;
                 }
                 npsDataForChart.push(npsObject);
             }
             var graphData = [];
-            for( i = 0; i < npsDataForChart.length; i++){
-                graphData.push([npsDataForChart[i].date,npsDataForChart[i].nps]);
+            for (i = 0; i < npsDataForChart.length; i++) {
+                graphData.push([npsDataForChart[i].date, npsDataForChart[i].nps]);
             }
             $scope.lineData = [
                 {
@@ -186,6 +241,7 @@
                 }
             ];
         }
+
         $scope.lineOptions = {
             series: {
                 lines: {
@@ -209,7 +265,9 @@
             },
             tooltip: true,
             tooltipOpts: {
-                content: function (label, x, y) { return getDateString(new Date(x)) + ' : ' + y; }
+                content: function (label, x, y) {
+                    return getDateString(new Date(x)) + ' : ' + y;
+                }
             },
             xaxis: {
                 tickColor: '#eee',

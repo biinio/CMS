@@ -58,52 +58,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="col-lg-4">
-                        <!-- START List group-->
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <div class="row row-table pv-xs">
-                                    <div class="col-xs-4 text-center color-biin-brand">
-                                        <em class="fa fa-users fa-2x"></em>
-                                    </div>
-                                    <div class="col-xs-8 text-center">
-                                        <p class="m0 lead">755</p>
-
-                                        <p class="m0">
-                                            <small>Visitas Totales</small>
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="row row-table pv-xs">
-                                    <div class="col-xs-4 text-center color-biin-brand">
-                                        <em class="fa fa-user-plus fa-2x"></em>
-                                    </div>
-                                    <div class="col-xs-8 text-center">
-                                        <p class="m0 lead">455</p>
-
-                                        <p class="m0">
-                                            <small>Nuevas Visitas</small>
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="row row-table pv-xs">
-                                    <div class="col-xs-4 text-center color-biin-brand">
-                                        <em class="fa fa-refresh fa-2x"></em>
-                                    </div>
-                                    <div class="col-xs-8 text-center">
-                                        <p class="m0 lead">300</p>
-
-                                        <p class="m0">
-                                            <small>Visitas Recurrentes</small>
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <!-- END List group-->
+                        <ng-include src="'modules/dashboard/views/partials/site.visits.graph.partial.client.view.html'"/>
                     </div>
 
                     <!--<div class="col-md-3">
@@ -127,50 +82,7 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <!-- START List group-->
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    <div class="row row-table pv-xs">
-                                        <div class="col-xs-4 text-center text-success">
-                                            <em class="fa fa-users fa-2x"></em>
-                                        </div>
-                                        <div class="col-xs-8 text-center">
-                                            <p class="m0 lead">1204</p>
-
-                                            <p class="m0">
-                                                <small>Visitas Totales</small>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="row row-table pv-xs">
-                                        <div class="col-xs-4 text-center text-success">
-                                            <em class="fa fa-user-plus fa-2x"></em>
-                                        </div>
-                                        <div class="col-xs-8 text-center">
-                                            <p class="m0 lead">800</p>
-
-                                            <p class="m0">
-                                                <small>Nuevas Visitas</small>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="row row-table pv-xs">
-                                        <div class="col-xs-4 text-center text-success">
-                                            <em class="fa fa-refresh fa-2x"></em>
-                                        </div>
-                                        <div class="col-xs-8 text-center">
-                                            <p class="m0 lead">404</p>
-
-                                            <p class="m0">
-                                                <small>Visitas Recurrentes</small>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                            <ng-include src="'modules/dashboard/views/partials/mobile.visits.graph.partial.client.view.html'"/>
                             <!-- END List group-->
                         </div>
                         <div class="col-lg-4">
