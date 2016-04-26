@@ -2468,7 +2468,7 @@ angular.module('dashboard').config(['$stateProvider',
 
                 $scope.news = information.news || 0;
                 $scope.returning = information.returning || 0;
-                $scope.total = $scope.news + $scope.returning;
+                $scope.total = information.totalSessions || 0;
             });
         };
 
@@ -2840,7 +2840,7 @@ angular.module('dashboard').config(['$stateProvider',
 
                 $scope.news = information.news || 0;
                 $scope.returning = information.returning || 0;
-                $scope.total = $scope.news + $scope.returning;
+                $scope.total = information.totalSessions || 0;
             });
         };
 

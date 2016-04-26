@@ -50,7 +50,16 @@
             </div>
         </div>
 
-
+        <div class="nps panel panel-default">
+            <div class="panel-wrapper">
+                <div class="panel-heading">
+                    <legend>Índice de promotor neto en {{globalFilters.selectedSite.title2}}</legend>
+                </div>
+                <div class="panel-body">
+                    <ng-include src="'modules/dashboard/views/partials/nps.partial.client.view.html'"/>
+                </div>
+            </div>
+        </div>
         <div class="presentialSection panel panel-default">
             <div class="panel-wrapper">
                 <div class="panel-heading">
@@ -97,15 +106,6 @@
                 </div>
             </div>
         </div>
-        <div class="nps panel panel-default">
-            <div class="panel-wrapper">
-                <div class="panel-heading">
-                    <legend>Índice de promotor neto</legend>
-                </div>
-                <div class="panel-body">
-                    <ng-include src="'modules/dashboard/views/partials/nps.partial.client.view.html'"/>
-                </div>
-            </div>
-        </div>
+
     </div>
 </div>

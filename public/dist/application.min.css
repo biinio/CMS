@@ -13796,6 +13796,7 @@ body {
   margin-bottom: -1px;
   background-color: #ffffff;
   border: 1px solid #e4eaec;
+  border-radius: 3px;
 }
 .nps-last-comments-title {
   font-size: 18px;
