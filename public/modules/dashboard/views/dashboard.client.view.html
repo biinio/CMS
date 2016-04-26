@@ -2,7 +2,8 @@
     <!-- START Language list-->
     <div class="pull-right">
         <div dropdown="" is-open="language.listIsOpen" class="btn-group">
-            <button type="button" dropdown-toggle="" class="btn btn-default">{{language.selected}}<span class="caret"></span></button>
+            <button type="button" dropdown-toggle="" class="btn btn-default">{{language.selected}}<span
+                    class="caret"></span></button>
             <ul role="menu" class="dropdown-menu dropdown-menu-right animated fadeInUpShort">
                 <li ng-repeat="(localeId, langName) in language.available">
                     <a ng-click="language.set(localeId, $event)" href="#">{{langName}}</a>
@@ -22,93 +23,89 @@
                     <div class="col-md-12">
                         <label>{{ 'dashboard.SITE_FILTER' | translate }}</label>
 
-                        <select ng-model="globalFilters.selectedSite" ng-change="changeSelectedSite()" ng-options="(site.title1 + ' ' + site.title2) for site in organizationService.selectedOrganization.sites">
-
-                        </select>
-                        <!--<div dropdown="" is-open="language.listIsOpen" class="btn-group">
-                            <button type="button" dropdown-toggle="" class="btn btn-default">{{language.selected}}<span class="caret"></span></button>
-                            <ul role="menu" class="dropdown-menu dropdown-menu-right animated fadeInUpShort">
-                                <li ng-repeat="(localeId, langName) in language.available">
-                                    <a ng-click="language.set(localeId, $event)" href="#">{{langName}}</a>
-                                </li>
+                        <!-- Single button -->
+                        <div class="btn-group" dropdown is-open="status.isopen">
+                            <button id="single-button" type="button" class="btn btn-default" dropdown-toggle ng-disabled="disabled">
+                                {{globalFilters.selectedSite.title1 + ' ' + globalFilters.selectedSite.title2}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+                                <li role="menuitem" data-ng-repeat="site in organizationService.selectedOrganization.sites">
+                                    <a ng-click="setSelectedSite(site)">{{site.title1 + ' ' + site.title2}}</a></li>
                             </ul>
-                        </div>-->
+                        </div>
 
                         <buttons class="pull-right">
-                            <button ng-click="changeChartRange(7)" class="btn-default">{{ 'dashboard.FILTER_7DAYS' | translate }}</button>
-                            <button ng-click="changeChartRange(30)" class="btn-default">{{ 'dashboard.FILTER_30DAYS' | translate }}</button>
-                            <button ng-click="changeChartRange(180)" class="btn-default">{{ 'dashboard.FILTER_6MONTHS' | translate }}</button>
+                            <button ng-click="changeChartRange(7)" class="mb-sm btn btn-default btn-lg">{{ 'dashboard.FILTER_7DAYS' |
+                                translate }}
+                            </button>
+                            <button ng-click="changeChartRange(30)" class="mb-sm btn btn-default btn-lg">{{ 'dashboard.FILTER_30DAYS' |
+                                translate }}
+                            </button>
+                            <button ng-click="changeChartRange(180)" class="mb-sm btn btn-default btn-lg">{{ 'dashboard.FILTER_6MONTHS' |
+                                translate }}
+                            </button>
                         </buttons>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="visitsGraph">
-            <ng-include src="'modules/dashboard/views/partials/visits.graph.partial.client.view.html'"/>
-        </div>
-        <div class="mobileGraph">
-            <legend>{{ 'dashboard.MOBILE_TITLE' | translate }}</legend>
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ng-include src="'modules/dashboard/views/partials/mobile.session.counter.partial.client.view.html'"/>
-                        </div>
-                        <div class="col-md-6">
-                            <ng-include src="'modules/dashboard/views/partials/mobile.biined.counter.partial.client.view.html'"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ng-include src="'modules/dashboard/views/partials/mobile.newvisits.average.partial.client.view.html'"/>
-                        </div>
-                        <div class="col-md-6">
-                            <ng-include src="'modules/dashboard/views/partials/mobile.elementsvisited.average.partial.client.view.html'"/>
-                        </div>
-                    </div>
+
+        <div class="nps panel panel-default">
+            <div class="panel-wrapper">
+                <div class="panel-heading">
+                    <legend>Índice de promotor neto en {{globalFilters.selectedSite.title2}}</legend>
                 </div>
-                <div class="col-md-4">
-                    <ng-include src="'modules/dashboard/views/partials/mobile.visits.graph.partial.client.view.html'"/>
+                <div class="panel-body">
+                    <ng-include src="'modules/dashboard/views/partials/nps.partial.client.view.html'"/>
                 </div>
             </div>
         </div>
-        <div class="localGraph">
-            <legend>{{ 'dashboard.LOCAL_TITLE' | translate }}</legend>
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ng-include src="'modules/dashboard/views/partials/site.sessions.counter.partial.client.view.html'"/>
-                        </div>
-                        <div class="col-md-6">
-                            <ng-include src="'modules/dashboard/views/partials/site.newvisits.average.partial.client.view.html'"/>
-                        </div>
-                        <!--<div class="col-md-6">
-                            <ng-include src="'modules/dashboard/views/partials/site.fromvisits.graph.partial.client.view.html'"/>
-                        </div>-->
-                    </div>
+        <div class="presentialSection panel panel-default">
+            <div class="panel-wrapper">
+                <div class="panel-heading">
+                    <legend>Interacciones presenciales en {{globalFilters.selectedSite.title2}}</legend>
                 </div>
-                <div class="col-md-4">
-                    <ng-include src="'modules/dashboard/views/partials/site.visits.graph.partial.client.view.html'"/>
+                <div class="panel-body">
+                    <div class="col-lg-4">
+                        <ng-include src="'modules/dashboard/views/partials/site.visits.graph.partial.client.view.html'"/>
+                    </div>
+
+                    <!--<div class="col-md-3">
+                        <ng-include src="'modules/dashboard/views/partials/site.sessions.counter.partial.client.view.html'"/>
+                    </div>
+                    <div class="col-md-3">
+                        <ng-include src="'modules/dashboard/views/partials/mobile.visits.graph.partial.client.view.html'"/>
+                    </div> -->
+                    <div class="col-lg-8">
+                        <ng-include src="'modules/dashboard/views/partials/visits.graph.partial.client.view.html'"/>
+                    </div>
                 </div>
             </div>
         </div>
-        <!--<div class="localTable">
-            <div class="row">
-                <div class="col-md-12">
-                    <table class="table dashboardTable">
-                        <thead>
-                        <tr>
-                            <th>Locales</th>
-                            <th>Visitas En Biin</th>
-                            <th>Visitas A Locales</th>
-                            <th>Biined</th>
-                            <th>Notificaciones</th>
-                        </tr>
-                        </thead>
-                    </table>
+        <div class="virtualSection panel panel-default">
+            <div class="panel-wrapper">
+                <div class="panel-heading">
+                    <legend>Interacciones virtuales en {{globalFilters.selectedSite.title2}}</legend>
                 </div>
-            </div>-->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <!-- START List group-->
+                            <ng-include src="'modules/dashboard/views/partials/mobile.visits.graph.partial.client.view.html'"/>
+                            <!-- END List group-->
+                        </div>
+                        <div class="col-lg-4">
+                            <ng-include
+                                    src="'modules/dashboard/views/partials/mobile.biined.counter.partial.client.view.html'"/>
+                        </div>
+                        <div class="col-lg-4">
+                            <ng-include
+                                    src="'modules/dashboard/views/partials/mobile.elementsvisited.average.partial.client.view.html'"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 </div>

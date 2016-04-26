@@ -79,7 +79,9 @@ module.exports = {
                 'public/lib/Flot/jquery.flot.pie.js',
                 'public/lib/Flot/jquery.flot.time.js',
                 'public/lib/Flot/jquery.flot.categories.js',
-                'public/lib/flot-spline/js/jquery.flot.spline.min.js'
+                'public/lib/flot-spline/js/jquery.flot.spline.min.js',
+                'public/lib/jqueryui-touch-punch/jquery.ui.touch-punch.min.js',
+                'public/lib/slimScroll/jquery.slimscroll.min.js'
 
                 // 'public/lib/jquery/dist/jquery.js',
                 // 'public/lib/angular/angular.js',

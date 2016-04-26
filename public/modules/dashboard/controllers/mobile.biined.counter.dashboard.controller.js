@@ -35,11 +35,16 @@
             $scope.changeChartRange($scope.globalFilters.dateRange);
         });
 
+        $scope.$on('Biin: Site Changed',function(scope,site){
+            $scope.getChartData($scope.globalFilters.dateRange);
+        });
+
         $scope.getChartData = function ( days )
         {
             var filters = {};
             filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
             filters.dateRange = $scope.globalFilters.dateRange;
+            filters.siteId = $scope.globalFilters.selectedSite.identifier;
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/totalbiined',
                 { headers:{

@@ -1,0 +1,113 @@
+<div data-ng-controller="npsController">
+    <form role="form">
+        <div class="form-group">
+            <div class="checkbox c-checkbox">
+                <label>
+                    <input type="checkbox"
+                           ng-model="organizationService.selectedOrganization.hasNPS" ng-true-value="'1'"
+                           ng-false-value="'0'" data/>
+                    <span class="fa fa-check"></span>
+                    {{ 'NPS.ACTIVATE_TITLE' | translate }}
+                </label>
+            </div>
+            <span class="help-block" translate="NPS.ACTIVATE_HELP"></span>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- START widget-->
+                    <div class="panel widget custom-border">
+                        <div class="panel-body">
+                            <div class="row row-table">
+                                <div class="row text-center">
+                                    <label data-ng-if="globalFilters.dateRange == 7">{{ 'NPS.THIS_WEEK' | translate }}</label>
+                                    <label data-ng-if="globalFilters.dateRange == 30">Ultimo mes</label>
+                                    <label data-ng-if="globalFilters.dateRange == 180">Ultimos 6 meses</label>
+                                </div>
+                                <div class="row text-center text-success" data-ng-if="npsScore >= 90">
+                                    <h2 class="NPSScore">{{npsScore | number:0}}</h2>
+                                </div>
+                                <div class="row text-center text-warning" data-ng-if="npsScore >= 70 && npsScore < 90">
+                                    <h2 class="NPSScore">{{npsScore | number:0}}</h2>
+                                </div>
+                                <div class="row text-center text-danger" data-ng-if="npsScore < 70">
+                                    <h2 class="NPSScore">{{npsScore | number:0}}</h2>
+                                </div>
+                                <div class="row text-center">
+                                    <label>{{ 'NPS.NPS' | translate }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body bg-inverse">
+                            <div class="row row-table text-center">
+                                <div class="col-xs-4 text-success">
+                                    <p class="m0 h3">{{promotersQuantity}} ({{promotersPercentage | number:0}}%)</p>
+
+                                    <p class="m0 text-muted">{{ 'NPS.PROMOTERS' | translate }}</p>
+                                </div>
+                                <div class="col-xs-4 text-warning">
+                                    <p class="m0 h3">{{passiveQuantity}} ({{passivePercentage | number:0}}%)</p>
+
+                                    <p class="m0 text-muted">{{ 'NPS.PASSIVE' | translate }}</p>
+                                </div>
+                                <div class="col-xs-4 text-danger">
+                                    <p class="m0 h3">{{detractorsQuantity}} ({{detractorsPercentage | number:0}}%)</p>
+
+                                    <p class="m0 text-muted">{{ 'NPS.DETRACTORS' | translate }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- START widget-->
+                    <div class="panel widget custom-border">
+                        <div class="panel-body">
+                            <!--<nvd3 options="options" data="data" class="visitsGraph with-3d-shadow with-transitions"></nvd3>-->
+                            <flot dataset="lineData" options="lineOptions" height="185px"></flot>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="">
+                <div class="custom-border">
+                    <div class="nps-last-comments-title">Ultimos 20 comentarios</div>
+                    <!-- START list group-->
+                    <div class="list-group" style="overflow-x: hidden; overflow-y: scroll; max-height: 403px">
+                        <!-- START list group item-->
+                        <a class="list-group-item" data-ng-repeat="commentData in lastComments">
+                            <div class="media-box">
+                                <div class="pull-left">
+                                    <img ng-src="{{commentData.image}}" alt="Image"
+                                         class="media-box-object img-circle thumb32"/>
+                                </div>
+                                <div class="media-box-body clearfix">
+                                    <small class="pull-right">{{commentData.date}}</small>
+                                    <strong class="media-box-heading text-primary">
+                                        <span class="circle circle-success circle-lg text-left"></span>
+                                        {{commentData.user}}
+                                    </strong>
+                                    <p class="mb-sm">
+                                        <strong>Calificación: </strong><small>{{commentData.rating}}</small>
+                                    </p>
+                                    <p class="mb-sm">
+                                        <small>{{commentData.comment}}</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- END list group item-->
+                    </div>
+                    <!-- END list group-->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
