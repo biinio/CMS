@@ -286,7 +286,8 @@
             xaxis: {
                 tickColor: '#eee',
                 mode: 'time',
-                timeformat: '%d-%m-%y'
+                timeformat: '%d-%b',
+                monthNames: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
             },
             yaxis: {
                 position: ($scope.app.layout.isRTL ? 'right' : 'left'),
