@@ -1577,7 +1577,7 @@ angular.module('biins').config(['$stateProvider',
         Menus.addMenuItem('sidebar', 'Elements', 'elements', null, '/elements', false, null, null,'icon-book-open', "sidebar.MENU_ELEMENTS");
         Menus.addMenuItem('sidebar', 'Showcase', 'showcases', null, '/showcase', false, null, null,'icon-docs', "sidebar.MENU_SHOWCASES");
         Menus.addMenuItem('sidebar', 'Biins', 'biins', null, '/biins', false, null, null,'icon-feed', "sidebar.MENU_BIINS");
-        Menus.addMenuItem('sidebar', 'NPS', 'nps', null, null, false, null, null,'fa fa-bar-chart', "sidebar.MENU_NPS");
+        //Menus.addMenuItem('sidebar', 'NPS', 'nps', null, null, false, null, null,'fa fa-bar-chart', "sidebar.MENU_NPS");
 
                     //     menuId, menuItemTitle, menuItemURL, menuItemType, menuItemUIRoute, isPublic, roles, position,iconClass, translateKey, alert)
         Menus.addMenuItem('sidebar', 'Administration', 'profile', 'dropdown', null, false, null, null,'fa fa-gears', "sidebar.MENU_ADMINISTRATION");
