@@ -80,13 +80,13 @@
                 <div class="custom-border">
                     <div class="nps-last-comments-title">Ultimos 20 comentarios</div>
                     <!-- START list group-->
-                    <div class="list-group custom-border" style="overflow-x: hidden; overflow-y: scroll; max-height: 403px">
+                    <div class="list-group custom-border" style="overflow-x: hidden; overflow-y: scroll; max-height: 424px; min-height: 424px; padding-top: 0px">
                         <!-- START list group item-->
                         <a class="list-group-item" data-ng-repeat="commentData in lastComments">
                             <div class="media-box">
                                 <div class="pull-left">
                                     <img ng-src="{{commentData.image}}" alt="Image"
-                                         class="media-box-object img-circle thumb32"/>
+                                         class="media-box-object img-circle thumb64"/>
                                 </div>
                                 <div class="media-box-body clearfix">
                                     <small class="pull-right">{{commentData.date}}</small>
