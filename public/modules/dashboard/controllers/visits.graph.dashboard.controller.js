@@ -27,25 +27,31 @@
         }
 
         $scope.$on('organizationChanged',function(){
+            $scope.reset();
             $scope.getChartData($scope.globalFilters.dateRange);
         });
 
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
+            $scope.reset();
             $scope.changeChartRange($scope.globalFilters.dateRange);
         });
 
         $scope.$on('Biin: Site Changed',function(scope,site){
+            $scope.reset();
             $scope.getChartData($scope.globalFilters.dateRange);
         });
 
-        $scope.secondCriteriaChange = function(value)
-        {
-            $scope.getChartData($scope.globalFilters.dateRange);
-        };
 
-        $scope.firstCriteriaChange = function(value)
-        {
-            $scope.getChartData($scope.globalFilters.dateRange);
+        $scope.reset = function(){
+            $scope.areaData = [{
+                "label": "Visitas",
+                "color": "#FE5621",
+                "data": []
+            }, {
+                "label": "Notificaciones",
+                "color": "#7dc7df",
+                "data": []
+            }];
         };
 
         function getDateString(date) {

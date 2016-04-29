@@ -32,16 +32,25 @@
         }
 
         $scope.$on('organizationChanged',function(){
+            $scope.reset();
             $scope.getChartData($scope.globalFilters.dateRange);
         });
 
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
+            $scope.reset();
             $scope.changeChartRange($scope.globalFilters.dateRange);
         });
 
         $scope.$on('Biin: Site Changed',function(scope,site){
+            $scope.reset();
             $scope.getChartData($scope.globalFilters.dateRange);
         });
+
+        $scope.reset = function () {
+            $scope.news = 0;
+            $scope.returning = 0;
+            $scope.total = 0;
+        };
 
         $scope.getChartData = function ( days )
         {
