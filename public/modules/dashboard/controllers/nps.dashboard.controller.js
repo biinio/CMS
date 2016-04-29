@@ -88,19 +88,21 @@
             var filters = {};
             filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
             filters.dateRange = $scope.globalFilters.dateRange;
-            filters.siteId = $scope.globalFilters.selectedSite.identifier;
 
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/nps', {
-                    headers: {
-                        organizationid: $scope.organizationService.selectedOrganization.identifier,
-                        filters : JSON.stringify(filters),
-                        offset : new Date().getTimezoneOffset()
+            if($scope.globalFilters.selectedSite){
+                filters.siteId = $scope.globalFilters.selectedSite.identifier;
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/nps', {
+                        headers: {
+                            organizationid: $scope.organizationService.selectedOrganization.identifier,
+                            filters : JSON.stringify(filters),
+                            offset : new Date().getTimezoneOffset()
+                        }
+                    }).success(function (data) {
+                    if (data.result == "1") {
+                        updateNPSValues(data.data);
                     }
-                }).success(function (data) {
-                if (data.result == "1") {
-                    updateNPSValues(data.data);
-                }
-            });
+                });
+            }
         }
 
         function updateNPSValues(data) {
@@ -131,6 +133,7 @@
                     $scope.passivePercentage = ($scope.passiveQuantity / totalCases) * 100;
                     $scope.detractorsPercentage = ($scope.detractorsQuantity / totalCases) * 100;
                     $scope.npsScore = $scope.promotersPercentage - $scope.detractorsPercentage;
+                    $scope.totalCases = totalCases;
                 }
 
                 generateLastComments(data);
@@ -195,6 +198,7 @@
             $scope.passivePercentage = 0;
             $scope.detractorsPercentage = 0;
             $scope.lastComments = [];
+            $scope.totalCases = 0;
         }
 
         function getDateString(date) {
