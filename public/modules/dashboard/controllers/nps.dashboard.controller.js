@@ -24,14 +24,17 @@
          *
          =============================================================================================================*/
         $scope.$on('organizationChanged', function () {
+            resetNPS();
             getNPSData();
         });
 
         $scope.$on('Biin: Days Range Changed', function (scope, numberdays) {
+            resetNPS();
             getNPSData();
         });
 
         $scope.$on('Biin: Site Changed', function (scope, site) {
+            resetNPS();
             getNPSData();
         });
 

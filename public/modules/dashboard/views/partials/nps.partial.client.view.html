@@ -1,19 +1,4 @@
-<div data-ng-controller="npsController" ng-mouseleave="save()">
-    <form role="form">
-        <div class="form-group">
-            <div class="checkbox c-checkbox">
-                <label>
-                    <input type="checkbox"
-                           ng-model="organizationService.selectedOrganization.hasNPS" ng-true-value="'1'"
-                           ng-false-value="'0'" data/>
-                    <span class="fa fa-check"></span>
-                    {{ 'NPS.ACTIVATE_TITLE' | translate }}
-                </label>
-            </div>
-            <span class="help-block" translate="NPS.ACTIVATE_HELP"></span>
-
-        </div>
-    </form>
+<div data-ng-controller="npsController">
     <div class="row">
         <div class="col-lg-6">
             <div class="row">
