@@ -13804,6 +13804,9 @@ body {
 .nps-last-comments-wrapper {
   margin-top: 15px;
 }
+.nps-total-nps-font {
+  font-size: 20px;
+}
 .loader {
   margin: 60px auto;
   font-size: 10px;

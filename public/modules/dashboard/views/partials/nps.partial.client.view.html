@@ -11,6 +11,7 @@
                 </label>
             </div>
             <span class="help-block" translate="NPS.ACTIVATE_HELP"></span>
+
         </div>
     </form>
     <div class="row">
@@ -35,27 +36,27 @@
                                 <div class="row text-center text-danger" data-ng-if="npsScore < 70">
                                     <h2 class="NPSScore">{{npsScore | number:0}}</h2>
                                 </div>
-                                <div class="row text-center">
-                                    <label>{{ 'NPS.NPS' | translate }}</label>
+                                <div class="row text-center nps-total-nps-font">
+                                    <label>Total de encuestados: {{totalCases}}</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="panel-body bg-inverse">
+                        <div class="panel-body custom-border">
                             <div class="row row-table text-center">
                                 <div class="col-xs-4 text-success">
                                     <p class="m0 h3">{{promotersQuantity}} ({{promotersPercentage | number:0}}%)</p>
 
-                                    <p class="m0 text-muted">{{ 'NPS.PROMOTERS' | translate }}</p>
+                                    <p class="m0 ">{{ 'NPS.PROMOTERS' | translate }}</p>
                                 </div>
                                 <div class="col-xs-4 text-warning">
                                     <p class="m0 h3">{{passiveQuantity}} ({{passivePercentage | number:0}}%)</p>
 
-                                    <p class="m0 text-muted">{{ 'NPS.PASSIVE' | translate }}</p>
+                                    <p class="m0">{{ 'NPS.PASSIVE' | translate }}</p>
                                 </div>
                                 <div class="col-xs-4 text-danger">
                                     <p class="m0 h3">{{detractorsQuantity}} ({{detractorsPercentage | number:0}}%)</p>
 
-                                    <p class="m0 text-muted">{{ 'NPS.DETRACTORS' | translate }}</p>
+                                    <p class="m0">{{ 'NPS.DETRACTORS' | translate }}</p>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +80,7 @@
                 <div class="custom-border">
                     <div class="nps-last-comments-title">Ultimos 20 comentarios</div>
                     <!-- START list group-->
-                    <div class="list-group" style="overflow-x: hidden; overflow-y: scroll; max-height: 403px">
+                    <div class="list-group custom-border" style="overflow-x: hidden; overflow-y: scroll; max-height: 403px">
                         <!-- START list group item-->
                         <a class="list-group-item" data-ng-repeat="commentData in lastComments">
                             <div class="media-box">
