@@ -2501,14 +2501,17 @@ angular.module('dashboard').config(['$stateProvider',
          *
          =============================================================================================================*/
         $scope.$on('organizationChanged', function () {
+            resetNPS();
             getNPSData();
         });
 
         $scope.$on('Biin: Days Range Changed', function (scope, numberdays) {
+            resetNPS();
             getNPSData();
         });
 
         $scope.$on('Biin: Site Changed', function (scope, site) {
+            resetNPS();
             getNPSData();
         });
 
@@ -2565,19 +2568,21 @@ angular.module('dashboard').config(['$stateProvider',
             var filters = {};
             filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
             filters.dateRange = $scope.globalFilters.dateRange;
-            filters.siteId = $scope.globalFilters.selectedSite.identifier;
 
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/nps', {
-                    headers: {
-                        organizationid: $scope.organizationService.selectedOrganization.identifier,
-                        filters : JSON.stringify(filters),
-                        offset : new Date().getTimezoneOffset()
+            if($scope.globalFilters.selectedSite){
+                filters.siteId = $scope.globalFilters.selectedSite.identifier;
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/nps', {
+                        headers: {
+                            organizationid: $scope.organizationService.selectedOrganization.identifier,
+                            filters : JSON.stringify(filters),
+                            offset : new Date().getTimezoneOffset()
+                        }
+                    }).success(function (data) {
+                    if (data.result == "1") {
+                        updateNPSValues(data.data);
                     }
-                }).success(function (data) {
-                if (data.result == "1") {
-                    updateNPSValues(data.data);
-                }
-            });
+                });
+            }
         }
 
         function updateNPSValues(data) {
@@ -2608,6 +2613,7 @@ angular.module('dashboard').config(['$stateProvider',
                     $scope.passivePercentage = ($scope.passiveQuantity / totalCases) * 100;
                     $scope.detractorsPercentage = ($scope.detractorsQuantity / totalCases) * 100;
                     $scope.npsScore = $scope.promotersPercentage - $scope.detractorsPercentage;
+                    $scope.totalCases = totalCases;
                 }
 
                 generateLastComments(data);
@@ -2672,6 +2678,7 @@ angular.module('dashboard').config(['$stateProvider',
             $scope.passivePercentage = 0;
             $scope.detractorsPercentage = 0;
             $scope.lastComments = [];
+            $scope.totalCases = 0;
         }
 
         function getDateString(date) {
@@ -6183,7 +6190,7 @@ angular.module('organization').config(['$stateProvider',
         //Indicate if an organization data is changed
         var isOrganizationDirty = function () {
             $scope.isAnalazingOrg = true;
-            var propertiesToCheck = ["name", "brand", "description", "extraInfo","isPublished","isUsingBrandColors","primaryColor","secondaryColor"];
+            var propertiesToCheck = ["name", "brand", "description", "extraInfo","isPublished","isUsingBrandColors","primaryColor","secondaryColor","hasNPS"];
             var foundChange = false;
             if ($scope.prevSaveOrganization !== null) {
                 for (var i = 0; i < propertiesToCheck.length && !foundChange; i++) {

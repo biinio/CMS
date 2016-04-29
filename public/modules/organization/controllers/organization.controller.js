@@ -163,7 +163,7 @@
         //Indicate if an organization data is changed
         var isOrganizationDirty = function () {
             $scope.isAnalazingOrg = true;
-            var propertiesToCheck = ["name", "brand", "description", "extraInfo","isPublished","isUsingBrandColors","primaryColor","secondaryColor"];
+            var propertiesToCheck = ["name", "brand", "description", "extraInfo","isPublished","isUsingBrandColors","primaryColor","secondaryColor","hasNPS"];
             var foundChange = false;
             if ($scope.prevSaveOrganization !== null) {
                 for (var i = 0; i < propertiesToCheck.length && !foundChange; i++) {

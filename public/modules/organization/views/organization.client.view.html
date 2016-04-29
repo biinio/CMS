@@ -28,6 +28,22 @@
                                     </label>
                                 </div>
                             </div>
+
+                            <form role="form">
+                                <div class="form-group">
+                                    <div class="checkbox c-checkbox">
+                                        <label>
+                                            <input type="checkbox"
+                                                   ng-model="objectsSidebarService.selectedObject.hasNPS" ng-true-value="'1'"
+                                                   ng-false-value="'0'" data/>
+                                            <span class="fa fa-check"></span>
+                                            {{ 'NPS.ACTIVATE_TITLE' | translate }}
+                                        </label>
+                                    </div>
+                                    <span class="help-block" translate="NPS.ACTIVATE_HELP"></span>
+                                </div>
+                            </form>
+
                             <div class="form-group">
                                 <div class="checkbox c-checkbox">
                                     <label title="{{ 'ORGANIZATION.USECOLORBRAND_TOOLTIP' | translate }}">
