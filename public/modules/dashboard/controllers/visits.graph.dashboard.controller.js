@@ -156,7 +156,8 @@
             xaxis: {
                 tickColor: '#fcfcfc',
                 mode: 'time',
-                timeformat: '%d-%m-%y'
+                timeformat: '%d-%b',
+                monthNames: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
             },
             yaxis: {
                 min: 0,
