@@ -746,7 +746,7 @@ angular.module('textAngularSetup', [])
         });
 
         taRegisterTool('p', {
-		buttontext: 'P',
+            buttontext: taTranslations.p.text,
             tooltiptext: taTranslations.p.tooltip,
             action: function () {
                 return this.$editor().wrapSelection("formatBlock", "<P>");
@@ -787,7 +787,7 @@ angular.module('textAngularSetup', [])
             }
         });
         taRegisterTool('quote', {
-		iconclass: 'fa fa-quote-right',
+            buttontext: taTranslations.quote.text,
             tooltiptext: taTranslations.quote.tooltip,
             action: function () {
                 return this.$editor().wrapSelection("formatBlock", "<BLOCKQUOTE>");
