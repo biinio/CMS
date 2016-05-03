@@ -16,19 +16,19 @@
                         <div class="panel-body">
                             <div class="row row-table text-center">
                                 <div class="col-xs-3">
-                                    <p class="m0 h3">{{totalCases}}</p>
+                                    <p class="m0 h3 text-22px">{{totalCases}}</p>
                                     <p class="m0 ">Encuestados</p>
                                 </div>
                                 <div class="col-xs-3 text-success">
-                                    <p class="m0 h3">{{promotersQuantity}} ({{promotersPercentage | number:0}}%)</p>
+                                    <p class="m0 h3 text-22px">{{promotersQuantity}} ({{promotersPercentage | number:0}}%)</p>
                                     <p class="m0 ">{{ 'NPS.PROMOTERS' | translate }}</p>
                                 </div>
                                 <div class="col-xs-3 text-warning">
-                                    <p class="m0 h3">{{passiveQuantity}} ({{passivePercentage | number:0}}%)</p>
+                                    <p class="m0 h3 text-22px">{{passiveQuantity}} ({{passivePercentage | number:0}}%)</p>
                                     <p class="m0">{{ 'NPS.PASSIVE' | translate }}</p>
                                 </div>
                                 <div class="col-xs-3 text-danger">
-                                    <p class="m0 h3">{{detractorsQuantity}} ({{detractorsPercentage | number:0}}%)</p>
+                                    <p class="m0 h3 text-22px">{{detractorsQuantity}} ({{detractorsPercentage | number:0}}%)</p>
                                     <p class="m0">{{ 'NPS.DETRACTORS' | translate }}</p>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                 <div class="custom-border comments-section-padding">
                     <div class="nps-last-comments-title">Ultimos 20 comentarios</div>
                     <!-- START list group-->
-                    <div class="list-group custom-border" style="overflow-x: hidden; overflow-y: auto; max-height: 399px; min-height: 399px; padding-top: 0px">
+                    <div class="list-group custom-border" style="overflow-x: hidden; overflow-y: auto; max-height: 392px; min-height: 392px; padding-top: 0px">
                         <!-- START list group item-->
                         <a class="list-group-item" data-ng-repeat="commentData in lastComments">
                             <div class="media-box">
