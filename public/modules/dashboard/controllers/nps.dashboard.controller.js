@@ -212,6 +212,7 @@
             $scope.detractorsPercentage = 0;
             $scope.lastComments = [];
             $scope.totalCases = 0;
+            $scope.indexBGColor = "bg-danger";
         }
 
         function getDateString(date) {
