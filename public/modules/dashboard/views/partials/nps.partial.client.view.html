@@ -9,7 +9,7 @@
                             <div class="row row-table">
                                 <div class="row text-center">
                                     <div class="NPSIndexText">Indice</div>
-                                    <h2 class="NPSScore">{{npsScore | number:0}}</h2>
+                                    <div class="NPSScore">{{npsScore | number:0}}</div>
                                 </div>
                             </div>
                         </div>
@@ -50,10 +50,10 @@
         </div>
         <div class="col-lg-6">
             <div class="">
-                <div class="custom-border">
+                <div class="custom-border comments-section-padding">
                     <div class="nps-last-comments-title">Ultimos 20 comentarios</div>
                     <!-- START list group-->
-                    <div class="list-group custom-border" style="overflow-x: hidden; overflow-y: scroll; max-height: 424px; min-height: 424px; padding-top: 0px">
+                    <div class="list-group custom-border" style="overflow-x: hidden; overflow-y: auto; max-height: 424px; min-height: 424px; padding-top: 0px">
                         <!-- START list group item-->
                         <a class="list-group-item" data-ng-repeat="commentData in lastComments">
                             <div class="media-box">
@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="media-box-body clearfix">
                                     <small class="pull-right">{{commentData.date}}</small>
-                                    <strong class="media-box-heading text-primary">
+                                    <strong class="media-box-heading">
                                         <span class="circle circle-success circle-lg text-left"></span>
                                         {{commentData.user}}
                                     </strong>
