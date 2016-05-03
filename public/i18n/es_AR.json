@@ -2,7 +2,7 @@
   "dashboard": {
     "TITLE": "Resumen",
     "WELCOME": "Bienvenido a {{appName}}",
-    "SITE_FILTER": "Sitio",
+    "SITE_FILTER": "Seleccionar Sitio",
     "SESSIONS": "Sesiones",
     "NEW_VISITS": "Nuevas visitas",
     "MOBILE_SESSIONS": "Sesiones móviles",

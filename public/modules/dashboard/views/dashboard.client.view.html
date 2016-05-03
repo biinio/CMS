@@ -18,8 +18,8 @@
         <div class="panel panel-default">
             <div class="panel-wrapper">
                 <div class="panel-body">
-                    <div class="col-md-12">
-                        <label>{{ 'dashboard.SITE_FILTER' | translate }}</label>
+                    <div class="col-md-6">
+                        <label class="text-19px select-site-label">{{ 'dashboard.SITE_FILTER' | translate }}</label>
 
                         <!-- Single button -->
                         <div class="btn-group" dropdown is-open="status.isopen">
@@ -31,18 +31,19 @@
                                     <a ng-click="setSelectedSite(site)">{{site.title1 + ' ' + site.title2}}</a></li>
                             </ul>
                         </div>
-
-                        <buttons class="pull-right">
-                            <button ng-click="changeChartRange(7)" class="mb-sm btn btn-default btn-lg">{{ 'dashboard.FILTER_7DAYS' |
+                    </div>
+                    <div class="col-md-6">
+                        <div class="pull-right">
+                            <button ng-click="changeChartRange(7)" class="mb-sm btn filter-button-large" data-ng-class="globalFilters.dateRange == 7? 'filter-button-active' :'filter-button-inactive'">{{ 'dashboard.FILTER_7DAYS' |
                                 translate }}
                             </button>
-                            <button ng-click="changeChartRange(30)" class="mb-sm btn btn-default btn-lg">{{ 'dashboard.FILTER_30DAYS' |
+                            <button ng-click="changeChartRange(30)" class="mb-sm btn filter-button-large" data-ng-class="globalFilters.dateRange == 30? 'filter-button-active' :'filter-button-inactive'">{{ 'dashboard.FILTER_30DAYS' |
                                 translate }}
                             </button>
-                            <button ng-click="changeChartRange(180)" class="mb-sm btn btn-default btn-lg">{{ 'dashboard.FILTER_6MONTHS' |
+                            <button ng-click="changeChartRange(180)" class="mb-sm btn filter-button-large" data-ng-class="globalFilters.dateRange == 180? 'filter-button-active' :'filter-button-inactive'">{{ 'dashboard.FILTER_6MONTHS' |
                                 translate }}
                             </button>
-                        </buttons>
+                        </div>
                     </div>
                 </div>
             </div>

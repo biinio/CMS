@@ -13752,13 +13752,73 @@ Component: elements.less
   min-height: 95px;
 }
 .color-biin-brand {
-  color: #fe5621;
+  color: #FE5621;
+}
+.filter-button-active {
+  color: #FFF;
+  background-color: #FE5621;
+}
+.filter-button-inactive {
+  color: #FFF;
+  background-color: #4a484b;
+}
+.filter-button-large {
+  padding: 10px 50px;
+  font-size: 14px;
+  line-height: 1.1;
+  border-radius: 4px;
+}
+.filter-button-large:hover {
+  color: #FFF;
+}
+.select-site-label {
+  margin-top: 5px;
+  font-weight: normal;
+}
+.text-19px {
+  font-size: 19px;
+}
+.text-18px {
+  font-size: 18px;
+}
+.text-17px {
+  font-size: 17px;
+}
+.text-16px {
+  font-size: 16px;
+}
+.text-15px {
+  font-size: 15px;
+}
+.text-14px {
+  font-size: 14px;
+}
+.text-13px {
+  font-size: 13px;
+}
+.text-12px {
+  font-size: 12px;
 }
 .NPSScore {
-  font-size: 50px;
+  font-size: 80px;
   font-weight: bold;
   margin-bottom: 0px;
   margin-top: 0px;
+}
+.NPSIndexText {
+  font-size: 40px;
+  font-weight: normal;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+.nps-green-border {
+  border-color: #00A000;
+}
+.nps-orange-border {
+  border-color: #FE5621;
+}
+.nps-red-border {
+  border-color: #f05050;
 }
 .panel {
   margin-bottom: 6px;
@@ -13792,7 +13852,6 @@ body {
 }
 .custom-border {
   display: block;
-  padding: 10px 15px;
   margin-bottom: -1px;
   background-color: #ffffff;
   border: 1px solid #e4eaec;
@@ -13806,6 +13865,11 @@ body {
 }
 .nps-total-nps-font {
   font-size: 20px;
+}
+.border-round {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 50%;
 }
 .loader {
   margin: 60px auto;
