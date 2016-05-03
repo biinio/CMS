@@ -19,11 +19,10 @@
             <div class="panel-wrapper">
                 <div class="panel-body">
                     <div class="col-md-6">
-                        <label class="text-19px select-site-label">{{ 'dashboard.SITE_FILTER' | translate }}</label>
-
+                        <label class="text-19px select-site-label">{{ 'dashboard.SITE_FILTER' | translate }}   </label>
                         <!-- Single button -->
                         <div class="btn-group" dropdown is-open="status.isopen">
-                            <button id="single-button" type="button" class="btn btn-default" dropdown-toggle ng-disabled="disabled">
+                            <button id="single-button" type="button" class="btn btn-default text-14px" dropdown-toggle ng-disabled="disabled">
                                 {{globalFilters.selectedSite.title1 + ' ' + globalFilters.selectedSite.title2}} <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">

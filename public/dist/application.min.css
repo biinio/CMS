@@ -13773,6 +13773,7 @@ Component: elements.less
 }
 .select-site-label {
   margin-top: 5px;
+  margin-right: 10px;
   font-weight: normal;
 }
 .text-19px {
