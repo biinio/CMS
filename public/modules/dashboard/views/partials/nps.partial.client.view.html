@@ -5,42 +5,30 @@
                 <div class="col-lg-12">
                     <!-- START widget-->
                     <div class="panel widget custom-border">
-                        <div class="panel-body">
+                        <div class="panel-body" data-ng-class="indexBGColor">
                             <div class="row row-table">
                                 <div class="row text-center">
-                                    <label data-ng-if="globalFilters.dateRange == 7">{{ 'NPS.THIS_WEEK' | translate }}</label>
-                                    <label data-ng-if="globalFilters.dateRange == 30">Ultimo mes</label>
-                                    <label data-ng-if="globalFilters.dateRange == 180">Ultimos 6 meses</label>
-                                </div>
-                                <div class="row text-center text-success" data-ng-if="npsScore >= 90">
-                                    <h2 class="NPSScore">{{npsScore | number:0}}</h2>
-                                </div>
-                                <div class="row text-center text-warning" data-ng-if="npsScore >= 70 && npsScore < 90">
-                                    <h2 class="NPSScore">{{npsScore | number:0}}</h2>
-                                </div>
-                                <div class="row text-center text-danger" data-ng-if="npsScore < 70">
-                                    <h2 class="NPSScore">{{npsScore | number:0}}</h2>
-                                </div>
-                                <div class="row text-center nps-total-nps-font">
-                                    <label>Total de encuestados: {{totalCases}}</label>
+                                    <div class="NPSIndexText">Índice</div>
+                                    <div class="NPSScore">{{npsScore | number:0}}</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="panel-body custom-border">
+                        <div class="panel-body">
                             <div class="row row-table text-center">
-                                <div class="col-xs-4 text-success">
-                                    <p class="m0 h3">{{promotersQuantity}} ({{promotersPercentage | number:0}}%)</p>
-
+                                <div class="col-xs-3">
+                                    <p class="m0 h3 text-22px">{{totalCases}}</p>
+                                    <p class="m0 ">Encuestados</p>
+                                </div>
+                                <div class="col-xs-3 text-success">
+                                    <p class="m0 h3 text-22px">{{promotersQuantity}} ({{promotersPercentage | number:0}}%)</p>
                                     <p class="m0 ">{{ 'NPS.PROMOTERS' | translate }}</p>
                                 </div>
-                                <div class="col-xs-4 text-warning">
-                                    <p class="m0 h3">{{passiveQuantity}} ({{passivePercentage | number:0}}%)</p>
-
+                                <div class="col-xs-3 text-warning">
+                                    <p class="m0 h3 text-22px">{{passiveQuantity}} ({{passivePercentage | number:0}}%)</p>
                                     <p class="m0">{{ 'NPS.PASSIVE' | translate }}</p>
                                 </div>
-                                <div class="col-xs-4 text-danger">
-                                    <p class="m0 h3">{{detractorsQuantity}} ({{detractorsPercentage | number:0}}%)</p>
-
+                                <div class="col-xs-3 text-danger">
+                                    <p class="m0 h3 text-22px">{{detractorsQuantity}} ({{detractorsPercentage | number:0}}%)</p>
                                     <p class="m0">{{ 'NPS.DETRACTORS' | translate }}</p>
                                 </div>
                             </div>
@@ -62,25 +50,25 @@
         </div>
         <div class="col-lg-6">
             <div class="">
-                <div class="custom-border">
+                <div class="custom-border comments-section-padding">
                     <div class="nps-last-comments-title">Ultimos 20 comentarios</div>
                     <!-- START list group-->
-                    <div class="list-group custom-border" style="overflow-x: hidden; overflow-y: scroll; max-height: 424px; min-height: 424px; padding-top: 0px">
+                    <div class="list-group custom-border" style="overflow-x: hidden; overflow-y: auto; max-height: 392px; min-height: 392px; padding-top: 0px">
                         <!-- START list group item-->
                         <a class="list-group-item" data-ng-repeat="commentData in lastComments">
                             <div class="media-box">
-                                <div class="pull-left">
+                                <div class="pull-left border-round" data-ng-class="{ 'nps-green-border': commentData.rating>=9, 'nps-orange-border': commentData.rating<9 && commentData.rating>=7, 'nps-red-border':commentData.rating<7}">
                                     <img ng-src="{{commentData.image}}" alt="Image"
                                          class="media-box-object img-circle thumb64"/>
                                 </div>
                                 <div class="media-box-body clearfix">
                                     <small class="pull-right">{{commentData.date}}</small>
-                                    <strong class="media-box-heading text-primary">
+                                    <strong class="media-box-heading">
                                         <span class="circle circle-success circle-lg text-left"></span>
                                         {{commentData.user}}
                                     </strong>
-                                    <p class="mb-sm">
-                                        <strong>Calificación: </strong><small>{{commentData.rating}}</small>
+                                    <p class="mb-sm" data-ng-class="{ 'text-success': commentData.rating>=9, 'text-warning': commentData.rating<9 && commentData.rating>=7, 'text-danger':commentData.rating<7}">
+                                        <strong>Calificación: </strong><strong>{{commentData.rating}}</strong>
                                     </p>
                                     <p class="mb-sm">
                                         <small>{{commentData.comment}}</small>

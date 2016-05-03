@@ -77,6 +77,8 @@
                     $scope.errorSaveShow = true;
             });
         };
+
+        $scope.indexBGColor = "";
         ////////////////
 
         function activate() {
@@ -137,6 +139,14 @@
                     $scope.detractorsPercentage = ($scope.detractorsQuantity / totalCases) * 100;
                     $scope.npsScore = $scope.promotersPercentage - $scope.detractorsPercentage;
                     $scope.totalCases = totalCases;
+
+                    if($scope.npsScore < 70){
+                        $scope.indexBGColor = "bg-danger";
+                    }else if($scope.npsScore <90){
+                        $scope.indexBGColor = "bg-warning";
+                    }else{
+                        $scope.indexBGColor = "bg-success";
+                    }
                 }
 
                 generateLastComments(data);
@@ -202,6 +212,7 @@
             $scope.detractorsPercentage = 0;
             $scope.lastComments = [];
             $scope.totalCases = 0;
+            $scope.indexBGColor = "bg-danger";
         }
 
         function getDateString(date) {
