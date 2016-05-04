@@ -12,7 +12,11 @@
 
     DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','ObjectsSidebar','GlobalFilters','Loading'];
     function DashboardController($http, $state, $scope, Authentication, Organization,ObjectsSidebar,GlobalFilters,Loading) {
-        var vm = this;
+
+        if (!Authentication.user) {
+            $location.path('/');
+        }
+
         $scope.authentication = Authentication;
         $scope.organizationService = Organization;
         $scope.globalFilters = GlobalFilters;
@@ -22,15 +26,15 @@
         $scope.loadingService = Loading;
         $scope.loadingService.isLoading = false;
 
+
+
+
         activate();
 
         ////////////////
 
         function activate() {
-
             $scope.globalFilters.dateRange = 30;
-            //$scope.globalFilters.selectedSite = $scope.organizationService.selectedOrganization.sites[0];
-
         }
 
         $scope.$on('$stateChangeStart', function(){
@@ -41,11 +45,11 @@
 
         $scope.changeChartRange = function (numberDays) {
             $scope.globalFilters.changeDateRange(numberDays);
-        }
+        };
 
         $scope.changeSelectedSite = function () {
             $scope.globalFilters.changeSelectedSite($scope.globalFilters.selectedSite);
-        }
+        };
 
         $scope.$on('organizationChanged', function () {
             $scope.globalFilters.selectedSite = $scope.organizationService.selectedOrganization.sites[0];

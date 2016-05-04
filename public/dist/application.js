@@ -2225,7 +2225,11 @@ angular.module('dashboard').config(['$stateProvider',
 
     DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','ObjectsSidebar','GlobalFilters','Loading'];
     function DashboardController($http, $state, $scope, Authentication, Organization,ObjectsSidebar,GlobalFilters,Loading) {
-        var vm = this;
+
+        if (!Authentication.user) {
+            $location.path('/');
+        }
+
         $scope.authentication = Authentication;
         $scope.organizationService = Organization;
         $scope.globalFilters = GlobalFilters;
@@ -2235,15 +2239,15 @@ angular.module('dashboard').config(['$stateProvider',
         $scope.loadingService = Loading;
         $scope.loadingService.isLoading = false;
 
+
+
+
         activate();
 
         ////////////////
 
         function activate() {
-
             $scope.globalFilters.dateRange = 30;
-            //$scope.globalFilters.selectedSite = $scope.organizationService.selectedOrganization.sites[0];
-
         }
 
         $scope.$on('$stateChangeStart', function(){
@@ -2254,11 +2258,11 @@ angular.module('dashboard').config(['$stateProvider',
 
         $scope.changeChartRange = function (numberDays) {
             $scope.globalFilters.changeDateRange(numberDays);
-        }
+        };
 
         $scope.changeSelectedSite = function () {
             $scope.globalFilters.changeSelectedSite($scope.globalFilters.selectedSite);
-        }
+        };
 
         $scope.$on('organizationChanged', function () {
             $scope.globalFilters.selectedSite = $scope.organizationService.selectedOrganization.sites[0];
@@ -2539,8 +2543,57 @@ angular.module('dashboard').config(['$stateProvider',
         });
 
 
-        if (!Authentication.user) {
-            $location.path('/');
+        $scope.indexBGColor = "";
+        $scope.lineOptions = {
+            series: {
+                lines: {
+                    show: false
+                },
+                points: {
+                    show: true,
+                    radius: 4
+                },
+                splines: {
+                    show: true,
+                    tension: 0.4,
+                    lineWidth: 1
+                }
+            },
+            grid: {
+                borderColor: '#eee',
+                borderWidth: 1,
+                hoverable: true,
+                backgroundColor: '#fcfcfc'
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: function (label, x, y) {
+                    return getDateString(new Date(x)) + ' : ' + y;
+                }
+            },
+            xaxis: {
+                tickColor: '#eee',
+                mode: 'time',
+                timeformat: '%d-%b',
+                monthNames: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
+            },
+            yaxis: {
+                position: ($scope.app.layout.isRTL ? 'right' : 'left'),
+                tickColor: '#eee'
+            },
+            shadowSize: 0
+        };
+        $scope.isLoading = true;
+
+        activate();
+
+
+        function activate() {
+            $scope.authentication = Authentication;
+            $scope.organizationService = Organization;
+            $scope.globalFilters = GlobalFilters;
+            getNPSData();
+            resetNPS();
         }
 
         Date.prototype.addDays = function (days) {
@@ -2567,29 +2620,8 @@ angular.module('dashboard').config(['$stateProvider',
             return dateArray;
         }
 
-        activate();
-
-        $scope.save = function () {
-            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationService.selectedOrganization.identifier, {model: $scope.organizationService.selectedOrganization}).success(function (data, status) {
-                if (status === 200) {
-                    $scope.succesSaveShow = true;
-                } else
-                    $scope.errorSaveShow = true;
-            });
-        };
-
-        $scope.indexBGColor = "";
-        ////////////////
-
-        function activate() {
-            $scope.authentication = Authentication;
-            $scope.organizationService = Organization;
-            $scope.globalFilters = GlobalFilters;
-            getNPSData();
-            resetNPS();
-        }
-
         function getNPSData() {
+            $scope.isLoading = true;
             var filters = {};
             filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
             filters.dateRange = $scope.globalFilters.dateRange;
@@ -2603,10 +2635,13 @@ angular.module('dashboard').config(['$stateProvider',
                             offset : new Date().getTimezoneOffset()
                         }
                     }).success(function (data) {
+                    $scope.isLoading = false;
                     if (data.result == "1") {
                         updateNPSValues(data.data);
                     }
                 });
+            } else {
+                $scope.isLoading = false;
             }
         }
 
@@ -2773,46 +2808,6 @@ angular.module('dashboard').config(['$stateProvider',
                 }
             ];
         }
-
-        $scope.lineOptions = {
-            series: {
-                lines: {
-                    show: false
-                },
-                points: {
-                    show: true,
-                    radius: 4
-                },
-                splines: {
-                    show: true,
-                    tension: 0.4,
-                    lineWidth: 1
-                }
-            },
-            grid: {
-                borderColor: '#eee',
-                borderWidth: 1,
-                hoverable: true,
-                backgroundColor: '#fcfcfc'
-            },
-            tooltip: true,
-            tooltipOpts: {
-                content: function (label, x, y) {
-                    return getDateString(new Date(x)) + ' : ' + y;
-                }
-            },
-            xaxis: {
-                tickColor: '#eee',
-                mode: 'time',
-                timeformat: '%d-%b',
-                monthNames: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
-            },
-            yaxis: {
-                position: ($scope.app.layout.isRTL ? 'right' : 'left'),
-                tickColor: '#eee'
-            },
-            shadowSize: 0
-        };
     }
 })();
 

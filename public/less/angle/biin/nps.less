@@ -32,3 +32,44 @@
   padding-right: 15px;
   padding-bottom: 15px;
 }
+
+ .loadercont.ng-leave {
+   transition:0.5s linear all;
+   opacity:1;
+ }
+
+.loadercont.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+
+.loadercont.ng-enter {
+  transition:0.5s linear all;
+  opacity:0;
+}
+
+/* The finishing CSS styles for the enter animation */
+.loadercont.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+
+.loadercontainer{
+  min-height: 440px;
+  max-height: 434px;
+  position: absolute;
+  z-index: 1000;
+  min-width: 100%;
+  background-color: white;
+  display: table;
+}
+
+
+.centerloader{
+  display:table-cell;
+  vertical-align: middle;
+}
+
+.npsContainer{
+  position: relative;
+}
