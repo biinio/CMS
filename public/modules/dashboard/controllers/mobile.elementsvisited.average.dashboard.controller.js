@@ -13,8 +13,8 @@
         .module('dashboard')
         .controller('mobileAverageVisitedElementsController', mobileAverageVisitedElementsController);
 
-    mobileAverageVisitedElementsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function mobileAverageVisitedElementsController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+    mobileAverageVisitedElementsController.$inject = ['$http', '$state','$scope','$rootScope', 'Authentication', 'Organization','GlobalFilters'];
+    function mobileAverageVisitedElementsController($http, $state, $scope,$rootScope, Authentication, Organization,GlobalFilters) {
         var vm = this;
         $scope.value = 0;
 
@@ -58,6 +58,7 @@
                     filters : JSON.stringify(filters),
                     offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                     $scope.value = data.data;
+                    $rootScope.$broadcast('Biin: Finished Virtual Children To Load', 'visitsShared');
                 });
         };
 

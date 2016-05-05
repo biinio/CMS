@@ -64,12 +64,20 @@
                     <legend>Interacciones presenciales en {{globalFilters.selectedSite.title2}}</legend>
                 </div>
                 <div class="panel-body">
-                    <!--<div class="row" data-ng-if="true" style="min-height: 434px; max-height: 434px">
-                        <div>
-                            <div class="loader"></div>
+                    <div class="loaderRelative">
+                        <div class="loadercontainer loaderAnim" data-ng-if="presentialLoaderEnabled" style="min-height: 225px; max-height: 225px">
+                        <div class="centerloader">
+                            <div class="line-scale loadernps">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
                         </div>
-                    </div>-->
-                    <div class="row" data-ng-if="false">
+                    </div>
+                    </div>
+                    <div class="row">
                         <div class="col-lg-4">
                             <ng-include src="'modules/dashboard/views/partials/site.visits.graph.partial.client.view.html'"></ng-include>
                         </div>
@@ -86,12 +94,20 @@
                     <legend>Interacciones virtuales en {{globalFilters.selectedSite.title2}}</legend>
                 </div>
                 <div class="panel-body">
-                    <!--<div class="row" data-ng-if="true" style="min-height: 434px; max-height: 434px">
-                        <div>
-                            <div class="loader"></div>
+                    <div class="loaderRelative">
+                        <div class="loadercontainer loaderAnim" data-ng-if="virtualLoaderEnabled" style="min-height: 225px; max-height: 225px">
+                            <div class="centerloader">
+                                <div class="line-scale loadernps">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
                         </div>
-                    </div>-->
-                    <div class="row" data-ng-if="false">
+                    </div>
+                    <div class="row">
                         <div class="col-lg-4">
                             <ng-include src="'modules/dashboard/views/partials/mobile.visits.graph.partial.client.view.html'"></ng-include>
                         </div>

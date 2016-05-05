@@ -27,7 +27,17 @@
         $scope.loadingService.isLoading = false;
 
 
+        $scope.presentialLoaderEnabled = true;
+        $scope.virtualLoaderEnabled = true;
 
+        var presentialChildren = {};
+        presentialChildren.visitsGraph = true;
+        presentialChildren.visitsTable = true;
+
+        var virtualChildren = {};
+        virtualChildren.visitsLiked = true;
+        virtualChildren.visitsShared = true;
+        virtualChildren.visitsTable = true;
 
         activate();
 
@@ -37,13 +47,36 @@
             $scope.globalFilters.dateRange = 30;
         }
 
+        function resetValues(){
+            $scope.presentialLoaderEnabled = true;
+            $scope.virtualLoaderEnabled = true;
+
+            presentialChildren.visitsGraph = true;
+            presentialChildren.visitsTable = true;
+
+            virtualChildren.visitsLiked = true;
+            virtualChildren.visitsShared = true;
+            virtualChildren.visitsTable = true;
+        }
+
         $scope.$on('$stateChangeStart', function(){
             $scope.loadingService.isLoading = true;
             $scope.objectsSidebarService.reset();
         });
 
+        $scope.$on('Biin: Finished Presential Children To Load', function(scope, children){
+            presentialChildren[children] = false;
+            $scope.presentialLoaderEnabled = presentialChildren.visitsTable || presentialChildren.visitsGraph;
+        });
+
+        $scope.$on('Biin: Finished Virtual Children To Load', function(scope, children){
+            virtualChildren[children] = false;
+            $scope.virtualLoaderEnabled = virtualChildren.visitsLiked || virtualChildren.visitsTable || virtualChildren.visitsShared;
+        });
+
 
         $scope.changeChartRange = function (numberDays) {
+            resetValues();
             $scope.globalFilters.changeDateRange(numberDays);
         };
 
@@ -57,6 +90,7 @@
         });
 
         $scope.setSelectedSite = function(site){
+            resetValues();
             $scope.globalFilters.selectedSite = site;
             $scope.globalFilters.changeSelectedSite($scope.globalFilters.selectedSite);
         }

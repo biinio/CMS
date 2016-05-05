@@ -13809,6 +13809,24 @@ Component: elements.less
 .text-12px {
   font-size: 12px;
 }
+.loaderRelative {
+  position: relative;
+}
+.loaderAnim.ng-leave {
+  transition: 0.5s linear all;
+  opacity: 1;
+}
+.loaderAnim.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+.loaderAnim.ng-enter {
+  transition: 0.5s linear all;
+  opacity: 0;
+}
+/* The finishing CSS styles for the enter animation */
+.loaderAnim.ng-enter.ng-enter-active {
+  opacity: 1;
+}
 .NPSScore {
   font-size: 80px;
   font-weight: bold;
@@ -13864,9 +13882,13 @@ Component: elements.less
 .centerloader {
   display: table-cell;
   vertical-align: middle;
+  text-align: center;
 }
 .npsContainer {
   position: relative;
+}
+.loadernps {
+  display: inline-block;
 }
 .panel {
   margin-bottom: 6px;
@@ -13918,6 +13940,9 @@ body {
   border-style: solid;
   border-width: 2px;
   border-radius: 50%;
+}
+.line-scale > div {
+  background: #fe5621 !important;
 }
 .loader {
   margin: 60px auto;

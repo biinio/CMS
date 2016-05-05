@@ -13,8 +13,8 @@
         .module('dashboard')
         .controller('mobilePieVisitsController', mobilePieVisitsController);
 
-    mobilePieVisitsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function mobilePieVisitsController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+    mobilePieVisitsController.$inject = ['$http', '$state','$scope','$rootScope', 'Authentication', 'Organization','GlobalFilters'];
+    function mobilePieVisitsController($http, $state, $scope,$rootScope, Authentication, Organization,GlobalFilters) {
 
         var vm = this;
         $scope.value = 0;
@@ -69,6 +69,7 @@
                 $scope.news = information.news || 0;
                 $scope.returning = information.returning || 0;
                 $scope.total = information.totalSessions || 0;
+                $rootScope.$broadcast('Biin: Finished Virtual Children To Load', 'visitsTable');
             });
         };
 
