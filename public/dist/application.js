@@ -2225,7 +2225,11 @@ angular.module('dashboard').config(['$stateProvider',
 
     DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','ObjectsSidebar','GlobalFilters','Loading'];
     function DashboardController($http, $state, $scope, Authentication, Organization,ObjectsSidebar,GlobalFilters,Loading) {
-        var vm = this;
+
+        if (!Authentication.user) {
+            $location.path('/');
+        }
+
         $scope.authentication = Authentication;
         $scope.organizationService = Organization;
         $scope.globalFilters = GlobalFilters;
@@ -2235,15 +2239,37 @@ angular.module('dashboard').config(['$stateProvider',
         $scope.loadingService = Loading;
         $scope.loadingService.isLoading = false;
 
+
+        $scope.presentialLoaderEnabled = true;
+        $scope.virtualLoaderEnabled = true;
+
+        var presentialChildren = {};
+        presentialChildren.visitsGraph = true;
+        presentialChildren.visitsTable = true;
+
+        var virtualChildren = {};
+        virtualChildren.visitsLiked = true;
+        virtualChildren.visitsShared = true;
+        virtualChildren.visitsTable = true;
+
         activate();
 
         ////////////////
 
         function activate() {
-
             $scope.globalFilters.dateRange = 30;
-            //$scope.globalFilters.selectedSite = $scope.organizationService.selectedOrganization.sites[0];
+        }
 
+        function resetValues(){
+            $scope.presentialLoaderEnabled = true;
+            $scope.virtualLoaderEnabled = true;
+
+            presentialChildren.visitsGraph = true;
+            presentialChildren.visitsTable = true;
+
+            virtualChildren.visitsLiked = true;
+            virtualChildren.visitsShared = true;
+            virtualChildren.visitsTable = true;
         }
 
         $scope.$on('$stateChangeStart', function(){
@@ -2251,14 +2277,25 @@ angular.module('dashboard').config(['$stateProvider',
             $scope.objectsSidebarService.reset();
         });
 
+        $scope.$on('Biin: Finished Presential Children To Load', function(scope, children){
+            presentialChildren[children] = false;
+            $scope.presentialLoaderEnabled = presentialChildren.visitsTable || presentialChildren.visitsGraph;
+        });
+
+        $scope.$on('Biin: Finished Virtual Children To Load', function(scope, children){
+            virtualChildren[children] = false;
+            $scope.virtualLoaderEnabled = virtualChildren.visitsLiked || virtualChildren.visitsTable || virtualChildren.visitsShared;
+        });
+
 
         $scope.changeChartRange = function (numberDays) {
+            resetValues();
             $scope.globalFilters.changeDateRange(numberDays);
-        }
+        };
 
         $scope.changeSelectedSite = function () {
             $scope.globalFilters.changeSelectedSite($scope.globalFilters.selectedSite);
-        }
+        };
 
         $scope.$on('organizationChanged', function () {
             $scope.globalFilters.selectedSite = $scope.organizationService.selectedOrganization.sites[0];
@@ -2266,6 +2303,7 @@ angular.module('dashboard').config(['$stateProvider',
         });
 
         $scope.setSelectedSite = function(site){
+            resetValues();
             $scope.globalFilters.selectedSite = site;
             $scope.globalFilters.changeSelectedSite($scope.globalFilters.selectedSite);
         }
@@ -2289,8 +2327,8 @@ angular.module('dashboard').config(['$stateProvider',
         .module('dashboard')
         .controller('mobileTotalBiinedController', mobileTotalBiinedController);
 
-    mobileTotalBiinedController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function mobileTotalBiinedController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+    mobileTotalBiinedController.$inject = ['$http', '$state','$scope','$rootScope', 'Authentication', 'Organization','GlobalFilters'];
+    function mobileTotalBiinedController($http, $state, $scope,$rootScope, Authentication, Organization,GlobalFilters) {
         var vm = this;
         $scope.value = 0;
 
@@ -2334,6 +2372,7 @@ angular.module('dashboard').config(['$stateProvider',
                     filters : JSON.stringify(filters),
                     offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                     $scope.value = data.data;
+                    $rootScope.$broadcast('Biin: Finished Virtual Children To Load', 'visitsLiked');
                 });
         };
 
@@ -2360,8 +2399,8 @@ angular.module('dashboard').config(['$stateProvider',
         .module('dashboard')
         .controller('mobileAverageVisitedElementsController', mobileAverageVisitedElementsController);
 
-    mobileAverageVisitedElementsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function mobileAverageVisitedElementsController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+    mobileAverageVisitedElementsController.$inject = ['$http', '$state','$scope','$rootScope', 'Authentication', 'Organization','GlobalFilters'];
+    function mobileAverageVisitedElementsController($http, $state, $scope,$rootScope, Authentication, Organization,GlobalFilters) {
         var vm = this;
         $scope.value = 0;
 
@@ -2405,6 +2444,7 @@ angular.module('dashboard').config(['$stateProvider',
                     filters : JSON.stringify(filters),
                     offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                     $scope.value = data.data;
+                    $rootScope.$broadcast('Biin: Finished Virtual Children To Load', 'visitsShared');
                 });
         };
 
@@ -2431,8 +2471,8 @@ angular.module('dashboard').config(['$stateProvider',
         .module('dashboard')
         .controller('mobilePieVisitsController', mobilePieVisitsController);
 
-    mobilePieVisitsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function mobilePieVisitsController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+    mobilePieVisitsController.$inject = ['$http', '$state','$scope','$rootScope', 'Authentication', 'Organization','GlobalFilters'];
+    function mobilePieVisitsController($http, $state, $scope,$rootScope, Authentication, Organization,GlobalFilters) {
 
         var vm = this;
         $scope.value = 0;
@@ -2487,6 +2527,7 @@ angular.module('dashboard').config(['$stateProvider',
                 $scope.news = information.news || 0;
                 $scope.returning = information.returning || 0;
                 $scope.total = information.totalSessions || 0;
+                $rootScope.$broadcast('Biin: Finished Virtual Children To Load', 'visitsTable');
             });
         };
 
@@ -2539,8 +2580,57 @@ angular.module('dashboard').config(['$stateProvider',
         });
 
 
-        if (!Authentication.user) {
-            $location.path('/');
+        $scope.indexBGColor = "";
+        $scope.lineOptions = {
+            series: {
+                lines: {
+                    show: false
+                },
+                points: {
+                    show: true,
+                    radius: 4
+                },
+                splines: {
+                    show: true,
+                    tension: 0.4,
+                    lineWidth: 1
+                }
+            },
+            grid: {
+                borderColor: '#eee',
+                borderWidth: 1,
+                hoverable: true,
+                backgroundColor: '#fcfcfc'
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: function (label, x, y) {
+                    return getDateString(new Date(x)) + ' : ' + y;
+                }
+            },
+            xaxis: {
+                tickColor: '#eee',
+                mode: 'time',
+                timeformat: '%d-%b',
+                monthNames: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
+            },
+            yaxis: {
+                position: ($scope.app.layout.isRTL ? 'right' : 'left'),
+                tickColor: '#eee'
+            },
+            shadowSize: 0
+        };
+        $scope.isLoading = true;
+
+        activate();
+
+
+        function activate() {
+            $scope.authentication = Authentication;
+            $scope.organizationService = Organization;
+            $scope.globalFilters = GlobalFilters;
+            getNPSData();
+            resetNPS();
         }
 
         Date.prototype.addDays = function (days) {
@@ -2567,29 +2657,8 @@ angular.module('dashboard').config(['$stateProvider',
             return dateArray;
         }
 
-        activate();
-
-        $scope.save = function () {
-            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationService.selectedOrganization.identifier, {model: $scope.organizationService.selectedOrganization}).success(function (data, status) {
-                if (status === 200) {
-                    $scope.succesSaveShow = true;
-                } else
-                    $scope.errorSaveShow = true;
-            });
-        };
-
-        $scope.indexBGColor = "";
-        ////////////////
-
-        function activate() {
-            $scope.authentication = Authentication;
-            $scope.organizationService = Organization;
-            $scope.globalFilters = GlobalFilters;
-            getNPSData();
-            resetNPS();
-        }
-
         function getNPSData() {
+            $scope.isLoading = true;
             var filters = {};
             filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
             filters.dateRange = $scope.globalFilters.dateRange;
@@ -2603,10 +2672,13 @@ angular.module('dashboard').config(['$stateProvider',
                             offset : new Date().getTimezoneOffset()
                         }
                     }).success(function (data) {
+                    $scope.isLoading = false;
                     if (data.result == "1") {
                         updateNPSValues(data.data);
                     }
                 });
+            } else {
+                $scope.isLoading = false;
             }
         }
 
@@ -2773,46 +2845,6 @@ angular.module('dashboard').config(['$stateProvider',
                 }
             ];
         }
-
-        $scope.lineOptions = {
-            series: {
-                lines: {
-                    show: false
-                },
-                points: {
-                    show: true,
-                    radius: 4
-                },
-                splines: {
-                    show: true,
-                    tension: 0.4,
-                    lineWidth: 1
-                }
-            },
-            grid: {
-                borderColor: '#eee',
-                borderWidth: 1,
-                hoverable: true,
-                backgroundColor: '#fcfcfc'
-            },
-            tooltip: true,
-            tooltipOpts: {
-                content: function (label, x, y) {
-                    return getDateString(new Date(x)) + ' : ' + y;
-                }
-            },
-            xaxis: {
-                tickColor: '#eee',
-                mode: 'time',
-                timeformat: '%d-%b',
-                monthNames: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
-            },
-            yaxis: {
-                position: ($scope.app.layout.isRTL ? 'right' : 'left'),
-                tickColor: '#eee'
-            },
-            shadowSize: 0
-        };
     }
 })();
 
@@ -2831,8 +2863,8 @@ angular.module('dashboard').config(['$stateProvider',
         .module('dashboard')
         .controller('sitesPieVisitsController', sitesPieVisitsController);
 
-    sitesPieVisitsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function sitesPieVisitsController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+    sitesPieVisitsController.$inject = ['$http', '$state','$scope','$rootScope', 'Authentication', 'Organization','GlobalFilters'];
+    function sitesPieVisitsController($http, $state, $scope, $rootScope, Authentication, Organization,GlobalFilters) {
 
         var vm = this;
         $scope.value = 0;
@@ -2887,6 +2919,8 @@ angular.module('dashboard').config(['$stateProvider',
                 $scope.news = information.news || 0;
                 $scope.returning = information.returning || 0;
                 $scope.total = information.totalSessions || 0;
+
+                $rootScope.$broadcast('Biin: Finished Presential Children To Load', 'visitsTable');
             });
         };
 
@@ -2913,8 +2947,8 @@ angular.module('dashboard').config(['$stateProvider',
         .module('dashboard')
         .controller('VisitsGraphController', VisitsGraphController);
 
-    VisitsGraphController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function VisitsGraphController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+    VisitsGraphController.$inject = ['$http', '$state','$scope','$rootScope', 'Authentication', 'Organization','GlobalFilters'];
+    function VisitsGraphController($http, $state, $scope,$rootScope, Authentication, Organization,GlobalFilters) {
         var vm = this;
         activate();
 
@@ -3017,6 +3051,8 @@ angular.module('dashboard').config(['$stateProvider',
                         "color": "#7dc7df",
                         "data": notifications
                     }];
+
+                    $rootScope.$broadcast('Biin: Finished Presential Children To Load', 'visitsGraph');
                 });
 
             });

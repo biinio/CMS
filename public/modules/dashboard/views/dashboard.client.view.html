@@ -64,18 +64,26 @@
                     <legend>Interacciones presenciales en {{globalFilters.selectedSite.title2}}</legend>
                 </div>
                 <div class="panel-body">
-                    <div class="col-lg-4">
-                        <ng-include src="'modules/dashboard/views/partials/site.visits.graph.partial.client.view.html'"/>
+                    <div class="loaderRelative">
+                        <div class="loadercontainer loaderAnim" data-ng-if="presentialLoaderEnabled" style="min-height: 225px; max-height: 225px">
+                        <div class="centerloader">
+                            <div class="line-scale loadernps">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </div>
                     </div>
-
-                    <!--<div class="col-md-3">
-                        <ng-include src="'modules/dashboard/views/partials/site.sessions.counter.partial.client.view.html'"/>
                     </div>
-                    <div class="col-md-3">
-                        <ng-include src="'modules/dashboard/views/partials/mobile.visits.graph.partial.client.view.html'"/>
-                    </div> -->
-                    <div class="col-lg-8">
-                        <ng-include src="'modules/dashboard/views/partials/visits.graph.partial.client.view.html'"/>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <ng-include src="'modules/dashboard/views/partials/site.visits.graph.partial.client.view.html'"></ng-include>
+                        </div>
+                        <div class="col-lg-8">
+                            <ng-include src="'modules/dashboard/views/partials/visits.graph.partial.client.view.html'"></ng-include>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -86,19 +94,28 @@
                     <legend>Interacciones virtuales en {{globalFilters.selectedSite.title2}}</legend>
                 </div>
                 <div class="panel-body">
+                    <div class="loaderRelative">
+                        <div class="loadercontainer loaderAnim" data-ng-if="virtualLoaderEnabled" style="min-height: 225px; max-height: 225px">
+                            <div class="centerloader">
+                                <div class="line-scale loadernps">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-lg-4">
-                            <!-- START List group-->
-                            <ng-include src="'modules/dashboard/views/partials/mobile.visits.graph.partial.client.view.html'"/>
-                            <!-- END List group-->
+                            <ng-include src="'modules/dashboard/views/partials/mobile.visits.graph.partial.client.view.html'"></ng-include>
                         </div>
                         <div class="col-lg-4">
-                            <ng-include
-                                    src="'modules/dashboard/views/partials/mobile.biined.counter.partial.client.view.html'"/>
+                            <ng-include src="'modules/dashboard/views/partials/mobile.biined.counter.partial.client.view.html'"></ng-include>
                         </div>
                         <div class="col-lg-4">
-                            <ng-include
-                                    src="'modules/dashboard/views/partials/mobile.elementsvisited.average.partial.client.view.html'"/>
+                            <ng-include src="'modules/dashboard/views/partials/mobile.elementsvisited.average.partial.client.view.html'"></ng-include>
                         </div>
                     </div>
                 </div>

@@ -13,8 +13,8 @@
         .module('dashboard')
         .controller('VisitsGraphController', VisitsGraphController);
 
-    VisitsGraphController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function VisitsGraphController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+    VisitsGraphController.$inject = ['$http', '$state','$scope','$rootScope', 'Authentication', 'Organization','GlobalFilters'];
+    function VisitsGraphController($http, $state, $scope,$rootScope, Authentication, Organization,GlobalFilters) {
         var vm = this;
         activate();
 
@@ -117,6 +117,8 @@
                         "color": "#7dc7df",
                         "data": notifications
                     }];
+
+                    $rootScope.$broadcast('Biin: Finished Presential Children To Load', 'visitsGraph');
                 });
 
             });

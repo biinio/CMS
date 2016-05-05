@@ -13,8 +13,8 @@
         .module('dashboard')
         .controller('sitesPieVisitsController', sitesPieVisitsController);
 
-    sitesPieVisitsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function sitesPieVisitsController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+    sitesPieVisitsController.$inject = ['$http', '$state','$scope','$rootScope', 'Authentication', 'Organization','GlobalFilters'];
+    function sitesPieVisitsController($http, $state, $scope, $rootScope, Authentication, Organization,GlobalFilters) {
 
         var vm = this;
         $scope.value = 0;
@@ -69,6 +69,8 @@
                 $scope.news = information.news || 0;
                 $scope.returning = information.returning || 0;
                 $scope.total = information.totalSessions || 0;
+
+                $rootScope.$broadcast('Biin: Finished Presential Children To Load', 'visitsTable');
             });
         };
 

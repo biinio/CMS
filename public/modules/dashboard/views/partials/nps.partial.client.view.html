@@ -1,4 +1,15 @@
-<div data-ng-controller="npsController">
+<div data-ng-controller="npsController" class="npsContainer">
+    <div class="loadercont loadercontainer" data-ng-if="isLoading">
+        <div class="centerloader">
+            <div class="line-scale loadernps">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-6">
             <div class="row">
@@ -53,7 +64,7 @@
                 <div class="custom-border comments-section-padding">
                     <div class="nps-last-comments-title">Ultimos 20 comentarios</div>
                     <!-- START list group-->
-                    <div class="list-group custom-border" style="overflow-x: hidden; overflow-y: auto; max-height: 392px; min-height: 392px; padding-top: 0px">
+                    <div class="list-group custom-border" style="overflow-x: hidden; overflow-y: auto; max-height: 392px; min-height: 392px; padding-top: 0px" data-ng-if="lastComments.length > 0">
                         <!-- START list group item-->
                         <a class="list-group-item" data-ng-repeat="commentData in lastComments">
                             <div class="media-box">
@@ -78,10 +89,12 @@
                         </a>
                         <!-- END list group item-->
                     </div>
+                    <div class="list-group custom-border center-text" style="overflow-x: hidden; overflow-y: auto; max-height: 392px; min-height: 392px; padding-top: 0px" data-ng-if="lastComments.length <= 0">
+                        No hay comentarios
+                    </div>
                     <!-- END list group-->
                 </div>
             </div>
         </div>
-
     </div>
 </div>
