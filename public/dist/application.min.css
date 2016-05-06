@@ -7076,7 +7076,7 @@ body {
 .wrapper {
   position: relative;
   width: 100%;
-  height: auto;
+  height: 100%;
   min-height: 100%;
   overflow-x: hidden;
 }
@@ -13199,7 +13199,7 @@ Component: sidemenu.less
   overflow-y: auto;
 }
 .objects-sidebar {
-  width: 220px;
+  width: 230px;
   min-height: 100%;
   position: fixed;
   height: 1px;
@@ -13243,7 +13243,7 @@ Component: sidemenu.less
   padding-left: 0;
 }
 .right-section-content {
-  padding-left: 200px;
+  padding-left: 210px;
   -webkit-transition: 0.3s;
   /* For Safari 3.1 to 6.0 */
   transition: 0.3s;
@@ -13986,9 +13986,20 @@ body {
   }
 }
 .loading-container {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: 999;
+  margin-top: 55px;
+  margin-left: 220px;
+}
+.loadercont2 {
   height: 100%;
-  width: 100%;
-  position: relative;
+  position: absolute;
+  z-index: 1000;
+  min-width: 100%;
+  background-color: white;
+  display: table;
 }
 .template-cell {
   position: relative;
