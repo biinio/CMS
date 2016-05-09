@@ -129,7 +129,7 @@
     "DELETE_SHOWCASE_CONFIRMATION": "Al eliminar esta vitrina dejará de estar disponible en todos los locales.",
     "DELETE_ORGANIZATION": "Eliminar organización",
     "DELETE_ORGANIZATION_TITLE": "¿Desea eliminar esta organización?",
-    "DELETE_ORGANIZATION_CONFIRMATION": "Al eliminar la organizacion todos los locales, sitios y vitrinas asignados a este se borrarán.",
+    "DELETE_ORGANIZATION_CONFIRMATION": "Al eliminar la organizacion todos los locales, elementos y vitrinas asignados a este se borrarán.",
     "DELETE_IMAGES_CONFIRMATION": "¿Desea eliminar las imágenes seleccionadas?",
     "CANCEL": "Cancelar",
     "DELETED" : "Eliminado"
@@ -139,13 +139,13 @@
     "NAME": "Nombre",
     "NAME_PLACEHOLDER": "Ingrese nombre del local",
     "AT": "Está en",
-    "AT_PLACEHOLDER": "Ingrese el nombre del sitio en el que se encuentra su local",
+    "AT_PLACEHOLDER": "Ingrese el nombre del lugar en el que se encuentra su local",
     "EMAIL": "Correo Electrónico",
-    "EMAIL_PLACEHOLDER": "mi-sitio@ejemplo.com",
+    "EMAIL_PLACEHOLDER": "mi-local@ejemplo.com",
     "NUTSHELL": "Mini Descripción",
     "NUTSHELL_PLACEHOLDER": "Ingrese una descripción breve de su local",
     "SCHEDULE":"Horario",
-    "SCHEDULE_PLACEHOLDER":"Ingrese el horario del sitio",
+    "SCHEDULE_PLACEHOLDER":"Ingrese el horario del local",
     "DELETED_TEXT":"Su local ha sido eliminado correctamente",
 
     "LOCATION":{
@@ -177,7 +177,7 @@
     "PRICE": "Precio"
   },
   "CATEGORY": {
-    "CATEGORIES_DESCRIPTION": "Las categorías permiten que su sitio y sus productos aparezcan en las búsquedas. Seleccione las categorías que considere que deben ser asociados a su sitio y a sus productos."
+    "CATEGORIES_DESCRIPTION": "Las categorías permiten que su local y sus productos aparezcan en las búsquedas. Seleccione las categorías que considere que deben ser asociados a su local y a sus productos."
   },
   "TEXTANGULAR" : {
     "INSERT_BUTTON": "Insertar",
@@ -247,8 +247,8 @@
     "DESCRIPTION_PLACEHOLDER": "Ingrese una descripción breve para la vitrina",
     "ELEMENTS": "Asignación de productos",
     "ELEMENTS_INFO": "Agregue productos a su vitrina.",
-    "SITES": "Sitios habilitados",
-    "SITES_INFO": "Por favor seleccione las vitrinas que se desean habilitar en cada sitio.",
+    "SITES": "Locales habilitados",
+    "SITES_INFO": "Por favor seleccione las vitrinas que se desean habilitar en cada local.",
     "ELEMENTS_REQUIRED_MESSAGE": "Por favor asigne al menos un productos válido a esta vitrina",
     "DELETED_TEXT" : "Su vitrina ha sido eliminado correctamente"
   },
