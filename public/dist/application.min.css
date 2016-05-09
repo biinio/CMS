@@ -13989,13 +13989,13 @@ body {
   height: 100vh;
   width: 100%;
   /* Firefox */
-  width: -moz-calc(100% - 280px);
+  width: -moz-calc(100% - 220px);
   /* WebKit */
-  width: -webkit-calc(100% + 280px);
+  width: -webkit-calc(100% - 220px);
   /* Opera */
-  width: -o-calc(100% + 280px);
+  width: -o-calc(100% - 220px);
   /* Standard */
-  width: calc(100% + 280px);
+  width: calc(100% - 220px);
   position: fixed;
   z-index: 999;
   margin-top: 55px;
