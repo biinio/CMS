@@ -42,7 +42,15 @@
 
 .loading-container{
   height: 100vh;
-  width: 100vw;
+  width: 100%;
+  /* Firefox */
+  width: -moz-calc(~"100% - 280px");
+  /* WebKit */
+  width: -webkit-calc(~"100% + 280px");
+  /* Opera */
+  width: -o-calc(~"100% + 280px");
+  /* Standard */
+  width: calc(~"100% + 280px");
   position: fixed;
   z-index: 999;
   margin-top: 55px;
