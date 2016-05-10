@@ -41,7 +41,28 @@
 }
 
 .loading-container{
-  height: 100%;
+  height: 100vh;
   width: 100%;
-  position:relative;
+  /* Firefox */
+  width: -moz-calc(~"100% - 220px");
+  /* WebKit */
+  width: -webkit-calc(~"100% - 220px");
+  /* Opera */
+  width: -o-calc(~"100% - 220px");
+  /* Standard */
+  width: calc(~"100% - 220px");
+  position: fixed;
+  z-index: 999;
+  margin-top: 55px;
+  margin-left: 220px;
+}
+
+
+.loadercont2{
+  height: 100%;
+  position: absolute;
+  z-index: 1000;
+  min-width: 100%;
+  background-color: white;
+  display: table;
 }

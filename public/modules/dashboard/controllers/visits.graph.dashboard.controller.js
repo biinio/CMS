@@ -13,8 +13,8 @@
         .module('dashboard')
         .controller('VisitsGraphController', VisitsGraphController);
 
-    VisitsGraphController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function VisitsGraphController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+    VisitsGraphController.$inject = ['$http', '$state','$scope','$rootScope', 'Authentication', 'Organization','GlobalFilters'];
+    function VisitsGraphController($http, $state, $scope,$rootScope, Authentication, Organization,GlobalFilters) {
         var vm = this;
         activate();
 
@@ -27,21 +27,31 @@
         }
 
         $scope.$on('organizationChanged',function(){
+            $scope.reset();
             $scope.getChartData($scope.globalFilters.dateRange);
         });
 
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
+            $scope.reset();
             $scope.changeChartRange($scope.globalFilters.dateRange);
         });
 
-        $scope.secondCriteriaChange = function(value)
-        {
+        $scope.$on('Biin: Site Changed',function(scope,site){
+            $scope.reset();
             $scope.getChartData($scope.globalFilters.dateRange);
-        };
+        });
 
-        $scope.firstCriteriaChange = function(value)
-        {
-            $scope.getChartData($scope.globalFilters.dateRange);
+
+        $scope.reset = function(){
+            $scope.areaData = [{
+                "label": "Visitas",
+                "color": "#FE5621",
+                "data": []
+            }, {
+                "label": "Notificaciones",
+                "color": "#7dc7df",
+                "data": []
+            }];
         };
 
         function getDateString(date) {
@@ -100,13 +110,15 @@
 
                     $scope.areaData = [{
                         "label": "Visitas",
-                        "color": "#ff902b",
+                        "color": "#FE5621",
                         "data": visits
                     }, {
                         "label": "Notificaciones",
                         "color": "#7dc7df",
                         "data": notifications
                     }];
+
+                    $rootScope.$broadcast('Biin: Finished Presential Children To Load', 'visitsGraph');
                 });
 
             });
@@ -120,12 +132,17 @@
         $scope.areaOptions = {
             series: {
                 lines: {
-                    show: true,
-                    fill: 0.8
+                    show: false
                 },
                 points: {
                     show: true,
                     radius: 4
+                },
+                splines: {
+                    show: true,
+                    tension: 0.4,
+                    lineWidth: 1,
+                    fill: 0.5
                 }
             },
             grid: {
@@ -141,7 +158,8 @@
             xaxis: {
                 tickColor: '#fcfcfc',
                 mode: 'time',
-                timeformat: '%d-%m-%y'
+                timeformat: '%d-%b',
+                monthNames: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
             },
             yaxis: {
                 min: 0,

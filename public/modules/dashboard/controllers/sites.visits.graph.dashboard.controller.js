@@ -13,12 +13,17 @@
         .module('dashboard')
         .controller('sitesPieVisitsController', sitesPieVisitsController);
 
-    sitesPieVisitsController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function sitesPieVisitsController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+    sitesPieVisitsController.$inject = ['$http', '$state','$scope','$rootScope', 'Authentication', 'Organization','GlobalFilters'];
+    function sitesPieVisitsController($http, $state, $scope, $rootScope, Authentication, Organization,GlobalFilters) {
 
         var vm = this;
         $scope.value = 0;
         $scope.enoughData = false;
+
+        $scope.news = 0;
+        $scope.returning = 0;
+        $scope.total = 0;
+
         activate();
 
         ////////////////
@@ -29,35 +34,25 @@
         }
 
         $scope.$on('organizationChanged',function(){
+            $scope.reset();
             $scope.getChartData($scope.globalFilters.dateRange);
         });
 
-        $scope.options = {
-            chart: {
-                type: 'pieChart',
-                x: function(d){return d.key;},
-                y: function(d){return d.y;},
-                showLabels: true,
-                transitionDuration: 500,
-                labelThreshold: 0.01,
-                legend: {
-                    margin: {
-                        top: 5,
-                        right: 35,
-                        bottom: 5,
-                        left: 0
-                    }
-                }
-            }
-        };
-
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
+            $scope.reset();
             $scope.changeChartRange($scope.globalFilters.dateRange);
         });
 
         $scope.$on('Biin: Site Changed', function(){
+            $scope.reset();
             $scope.getChartData($scope.globalFilters.dateRange);
         });
+
+        $scope.reset = function () {
+            $scope.news = 0;
+            $scope.returning = 0;
+            $scope.total = 0;
+        };
 
         $scope.getChartData = function ( days )
         {
@@ -70,19 +65,12 @@
                 filters : JSON.stringify(filters),
                 offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                 var information  = data.data;
-                $scope.enoughData = information.news || information.returning;
-                if($scope.enoughData){
-                    $scope.data = [
-                        {
-                            key: "New Visits",
-                            y: information.news
-                        },
-                        {
-                            key: "Frecuent Client",
-                            y: information.returning
-                        }
-                    ];
-                }
+
+                $scope.news = information.news || 0;
+                $scope.returning = information.returning || 0;
+                $scope.total = information.totalSessions || 0;
+
+                $rootScope.$broadcast('Biin: Finished Presential Children To Load', 'visitsTable');
             });
         };
 
@@ -91,6 +79,5 @@
         };
 
         $scope.changeChartRange($scope.globalFilters.dateRange);
-
     }
 })();

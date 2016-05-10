@@ -10,9 +10,9 @@
         .module('elements')
         .controller('ElementsController', ElementsController);
 
-    ElementsController.$inject = ['$http', '$state','$timeout','$scope','$translate', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading'];
+    ElementsController.$inject = ['$http', '$state','$timeout','$scope','$translate', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading','textAngularManager'];
 
-    function ElementsController($http, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
+    function ElementsController($http, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading,textAngularManager) {
         activate();
 
         $scope.objectsSidebarService = ObjectsSidebar;
@@ -98,6 +98,16 @@
                     elemSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
                 }
             },100);
+
+
+            var textangulareditor = textAngularManager.retrieveEditor('detailselementeditor');
+            if(textangulareditor) {
+                textangulareditor.scope.$undoManagertaHtmlElement1._stack = [];
+                textangulareditor.scope.$undoManagertaHtmlElement1._index = 0;
+                textangulareditor.scope.$undoManagertaTextElement1._stack = [];
+                textangulareditor.scope.$undoManagertaTextElement1._index = 0;
+            }
+            var a = 1;
         });
 
         $scope.$on("Biin: On Object Created", function(){

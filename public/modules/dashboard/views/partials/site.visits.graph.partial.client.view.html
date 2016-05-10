@@ -1,10 +1,48 @@
-<div ng-controller="sitesPieVisitsController" ngCloack="ngCloack" class="panel visitsvsretorning-graph">
-    <div collapse="" class="panel-wrapper">
-        <div data-ng-if="enoughData">
-            <nvd3 options="options" data="data" class="with-3d-shadow with-transitions"></nvd3>
-        </div>
-        <div data-ng-if="!enoughData" class="text-center">
-            {{ 'dashboard.NOT_ENOUGH_DATA' | translate }}
-        </div>
-    </div>
+<div ng-controller="sitesPieVisitsController" ngCloack="ngCloack">
+    <!-- START List group-->
+    <ul class="list-group">
+        <li class="list-group-item">
+            <div class="row row-table pv-xs">
+                <div class="col-xs-4 text-center color-biin-brand">
+                    <em class="fa fa-users fa-2x"></em>
+                </div>
+                <div class="col-xs-8 text-center">
+                    <p class="m0 lead">{{total}}</p>
+
+                    <p class="m0">
+                        <small>Visitas Totales</small>
+                    </p>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row row-table pv-xs">
+                <div class="col-xs-4 text-center color-biin-brand">
+                    <em class="fa fa-user-plus fa-2x"></em>
+                </div>
+                <div class="col-xs-8 text-center">
+                    <p class="m0 lead">{{news}}</p>
+
+                    <p class="m0">
+                        <small>Nuevas Visitas</small>
+                    </p>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row row-table pv-xs">
+                <div class="col-xs-4 text-center color-biin-brand">
+                    <em class="fa fa-refresh fa-2x"></em>
+                </div>
+                <div class="col-xs-8 text-center">
+                    <p class="m0 lead">{{returning}}</p>
+
+                    <p class="m0">
+                        <small>Visitas Recurrentes</small>
+                    </p>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <!-- END List group-->
 </div>

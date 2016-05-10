@@ -13,8 +13,8 @@
         .module('dashboard')
         .controller('mobileTotalBiinedController', mobileTotalBiinedController);
 
-    mobileTotalBiinedController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','GlobalFilters'];
-    function mobileTotalBiinedController($http, $state, $scope, Authentication, Organization,GlobalFilters) {
+    mobileTotalBiinedController.$inject = ['$http', '$state','$scope','$rootScope', 'Authentication', 'Organization','GlobalFilters'];
+    function mobileTotalBiinedController($http, $state, $scope,$rootScope, Authentication, Organization,GlobalFilters) {
         var vm = this;
         $scope.value = 0;
 
@@ -28,24 +28,37 @@
         }
 
         $scope.$on('organizationChanged',function(){
+            $scope.reset();
             $scope.getChartData($scope.globalFilters.dateRange);
         });
 
         $scope.$on('Biin: Days Range Changed',function(scope,numberdays){
+            $scope.reset();
             $scope.changeChartRange($scope.globalFilters.dateRange);
         });
+
+        $scope.$on('Biin: Site Changed',function(scope,site){
+            $scope.reset();
+            $scope.getChartData($scope.globalFilters.dateRange);
+        });
+
+        $scope.reset = function (){
+            $scope.value = 0;
+        };
 
         $scope.getChartData = function ( days )
         {
             var filters = {};
             filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
             filters.dateRange = $scope.globalFilters.dateRange;
+            filters.siteId = $scope.globalFilters.selectedSite.identifier;
 
             $http.get(ApplicationConfiguration.applicationBackendURL+'api/dashboard/mobile/totalbiined',
                 { headers:{
                     filters : JSON.stringify(filters),
                     offset : new Date().getTimezoneOffset() } } ).success(function(data) {
                     $scope.value = data.data;
+                    $rootScope.$broadcast('Biin: Finished Virtual Children To Load', 'visitsLiked');
                 });
         };
 

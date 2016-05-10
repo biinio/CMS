@@ -1,84 +1,105 @@
-<div ng-controller="NPSController as nps" class="block-center">
-    <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
-        <!-- START panel-->
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <legend>{{ 'NPS.TITLE' | translate }}</legend>
-                <!-- START row -->
-                <form role="form">
-                    <div class="form-group">
-                        <div class="checkbox c-checkbox">
-                            <label>
-                                <input type="checkbox"
-                                       ng-model="organizationService.selectedOrganization.hasNPS" ng-true-value="'1'" ng-false-value="'0'" data/>
-                                <span class="fa fa-check"></span>
-                                {{ 'NPS.ACTIVATE_TITLE' | translate }}
-                            </label>
-                        </div>
-                        <span class="help-block" translate="NPS.ACTIVATE_HELP"></span>
-                    </div>
-                </form>
-                <!-- END row -->
-                <div data-ng-if="isLoadingNPSData">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="loader-inner ball-grid-pulse center">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="loading-text">
-                                <p>{{ 'NPS.LOADING' | translate }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" data-ng-if="!isLoadingNPSData && organizationService.selectedOrganization.hasNPS=='1'">
-                    <div class="col-md-offset-1 col-md-4" style="border-style: solid">
-                        <div class="row text-center">
-                            <label>{{ 'NPS.THIS_WEEK' | translate }}</label>
-                        </div>
-                        <div class="row text-center text-success" data-ng-if="npsScore >= 90">
-                            <h2 class="NPSScore">{{npsScore | number:0}}</h2>
-                        </div>
-                        <div class="row text-center text-warning" data-ng-if="npsScore >= 70 && npsScore < 90">
-                            <h2 class="NPSScore">{{npsScore | number:0}}</h2>
-                        </div>
-                        <div class="row text-center text-danger" data-ng-if="npsScore < 70">
-                            <h2 class="NPSScore">{{npsScore | number:0}}</h2>
-                        </div>
-                        <div class="row text-center">
-                            <label>{{ 'NPS.NPS' | translate }}</label>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 text-center text-success">
-                                <div class="row">{{ 'NPS.PROMOTERS' | translate }}</div>
-                                <div class="row">{{promotersQuantity}} ({{promotersPercentage | number:0}}%)</div>
-                            </div>
-                            <div class="col-md-4 text-center text-warning">
-                                <div class="row">{{ 'NPS.PASSIVE' | translate }}</div>
-                                <div class="row">{{passiveQuantity}} ({{passivePercentage | number:0}}%)</div>
-                            </div>
-                            <div class="col-md-4 text-center text-danger">
-                                <div class="row">{{ 'NPS.DETRACTORS' | translate }}</div>
-                                <div class="row">{{detractorsQuantity}} ({{detractorsPercentage | number:0}}%)</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-offset-1 col-md-4" style="border-style: solid">
-                        <nvd3 options="options" data="data" class="visitsGraph with-3d-shadow with-transitions"></nvd3>
-                    </div>
-                </div>
+<div class="panel-title">Ultimos 10 comentarios</div>
+<!-- START list group-->
+<scrollable height="250" class="list-group">
+    <!-- START list group item-->
+    <a href="#" class="list-group-item">
+        <div class="media-box">
+            <div class="pull-left">
+                <img src="modules/core/img/user/02.jpg" alt="Image"
+                     class="media-box-object img-circle thumb32"/>
+            </div>
+            <div class="media-box-body clearfix">
+                <small class="pull-right">2h</small>
+                <strong class="media-box-heading text-primary">
+                    <span class="circle circle-success circle-lg text-left"></span>Catherine
+                    Ellis</strong>
+
+                <p class="mb-sm">
+                    <small>Cras sit amet nibh libero, in gravida nulla. Nulla...</small>
+                </p>
             </div>
         </div>
-        <!-- END panel -->
-    </div>
+    </a>
+    <!-- END list group item-->
+    <!-- START list group item-->
+    <a href="#" class="list-group-item">
+        <div class="media-box">
+            <div class="pull-left">
+                <img src="modules/core/img/user/03.jpg" alt="Image"
+                     class="media-box-object img-circle thumb32"/>
+            </div>
+            <div class="media-box-body clearfix">
+                <small class="pull-right">3h</small>
+                <strong class="media-box-heading text-primary">
+                    <span class="circle circle-success circle-lg text-left"></span>Jessica
+                    Silva</strong>
+
+                <p class="mb-sm">
+                    <small>Cras sit amet nibh libero, in gravida nulla. Nulla facilisi.</small>
+                </p>
+            </div>
+        </div>
+    </a>
+    <!-- END list group item-->
+    <!-- START list group item-->
+    <a href="#" class="list-group-item">
+        <div class="media-box">
+            <div class="pull-left">
+                <img src="modules/core/img/user/09.jpg" alt="Image"
+                     class="media-box-object img-circle thumb32"/>
+            </div>
+            <div class="media-box-body clearfix">
+                <small class="pull-right">4h</small>
+                <strong class="media-box-heading text-primary">
+                    <span class="circle circle-danger circle-lg text-left"></span>Jessie Wells</strong>
+
+                <p class="mb-sm">
+                    <small>Cras sit amet nibh libero, in gravida nulla. Nulla...</small>
+                </p>
+            </div>
+        </div>
+    </a>
+    <!-- END list group item-->
+    <!-- START list group item-->
+    <a href="#" class="list-group-item">
+        <div class="media-box">
+            <div class="pull-left">
+                <img src="modules/core/img/user/12.jpg" alt="Image"
+                     class="media-box-object img-circle thumb32"/>
+            </div>
+            <div class="media-box-body clearfix">
+                <small class="pull-right">1d</small>
+                <strong class="media-box-heading text-primary">
+                    <span class="circle circle-danger circle-lg text-left"></span>Rosa Burke</strong>
+
+                <p class="mb-sm">
+                    <small>Cras sit amet nibh libero, in gravida nulla. Nulla...</small>
+                </p>
+            </div>
+        </div>
+    </a>
+    <!-- END list group item-->
+    <!-- START list group item-->
+    <a href="#" class="list-group-item">
+        <div class="media-box">
+            <div class="pull-left">
+                <img src="modules/core/img/user/10.jpg" alt="Image"
+                     class="media-box-object img-circle thumb32"/>
+            </div>
+            <div class="media-box-body clearfix">
+                <small class="pull-right">2d</small>
+                <strong class="media-box-heading text-primary">
+                    <span class="circle circle-danger circle-lg text-left"></span>Michelle Lane</strong>
+
+                <p class="mb-sm">
+                    <small>Mauris eleifend, libero nec cursus lacinia...</small>
+                </p>
+            </div>
+        </div>
+    </a>
+    <!-- END list group item-->
+</scrollable>
+<!-- END list group-->
+<!-- START panel footer-->
+<div class="panel-footer clearfix">
 </div>

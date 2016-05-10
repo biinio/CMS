@@ -7076,7 +7076,7 @@ body {
 .wrapper {
   position: relative;
   width: 100%;
-  height: auto;
+  height: 100%;
   min-height: 100%;
   overflow-x: hidden;
 }
@@ -13199,7 +13199,7 @@ Component: sidemenu.less
   overflow-y: auto;
 }
 .objects-sidebar {
-  width: 220px;
+  width: 230px;
   min-height: 100%;
   position: fixed;
   height: 1px;
@@ -13243,7 +13243,7 @@ Component: sidemenu.less
   padding-left: 0;
 }
 .right-section-content {
-  padding-left: 200px;
+  padding-left: 210px;
   -webkit-transition: 0.3s;
   /* For Safari 3.1 to 6.0 */
   transition: 0.3s;
@@ -13751,11 +13751,144 @@ Component: elements.less
 .visitsvsretorning-graph {
   min-height: 95px;
 }
+.color-biin-brand {
+  color: #FE5621;
+}
+.filter-button-active {
+  color: #FFF;
+  background-color: #FE5621;
+}
+.filter-button-inactive {
+  color: #FFF;
+  background-color: #4a484b;
+}
+.filter-button-large {
+  padding: 10px 50px;
+  font-size: 14px;
+  line-height: 1.1;
+  border-radius: 4px;
+}
+.filter-button-large:hover {
+  color: #FFF;
+}
+.select-site-label {
+  margin-top: 5px;
+  margin-right: 10px;
+  font-weight: normal;
+}
+.text-22px {
+  font-size: 22px;
+}
+.text-21px {
+  font-size: 21px;
+}
+.text-20px {
+  font-size: 20px;
+}
+.text-19px {
+  font-size: 19px;
+}
+.text-18px {
+  font-size: 18px;
+}
+.text-17px {
+  font-size: 17px;
+}
+.text-16px {
+  font-size: 16px;
+}
+.text-15px {
+  font-size: 15px;
+}
+.text-14px {
+  font-size: 14px;
+}
+.text-13px {
+  font-size: 13px;
+}
+.text-12px {
+  font-size: 12px;
+}
+.loaderRelative {
+  position: relative;
+}
+.loaderAnim.ng-leave {
+  transition: 0.5s linear all;
+  opacity: 1;
+}
+.loaderAnim.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+.loaderAnim.ng-enter {
+  transition: 0.5s linear all;
+  opacity: 0;
+}
+/* The finishing CSS styles for the enter animation */
+.loaderAnim.ng-enter.ng-enter-active {
+  opacity: 1;
+}
 .NPSScore {
-  font-size: 50px;
+  font-size: 80px;
   font-weight: bold;
   margin-bottom: 0px;
   margin-top: 0px;
+  line-height: 1;
+}
+.NPSIndexText {
+  font-size: 35px;
+  font-weight: normal;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  line-height: 1;
+}
+.nps-green-border {
+  border-color: #00A000;
+}
+.nps-orange-border {
+  border-color: #FE5621;
+}
+.nps-red-border {
+  border-color: #f05050;
+}
+.comments-section-padding {
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+}
+.loadercont.ng-leave {
+  transition: 0.5s linear all;
+  opacity: 1;
+}
+.loadercont.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+.loadercont.ng-enter {
+  transition: 0.5s linear all;
+  opacity: 0;
+}
+/* The finishing CSS styles for the enter animation */
+.loadercont.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+.loadercontainer {
+  min-height: 440px;
+  max-height: 434px;
+  position: absolute;
+  z-index: 1000;
+  min-width: 100%;
+  background-color: white;
+  display: table;
+}
+.centerloader {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+.npsContainer {
+  position: relative;
+}
+.loadernps {
+  display: inline-block;
 }
 .panel {
   margin-bottom: 6px;
@@ -13781,6 +13914,35 @@ body {
   font-size: 24px;
   margin-left: 15%;
   margin-right: 15%;
+}
+.col-same-height-of-table {
+  height: 205px;
+  display: flex;
+  align-items: center;
+}
+.custom-border {
+  display: block;
+  margin-bottom: -1px;
+  background-color: #ffffff;
+  border: 1px solid #e4eaec;
+  border-radius: 3px;
+}
+.nps-last-comments-title {
+  font-size: 18px;
+}
+.nps-last-comments-wrapper {
+  margin-top: 15px;
+}
+.nps-total-nps-font {
+  font-size: 20px;
+}
+.border-round {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 50%;
+}
+.line-scale > div {
+  background: #fe5621 !important;
 }
 .loader {
   margin: 60px auto;
@@ -13824,9 +13986,28 @@ body {
   }
 }
 .loading-container {
-  height: 100%;
+  height: 100vh;
   width: 100%;
-  position: relative;
+  /* Firefox */
+  width: -moz-calc(100% - 220px);
+  /* WebKit */
+  width: -webkit-calc(100% - 220px);
+  /* Opera */
+  width: -o-calc(100% - 220px);
+  /* Standard */
+  width: calc(100% - 220px);
+  position: fixed;
+  z-index: 999;
+  margin-top: 55px;
+  margin-left: 220px;
+}
+.loadercont2 {
+  height: 100%;
+  position: absolute;
+  z-index: 1000;
+  min-width: 100%;
+  background-color: white;
+  display: table;
 }
 .template-cell {
   position: relative;

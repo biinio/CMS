@@ -14,7 +14,7 @@
     "dashboard"
   ],
   "license": "http://support.wrapbootstrap.com/knowledge_base/topics/usage-licenses",
-  "homepage": "http://themicon.co",
+  "homepage": "http://biin.io",
   "private": true,
   "ignore": [
     "**/.*"
@@ -60,7 +60,11 @@
     "angular-color-picker": "angularjs-color-picker#~1.0.2",
     "sweetalert": "~1.1.3",
     "Flot": "flot#~0.8.3",
-    "flot.tooltip": "^0.8.7"
+    "flot.tooltip": "^0.8.7",
+    "flot-spline": "^0.8.2",
+    "slimScroll": "jquery-slimscroll#^1.3.7",
+    "jquery-ui": "^1.11.4",
+    "jqueryui-touch-punch": "*"
   },
   "resolutions": {
     "angular": "1.4.2",
