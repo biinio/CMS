@@ -13,7 +13,7 @@
         .module('biins')
         .controller('biinsModalController', BiinModalController);
 
-    BiinModalController.$inject = ['$scope', '$modalInstance', 'selectedObj', 'elements', 'showcases'];
+    BiinModalController.$inject = ['$scope', '$uibModalInstance', 'selectedObj', 'elements', 'showcases'];
     function BiinModalController($scope, $modalInstance, selectedObj,elements,showcases) {
 
         $scope.type = selectedObj.type;

@@ -5,7 +5,7 @@
    * Modern browsers and almost all mobile browsers support CSS animations (http://caniuse.com/css-animation).
    *
    * @author Daniel Raftery : twitter/ThrivingKings
-   * @version 1.0.2
+   * @version 1.0.3
   */
   function animo( element, options, callback, other_cb ) {
     
@@ -14,8 +14,9 @@
     	duration: 1,
     	animation: null,
     	iterate: 1,
+    	delay: 0,
     	timing: "linear",
-      keep: false
+    	keep: false
     };
 
     // Browser prefixes for CSS
@@ -122,6 +123,8 @@
       while(ai--) {
 
       	this.element.css(this.prefixes[ai]+"animation-duration", this.options.duration+"s");
+        
+      	this.element.css(this.prefixes[ai]+"animation-delay", this.options.delay+"s");
 
       	this.element.css(this.prefixes[ai]+"animation-iteration-count", this.options.iterate);
 
@@ -168,6 +171,8 @@
   		while(ai--) {
 
       	this.element.css(this.prefixes[ai]+"animation-duration", "");
+        
+      	this.element.css(this.prefixes[ai]+"animation-delay", "");
 
       	this.element.css(this.prefixes[ai]+"animation-iteration-count", "");
 

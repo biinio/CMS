@@ -471,7 +471,7 @@ angular.module('textAngularSetup', [])
         };
     }])
     //TODO: PRICELIST EDIT, added $modal and $rootScope
-    .run(['taRegisterTool', '$window', 'taTranslations', 'taSelection', 'taToolFunctions', '$sanitize', 'taOptions', '$modal', '$rootScope', '$translate',   function (taRegisterTool, $window, taTranslations, taSelection, taToolFunctions, $sanitize, taOptions, $modal, $rootScope, $translate) {
+    .run(['taRegisterTool', '$window', 'taTranslations', 'taSelection', 'taToolFunctions', '$sanitize', 'taOptions', '$uibModal', '$rootScope', '$translate',   function (taRegisterTool, $window, taTranslations, taSelection, taToolFunctions, $sanitize, taOptions, $modal, $rootScope, $translate) {
         // test for the version of $sanitize that is in use
         // You can disable this check by setting taOptions.textAngularSanitize == false
         var gv = {};
@@ -547,16 +547,16 @@ angular.module('textAngularSetup', [])
 
                 var modalInstance=$modal.open({
                     templateUrl: 'lib/textAngular/dist/highlight.html',
-                    controller :function ($rootScope, $modalInstance) {
+                    controller :function ($rootScope, $uibModalInstance) {
 
                         $rootScope.invitation = {};
 
                         $rootScope.ok = function () {
-                            $modalInstance.close($rootScope.invitation);
+                            $uibModalInstance.close($rootScope.invitation);
                         };
 
                         $rootScope.cancel = function () {
-                            $modalInstance.dismiss('cancel');
+                            $uibModalInstance.dismiss('cancel');
                         };
 
                         $rootScope.highlightTitle = "";
@@ -628,16 +628,16 @@ angular.module('textAngularSetup', [])
 
                 var modalInstance=$modal.open({
                     templateUrl: 'lib/textAngular/dist/pricelist.html',
-                    controller :function ($rootScope, $modalInstance) {
+                    controller :function ($rootScope, $uibModalInstance) {
 
                         $rootScope.invitation ={};
 
                         $rootScope.ok = function () {
-                            $modalInstance.close($rootScope.invitation);
+                            $uibModalInstance.close($rootScope.invitation);
                         };
 
                         $rootScope.cancel = function () {
-                            $modalInstance.dismiss('cancel');
+                            $uibModalInstance.dismiss('cancel');
                         };
 
                         $rootScope.count = 0;

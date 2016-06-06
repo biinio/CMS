@@ -3,7 +3,7 @@
 angular
     .module('gallery')
     .controller('GalleryController', GalleryController);
-GalleryController.$inject = ['$scope','$modalInstance','$http','galleries','Organization'];
+GalleryController.$inject = ['$scope','$uibModalInstance','$http','galleries','Organization'];
 function GalleryController($scope, $modalInstance,$http, galleries,Organization) {
     $scope.organizationService = Organization;
     $scope.render = true;

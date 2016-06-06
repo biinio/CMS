@@ -300,7 +300,7 @@ angular.module('basiccms').config(['$stateProvider',
         .module('basiccms')
         .controller('BasicCMSController', BasicCMSController);
 
-    BasicCMSController.$inject = ['$http', '$state', '$scope','$modal', 'Authentication', 'Organization', 'ObjectsSidebar','Loading'];
+    BasicCMSController.$inject = ['$http', '$state', '$scope','$uibModal', 'Authentication', 'Organization', 'ObjectsSidebar','Loading'];
     function BasicCMSController($http, $state, $scope,$modal, Authentication, Organization, ObjectsSidebar,Loading) {
 
 
@@ -669,7 +669,7 @@ angular.module('biins').config(['$stateProvider',
         .module('biins')
         .controller('biinsModalController', BiinModalController);
 
-    BiinModalController.$inject = ['$scope', '$modalInstance', 'selectedObj', 'elements', 'showcases'];
+    BiinModalController.$inject = ['$scope', '$uibModalInstance', 'selectedObj', 'elements', 'showcases'];
     function BiinModalController($scope, $modalInstance, selectedObj,elements,showcases) {
 
         $scope.type = selectedObj.type;
@@ -790,8 +790,8 @@ angular.module('biins').config(['$stateProvider',
         .module('biins')
         .controller('BiinsController', BiinsController);
 
-    BiinsController.$inject = ['$http', '$state', '$scope','$modal', 'Authentication', 'Organization', 'ObjectsSidebar','Loading'];
-    function BiinsController($http, $state, $scope,$modal, Authentication, Organization, ObjectsSidebar,Loading) {
+    BiinsController.$inject = ['$http', '$state', '$scope', '$uibModal', 'Authentication', 'Organization', 'ObjectsSidebar', 'Loading'];
+    function BiinsController($http, $state, $scope, $modal, Authentication, Organization, ObjectsSidebar, Loading) {
 
 
         /**=============================================================================================================
@@ -799,32 +799,7 @@ angular.module('biins').config(['$stateProvider',
          =============================================================================================================*/
 
         $scope.objectsSidebarService = ObjectsSidebar;
-        $scope.objectsSidebarService.enableAddButton = false;
-
-        $scope.getSiteName = function (identifier) {
-            var site = _.findWhere($scope.sites, {identifier: identifier});
-            if (site) {
-                return site.title1 + " " + site.title2;
-            } else {
-                return "";
-            }
-        };
-
-        $scope.getObjectName = function (identifier, type) {
-            if (identifier && type) {
-                if (type === "1") {
-                    var el = _.findWhere($scope.elements, {elementIdentifier: identifier});
-                    if (el)
-                        return el.title;
-                }
-                else {
-                    var sh = _.findWhere($scope.showcases, {identifier: identifier});
-                    if (sh)
-                        return sh.name;
-                }
-            }
-            return "name not available";
-        };
+        $scope.objectsSidebarService.enableAddButton = true;
 
         $scope.removeObject = function (index) {
             $scope.objectsSidebarService.selectedObject.objects.splice(index, 1);
@@ -833,24 +808,50 @@ angular.module('biins').config(['$stateProvider',
 
         //Save The Biin Objects Changes
         $scope.save = function () {
+            console.log($scope.objectsSidebarService.selectedObject);
+            console.log($scope.days);
+            console.log($scope.sitesAssigned);
 
-            if ($scope.objectsSidebarService.selectedObject != null) {
-                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/venues/create', null, {
-                    headers: {
-                        name: $scope.objectsSidebarService.selectedObject.venue,
-                        orgidentifier: $scope.organizationId
+            var objectToSave = $scope.objectsSidebarService.selectedObject;
+
+            objectToSave.onMonday =  $scope.days.monday ? "1" : "0";
+            objectToSave.onTuesday =  $scope.days.tuesday ? "1" : "0";
+            objectToSave.onWednesday =  $scope.days.wednesday ? "1" : "0";
+            objectToSave.onThursday =  $scope.days.thursday ? "1" : "0";
+            objectToSave.onFriday =  $scope.days.friday ? "1" : "0";
+            objectToSave.onSaturday =  $scope.days.saturday ? "1" : "0";
+            objectToSave.onSunday =  $scope.days.sunday ? "1" : "0";
+
+            objectToSave.startTime = $scope.time.initial.getHours() +":"+ $scope.time.initial.getMinutes();
+            objectToSave.endTime = $scope.time.final.getHours() +":"+ $scope.time.final.getMinutes();
+
+            var sitesToSave = $scope.sitesAssigned;
+
+            var dataToSave = {};
+            dataToSave.sites = sitesToSave;
+            dataToSave.notice = objectToSave;
+
+
+
+            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/notices/organizations/' + $scope.organizationId,dataToSave).success(function(data){
+                console.log("data was saved succesfully");
+                $scope.sites = data.sites;
+                $scope.sitesAssigned = [];
+
+                for(var i = 0; i < $scope.sites.length; i++){
+                    if($scope.sites[i].isReady == 1){
+                        var isAssigned = false;
+                        if($scope.sites[i].notices)
+                            isAssigned = $scope.sites[i].notices.indexOf($scope.objectsSidebarService.selectedObject.identifier) > -1;
+                        $scope.sitesAssigned.push({"isAssigned":isAssigned, site:$scope.sites[i]});
                     }
-                }).success(function () {
-                    $http.post(ApplicationConfiguration.applicationBackendURL + 'api/biins/' + $scope.objectsSidebarService.selectedObject.identifier + '/update', $scope.objectsSidebarService.selectedObject).success(function () {
-                        console.log("success");
-                    }).error(function (err) {
-                       console.log(err);
-                    });
-                });
-            }
+                }
+
+            }).error(function(){
+                console.log("data wasnt saved succesfully");
+            })
         };
 
-        var vm = this;
         activate();
 
         ////////////////
@@ -866,10 +867,10 @@ angular.module('biins').config(['$stateProvider',
          =============================================================================================================*/
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.sidebarTemplate =
-            "<div class='col-md-12 leftInformationArea' style='padding-left: 10px'>" +
-                "<label class='threeRowTitle'>{{item.name}}</label>" +
-                "<localization class='threeRowSubTitle' style='display: block'></localization>" +
-                "<p class='threeRowThirdLine'>{{item.status}}</p>" +
+            "<div class='col-md-12 leftInformationArea'>"+
+            "<label class='twoRowTitle'>{{item.name}}</label>"+
+            "<label ng-if='item.isActive' class='twoRowSubtitle'>Activado</label>"+
+            "<label ng-if='!item.isActive' class='twoRowSubtitle'>Desactivado</label>"+
             "</div>";
         $scope.objectsSidebarService.template = $scope.sidebarTemplate;
         $scope.loadingService = Loading;
@@ -880,7 +881,7 @@ angular.module('biins').config(['$stateProvider',
          *
          =============================================================================================================*/
 
-        $scope.$on('$stateChangeStart', function(){
+        $scope.$on('$stateChangeStart', function () {
             $scope.loadingService.isLoading = true;
             $scope.objectsSidebarService.reset();
         });
@@ -900,12 +901,12 @@ angular.module('biins').config(['$stateProvider',
                     //Get the showcases
                     $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/showcases/').success(function (data) {
                         $scope.showcases = data.data;
-                        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
-                            $scope.biins = data.data;
+                        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/notices/organizations/' + $scope.organizationId).success(function (data) {
+                            $scope.notices = data.data;
                             $scope.objectsSidebarService.setObjects(data.data);
                             $scope.loadingService.isLoading = false;
                         }).error(function (err) {
-                            console.log(err);
+                            console.error(err);
                         });
                     }).error(function (err) {
                         console.log(err);
@@ -919,7 +920,50 @@ angular.module('biins').config(['$stateProvider',
         });
 
         $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
+            $scope.days.monday = objectClicked.onMonday == "1";
+            $scope.days.tuesday = objectClicked.onTuesday == "1";
+            $scope.days.wednesday = objectClicked.onWednesday == "1";
+            $scope.days.thursday = objectClicked.onThursday == "1";
+            $scope.days.friday = objectClicked.onFriday == "1";
+            $scope.days.saturday = objectClicked.onSaturday == "1";
+            $scope.days.sunday = objectClicked.onSunday == "1";
 
+            var initialTime = new Date();
+            var startTimeHour = parseInt(objectClicked.startTime.split(":")[0]);
+            var startTimeMin = parseInt(objectClicked.startTime.split(":")[1]);
+            initialTime.setHours(startTimeHour);
+            initialTime.setMinutes(startTimeMin);
+
+            var finalTime = new Date();
+            var endTimeHour = parseInt(objectClicked.endTime.split(":")[0]);
+            var endTimeMin = parseInt(objectClicked.endTime.split(":")[1]);
+            finalTime.setHours(endTimeHour);
+            finalTime.setMinutes(endTimeMin);
+
+            $scope.time.final = finalTime;
+            $scope.time.initial = initialTime;
+
+            $scope.sitesAssigned = [];
+
+
+            if($scope.objectsSidebarService.selectedObject.elementIdentifier == "" && $scope.elements.length> 0){
+                $scope.objectsSidebarService.selectedObject.elementIdentifier = $scope.elements[0].elementIdentifier;
+            }
+
+            for(var i = 0; i < $scope.sites.length; i++){
+              if($scope.sites[i].isReady == 1){
+                  var isAssigned = false;
+                  if($scope.sites[i].notices)
+                      isAssigned = $scope.sites[i].notices.indexOf($scope.objectsSidebarService.selectedObject.identifier) > -1;
+                  $scope.sitesAssigned.push({"isAssigned":isAssigned, site:$scope.sites[i]});
+              }
+            }
+
+
+        });
+
+        $scope.$on("Biin: On Object Created", function () {
+            $scope.create();
         });
 
         /**=============================================================================================================
@@ -927,8 +971,61 @@ angular.module('biins').config(['$stateProvider',
          *
          =============================================================================================================*/
 
-            //Init the the sites
+        //Init the the sites
         $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+        $scope.days = {
+            monday: false,
+            tuesday: false,
+            wednesday: false,
+            thursday: false,
+            friday: false,
+            saturday: false,
+            sunday: false
+        };
+        $scope.isMeridian = true;
+
+        $scope.hstep = 1;
+        $scope.mstep = 1;
+
+        $scope.time = {};
+        $scope.time.final = new Date();
+        $scope.time.initial = new Date();
+
+        var d = new Date();
+        d.setHours( 0 );
+        d.setMinutes( 0 );
+        $scope.initialMin = d;
+
+        d = new Date();
+        d.setHours( 23 );
+        d.setMinutes( 59 );
+        $scope.initialMax = d;
+
+        d = new Date();
+        d.setHours( 0 );
+        d.setMinutes( 1 );
+        $scope.finalMin = d;
+
+        d = new Date();
+        d.setHours( 23,59,59,999);
+        $scope.finalMax = d;
+
+        $scope.sitesAssigned = [];
+
+
+        $scope.checkTimeValues = function(){
+            var initialHour = $scope.time.initial.getHours();
+            var initialMin = $scope.time.initial.getMinutes();
+            var finalHour = $scope.time.final.getHours();
+            var finalMin = $scope.time.final.getMinutes();
+
+            if(initialHour >= finalHour  || ( initialHour == finalHour && initialMin >= finalMin)){
+                var d = new Date();
+                d.setHours(initialHour,initialMin + 1);
+                $scope.time.final = d;
+            }
+        };
+
 
         /**=============================================================================================================
          * Self called functions
@@ -944,84 +1041,92 @@ angular.module('biins').config(['$stateProvider',
                 //Get the showcases
                 $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/showcases/').success(function (data) {
                     $scope.showcases = data.data;
-                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
-                        $scope.biins = data.data;
+                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/notices/organizations/' + $scope.organizationId).success(function (data) {
+                        $scope.notices = data.data;
                         $scope.objectsSidebarService.setObjects(data.data);
                         $scope.loadingService.isLoading = false;
                     }).error(function (err) {
-                        console.log(err);
+                        console.error(err);
                     });
                 }).error(function (err) {
-                    console.log(err);
+                    console.error(err);
                 });
             }).error(function (err) {
-                console.log(err);
+                console.error(err);
             });
         }).error(function (err) {
-            console.log(err);
+            console.error(err);
         });
 
 
-        //Add an object to the objects collection
-        $scope.saveObject = function (obj) {
-            if (obj)
-                if ('isNew' in obj) {
-                    delete obj.isNew;
-                    $scope.objectsSidebarService.selectedObject.objects.push(obj);
-                    $scope.biins = $scope.objectsSidebarService.getObjects();
-                }
-            //$scope.biins.push(obj);
-            //Todo Do the method to save the save the data
+        $scope.setAllDay = function () {
+            var newInitialTime = new Date();
+            newInitialTime.setHours(0);
+            newInitialTime.setMinutes(0);
+            $scope.time.initial = newInitialTime;
+
+            var newFinalTime = new Date();
+            newFinalTime.setHours(23);
+            newFinalTime.setMinutes(59);
+            $scope.time.final = newFinalTime;
         };
 
-        $scope.getVenues = function (val) {
-            return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/venues/search', {
-                headers: {
-                    regex: val,
-                    orgidentifier: $scope.organizationId
-                }
-            }).then(function (response) {
-                return response.data;
+        $scope.create = function () {
+            $http.put(ApplicationConfiguration.applicationBackendURL + 'api/notices/organizations/' + $scope.organizationId).success(function (data) {
+                $scope.notices.push(data);
+                $scope.objectsSidebarService.setObjects($scope.notices);
+                $scope.objectsSidebarService.setSelectedObject(data);
+            }).error(function (err) {
+                console.error(err);
             });
         };
 
         $scope.convertTime = function (time) {
             var hours = parseInt(time);
-            var min = ( parseFloat(time) - hours )*60;
-            var hoursString = hours < 10 ? "0"+hours : ""+ hours;
-            var minString = min < 10 ? "0"+min : ""+ min;
-            return hoursString+":"+minString;
+            var min = ( parseFloat(time) - hours ) * 60;
+            var hoursString = hours < 10 ? "0" + hours : "" + hours;
+            var minString = min < 10 ? "0" + min : "" + min;
+            return hoursString + ":" + minString;
         };
 
-        //Modal to edit or create an Object
-        $scope.biinObject = function (size, type, obj) {
+        $scope.enableAllDays = function () {
+            $scope.days = {
+                monday: true,
+                tuesday: true,
+                wednesday: true,
+                thursday: true,
+                friday: true,
+                saturday: true,
+                sunday: true
+            };
+        };
 
-            var modalInstance = $modal.open({
-                templateUrl: '/modules/biins/views/partials/biin.client.modal.view.html',
-                controller: 'biinsModalController',
-                size: size,
-                resolve: {
-                    selectedObj: function () {
-                        if (type === 'create')
-                            return {type: type};//name:$scope.sites[selectedIndex].title1,index:selectedIndex};
-                        else
-                            return {type: type, obj: obj};//name:$scope.sites[selectedIndex].title1,index:selectedIndex};
-                    },
-                    elements: function () {
-                        return $scope.elements;
-                    },
-                    showcases: function () {
-                        return $scope.showcases;
-                    }
-                }
-            });
+        $scope.disableAllDays = function () {
+            $scope.days = {
+                monday: false,
+                tuesday: false,
+                wednesday: false,
+                thursday: false,
+                friday: false,
+                saturday: false,
+                sunday: false
+            };
+        };
 
+        $scope.enableNoticeInAllSites = function(){
+            for (var i = 0; i < $scope.sitesAssigned.length; i++) {
+                $scope.sitesAssigned[i].isAssigned = true;
+            }
+        };
 
-            modalInstance.result.then(function (objectToCreate) {
-                $scope.saveObject(objectToCreate);
-            }, function () {
-                //$log.info('Modal dismissed at: ' + new Date());
-            });
+        $scope.disableNoticeInAllSites = function(){
+            for (var i = 0; i < $scope.sitesAssigned.length; i++) {
+                $scope.sitesAssigned[i].isAssigned = false;
+            }
+        };
+
+        $scope.toggleIsActive = function(){
+            $scope.objectsSidebarService.selectedObject.isActive = !$scope.objectsSidebarService.selectedObject.isActive;
         };
     }
 
@@ -4502,7 +4607,7 @@ angular.module('elements').config(['$stateProvider',
 angular
     .module('gallery')
     .controller('GalleryController', GalleryController);
-GalleryController.$inject = ['$scope','$modalInstance','$http','galleries','Organization'];
+GalleryController.$inject = ['$scope','$uibModalInstance','$http','galleries','Organization'];
 function GalleryController($scope, $modalInstance,$http, galleries,Organization) {
     $scope.organizationService = Organization;
     $scope.render = true;
@@ -4662,7 +4767,7 @@ function GalleryController($scope, $modalInstance,$http, galleries,Organization)
         .module('gallery')
         .directive('gallery', Gallery);
 
-    Gallery.$inject = ['$modal','ObjectsSidebar', '$rootScope'];
+    Gallery.$inject = ['$uibModal','ObjectsSidebar', '$rootScope'];
     function Gallery ($modal,ObjectsSidebar, $rootScope) {
         var objectsSidebar  = ObjectsSidebar;
         var directive = {
@@ -4776,7 +4881,7 @@ function GalleryController($scope, $modalInstance,$http, galleries,Organization)
         .module('gallery')
         .directive('uploadFiles', UploadFiles);
 
-    UploadFiles.$inject = ['$modal','Organization','$rootScope'];
+    UploadFiles.$inject = ['$uibModal','Organization','$rootScope'];
 
     function UploadFiles($modal,Organization,$rootScope) {
         var organizationService = Organization;
@@ -4892,7 +4997,7 @@ function GalleryController($scope, $modalInstance,$http, galleries,Organization)
 angular
     .module('gmaps')
     .controller('GmapController', GmapController);
-GmapController.$inject = ['$scope','$modalInstance'];
+GmapController.$inject = ['$scope','$uibModalInstance'];
 function GmapController($scope, $modalInstance) {
 
     $scope.render = true;
@@ -5019,7 +5124,7 @@ function GmapController($scope, $modalInstance) {
         .module('gmaps')
         .directive('staticmap', StaticMap);
 
-    StaticMap.$inject = ['ObjectsSidebar','$modal'];
+    StaticMap.$inject = ['ObjectsSidebar','$uibModal'];
     function StaticMap (ObjectsSidebar,$modal) {
         return {
             restrict: 'A',
@@ -5235,7 +5340,7 @@ angular.module('maintenance').config(['$stateProvider',
         .module('maintenance')
         .controller('MaintenanceController', MaintenanceController);
 
-    MaintenanceController.$inject = ['$http', '$state', '$timeout', '$scope', '$modal', 'Authentication', 'ObjectsSidebar','Loading'];
+    MaintenanceController.$inject = ['$http', '$state', '$timeout', '$scope', '$uibModal', 'Authentication', 'ObjectsSidebar','Loading'];
     function MaintenanceController($http, $state, $timeout, $scope, $modal, Authentication, ObjectsSidebar,Loading) {
         var vm = this;
         activate();
@@ -5398,7 +5503,7 @@ angular.module('maintenance').config(['$stateProvider',
         .module('maintenance')
         .controller('manageBiinToOrganization', ManageBiinToOrganization);
 
-    ManageBiinToOrganization.$inject = ['$scope', '$modalInstance', '$http', 'selectedElement', 'mode', 'beacon', 'selectedOrganization', 'defaultUUID'];
+    ManageBiinToOrganization.$inject = ['$scope', '$uibModalInstance', '$http', 'selectedElement', 'mode', 'beacon', 'selectedOrganization', 'defaultUUID'];
     function ManageBiinToOrganization($scope, $modalInstance, $http, selectedElement, mode, beacon, selectedOrganization, defaultUUID) {
 
         /**=============================================================================================================

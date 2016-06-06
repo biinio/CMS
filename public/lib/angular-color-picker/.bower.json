@@ -1,7 +1,7 @@
 {
   "name": "angular-color-picker",
   "description": "Color Picker Directive For AngularJS",
-  "version": "1.0.2",
+  "version": "1.0.7",
   "homepage": "https://github.com/ruhley/angular-color-picker",
   "repository": {
     "type": "git",
@@ -39,14 +39,13 @@
     "tinycolor": "^1.3.0",
     "angular": "^1.3.0"
   },
-  "_release": "1.0.2",
+  "_release": "1.0.7",
   "_resolution": {
     "type": "version",
-    "tag": "v1.0.2",
-    "commit": "1228dc584e1f968c40619c467474175dc2b102df"
+    "tag": "v1.0.7",
+    "commit": "81333844acc0d7ed6695789e6488fc58a8d6cc5f"
   },
-  "_source": "git://github.com/ruhley/angular-color-picker.git",
+  "_source": "https://github.com/ruhley/angular-color-picker.git",
   "_target": "~1.0.2",
-  "_originalSource": "angularjs-color-picker",
-  "_direct": true
+  "_originalSource": "angularjs-color-picker"
 }

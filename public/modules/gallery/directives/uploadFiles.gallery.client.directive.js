@@ -5,7 +5,7 @@
         .module('gallery')
         .directive('uploadFiles', UploadFiles);
 
-    UploadFiles.$inject = ['$modal','Organization','$rootScope'];
+    UploadFiles.$inject = ['$uibModal','Organization','$rootScope'];
 
     function UploadFiles($modal,Organization,$rootScope) {
         var organizationService = Organization;

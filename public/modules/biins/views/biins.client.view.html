@@ -7,7 +7,47 @@
                 <section>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <legend>Informaci&oacute;n  y Ubicaci&oacute;n</legend>
+                            <legend>Avisos del Local</legend>
+                        </div>
+                        <div class="panel-body">
+                            <form class="novalidate">
+                                <div class="section">
+                                    <div class="container-fluid">
+                                        <div class="col-md-12">
+                                            <div>
+                                                <label>Nombre</label>
+                                                <input ng-model="objectsSidebarService.selectedObject.name"
+                                                       ng-value="objectsSidebarService.selectedObject.name"
+                                                       required=""
+                                                       class="form-control"/>
+                                            </div>
+                                            <div>
+                                                <label>Mensaje</label>
+                                                <input type="text" required=""
+                                                       ng-model="objectsSidebarService.selectedObject.message"
+                                                       ng-value="objectsSidebarService.selectedObject.message"
+                                                       class="form-control"/>
+                                            </div>
+                                            <div>
+                                                <label>Producto</label>
+                                                <select required=""
+                                                        data-ng-model="objectsSidebarService.selectedObject.elementIdentifier"
+                                                        data-ng-options="element.elementIdentifier as element.title for element in elements"
+                                                        class="form-control"></select>
+                                                <span>Solamente puede seleccionar un producto para su campaña.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+                <!-- Days Section -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <legend>Dias</legend>
                         </div>
                         <div class="panel-body">
                             <form class="novalidate">
@@ -15,30 +55,136 @@
                                     <div class="container-fluid">
                                         <div class="col-md-12">
                                             <div class="col-md-6">
-                                                <div>
-                                                    <p>{{getSiteName(objectsSidebarService.selectedObject.siteIdentifier)}}</p>
-                                                </div>
-                                                <p>Identificador:</p>
-                                                <strong>{{objectsSidebarService.selectedObject.brandIdentifier}}</strong>
-                                                <div>
-                                                    <p>Tipo:</p>
-                                                    <strong ng-if="objectsSidebarService.selectedObject.biinType=='1'">Exterior</strong>
-                                                    <strong ng-if="objectsSidebarService.selectedObject.biinType=='2'">Interior</strong>
-                                                    <strong ng-if="objectsSidebarService.selectedObject.biinType=='3'">Producto</strong>
-                                                </div>
+                                                <a type="button" class="btn btn-default btn-md btn-block"
+                                                   ng-click="enableAllDays()">Todos</a>
                                             </div>
                                             <div class="col-md-6">
-                                                <div>
-                                                    <label>Nombre</label>
-                                                    <input ng-model="objectsSidebarService.selectedObject.name" ng-value="objectsSidebarService.selectedObject.name" class="form-control"/>
+                                                <a type="button" class="btn btn-default btn-md btn-block"
+                                                   ng-click="disableAllDays()">Ninguno</a></div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="checkbox c-checkbox">
+                                                        <label>
+                                                            <input type="checkbox"
+                                                                   ng-model="days.monday"
+                                                                   ng-true-value="true" ng-false-value="false"/>
+                                                            <span class="fa fa-check"></span>
+                                                            Lunes
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <label>Venue</label>
-                                                    <input type="text" ng-model="objectsSidebarService.selectedObject.venue" ng-value="objectsSidebarService.selectedObject.venue" typeahead="venue.name for venue in getVenues($viewValue)" class="form-control"/>
+                                                <div class="col-md-4">
+                                                    <div class="checkbox c-checkbox">
+                                                        <label>
+                                                            <input type="checkbox"
+                                                                   ng-model="days.tuesday"
+                                                                   ng-true-value="true" ng-false-value="false"/>
+                                                            <span class="fa fa-check"></span>
+                                                            Martes
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <label>Posicion</label>
-                                                    <input ng-model="objectsSidebarService.selectedObject.position" ng-value="objectsSidebarService.selectedObject.position" class="form-control"/>
+                                                <div class="col-md-4">
+                                                    <div class="checkbox c-checkbox">
+                                                        <label>
+                                                            <input type="checkbox"
+                                                                   ng-model="days.wednesday"
+                                                                   ng-true-value="true" ng-false-value="false"/>
+                                                            <span class="fa fa-check"></span>
+                                                            Miércoles
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="checkbox c-checkbox">
+                                                        <label>
+                                                            <input type="checkbox"
+                                                                   ng-model="days.thursday"
+                                                                   ng-true-value="true" ng-false-value="false"/>
+                                                            <span class="fa fa-check"></span>
+                                                            Jueves
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="checkbox c-checkbox">
+                                                        <label>
+                                                            <input type="checkbox"
+                                                                   ng-model="days.friday"
+                                                                   ng-true-value="true" ng-false-value="false"/>
+                                                            <span class="fa fa-check"></span>
+                                                            Viernes
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="checkbox c-checkbox">
+                                                        <label>
+                                                            <input type="checkbox"
+                                                                   ng-model="days.saturday"
+                                                                   ng-true-value="true" ng-false-value="false"/>
+                                                            <span class="fa fa-check"></span>
+                                                            Sabado
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="checkbox c-checkbox">
+                                                        <label>
+                                                            <input type="checkbox"
+                                                                   ng-model="days.sunday"
+                                                                   ng-true-value="true" ng-false-value="false"/>
+                                                            <span class="fa fa-check"></span>
+                                                            Domingo
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="section">
+                                    <div class="container-fluid">
+                                        <div class="col-md-12">
+                                            <div class="row row-eq-height">
+                                                <div class="col-sm-4">
+                                                    <div class="row">
+                                                        Hora de Inicio
+                                                    </div>
+                                                    <div class="row">
+                                                        <uib-timepicker name="initialTime" required=""
+                                                                        ng-model="time.initial" mousewheel="false"
+                                                                        hour-step="hstep" minute-step="mstep"
+                                                                        min="initialMin"
+                                                                        max="initialMax"
+                                                                        ng-change="checkTimeValues()"
+                                                                        show-meridian="isMeridian"></uib-timepicker>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="row">
+                                                        Hora Final
+                                                    </div>
+                                                    <div class="row">
+                                                        <uib-timepicker name="finalTime" required=""
+                                                                        ng-model="time.final"
+                                                                        mousewheel="false" hour-step="hstep"
+                                                                        minute-step="mstep"
+                                                                        min="finalMin"
+                                                                        max="finalMax"
+                                                                        ng-change="checkTimeValues()"
+                                                                        show-meridian="isMeridian"></uib-timepicker>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <button class="btn btn-normal btn-block" ng-click="setAllDay()"
+                                                            style="vertical-align: middle">Todo el Dia
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -52,72 +198,70 @@
                 <section>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <legend>{{objectsSidebarService.selectedObject.name}}</legend>
+                            <legend>Locales</legend>
                         </div>
                         <div class="panel-body">
                             <form class="novalidate">
                                 <div class="section">
-                                    <table class="table table-condensed table-hover">
-                                        <tr>
-                                            <th>
-                                                <p>N&uacute;mero</p>
-                                            </th>
-                                            <th>
-                                                <p>Identifier</p>
-                                            </th>
-                                            <th>
-                                                <p>Tipo</p>
-                                            </th>
-                                            <th>
-                                                <p>Nombre</p>
-                                            </th>
-                                            <th>
-                                                <p>Actividad</p>
-                                            </th>
-                                            <th>
-
-                                            </th>
-                                        </tr>
-                                        <tr ng-repeat="obj in objectsSidebarService.selectedObject.objects">
-                                            <td>
-                                                <p>{{$index+1}}</p>
-                                            </td>
-                                            <td>
-                                                <p>{{obj.identifier}}</p>
-                                            </td>
-                                            <td>
-                                                <p ng-if="obj.objectType=='1'">Element</p>
-                                                <p ng-if="obj.objectType=='2'">Showcase					</p>
-                                            </td>
-                                            <td>
-                                                <p>{{getObjectName(obj.identifier,obj.objectType)}}</p>
-                                            </td>
-                                            <td>
-                                                <p>{{convertTime(obj.startTime) | date:'HH:mm'}} - {{convertTime(obj.endTime) | date:'HH:mm'}}</p>
-                                                <p><span ng-if="obj.onMonday==='1'">L</span><span ng-if="obj.onTuesday==='1'">K</span><span ng-if="obj.onWednesday==='1'">M</span><span ng-if="obj.onThursday==='1'">J</span><span ng-if="obj.onFriday==='1'">V</span><span ng-if="obj.onSaturday==='1'">S</span><span ng-if="obj.onSunday==='1'">D</span></p>
-                                            </td>
-                                            <td>
-                                                <div ng-click="biinObject('lg','edit',obj)" class="btn">
-                                                    <p>Editar</p>
-                                                </div>
-                                                <div ng-click="removeObject(biins[selectedBiin].objects.indexOf(obj))" class="btn">
-                                                    <p>Eliminar</p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <div>
-                                        <div ng-click="biinObject('lg','create',0)" class="btn btn-success pull-right"><strong>Agregar</strong></div>
+                                    <div class="container-fluid">
+                                        <div class="col-md-6">
+                                            <a type="button" class="btn btn-default btn-md btn-block"
+                                               ng-click="enableNoticeInAllSites()">Todos</a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a type="button" class="btn btn-default btn-md btn-block"
+                                               ng-click="disableNoticeInAllSites()">Ninguno</a>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Activado</th>
+                                                        <th>Local</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr data-ng-repeat="siteRelation in sitesAssigned">
+                                                        <td>
+                                                            <div class="checkbox c-checkbox">
+                                                                <label>
+                                                                    <input type="checkbox"
+                                                                           ng-model="siteRelation.isAssigned"
+                                                                           ng-true-value="true" ng-false-value="false"/>
+                                                                    <span class="fa fa-check"></span>
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{siteRelation.site.title2}}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        Activar la campaña en todos los lugares desactivará cualquier otra campaña que
+                                        esté activa en ese lugar durante ese periodo de tiempo.
                                     </div>
                                 </div>
                             </form>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a type="button" class="btn btn-md form-control btn-block"
+                                       data-ng-class="{ 'btn-danger': objectsSidebarService.selectedObject.isActive , 'btn-success' : !objectsSidebarService.selectedObject.isActive}"
+                                       ng-click="toggleIsActive()">
+                                        <span data-ng-if="objectsSidebarService.selectedObject.isActive">Desactivar</span>
+                                        <span data-ng-if="!objectsSidebarService.selectedObject.isActive">Activar</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
             </div>
-            <div ng-if="objectsSidebarService.selectedObject==null || objectsSidebarService.selectedObject == {}" class="no-object-container">
+            <div ng-if="objectsSidebarService.selectedObject==null || objectsSidebarService.selectedObject == {}"
+                 class="no-object-container">
                 <section class="text-center on-no-object-selected">
-                    <span>No tienes beacons asignados a tu organización por favor contacta a Biin para mas información.</span>
+                    <span>Por favor seleccione un aviso en la barra lateral o cree uno presionando el botón de crear nuevo.</span>
                 </section>
             </div>
         </div>

@@ -10,7 +10,7 @@
         .module('basiccms')
         .controller('BasicCMSController', BasicCMSController);
 
-    BasicCMSController.$inject = ['$http', '$state', '$scope','$modal', 'Authentication', 'Organization', 'ObjectsSidebar','Loading'];
+    BasicCMSController.$inject = ['$http', '$state', '$scope','$uibModal', 'Authentication', 'Organization', 'ObjectsSidebar','Loading'];
     function BasicCMSController($http, $state, $scope,$modal, Authentication, Organization, ObjectsSidebar,Loading) {
 
 

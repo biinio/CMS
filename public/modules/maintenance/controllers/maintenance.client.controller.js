@@ -10,7 +10,7 @@
         .module('maintenance')
         .controller('MaintenanceController', MaintenanceController);
 
-    MaintenanceController.$inject = ['$http', '$state', '$timeout', '$scope', '$modal', 'Authentication', 'ObjectsSidebar','Loading'];
+    MaintenanceController.$inject = ['$http', '$state', '$timeout', '$scope', '$uibModal', 'Authentication', 'ObjectsSidebar','Loading'];
     function MaintenanceController($http, $state, $timeout, $scope, $modal, Authentication, ObjectsSidebar,Loading) {
         var vm = this;
         activate();
