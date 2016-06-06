@@ -10,7 +10,7 @@
         .module('gmaps')
         .directive('staticmap', StaticMap);
 
-    StaticMap.$inject = ['ObjectsSidebar','$modal'];
+    StaticMap.$inject = ['ObjectsSidebar','$uibModal'];
     function StaticMap (ObjectsSidebar,$modal) {
         return {
             restrict: 'A',

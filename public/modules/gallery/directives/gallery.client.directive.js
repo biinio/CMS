@@ -13,7 +13,7 @@
         .module('gallery')
         .directive('gallery', Gallery);
 
-    Gallery.$inject = ['$modal','ObjectsSidebar', '$rootScope'];
+    Gallery.$inject = ['$uibModal','ObjectsSidebar', '$rootScope'];
     function Gallery ($modal,ObjectsSidebar, $rootScope) {
         var objectsSidebar  = ObjectsSidebar;
         var directive = {

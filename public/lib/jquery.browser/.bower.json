@@ -17,13 +17,13 @@
   "dependencies": {
     "jquery": ">=1.5"
   },
-  "_release": "deedc12dcf",
+  "_release": "07d59ee6e8",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "deedc12dcf8857686d592365df0cc0cf7324eec8"
+    "commit": "07d59ee6e87da9f789b196d221e5f62f9db3c158"
   },
-  "_source": "git://github.com/gabceb/jquery-browser-plugin.git",
+  "_source": "https://github.com/gabceb/jquery-browser-plugin.git",
   "_target": "master",
   "_originalSource": "jquery.browser"
 }

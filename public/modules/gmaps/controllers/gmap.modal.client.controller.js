@@ -3,7 +3,7 @@
 angular
     .module('gmaps')
     .controller('GmapController', GmapController);
-GmapController.$inject = ['$scope','$modalInstance'];
+GmapController.$inject = ['$scope','$uibModalInstance'];
 function GmapController($scope, $modalInstance) {
 
     $scope.render = true;

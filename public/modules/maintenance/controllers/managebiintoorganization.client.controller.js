@@ -13,7 +13,7 @@
         .module('maintenance')
         .controller('manageBiinToOrganization', ManageBiinToOrganization);
 
-    ManageBiinToOrganization.$inject = ['$scope', '$modalInstance', '$http', 'selectedElement', 'mode', 'beacon', 'selectedOrganization', 'defaultUUID'];
+    ManageBiinToOrganization.$inject = ['$scope', '$uibModalInstance', '$http', 'selectedElement', 'mode', 'beacon', 'selectedOrganization', 'defaultUUID'];
     function ManageBiinToOrganization($scope, $modalInstance, $http, selectedElement, mode, beacon, selectedOrganization, defaultUUID) {
 
         /**=============================================================================================================
