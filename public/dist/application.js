@@ -822,8 +822,8 @@ angular.module('biins').config(['$stateProvider',
             objectToSave.onSaturday =  $scope.days.saturday ? "1" : "0";
             objectToSave.onSunday =  $scope.days.sunday ? "1" : "0";
 
-            objectToSave.startTime = $scope.time.initial.getHours() +":"+ $scope.time.initial.getMinutes();
-            objectToSave.endTime = $scope.time.final.getHours() +":"+ $scope.time.final.getMinutes();
+            objectToSave.startTime = ($scope.time.initial.getHours() + $scope.time.initial.getMinutes()/60) + "";
+            objectToSave.endTime = ($scope.time.final.getHours() + $scope.time.final.getMinutes()/60) + "";
 
             var sitesToSave = $scope.sitesAssigned;
 
@@ -904,6 +904,20 @@ angular.module('biins').config(['$stateProvider',
                         $http.get(ApplicationConfiguration.applicationBackendURL + 'api/notices/organizations/' + $scope.organizationId).success(function (data) {
                             $scope.notices = data.data;
                             $scope.objectsSidebarService.setObjects(data.data);
+
+                            var elementsInShowcase = [];
+                            for (var i = 0; i < $scope.showcases.length; i++) {
+                                var showcase = $scope.showcases[i];
+                                elementsInShowcase = elementsInShowcase.concat(showcase.elements);
+                            }
+
+                            var elementsIdentifierInShowcase = _.pluck(elementsInShowcase,"elementIdentifier");
+                            elementsIdentifierInShowcase = _.uniq(elementsIdentifierInShowcase);
+
+                            $scope.elements = _.filter($scope.elements,function(element){
+                                return elementsIdentifierInShowcase.indexOf(element.elementIdentifier) > -1;
+                            });
+
                             $scope.loadingService.isLoading = false;
                         }).error(function (err) {
                             console.error(err);
@@ -929,16 +943,26 @@ angular.module('biins').config(['$stateProvider',
             $scope.days.sunday = objectClicked.onSunday == "1";
 
             var initialTime = new Date();
-            var startTimeHour = parseInt(objectClicked.startTime.split(":")[0]);
-            var startTimeMin = parseInt(objectClicked.startTime.split(":")[1]);
-            initialTime.setHours(startTimeHour);
-            initialTime.setMinutes(startTimeMin);
+            if(!isNaN(parseFloat(objectClicked.startTime))) {
+                var startTimeHour = parseInt(objectClicked.startTime.split(".")[0]);
+                var startTimeMin =  Math.round((parseFloat(objectClicked.startTime)- startTimeHour) * 60);
+                initialTime.setHours(startTimeHour);
+                initialTime.setMinutes(startTimeMin);
+            }else{
+                initialTime.setHours(0);
+                initialTime.setMinutes(0);
+            }
 
             var finalTime = new Date();
-            var endTimeHour = parseInt(objectClicked.endTime.split(":")[0]);
-            var endTimeMin = parseInt(objectClicked.endTime.split(":")[1]);
-            finalTime.setHours(endTimeHour);
-            finalTime.setMinutes(endTimeMin);
+            if(!isNaN(parseFloat(objectClicked.endTime))) {
+                var endTimeHour = parseInt(objectClicked.endTime.split(".")[0]);
+                var endTimeMin = Math.round((parseFloat(objectClicked.endTime)- endTimeHour) * 60);
+                finalTime.setHours(endTimeHour);
+                finalTime.setMinutes(endTimeMin);
+            } else{
+                finalTime.setHours(23);
+                finalTime.setMinutes(59);
+            }
 
             $scope.time.final = finalTime;
             $scope.time.initial = initialTime;
@@ -992,18 +1016,15 @@ angular.module('biins').config(['$stateProvider',
         $scope.time.initial = new Date();
 
         var d = new Date();
-        d.setHours( 0 );
-        d.setMinutes( 0 );
+        d.setHours( 0,0,0,0);
         $scope.initialMin = d;
 
         d = new Date();
-        d.setHours( 23 );
-        d.setMinutes( 59 );
+        d.setHours( 23,58,0,0);
         $scope.initialMax = d;
 
         d = new Date();
-        d.setHours( 0 );
-        d.setMinutes( 1 );
+        d.setHours( 0,1,0,0);
         $scope.finalMin = d;
 
         d = new Date();
@@ -1044,6 +1065,20 @@ angular.module('biins').config(['$stateProvider',
                     $http.get(ApplicationConfiguration.applicationBackendURL + 'api/notices/organizations/' + $scope.organizationId).success(function (data) {
                         $scope.notices = data.data;
                         $scope.objectsSidebarService.setObjects(data.data);
+
+                        var elementsInShowcase = [];
+                        for (var i = 0; i < $scope.showcases.length; i++) {
+                            var showcase = $scope.showcases[i];
+                            elementsInShowcase = elementsInShowcase.concat(showcase.elements);
+                        }
+
+                        var elementsIdentifierInShowcase = _.pluck(elementsInShowcase,"elementIdentifier");
+                        elementsIdentifierInShowcase = _.uniq(elementsIdentifierInShowcase);
+
+                        $scope.elements = _.filter($scope.elements,function(element){
+                            return elementsIdentifierInShowcase.indexOf(element.elementIdentifier) > -1;
+                        });
+
                         $scope.loadingService.isLoading = false;
                     }).error(function (err) {
                         console.error(err);
@@ -1061,13 +1096,11 @@ angular.module('biins').config(['$stateProvider',
 
         $scope.setAllDay = function () {
             var newInitialTime = new Date();
-            newInitialTime.setHours(0);
-            newInitialTime.setMinutes(0);
+            newInitialTime.setHours(0,0,0,0);
             $scope.time.initial = newInitialTime;
 
             var newFinalTime = new Date();
-            newFinalTime.setHours(23);
-            newFinalTime.setMinutes(59);
+            newFinalTime.setHours(23,59,0,0);
             $scope.time.final = newFinalTime;
         };
 
