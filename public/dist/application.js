@@ -896,7 +896,7 @@ angular.module('biins').config(['$stateProvider',
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/').success(function (data) {
                 $scope.sites = data.data.sites;
                 //Get the elements
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElementser/').success(function (data) {
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function (data) {
                     $scope.elements = data.data.elements;
                     //Get the showcases
                     $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/showcases/').success(function (data) {
@@ -6344,6 +6344,8 @@ angular.module('organization').config(['$stateProvider',
             if (!$scope.isAnalazingOrg) {
                 if (isOrganizationDirty()) {
                     var currentOrganization = $scope.objectsSidebarService.selectedObject;
+                    currentOrganization.isUsingBrandColors = '1';
+
                     $scope.prevSaveOrganization = jQuery.extend({}, currentOrganization);
                     $scope.isAnalazingOrg = false;
 
@@ -6422,7 +6424,7 @@ angular.module('organization').config(['$stateProvider',
         //Indicate if an organization data is changed
         var isOrganizationDirty = function () {
             $scope.isAnalazingOrg = true;
-            var propertiesToCheck = ["name", "brand", "description", "extraInfo","isPublished","isUsingBrandColors","primaryColor","secondaryColor","hasNPS"];
+            var propertiesToCheck = ["name", "brand", "description", "extraInfo","isPublished","primaryColor","secondaryColor","hasNPS"];
             var foundChange = false;
             if ($scope.prevSaveOrganization !== null) {
                 for (var i = 0; i < propertiesToCheck.length && !foundChange; i++) {
@@ -6441,6 +6443,15 @@ angular.module('organization').config(['$stateProvider',
             $scope.editOrganization(0);
         }
         $scope.loadingService.isLoading = false;
+
+
+        $scope.toggleIsPublished = function(){
+            $scope.objectsSidebarService.selectedObject.isPublished = !$scope.objectsSidebarService.selectedObject.isPublished;
+        };
+
+        $scope.toggleNPS = function(){
+            $scope.objectsSidebarService.selectedObject.hasNPS = $scope.objectsSidebarService.selectedObject.hasNPS == "1"? "0":"1";
+        };
     }
 })();
 

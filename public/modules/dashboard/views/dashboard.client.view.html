@@ -21,11 +21,11 @@
                     <div class="col-md-6">
                         <label class="text-19px select-site-label">{{ 'dashboard.SITE_FILTER' | translate }}   </label>
                         <!-- Single button -->
-                        <div class="btn-group" dropdown is-open="status.isopen">
-                            <button id="single-button" type="button" class="btn btn-default text-14px" dropdown-toggle ng-disabled="disabled">
+                        <div class="btn-group" uib-dropdown is-open="status.isopen">
+                            <button id="single-button" type="button" class="btn btn-default text-14px" uib-dropdown-toggle ng-disabled="disabled">
                                 {{globalFilters.selectedSite.title1 + ' ' + globalFilters.selectedSite.title2}} <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                                 <li role="menuitem" data-ng-repeat="site in organizationService.selectedOrganization.sites">
                                     <a ng-click="setSelectedSite(site)">{{site.title1 + ' ' + site.title2}}</a></li>
                             </ul>
