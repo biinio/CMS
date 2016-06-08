@@ -245,9 +245,9 @@
     "NAME_PLACEHOLDER": "Ingrese el un nombre o título para la vitrina",
     "DESCRIPTION": "Descripción",
     "DESCRIPTION_PLACEHOLDER": "Ingrese una descripción breve para la vitrina",
-    "ELEMENTS": "Asignación de productos",
+    "ELEMENTS": "Productos Asignados",
     "ELEMENTS_INFO": "Agregue productos a su vitrina.",
-    "SITES": "Locales habilitados",
+    "SITES": "Habilitar vitrina en local",
     "SITES_INFO": "Por favor seleccione las vitrinas que se desean habilitar en cada local.",
     "ELEMENTS_REQUIRED_MESSAGE": "Por favor asigne al menos un productos válido a esta vitrina",
     "DELETED_TEXT" : "Su vitrina ha sido eliminado correctamente"

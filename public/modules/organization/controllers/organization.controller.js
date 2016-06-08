@@ -85,6 +85,8 @@
             if (!$scope.isAnalazingOrg) {
                 if (isOrganizationDirty()) {
                     var currentOrganization = $scope.objectsSidebarService.selectedObject;
+                    currentOrganization.isUsingBrandColors = '1';
+
                     $scope.prevSaveOrganization = jQuery.extend({}, currentOrganization);
                     $scope.isAnalazingOrg = false;
 
@@ -163,7 +165,7 @@
         //Indicate if an organization data is changed
         var isOrganizationDirty = function () {
             $scope.isAnalazingOrg = true;
-            var propertiesToCheck = ["name", "brand", "description", "extraInfo","isPublished","isUsingBrandColors","primaryColor","secondaryColor","hasNPS"];
+            var propertiesToCheck = ["name", "brand", "description", "extraInfo","isPublished","primaryColor","secondaryColor","hasNPS"];
             var foundChange = false;
             if ($scope.prevSaveOrganization !== null) {
                 for (var i = 0; i < propertiesToCheck.length && !foundChange; i++) {
@@ -182,5 +184,14 @@
             $scope.editOrganization(0);
         }
         $scope.loadingService.isLoading = false;
+
+
+        $scope.toggleIsPublished = function(){
+            $scope.objectsSidebarService.selectedObject.isPublished = !$scope.objectsSidebarService.selectedObject.isPublished;
+        };
+
+        $scope.toggleNPS = function(){
+            $scope.objectsSidebarService.selectedObject.hasNPS = $scope.objectsSidebarService.selectedObject.hasNPS == "1"? "0":"1";
+        };
     }
 })();
