@@ -3695,6 +3695,9 @@ angular.module('elements').config(['$stateProvider',
                 $scope.$digest();
             }**/
         };
+        $scope.toggleIsHighlight = function(){
+            $scope.objectsSidebarService.selectedObject.isHighlight = $scope.objectsSidebarService.selectedObject.isHighlight == "1"? "0":"1";
+        };
     }
 })();
 

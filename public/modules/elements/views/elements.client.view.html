@@ -18,30 +18,25 @@
                                 <div class="section">
                                     <div class="form-group">
                                         <label for="title" translate="ELEMENT.NAME" class="control-label"></label>
-                                        <input id="title" ng-model="objectsSidebarService.selectedObject.title" name="title"
+                                        <input id="title" ng-model="objectsSidebarService.selectedObject.title"
+                                               name="title"
                                                type="text" placeholder="{{ 'ELEMENT.NAME_PLACEHOLDER' | translate }}"
                                                required="required" class="form-control title-value"/>
                                     </div>
                                     <div class="form-group">
-                                        <span class= "checkbox-inline c-checkbox">
-                                            <label>
-                                                <input type="checkbox" ng-model="objectsSidebarService.selectedObject.isHighlight" ng-true-value="'1'" ng-false-value="'0'"/>
-                                                <span class="fa fa-check"></span>
-                                            </label>
-                                        </span>
-                                        <span translate="ELEMENT.HIGHLIGHT"></span>
-                                        <span class="help-block" translate="ELEMENT.HIGHLIGHT_INFO">Turn on Hightlight to presents this element in the Hightlight section of the mobile app</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="description" translate="ELEMENT.DESCRIPTION" class="control-label"></label>
-                                        <input id="description" ng-model="objectsSidebarService.selectedObject.subTitle" name="subTitle"
-                                               type="text" placeholder="{{ 'ELEMENT.DESCRIPTION_PLACEHOLDER' | translate }}" ng-blur="validate()"
+                                        <label for="description" translate="ELEMENT.DESCRIPTION"
+                                               class="control-label"></label>
+                                        <input id="description" ng-model="objectsSidebarService.selectedObject.subTitle"
+                                               name="subTitle"
+                                               type="text"
+                                               placeholder="{{ 'ELEMENT.DESCRIPTION_PLACEHOLDER' | translate }}"
+                                               ng-blur="validate()"
                                                class="form-control title-value"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="elemSearchTag" translate="GENERIC.SEARCH_TAGS"></label>
-                                    <input id="elemSearchTag" type="text" tagsinput="tagsinput" ng-model="temptags" />
+                                    <input id="elemSearchTag" type="text" tagsinput="tagsinput" ng-model="temptags"/>
                                     <span class="help-block" translate="GENERIC.SEARCH_TAGS_DESC"></span>
                                 </div>
                             </form>
@@ -55,7 +50,11 @@
                         <div class="panel-body">
                             <legend translate="GENERIC.CATEGORIES"></legend>
                             <p translate="CATEGORY.CATEGORIES_DESCRIPTION"></p>
-                            <div class="error-message" ng-show="objectsSidebarService.selectedObject.categories.length == 0">* {{ 'GENERIC.CATEGORIES_REQUIRED_MESSAGE' | translate }}</div>
+
+                            <div class="error-message"
+                                 ng-show="objectsSidebarService.selectedObject.categories.length == 0">* {{
+                                'GENERIC.CATEGORIES_REQUIRED_MESSAGE' | translate }}
+                            </div>
                             <div class="section">
                                 <div id="categories">
                                     <div class="container-fluid">
@@ -65,7 +64,9 @@
                                                     <div class="checkbox c-checkbox">
                                                         <label>
                                                             <!--input input type="checkbox" checked="{{containsCategory(cat)}}"/-->
-                                                            <input ng-click="updateSelectedCategories(cat)" ng-checked="containsCategory(cat) == true" type="checkbox"/>
+                                                            <input ng-click="updateSelectedCategories(cat)"
+                                                                   ng-checked="containsCategory(cat) == true"
+                                                                   type="checkbox"/>
                                                             <span class="fa fa-check"></span>
                                                             {{cat.displayName}}
                                                         </label>
@@ -86,8 +87,12 @@
                         <div class="panel-body">
                             <legend translate="GALLERY.TITLE"></legend>
                             <p translate="GALLERY.SUB_TITLE"></p>
-                            <div class="error-message" ng-show="objectsSidebarService.selectedObject.media.length == 0">* {{ 'GENERIC.GALLERIES_REQUIRED_MESSAGE' | translate }}</div>
-                            <gallery ng-model="objectsSidebarService.selectedObject.media" gallery="galleries"></gallery>
+
+                            <div class="error-message" ng-show="objectsSidebarService.selectedObject.media.length == 0">
+                                * {{ 'GENERIC.GALLERIES_REQUIRED_MESSAGE' | translate }}
+                            </div>
+                            <gallery ng-model="objectsSidebarService.selectedObject.media"
+                                     gallery="galleries"></gallery>
                         </div>
                     </div>
                 </section>
@@ -97,10 +102,11 @@
                         <div class="panel-body">
                             <legend translate="ELEMENT.DETAILS"></legend>
                             <p translate="ELEMENT.DETAILS_INFO"></p>
-                            <text-angular name="detailselementeditor" serial="1" ng-model="objectsSidebarService.selectedObject.detailsHtml"></text-angular>
+                            <text-angular name="detailselementeditor" serial="1"
+                                          ng-model="objectsSidebarService.selectedObject.detailsHtml"></text-angular>
                         </div>
                     </div>
-                 </section>
+                </section>
 
                 <!-- Call to action Section -->
                 <section>
@@ -108,15 +114,18 @@
                         <div class="panel-body">
                             <legend translate="ELEMENT.ACTION"></legend>
                             <p translate="ELEMENT.ACTION_INFO"></p>
+
                             <div class="form-group">
                                 <label for="actionTitle" translate="ELEMENT.ACTION_TITLE" class="control-label"></label>
-                                <input id="actionTitle" ng-model="objectsSidebarService.selectedObject.callToActionTitle" name="title"
+                                <input id="actionTitle"
+                                       ng-model="objectsSidebarService.selectedObject.callToActionTitle" name="title"
                                        type="text" placeholder="{{ 'ELEMENT.ACTION_TITLE_PLACEHOLDER' | translate }}"
                                        class="form-control title-value"/>
                             </div>
                             <div class="form-group">
                                 <label for="actionLink" translate="ELEMENT.ACTION_URL" class="control-label"></label>
-                                <input id="actionLink" ng-model="objectsSidebarService.selectedObject.callToActionURL" name="title"
+                                <input id="actionLink" ng-model="objectsSidebarService.selectedObject.callToActionURL"
+                                       name="title"
                                        type="text" placeholder="{{ 'ELEMENT.ACTION_URL_PLACEHOLDER' | translate }}"
                                        class="form-control title-value"/>
                             </div>
@@ -130,6 +139,18 @@
                             <legend translate="GENERIC.HIGHLIGHT"></legend>
                             <div class="section section-margin">
                                 <div class="row">
+                                    <div class="form-group col-md-3">
+                                            <span title="{{ 'HIGHLIGHT.CURRENCY_TOOLTIP' | translate }}"
+                                                  translate="HIGHLIGHT.CURRENCY" class="form-label"></span>
+                                        <select name="Currency"
+                                                ng-model="objectsSidebarService.selectedObject.currencyType"
+                                                data-size="3"
+                                                class="form-control bootstrap-select">
+                                            <option value="1">&#36;</option>
+                                            <option value="2">&#162;</option>
+                                            <option value="4">&#128;</option>
+                                        </select>
+                                    </div>
                                     <form class="form-inline novalidate">
                                         <div class="form-group col-md-3">
                                             <span title="{{ 'HIGHLIGHT.PRICE_TOOLTIP' | translate }}">Precio</span>
@@ -137,34 +158,25 @@
                                                    placeholder="0.00" ng-blur="validate()" required="required"
                                                    ng-paste="validate()" step="0.01"
                                                    ng-pattern="/^[0-9]+(.[0-9]{1,2})?$/"
-                                                   class="title-value highlightInput"/>
+                                                   class="title-value highlightInput form-control"/>
 
                                         </div>
-                                        <div class="form-group col-md-3">
+                                        <div class="form-group col-md-3" style="padding-top: 27px">
                                             <div class="checkbox c-checkbox">
                                                 <label title="{{ 'HIGHLIGHT.TAXINCLUDED_TOOLTIP' | translate }}">
-                                                    <input type="checkbox" id="chkFromPrice" ng-model="objectsSidebarService.selectedObject.isTaxIncludedInPrice"
+                                                    <input type="checkbox" id="chkFromPrice"
+                                                           ng-model="objectsSidebarService.selectedObject.isTaxIncludedInPrice"
                                                            ng-true-value="'1'" ng-false-value="'0'">
                                                     <span class="fa fa-check"></span>
                                                     {{ 'HIGHLIGHT.TAXINCLUDED' | translate }}
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="form-group col-md-3">
-                                            <span title="{{ 'HIGHLIGHT.CURRENCY_TOOLTIP' | translate }}" translate="HIGHLIGHT.CURRENCY" class="form-label"></span>
-                                            <select name="Currency"
-                                                    ng-model="objectsSidebarService.selectedObject.currencyType" data-size="4"
-                                                    class="form-control bootstrap-select">
-                                                <option value="1">&#36;</option>
-                                                <option value="2">&#162;</option>
-                                                <option value="3">&#8359;</option>
-                                                <option value="4">&#128;</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-3">
+                                        <div class="form-group col-md-3" style="padding-top: 27px">
                                             <div class="checkbox c-checkbox">
                                                 <label title="{{ 'HIGHLIGHT.PRICESTART_TOOLTIP' | translate }}">
-                                                    <input type="checkbox" id="chkFromPrice" ng-model="objectsSidebarService.selectedObject.hasFromPrice"
+                                                    <input type="checkbox" id="chkFromPrice"
+                                                           ng-model="objectsSidebarService.selectedObject.hasFromPrice"
                                                            ng-true-value="'1'" ng-false-value="'0'">
                                                     <span class="fa fa-check"></span>
                                                     {{ 'HIGHLIGHT.PRICESTART' | translate }}
@@ -175,24 +187,34 @@
                                 </div>
                             </div>
                             <div class="section section-margin">
+                                <legend>Descuentos</legend>
                                 <div class="row">
-                                    <form class="form-inline novalidate">
-                                        <div class="form-group col-md-3">
-                                            <div class="checkbox c-checkbox">
-                                                <label title="{{ 'HIGHLIGHT.PERCENT_TOOLTIP' | translate }}">
-                                                    <input type="checkbox" id="chkDiscount"
-                                                           ng-model="objectsSidebarService.selectedObject.hasDiscount"
-                                                           ng-true-value="'1'" ng-false-value="'0'"/>
-                                                    <span class="fa fa-check"></span>
-                                                    {{ 'HIGHLIGHT.PERCENT' | translate }}
-                                                </label>
+                                    <form class="novalidate">
+                                        <div class="form-group col-md-4">
+                                            <div class="row col-sm-12 ">
+                                                <div class="checkbox c-checkbox">
+                                                    <label title="{{ 'HIGHLIGHT.PERCENT_TOOLTIP' | translate }}">
+                                                        <input type="checkbox" id="chkDiscount"
+                                                               ng-model="objectsSidebarService.selectedObject.hasDiscount"
+                                                               ng-true-value="'1'" ng-false-value="'0'"/>
+                                                        <span class="fa fa-check"></span>
+                                                        {{ 'HIGHLIGHT.PERCENT' | translate }}
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <input type="text" ng-model="objectsSidebarService.selectedObject.discount"
-                                                   ng-disabled="objectsSidebarService.selectedObject.hasDiscount=='0'" placeholder="0%"
-                                                   required="required"
-                                                   class="title-value highlightInput"/>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <input type="text"
+                                                           ng-model="objectsSidebarService.selectedObject.discount"
+                                                           ng-disabled="objectsSidebarService.selectedObject.hasDiscount=='0'"
+                                                           placeholder="0%"
+                                                           required="required"
+                                                           class="form-control"/>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-group col-md-3">
+                                        <div class="form-group col-md-4">
+                                            <div class="row col-sm-12">
                                                 <div class="checkbox c-checkbox">
                                                     <label title="{{ 'HIGHLIGHT.DISCOUNT_TOOLTIP' | translate }}">
                                                         <input type="checkbox" id="chkSaving"
@@ -202,90 +224,63 @@
                                                         {{ 'HIGHLIGHT.DISCOUNT' | translate }}
                                                     </label>
                                                 </div>
-                                                <input type="text" ng-model="objectsSidebarService.selectedObject.savings"
-                                                       placeholder="{{ 'HIGHLIGHT.DISCOUNT_PLACEHOLDER' | translate }}" ng-blur="validate()"
-                                                       ng-disabled="objectsSidebarService.selectedObject.hasSaving==0" required="required"
-                                                       class="title-value highlightInput"/>
                                             </div>
-                                        <div class="form-group col-md-3">
-                                            <div class="checkbox c-checkbox">
-                                                <label title="{{ 'HIGHLIGHT.FINALPRICE_TOOLTIP' | translate }}">
-                                                    <input type="checkbox" id="chkPrice"
-                                                           ng-model="objectsSidebarService.selectedObject.hasListPrice"
-                                                           ng-true-value="'1'" ng-false-value="'0'"/>
-                                                    <span class="fa fa-check"></span>
-                                                    {{ 'HIGHLIGHT.FINALPRICE' | translate }}
-                                                </label>
+                                            <div class="row col-md-12">
+                                                <input type="text"
+                                                       ng-model="objectsSidebarService.selectedObject.savings"
+                                                       placeholder="{{ 'HIGHLIGHT.DISCOUNT_PLACEHOLDER' | translate }}"
+                                                       ng-blur="validate()"
+                                                       ng-disabled="objectsSidebarService.selectedObject.hasSaving==0"
+                                                       required="required"
+                                                       class="title-value highlightInput form-control"/>
                                             </div>
-                                            <input type="text" ng-model="objectsSidebarService.selectedObject.listPrice"
-                                                   placeholder="{{ 'HIGHLIGHT.FINALPRICE_PLACEHOLDER' | translate }}" ng-blur="validate()"
-                                                   ng-disabled="objectsSidebarService.selectedObject.hasListPrice=='0'" required="required"
-                                                   class="title-value highlightInput"/>
                                         </div>
-                                        <div class="form-group col-md-3">
-                                            <div class="checkbox c-checkbox">
-                                                <label title="{{ 'HIGHLIGHT.LIMITEDQTY_TOOLTIP' | translate }}">
-                                                    <input type="checkbox"
-                                                           ng-model="objectsSidebarService.selectedObject.hasQuantity"
-                                                           ng-true-value="'1'" ng-false-value="'0'"/>
-                                                    <span class="fa fa-check"></span>
-                                                    {{ 'HIGHLIGHT.LIMITEDQTY' | translate }}
-                                                </label>
+                                        <div class="form-group col-md-4">
+                                            <div class="row col-sm-12">
+                                                <div class="checkbox c-checkbox">
+                                                    <label title="{{ 'HIGHLIGHT.FINALPRICE_TOOLTIP' | translate }}">
+                                                        <input type="checkbox" id="chkPrice"
+                                                               ng-model="objectsSidebarService.selectedObject.hasListPrice"
+                                                               ng-true-value="'1'" ng-false-value="'0'"/>
+                                                        <span class="fa fa-check"></span>
+                                                        {{ 'HIGHLIGHT.FINALPRICE' | translate }}
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <input type="text" ng-model="objectsSidebarService.selectedObject.quantity"
-                                                   ng-disabled="objectsSidebarService.selectedObject.hasQuantity=='0'" placeholder="{{ 'HIGHLIGHT.LIMITEDQTY_PLACEHOLDER' | translate }}"
-                                                   ng-blur="validate()" required="required" is-number="is-number"
-                                                   class="highlightInput"/>
+                                            <div class="row col-md-12">
+                                                <input type="text"
+                                                       ng-model="objectsSidebarService.selectedObject.listPrice"
+                                                       placeholder="{{ 'HIGHLIGHT.FINALPRICE_PLACEHOLDER' | translate }}"
+                                                       ng-blur="validate()"
+                                                       ng-disabled="objectsSidebarService.selectedObject.hasListPrice=='0'"
+                                                       required="required"
+                                                       class="title-value highlightInput form-control"/>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                            <div class="section section-margin">
-                                <div class="row">
-                                    <form class="form-inline novalidate">
-                                        <div class="form-group col-md-3">
-                                            <div class="checkbox c-checkbox">
-                                                <label title="{{ 'HIGHLIGHT.VALIDSINCE_TOOLTIP' | translate }}">
-                                                    <input type="checkbox"
-                                                           ng-model="objectsSidebarService.selectedObject.hasTimming"
-                                                           ng-true-value="'1'" ng-false-value="'0'"/>
-                                                    <span class="fa fa-check"></span>
-                                                    {{ 'HIGHLIGHT.VALIDSINCE' | translate }}
-                                                </label>
-                                            </div>
-                                            <input type="datetime" date-time="date-time"
-                                                   ng-model="objectsSidebarService.selectedObject.initialDate"
-                                                   ng-disabled="objectsSidebarService.selectedObject.hasTimming=='0'" placeholder="{{ 'HIGHLIGHT.VALIDSINCE_PLACEHOLDER' | translate }}"
-                                                   ng-blur="validate()" required="required" readonly="readonly"
-                                                   class="highlightInput"/>
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <div class="checkbox c-checkbox">
-                                                <label title="{{ 'HIGHLIGHT.VALIDUNTIL' | translate }}">
-                                                    <input type="checkbox"
-                                                           ng-model="objectsSidebarService.selectedObject.hasTimming"
-                                                           ng-true-value="'1'" ng-false-value="'0'"/>
-                                                    <span class="fa fa-check"></span>
-                                                    {{ 'HIGHLIGHT.VALIDUNTIL' | translate }}
-                                                </label>
-                                            </div>
-                                            <input type="datetime" date-time="date-time"
-                                                   ng-model="objectsSidebarService.selectedObject.expirationDate"
-                                                   ng-disabled="objectsSidebarService.selectedObject.hasTimming=='0'" placeholder="{{ 'HIGHLIGHT.VALIDUNTIL_PLACEHOLDER' | translate }}"
-                                                   ng-blur="validate()" required="required" readonly="readonly"
-                                                   class="highlightInput"/>
 
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <a type="button" class="btn btn-md form-control btn-block"
+                           data-ng-class="{ 'btn-danger': objectsSidebarService.selectedObject.isHighlight=='1' , 'btn-success' : !objectsSidebarService.selectedObject.isHighlight=='0'}"
+                           ng-click="toggleIsHighlight()">
+                            <span data-ng-if="objectsSidebarService.selectedObject.isHighlight=='1'">Quitar de recomendados</span>
+                            <span data-ng-if="objectsSidebarService.selectedObject.isHighlight=='0'">Poner como recomendado</span>
+                        </a>
+                        <span class="help-block" translate="ELEMENT.HIGHLIGHT_INFO"></span>
+                    </div>
                 </section>
-                <button  type="button" class="btn btn-oval btn-danger align-right" ng-click="deleteElement(' {{'GENERIC.DELETE_ELEMENT_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">{{ 'GENERIC.DELETE_ELEMENT' | translate }}</button>
+                <button type="button" class="btn btn-oval btn-danger align-right"
+                        ng-click="deleteElement(' {{'GENERIC.DELETE_ELEMENT_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">
+                    {{ 'GENERIC.DELETE_ELEMENT' | translate }}
+                </button>
                 <code>IDENTIFIER: {{objectsSidebarService.selectedObject.elementIdentifier}}</code>
             </div>
-            <div ng-if="objectsSidebarService.selectedObject==null || objectsSidebarService.selectedObject == {}" class="no-object-container">
+            <div ng-if="objectsSidebarService.selectedObject==null || objectsSidebarService.selectedObject == {}"
+                 class="no-object-container">
                 <section class="text-center on-no-object-selected">
                     <span>Por favor seleccione un elemento en la barra lateral o cree uno presionando el botón de crear nuevo.</span>
                 </section>
