@@ -13194,15 +13194,27 @@ Component: sidemenu.less
 }
 .objects-left-bar {
   overflow-x: hidden;
-  min-height: 100%;
-  max-height: 100%;
   overflow-y: auto;
+  /* Firefox */
+  height: -moz-calc(100% - 35px);
+  /* WebKit */
+  height: -webkit-calc(100% - 35px);
+  /* Opera */
+  height: -o-calc(100% - 35px);
+  /* Standard */
+  height: calc(100% - 35px);
 }
 .objects-sidebar {
   width: 230px;
-  min-height: 100%;
+  /* Firefox */
+  height: -moz-calc(100% - 55px);
+  /* WebKit */
+  height: -webkit-calc(100% - 55px);
+  /* Opera */
+  height: -o-calc(100% - 55px);
+  /* Standard */
+  height: calc(100% - 55px);
   position: fixed;
-  height: 1px;
   background-color: #cccccc;
   z-index: 116;
   -webkit-transition: width 0.3s;
