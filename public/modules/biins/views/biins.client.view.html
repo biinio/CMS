@@ -151,35 +151,12 @@
                                 <div class="section">
                                     <div class="container-fluid">
                                         <div class="col-md-12">
+
+
+
                                             <div class="row row-eq-height">
-                                                <div class="col-sm-4">
-                                                    <div class="row">
-                                                        Hora de Inicio
-                                                    </div>
-                                                    <div class="row">
-                                                        <uib-timepicker name="initialTime" required=""
-                                                                        ng-model="time.initial" mousewheel="false"
-                                                                        hour-step="hstep" minute-step="mstep"
-                                                                        min="initialMin"
-                                                                        max="initialMax"
-                                                                        ng-change="checkTimeValues()"
-                                                                        show-meridian="isMeridian"></uib-timepicker>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="row">
-                                                        Hora Final
-                                                    </div>
-                                                    <div class="row">
-                                                        <uib-timepicker name="finalTime" required=""
-                                                                        ng-model="time.final"
-                                                                        mousewheel="false" hour-step="hstep"
-                                                                        minute-step="mstep"
-                                                                        min="finalMin"
-                                                                        max="finalMax"
-                                                                        ng-change="checkTimeValues()"
-                                                                        show-meridian="isMeridian"></uib-timepicker>
-                                                    </div>
+                                                <div class="col-sm-8">
+                                                    <slider ng-model="time.timeEnabled" min="0" max="24" precision="2" value="time.timeEnabled" step="0.5" range="true" class="bs-slider" on-slide="validatesValues($event,value)" formatter="hourFormatter(value)" ticks="ticks" ticksLabels="ticksText"></slider>
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <button class="btn btn-info btn-block" ng-click="setAllDay()"
