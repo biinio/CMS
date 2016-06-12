@@ -42,8 +42,8 @@
             objectToSave.onSaturday =  $scope.days.saturday ? "1" : "0";
             objectToSave.onSunday =  $scope.days.sunday ? "1" : "0";
 
-            objectToSave.startTime = ($scope.time.initial.getHours() + $scope.time.initial.getMinutes()/60) + "";
-            objectToSave.endTime = ($scope.time.final.getHours() + $scope.time.final.getMinutes()/60) + "";
+            objectToSave.startTime = $scope.time.timeEnabled[0] + "";
+            objectToSave.endTime = $scope.time.timeEnabled[1] + "";
 
             var sitesToSave = $scope.sitesAssigned;
 
@@ -162,30 +162,17 @@
             $scope.days.saturday = objectClicked.onSaturday == "1";
             $scope.days.sunday = objectClicked.onSunday == "1";
 
-            var initialTime = new Date();
-            if(!isNaN(parseFloat(objectClicked.startTime))) {
-                var startTimeHour = parseInt(objectClicked.startTime.split(".")[0]);
-                var startTimeMin =  Math.round((parseFloat(objectClicked.startTime)- startTimeHour) * 60);
-                initialTime.setHours(startTimeHour);
-                initialTime.setMinutes(startTimeMin);
+            if(isNaN(parseFloat(objectClicked.startTime))) {
+                $scope.time.timeEnabled[0] = 0;
             }else{
-                initialTime.setHours(0);
-                initialTime.setMinutes(0);
+                $scope.time.timeEnabled[0] = parseFloat(objectClicked.startTime);
             }
 
-            var finalTime = new Date();
-            if(!isNaN(parseFloat(objectClicked.endTime))) {
-                var endTimeHour = parseInt(objectClicked.endTime.split(".")[0]);
-                var endTimeMin = Math.round((parseFloat(objectClicked.endTime)- endTimeHour) * 60);
-                finalTime.setHours(endTimeHour);
-                finalTime.setMinutes(endTimeMin);
+            if(isNaN(parseFloat(objectClicked.endTime))) {
+                $scope.time.timeEnabled[1] = 24;
             } else{
-                finalTime.setHours(23);
-                finalTime.setMinutes(59);
+                $scope.time.timeEnabled[1] = parseFloat(objectClicked.endTime);
             }
-
-            $scope.time.final = finalTime;
-            $scope.time.initial = initialTime;
 
             $scope.sitesAssigned = [];
 
@@ -226,44 +213,83 @@
             saturday: false,
             sunday: false
         };
-        $scope.isMeridian = true;
-
-        $scope.hstep = 1;
-        $scope.mstep = 1;
 
         $scope.time = {};
-        $scope.time.final = new Date();
-        $scope.time.initial = new Date();
-
-        var d = new Date();
-        d.setHours( 0,0,0,0);
-        $scope.initialMin = d;
-
-        d = new Date();
-        d.setHours( 23,58,0,0);
-        $scope.initialMax = d;
-
-        d = new Date();
-        d.setHours( 0,1,0,0);
-        $scope.finalMin = d;
-
-        d = new Date();
-        d.setHours( 23,59,59,999);
-        $scope.finalMax = d;
+        $scope.time.timeEnabled = [0,24];
 
         $scope.sitesAssigned = [];
 
+        $scope.validatesValues = function( event, value){
+            if(value && Array.isArray(value)){
+                if(value[1]-value[0] <= 0.5 && value[1] == 24){
+                    value[0] = 23.5;
+                    value[1] = 24;
+                } else if(value[1]-value[0] < 0.5){
+                    value[1] = value[0] + 0.5;
+                }
+            }
+        };
 
-        $scope.checkTimeValues = function(){
-            var initialHour = $scope.time.initial.getHours();
-            var initialMin = $scope.time.initial.getMinutes();
-            var finalHour = $scope.time.final.getHours();
-            var finalMin = $scope.time.final.getMinutes();
+        $scope.ticks = [0,6,12,18,24];
+        $scope.ticksText = ['12:00 AM','6:00 AM','12:00 PM','6:00 PM','12:00 AM'];
 
-            if(initialHour >= finalHour  || ( initialHour == finalHour && initialMin >= finalMin)){
-                var d = new Date();
-                d.setHours(initialHour,initialMin + 1);
-                $scope.time.final = d;
+        $scope.labels = [
+            "12:00 AM",
+            "12:30 AM",
+            "1:00 AM",
+            "1:30 AM",
+            "2:00 AM",
+            "2:30 AM",
+            "3:00 AM",
+            "3:30 AM",
+            "4:00 AM",
+            "4:30 AM",
+            "5:00 AM",
+            "5:30 AM",
+            "6:00 AM",
+            "6:30 AM",
+            "7:00 AM",
+            "7:30 AM",
+            "8:00 AM",
+            "8:30 AM",
+            "9:00 AM",
+            "9:30 AM",
+            "10:00 AM",
+            "10:30 AM",
+            "11:00 AM",
+            "11:30 AM",
+            "12:00 PM",
+            "12:30 PM",
+            "1:00 PM",
+            "1:30 PM",
+            "2:00 PM",
+            "2:30 PM",
+            "3:00 PM",
+            "3:30 PM",
+            "4:00 PM",
+            "4:30 PM",
+            "5:00 PM",
+            "5:30 PM",
+            "6:00 PM",
+            "6:30 PM",
+            "7:00 PM",
+            "7:30 PM",
+            "8:00 PM",
+            "8:30 PM",
+            "9:00 PM",
+            "9:30 PM",
+            "10:00 PM",
+            "10:30 PM",
+            "11:00 PM",
+            "11:30 PM",
+            "12:00 AM"];
+
+
+        $scope.hourFormatter = function(value){
+            if(Array.isArray(value)){
+                return $scope.labels[value[0]*2] +" : "+ $scope.labels[value[1]*2] ;
+            }else{
+                return $scope.labels[value*2];
             }
         };
 
@@ -315,13 +341,7 @@
 
 
         $scope.setAllDay = function () {
-            var newInitialTime = new Date();
-            newInitialTime.setHours(0,0,0,0);
-            $scope.time.initial = newInitialTime;
-
-            var newFinalTime = new Date();
-            newFinalTime.setHours(23,59,0,0);
-            $scope.time.final = newFinalTime;
+            $scope.time.timeEnabled = [0, 24];
         };
 
         $scope.create = function () {
@@ -332,14 +352,6 @@
             }).error(function (err) {
                 console.error(err);
             });
-        };
-
-        $scope.convertTime = function (time) {
-            var hours = parseInt(time);
-            var min = ( parseFloat(time) - hours ) * 60;
-            var hoursString = hours < 10 ? "0" + hours : "" + hours;
-            var minString = min < 10 ? "0" + min : "" + min;
-            return hoursString + ":" + minString;
         };
 
         $scope.enableAllDays = function () {
