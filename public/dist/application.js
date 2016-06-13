@@ -790,8 +790,8 @@ angular.module('biins').config(['$stateProvider',
         .module('biins')
         .controller('BiinsController', BiinsController);
 
-    BiinsController.$inject = ['$http', '$state', '$scope', '$uibModal', 'Authentication', 'Organization', 'ObjectsSidebar', 'Loading'];
-    function BiinsController($http, $state, $scope, $modal, Authentication, Organization, ObjectsSidebar, Loading) {
+    BiinsController.$inject = ['$http', '$state', '$scope', '$translate', 'Authentication', 'Organization', 'ObjectsSidebar', 'Loading'];
+    function BiinsController($http, $state, $scope, $translate, Authentication, Organization, ObjectsSidebar, Loading) {
 
 
         /**=============================================================================================================
@@ -1125,10 +1125,15 @@ angular.module('biins').config(['$stateProvider',
         };
 
         $scope.create = function () {
+            var titleText = $translate.instant("NOTICES.CREATING");
+            swal({   title: titleText,  type: "info",   showConfirmButton: false });
             $http.put(ApplicationConfiguration.applicationBackendURL + 'api/notices/organizations/' + $scope.organizationId).success(function (data) {
                 $scope.notices.push(data);
                 $scope.objectsSidebarService.setObjects($scope.notices);
                 $scope.objectsSidebarService.setSelectedObject(data);
+                setTimeout(function(){
+                    swal.close();
+                },2000);
             }).error(function (err) {
                 console.error(err);
             });
@@ -1172,6 +1177,40 @@ angular.module('biins').config(['$stateProvider',
 
         $scope.toggleIsActive = function(){
             $scope.objectsSidebarService.selectedObject.isActive = !$scope.objectsSidebarService.selectedObject.isActive;
+        };
+
+
+        $scope.deleteNotice = function(message, selectedObject) {
+            var translatedTexts  = $translate.instant(["NOTICES.DELETE_TITLE","NOTICES.DELETE_CONFIRMATION"," NOTICES.DELETED","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["NOTICES.DELETE_TITLE"],
+                text: translatedTexts["NOTICES.DELETE_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
+                $scope.removeNoticeAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
+            });
+        };
+
+        //Remove element at specific position
+        $scope.removeNoticeAt = function(index){
+            var translatedTexts  = $translate.instant(["NOTICES.DELETED_TEXT","GENERIC.DELETED"]);
+            //var elementId = $scope.objectsSidebarService.objects[index].elementIdentifier;
+            var noticeId = $scope.objectsSidebarService.objects[index].identifier;
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/notices/'+noticeId).success(function(data){
+                    if($scope.objectsSidebarService.selectedObject==$scope.objectsSidebarService.objects[index]){
+                        $scope.objectsSidebarService.selectedObject = null;
+                    }
+                    $scope.objectsSidebarService.objects.splice(index,1);
+                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["NOTICES.DELETED_TEXT"], "success");
+                }
+            );
         };
     }
 

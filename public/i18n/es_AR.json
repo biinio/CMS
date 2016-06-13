@@ -45,6 +45,14 @@
     "PHONE":"Telefono",
     "UPLOAD_IMAGE":"Subir imagen"
   },
+  "NOTICES":{
+    "CREATING" : "Su aviso se está creando.",
+    "DELETED_TEXT" : "Su aviso fue eliminado con éxito.",
+    "DELETE_TITLE":"¿Desea eliminar este aviso?",
+    "DELETE_CONFIRMATION" : "Cuando se elimina un aviso no estará dispoible para los usuarios.",
+    "DELETED" : "Eliminado",
+    "DELETE_NOTICE": "Eliminar aviso"
+  },
   "ORGANIZATION":{
     "TITLE": "Organizaciones",
     "SUB_TITLE": "Aquí puedes administrar las organizaciones que manejas en Biin",

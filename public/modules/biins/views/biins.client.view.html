@@ -234,6 +234,11 @@
                         </div>
                     </div>
                 </section>
+                <button type="button" class="btn btn-oval btn-danger align-right"
+                        ng-click="deleteNotice(' {{'GENERIC.DELETE_ELEMENT_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">
+                    {{ 'NOTICES.DELETE_NOTICE' | translate }}
+                </button>
+                <code>IDENTIFIER: {{objectsSidebarService.selectedObject.elementIdentifier}}</code>
             </div>
             <div ng-if="objectsSidebarService.selectedObject==null || objectsSidebarService.selectedObject == {}"
                  class="no-object-container">
