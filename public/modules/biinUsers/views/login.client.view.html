@@ -1,23 +1,27 @@
-<div data-ng-controller="LoginFormController as login" class="block-center mt-xl wd-xl">
+<div data-ng-controller="LoginFormController as login" class="login container-fluid">
    <!-- START panel-->
-   <div class="panel panel-dark panel-flat">
+   <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
       <div class="panel-heading text-center">
          <a href="#">
-            <img src="modules/core/img/brand/logo-biin-dark.png" alt="Image" class="block-center img-rounded" />
+            <img src="modules/core/img/brand/logo-biin-dark.svg" alt="Image" class="block-center" width="260" height="134"/>
          </a>
       </div>
       <div class="panel-body">
-         <p class="text-center pv" translate="LOGIN.SIGN_IN"></p>
+         <h1 class="text-center pv" translate="LOGIN.SIGN_IN"></h1>
          <form role="form" data-ng-submit="login.login()" name="login.loginForm" novalidate="" class="form-validate mb-lg">
             <div class="form-group has-feedback">
-               <input id="exampleInputEmail1" type="email" name="account_email" placeholder="{{ 'LOGIN.EMAIL_PLACEHOLDER' | translate }}" autocomplete="off" data-ng-model="login.account.email" required="" class="form-control" />
-               <span class="fa fa-envelope form-control-feedback text-muted"></span>
+               <div class="input-group">
+                  <span class="input-group-addon" id="email-addon"><i class="fa fa-envelope"></i></span>
+                  <input aria-describedby="email-addon" id="exampleInputEmail1" type="email" name="account_email" placeholder="{{ 'LOGIN.EMAIL_PLACEHOLDER' | translate }}" autocomplete="off" data-ng-model="login.account.email" required="" class="form-control" />
+               </div>
                <span data-ng-show="login.loginForm.account_email.$dirty &amp;&amp; login.loginForm.account_email.$error.required" class="text-danger">{{ 'LOGIN.REQUIRED' | translate }}</span>
                <span data-ng-show="login.loginForm.account_email.$dirty &amp;&amp; login.loginForm.account_email.$error.email" class="text-danger">{{ 'LOGIN.VALID_EMAIL' | translate }}</span>
             </div>
             <div class="form-group has-feedback">
-               <input id="exampleInputPassword1" type="password" name="account_password" placeholder="{{ 'LOGIN.PASSWORD' | translate }}" data-ng-model="login.account.password" required="" class="form-control" />
-               <span class="fa fa-lock form-control-feedback text-muted"></span>
+               <div class="input-group">
+                  <span class="input-group-addon" id="email-addon"><i class="fa fa-lock"></i></span>
+                  <input id="exampleInputPassword1" type="password" name="account_password" placeholder="{{ 'LOGIN.PASSWORD' | translate }}" data-ng-model="login.account.password" required="" class="form-control" />
+               </div>
                <span data-ng-show="login.loginForm.account_password.$dirty &amp;&amp; login.loginForm.account_password.$error.required" class="text-danger">{{ 'LOGIN.REQUIRED' | translate }}</span>
             </div>
             <div class="clearfix">
@@ -32,7 +36,7 @@
             <button type="submit" class="btn btn-block btn-primary mt-lg">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
          </form>
          <div data-ng-show="login.authMsg" class="alert alert-danger text-center">{{login.authMsg}}</div>
-         <p>{{'LOGIN.NEED_HELP' | translate}} <a href="mailto:contact@biin.io">contact@biin.io</a></p>
+         <p>{{'LOGIN.NEED_HELP' | translate}} <a href="mailto:contact@biin.io">contact@biin.io</a> {{'LOGIN.NEED_HELP2' | translate}}</p>
          <!-- SIGN UP SECTION -->
          <!--
          <p class="pt-lg text-center">{{ 'LOGIN.SIGN_UP' | translate }}</p><a ui-sref="page.register" class="btn btn-block btn-default">{{ 'LOGIN.REGISTER_NOW' | translate }}</a>

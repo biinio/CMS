@@ -207,17 +207,18 @@
     "LIMITEDQTY_PLACEHOLDER": "Quantity **"
   },
   "LOGIN": {
-    "SIGN_IN": "Sign in with your biin account",
-    "EMAIL_PLACEHOLDER": "Enter your e-mail address",
+    "SIGN_IN": "Login",
+    "EMAIL_PLACEHOLDER": "E-mail address",
     "REQUIRED": "This field is required",
     "VALID_EMAIL": "This field must be a valid email address",
     "PASSWORD": "Password",
     "REMEMBER_ME": "Remember Me",
     "FORGOT_PASSWORD": "Forgot your password?",
-    "LOGIN_BUTTON": "Continue",
+    "LOGIN_BUTTON": "Login",
     "SIGN_UP": "Need to sign up?",
-    "REGISTER_NOW": "Register Now"
-    "NEED_HELP":"If you're having problems, let us know at "
+    "REGISTER_NOW": "Register Now",
+    "NEED_HELP":"If you're having problems, let us know at ",
+    "NEED_HELP2":" or call us at (506) 8706 6660"
   },
   "SHOWCASE": {
     "DETAILS": "Showcase details",

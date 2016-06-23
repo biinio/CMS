@@ -233,17 +233,18 @@
     "TAXINCLUDED_TOOLTIP":"El precio incluye los impuestos"
   },
   "LOGIN": {
-    "SIGN_IN": "Acceder con su cuenta de Biin",
-    "EMAIL_PLACEHOLDER": "Introduzca su correo electrónico",
+    "SIGN_IN": "Iniciar sesión",
+    "EMAIL_PLACEHOLDER": "Correo electrónico",
     "REQUIRED": "Este campo es requerido",
     "VALID_EMAIL": "Este campo requiere un correo electrónico válido",
     "PASSWORD": "Contraseña",
-    "REMEMBER_ME": "No cerrar sesión",
+    "REMEMBER_ME": "Recordarme",
     "FORGOT_PASSWORD": "¿Has olvidado la contraseña?",
-    "LOGIN_BUTTON": "Continuar",
+    "LOGIN_BUTTON": "Ingresar",
     "SIGN_UP": "¿Necesita registrarse?",
     "REGISTER_NOW": "Regístrese ahora",
-    "NEED_HELP":"Si tiene problemas, escribanos a "
+    "NEED_HELP":"Si tiene algún incoveniente para iniciar sesión, escribanos a ",
+    "NEED_HELP2":" o llamenos al (506) 8706 6660"
 
   },
   "SHOWCASE": {
