@@ -16271,12 +16271,20 @@ body {
   width: 100%;
   height: 100%;
 }
+/*Login View Styles*/
 .login {
-  padding-top: 3%;
+  padding-top: 5%;
+  min-height: 100%;
+  height: 100%;
+  position: relative;
+}
+.login h1 {
+  margin-bottom: 3px;
+  margin-top: 0;
 }
 .login input,
 .login button {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: lighter;
 }
 @media (max-width: 425px) {
@@ -16286,7 +16294,7 @@ body {
   }
 }
 .login input {
-  padding: 24px;
+  padding: 21px;
 }
 @media (max-width: 425px) {
   .login input {
@@ -16295,15 +16303,12 @@ body {
 }
 .login i {
   color: white;
-  font-size: 24px;
+  font-size: 22px;
 }
 @media (max-width: 425px) {
   .login i {
     font-size: 18px;
   }
-}
-.login h1 {
-  margin-bottom: 3px;
 }
 .login hr {
   margin-bottom: 16px;
@@ -16326,13 +16331,23 @@ body {
 .login .switch {
   float: left;
 }
+.login .content {
+  padding-bottom: 60px;
+}
 .login .footer {
-  position: absolute;
   bottom: 0;
+  height: 20px;
+  position: absolute;
 }
 .login .alert {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: lighter;
+  padding: 6px;
+}
+@media (max-width: 425px) {
+  .login .alert {
+    font-size: 18px;
+  }
 }
 .cmn-toggle {
   position: absolute;

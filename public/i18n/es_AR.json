@@ -244,8 +244,10 @@
     "SIGN_UP": "¿Necesita registrarse?",
     "REGISTER_NOW": "Regístrese ahora",
     "NEED_HELP":"Si tiene algún incoveniente para iniciar sesión, escribanos a ",
-    "NEED_HELP2":" o llamenos al (506) 8706 6660",
-    "COPYRIGHT":" .Todos los derechos reservados"
+    "NEED_HELP2":" o llámenos al (506)8706-6660",
+    "COPYRIGHT":" .Todos los derechos reservados",
+    "INVALID_CREDENTIALS":"Credenciales inválidos",
+    "SERVER_ERROR":"Error de conexión"
   },
   "SHOWCASE": {
     "DETAILS": "Detalles de Vitrinas",

@@ -1,8 +1,16 @@
+/*Login View Styles*/
 .login{
-  padding-top: 3%;
+  padding-top: 5%;
+  min-height: 100%;
+  height: 100%;
+  position: relative;
 
+  h1{
+    margin-bottom: 3px;
+    margin-top: 0;
+  }
   input, button{
-    font-size: 22px;
+    font-size: 20px;
     font-weight: lighter;
 
     @media (max-width: 425px) {
@@ -10,7 +18,7 @@
     }
   }
   input{
-    padding: 24px;
+    padding: 21px;
 
     @media (max-width: 425px) {
       padding: 18px;
@@ -18,14 +26,11 @@
   }
   i{
     color: white;
-    font-size: 24px;
+    font-size: 22px;
 
     @media (max-width: 425px) {
       font-size: 18px;
     }
-  }
-  h1{
-    margin-bottom: 3px;
   }
   hr{
     margin-bottom: 16px;
@@ -48,12 +53,21 @@
   .switch{
     float: left;
   }
+  .content{
+    padding-bottom: 60px;
+  }
   .footer{
-    position: absolute;
     bottom: 0;
+    height: 20px;
+    position: absolute;
   }
   .alert{
-    font-size: 22px;
+    font-size: 20px;
     font-weight: lighter;
+    padding: 6px;
+
+    @media (max-width: 425px) {
+      font-size: 18px;
+    }
   }
 }

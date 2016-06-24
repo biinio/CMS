@@ -218,8 +218,10 @@
     "SIGN_UP": "Need to sign up?",
     "REGISTER_NOW": "Register Now",
     "NEED_HELP":"If you're having problems, let us know at ",
-    "NEED_HELP2":" or call us at (506) 8706 6660",
-    "COPYRIGHT":" .All rights reserved"
+    "NEED_HELP2":" or call us at (506)8706-6660",
+    "COPYRIGHT":" .All rights reserved",
+    "INVALID_CREDENTIALS":"Invalid credentials",
+    "SERVER_ERROR":"Connection Error"
   },
   "SHOWCASE": {
     "DETAILS": "Showcase details",
