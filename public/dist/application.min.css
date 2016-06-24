@@ -6929,6 +6929,13 @@ now {
 .input-group .input-sm + .input-group-btn .btn {
   font-size: 13px;
 }
+.btn-primary {
+  background-color: #1eafdc;
+}
+.btn-primary:hover {
+  background-color: #1aa6d2;
+  border-color: #1aa6d2;
+}
 .form-control {
   box-shadow: 0 0 0 #000 !important;
 }
@@ -7059,6 +7066,7 @@ h2,
 h3,
 h4 {
   font-family: "Raleway";
+  font-weight: lighter;
 }
 /*!
  *  Font Awesome 4.6.3 by @davegandy - http://fontawesome.io - @fontawesome
@@ -16264,15 +16272,114 @@ body {
   height: 100%;
 }
 .login {
-  padding-top: 5%;
+  padding-top: 3%;
 }
 .login input,
 .login button {
   font-size: 22px;
   font-weight: lighter;
 }
+@media (max-width: 425px) {
+  .login input,
+  .login button {
+    font-size: 16px;
+  }
+}
 .login input {
-  padding: 2.5rem;
+  padding: 24px;
+}
+@media (max-width: 425px) {
+  .login input {
+    padding: 18px;
+  }
+}
+.login i {
+  color: white;
+  font-size: 24px;
+}
+@media (max-width: 425px) {
+  .login i {
+    font-size: 18px;
+  }
+}
+.login h1 {
+  margin-bottom: 3px;
+}
+.login hr {
+  margin-bottom: 16px;
+}
+.login .form-group {
+  margin-bottom: 20px;
+}
+.login .input-group-addon {
+  border: none;
+  min-width: 60px;
+  background-color: #fc8a05;
+}
+.login .checkbox {
+  margin-bottom: 5px;
+}
+.login .rememberLabel {
+  float: left;
+  margin: 4px 0 0 15px;
+}
+.login .switch {
+  float: left;
+}
+.login .footer {
+  position: absolute;
+  bottom: 0;
+}
+.login .alert {
+  font-size: 22px;
+  font-weight: lighter;
+}
+.cmn-toggle {
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+.cmn-toggle + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+input.cmn-toggle-round + label {
+  padding: 1px;
+  width: 60px;
+  height: 30px;
+  background-color: #dddddd;
+  border-radius: 60px;
+}
+input.cmn-toggle-round + label:before,
+input.cmn-toggle-round + label:after {
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  content: "";
+}
+input.cmn-toggle-round + label:before {
+  right: 1px;
+  background-color: #f1f1f1;
+  border-radius: 60px;
+  transition: background 0.4s;
+}
+input.cmn-toggle-round + label:after {
+  width: 29px;
+  background-color: #fff;
+  border-radius: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: margin 0.4s;
+}
+input.cmn-toggle-round:checked + label:before {
+  background-color: #8ce196;
+}
+input.cmn-toggle-round:checked + label:after {
+  margin-left: 30px;
 }
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');

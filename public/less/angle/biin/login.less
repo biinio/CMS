@@ -1,10 +1,59 @@
 .login{
+  padding-top: 3%;
+
   input, button{
     font-size: 22px;
     font-weight: lighter;
+
+    @media (max-width: 425px) {
+      font-size: 16px;
+    }
   }
   input{
-    padding: 2.5rem;
+    padding: 24px;
+
+    @media (max-width: 425px) {
+      padding: 18px;
+    }
   }
-  padding-top: 5%;
+  i{
+    color: white;
+    font-size: 24px;
+
+    @media (max-width: 425px) {
+      font-size: 18px;
+    }
+  }
+  h1{
+    margin-bottom: 3px;
+  }
+  hr{
+    margin-bottom: 16px;
+  }
+  .form-group{
+    margin-bottom: 20px;
+  }
+  .input-group-addon{
+    border: none;
+    min-width: 60px;
+    background-color: #fc8a05;
+  }
+  .checkbox{
+    margin-bottom: 5px;
+  }
+  .rememberLabel{
+    float: left;
+    margin: 4px 0 0 15px;
+  }
+  .switch{
+    float: left;
+  }
+  .footer{
+    position: absolute;
+    bottom: 0;
+  }
+  .alert{
+    font-size: 22px;
+    font-weight: lighter;
+  }
 }

@@ -236,7 +236,7 @@
     "SIGN_IN": "Iniciar sesión",
     "EMAIL_PLACEHOLDER": "Correo electrónico",
     "REQUIRED": "Este campo es requerido",
-    "VALID_EMAIL": "Este campo requiere un correo electrónico válido",
+    "VALID_EMAIL": "Ingrese un correo válido",
     "PASSWORD": "Contraseña",
     "REMEMBER_ME": "Recordarme",
     "FORGOT_PASSWORD": "¿Has olvidado la contraseña?",
@@ -244,8 +244,8 @@
     "SIGN_UP": "¿Necesita registrarse?",
     "REGISTER_NOW": "Regístrese ahora",
     "NEED_HELP":"Si tiene algún incoveniente para iniciar sesión, escribanos a ",
-    "NEED_HELP2":" o llamenos al (506) 8706 6660"
-
+    "NEED_HELP2":" o llamenos al (506) 8706 6660",
+    "COPYRIGHT":" .Todos los derechos reservados"
   },
   "SHOWCASE": {
     "DETAILS": "Detalles de Vitrinas",

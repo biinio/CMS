@@ -210,7 +210,7 @@
     "SIGN_IN": "Login",
     "EMAIL_PLACEHOLDER": "E-mail address",
     "REQUIRED": "This field is required",
-    "VALID_EMAIL": "This field must be a valid email address",
+    "VALID_EMAIL": "Insert a valid email address",
     "PASSWORD": "Password",
     "REMEMBER_ME": "Remember Me",
     "FORGOT_PASSWORD": "Forgot your password?",
@@ -218,7 +218,8 @@
     "SIGN_UP": "Need to sign up?",
     "REGISTER_NOW": "Register Now",
     "NEED_HELP":"If you're having problems, let us know at ",
-    "NEED_HELP2":" or call us at (506) 8706 6660"
+    "NEED_HELP2":" or call us at (506) 8706 6660",
+    "COPYRIGHT":" .All rights reserved"
   },
   "SHOWCASE": {
     "DETAILS": "Showcase details",
