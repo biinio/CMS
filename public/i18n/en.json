@@ -35,7 +35,8 @@
     "MENU_MAINTENANCE": "Maintenance",
     "MENU_PROFILE": "Profile",
     "MENU_ORGANIZATIONS": "Organizations",
-    "MENU_NPS": "Net Promoter Score"
+    "MENU_NPS": "Net Promoter Score",
+    "MENU_GIFTS":"Gifts"
   },
   "PROFILE": {
     "FIRST_NAME": "First name",

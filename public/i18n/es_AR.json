@@ -35,7 +35,8 @@
     "MENU_MAINTENANCE": "Mantenimiento",
     "MENU_PROFILE": "Perfil",
     "MENU_ORGANIZATIONS": "Organizaciones",
-    "MENU_NPS": "Senso de Clientes"
+    "MENU_NPS": "Senso de Clientes",
+    "MENU_GIFTS":"Regalos"
   },
   "PROFILE": {
     "FIRST_NAME": "Nombre",
