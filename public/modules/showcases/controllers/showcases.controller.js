@@ -249,7 +249,7 @@
         $scope.save = function () {
 
 
-            //save sites
+            //Save showcases
 
             for(var i = 0; i< $scope.sites.length; i++){
                 for(var j = 0; j<$scope.sites[i].showcases.length;j++){

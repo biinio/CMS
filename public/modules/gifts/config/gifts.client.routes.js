@@ -1,16 +1,16 @@
 /**
- * Created by Ivan on 8/27/15.
+ * Created by Carlos on 6/27/15.
  */
 'use strict';
 
 // Setting up route
-angular.module('elements').config(['$stateProvider',
+angular.module('gifts').config(['$stateProvider',
     function($stateProvider) {
         // Users state routing
         $stateProvider.
-        state('app.elements', {
-            url: '/elements',
-            templateUrl: 'modules/elements/views/elements.client.view.html',
+        state('app.gifts', {
+            url: '/gifts',
+            templateUrl: 'modules/gifts/views/gifts.client.view.html',
             resolve:{
                 permissions: function(Permission) {
                     return Permission.getPermissions();

@@ -131,6 +131,14 @@ ApplicationConfiguration.registerModule('app.forms');
 'use strict';
 ApplicationConfiguration.registerModule('gallery');
 
+/**
+ * Created by Carlos on 6/27/16.
+ */
+'use strict';
+
+// Use Application configuration module to register a new module
+ApplicationConfiguration.registerModule('gifts');
+
 'use strict';
 ApplicationConfiguration.registerModule('gmaps');
 
@@ -1721,7 +1729,6 @@ angular.module('biins').config(['$stateProvider',
       core.service    = $provide.service;
       core.constant   = $provide.constant;
       core.value      = $provide.value;
-
     }
 
 })();
@@ -1761,6 +1768,7 @@ angular.module('biins').config(['$stateProvider',
         Menus.addMenuItem('sidebar', 'Showcase'     , 'showcases'       , null, '/showcase'     , false, null, null, 'icon-docs', "sidebar.MENU_SHOWCASES");
         Menus.addMenuItem('sidebar', 'Biins'        , 'biins'           , null, '/biins'        , false, null, null, 'icon-feed', "sidebar.MENU_BIINS");
         Menus.addMenuItem('sidebar', 'Sites'        , 'sites'           , null, '/sites'        , false, null, null, 'icon-pointer', "sidebar.MENU_SITES");
+        Menus.addMenuItem('sidebar', 'Gifts'        , 'gifts'           , null, '/gifts'        , false, null, null, 'icon-present', "sidebar.MENU_GIFTS");
         Menus.addMenuItem('sidebar', 'Organizations', 'organization'   , null, '/organization'  , false, null, null, 'icon-globe', "sidebar.MENU_ORGANIZATIONS");
         Menus.addMenuItem('sidebar', 'Profile'      , 'profile'         , null, '/profile'      , false, null, null, 'icon-user', "sidebar.MENU_PROFILE");
         //Maintenance has role field: maintenance
@@ -2405,8 +2413,8 @@ angular.module('dashboard').config(['$stateProvider',
         .module('dashboard')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','ObjectsSidebar','GlobalFilters','Loading'];
-    function DashboardController($http, $state, $scope, Authentication, Organization,ObjectsSidebar,GlobalFilters,Loading) {
+    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization', 'ObjectsSidebar', 'GlobalFilters', 'Loading'];
+    function DashboardController($http, $state, $scope, Authentication, Organization, ObjectsSidebar, GlobalFilters, Loading) {
 
         if (!Authentication.user) {
             $location.path('/');
@@ -2456,7 +2464,7 @@ angular.module('dashboard').config(['$stateProvider',
 
         $scope.$on('$stateChangeStart', function(){
             $scope.loadingService.isLoading = true;
-            $scope.objectsSidebarService.reset();
+            $scope.objectsSidebar.reset();
         });
 
         $scope.$on('Biin: Finished Presential Children To Load', function(scope, children){
@@ -3330,21 +3338,21 @@ angular.module('elements').config(['$stateProvider',
     function($stateProvider) {
         // Users state routing
         $stateProvider.
-            state('app.elements', {
-                url: '/elements',
-                templateUrl: 'modules/elements/views/elements.client.view.html',
-                resolve:{
-                    permissions: function(Permission) {
-                        return Permission.getPermissions();
-                    },
-                    selectedOrganization: function (Organization) {
-                        return Organization.getSelectedOrganization();
-                    },
-                    organization: function (Organization) {
-                        return Organization.getOrganizations();
-                    }
+        state('app.elements', {
+            url: '/elements',
+            templateUrl: 'modules/elements/views/elements.client.view.html',
+            resolve:{
+                permissions: function(Permission) {
+                    return Permission.getPermissions();
+                },
+                selectedOrganization: function (Organization) {
+                    return Organization.getSelectedOrganization();
+                },
+                organization: function (Organization) {
+                    return Organization.getOrganizations();
                 }
-            });
+            }
+        });
     }
 ]);
 
@@ -5069,6 +5077,52 @@ function GalleryController($scope, $modalInstance,$http, galleries,Organization)
             
         };
         return service;
+    }
+})();
+
+/**
+ * Created by Carlos on 6/27/15.
+ */
+'use strict';
+
+// Setting up route
+angular.module('gifts').config(['$stateProvider',
+    function($stateProvider) {
+        // Users state routing
+        $stateProvider.
+        state('app.gifts', {
+            url: '/gifts',
+            templateUrl: 'modules/gifts/views/gifts.client.view.html',
+            resolve:{
+                permissions: function(Permission) {
+                    return Permission.getPermissions();
+                },
+                selectedOrganization: function (Organization) {
+                    return Organization.getSelectedOrganization();
+                },
+                organization: function (Organization) {
+                    return Organization.getOrganizations();
+                }
+            }
+        });
+    }
+]);
+/**=========================================================
+ * Module: gifts.controller.js
+ * Controller of gifts
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('gifts')
+        .controller('GiftsController', GiftsController);
+
+    GiftsController.$inject = [];
+
+    function GiftsController() {
+
     }
 })();
 
@@ -7205,10 +7259,12 @@ angular.module('dashboard').config(['$stateProvider',
         .module('profile')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','Loading'];
-    function ProfileController($http, $state, $scope, Authentication, toaster, $location, Organization,Loading) {
+    ProfileController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','Loading', 'ObjectsSidebar'];
+    function ProfileController($http, $state, $scope, Authentication, toaster, $location, Organization, Loading, ObjectsSidebar) {
         var vm = this;
         $scope.organizationService = Organization;
+        $scope.objectsSidebarService = ObjectsSidebar;
+
         if (!Authentication.user) {
             $location.path('/');
         }
