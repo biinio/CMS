@@ -6930,11 +6930,11 @@ now {
   font-size: 13px;
 }
 .btn-primary {
-  background-color: #1eafdc;
+  background-color: #1da1f2;
 }
 .btn-primary:hover {
-  background-color: #1aa6d2;
-  border-color: #1aa6d2;
+  background-color: #1996e2;
+  border-color: #1996e2;
 }
 .form-control {
   box-shadow: 0 0 0 #000 !important;
@@ -7034,6 +7034,9 @@ fieldset .form-group {
   height: 20px;
   margin-top: -10px;
   margin-left: -10px;
+}
+.help-block small {
+  color: #E15252;
 }
 .nav,
 .pagination,
@@ -15553,8 +15556,8 @@ Component: sidemenu.less
 }
 .searchBox-wrapper > input {
   border-radius: 6px;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-left: 8px;
+  padding-right: 11px;
 }
 .searchBox-wrapper-without-add-button {
   margin-right: 6px;
@@ -16342,6 +16345,7 @@ body {
   bottom: 0;
   height: 20px;
   position: absolute;
+  margin-bottom: 20px;
 }
 .login .alert {
   font-size: 20px;

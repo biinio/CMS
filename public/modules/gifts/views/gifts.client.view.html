@@ -10,15 +10,20 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <legend translate="GIFT.TITLE"></legend>
-                                <form name="myForm" role="form" class="form-validate">
+                                <form name="myForm" role="form">
                                     <!--Title name:"title"-->
                                     <div class="form-group">
                                         <label for="title" translate="GIFT.GIFT_TITLE" class="control-label"></label>
                                         <input id="title" ng-model="objectsSidebarService.selectedObject.title"
                                            name="title"
                                            type="text" placeholder="{{ 'GIFT.TITLE_PLACEHOLDER' | translate }}"
-                                           required="required" class="form-control title-value"/>
+                                           required class="form-control title-value"/>
+                                        <!-- Input title errors -->
+                                        <div ng-messages="myForm.title.$error" ng-if="myForm.title.$touched"class="help-block">
+                                            <small ng-message="required" translate="GIFT.TITLE_REQUIRED"></small>
+                                        </div>
                                     </div>
+
                                     <!--Message name="message"-->
                                     <div class="form-group">
                                         <label for="title" translate="GIFT.MESSAGE" class="control-label"></label>
@@ -26,7 +31,12 @@
                                            name="message"
                                            type="text" placeholder="{{ 'GIFT.MESSAGE_PLACEHOLDER' | translate }}"
                                            required="required" class="form-control title-value"/>
+                                        <!-- Input title errors -->
+                                        <div ng-messages="myForm.message.$error" ng-if="myForm.message.$touched"class="help-block">
+                                            <small ng-message="required" translate="GIFT.MESSAGE_REQUIRED"></small>
+                                        </div>
                                     </div>
+
                                     <!--Gift Product name="productToGift"-->
                                     <div class="form-group">
                                         <label translate="GIFT.GIFT" class="form-label"></label>

@@ -8,22 +8,32 @@
       </div>
       <div class="panel-body">
          <h1 class="text-center pv" translate="LOGIN.SIGN_IN"></h1>
-         <form role="form" data-ng-submit="login.login()" name="login.loginForm" novalidate="" class="form-validate mb-lg">
-            <div class="form-group has-feedback">
+         <form role="form" data-ng-submit="login.login()" name="login.loginForm" novalidate="" class="mb-lg">
+            <!--Email name:"account_email"-->
+            <div class="form-group">
                <div class="input-group">
                   <span class="input-group-addon" id="email-addon"><i class="fa fa-envelope"></i></span>
-                  <input aria-describedby="email-addon" id="exampleInputEmail1" type="email" name="account_email" placeholder="{{ 'LOGIN.EMAIL_PLACEHOLDER' | translate }}" autocomplete="off" data-ng-model="login.account.email" required="" class="form-control" />
+                  <input aria-describedby="email-addon" id="exampleInputEmail1" type="email" name="account_email" placeholder="{{ 'LOGIN.EMAIL_PLACEHOLDER' | translate }}" autocomplete="off" data-ng-model="login.account.email" required class="form-control" />
                </div>
-               <span data-ng-show="login.loginForm.account_email.$dirty &amp;&amp; login.loginForm.account_email.$error.required" class="text-danger">{{ 'LOGIN.REQUIRED' | translate }}</span>
-               <span data-ng-show="login.loginForm.account_email.$dirty &amp;&amp; login.loginForm.account_email.$error.email" class="text-danger">{{ 'LOGIN.VALID_EMAIL' | translate }}</span>
+               <!-- Input account_email errors -->
+               <div ng-messages="login.loginForm.account_email.$error" ng-if="login.loginForm.account_email.$touched"class="help-block">
+                  <small ng-message="required">{{ 'LOGIN.REQUIRED_EMAIL' | translate }}</small>
+                  <small ng-message="email">{{ 'LOGIN.VALID_EMAIL' | translate }}</small>
+               </div>
             </div>
-            <div class="form-group has-feedback">
+
+            <!--Password name:"account_password"-->
+            <div class="form-group">
                <div class="input-group">
-                  <span class="input-group-addon" id="email-addon"><i class="fa fa-lock"></i></span>
-                  <input id="exampleInputPassword1" type="password" name="account_password" placeholder="{{ 'LOGIN.PASSWORD' | translate }}" data-ng-model="login.account.password" required="" class="form-control" />
+                  <span class="input-group-addon" id="password-addon"><i class="fa fa-lock"></i></span>
+                  <input id="exampleInputPassword1" type="password" name="account_password" placeholder="{{ 'LOGIN.PASSWORD' | translate }}" data-ng-model="login.account.password" required class="form-control" />
                </div>
-               <span data-ng-show="login.loginForm.account_password.$dirty &amp;&amp; login.loginForm.account_password.$error.required" class="text-danger">{{ 'LOGIN.REQUIRED' | translate }}</span>
+               <!-- Input password_email errors -->
+               <div ng-messages="login.loginForm.account_password.$error" ng-if="login.loginForm.account_password.$touched"class="help-block">
+                  <small ng-message="required">{{ 'LOGIN.REQUIRED_PASSWORD' | translate }}</small>
+               </div>
             </div>
+
             <div class="clearfix">
                <div class="checkbox c-checkbox pull-left mt0">
                      <div class="switch">
@@ -31,7 +41,6 @@
                         <label for="cmn-toggle-1"></label>
                      </div>
                      <p class="rememberLabel">{{ 'LOGIN.REMEMBER_ME' | translate }}</p>
-                    <!-- <input type="checkbox" value="" name="account_remember" data-ng-model="login.account.remember" /> -->
                </div>
                <!--<div class="pull-right"><a ui-sref="page.recover" class="text-muted">{{ 'LOGIN.FORGOT_PASSWORD' | translate }}</a>
                </div>-->
