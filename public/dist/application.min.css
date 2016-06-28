@@ -6938,6 +6938,7 @@ now {
 }
 .form-control {
   box-shadow: 0 0 0 #000 !important;
+  font-weight: lighter;
 }
 .input-sm,
 select.input-sm {
@@ -14180,6 +14181,7 @@ body .bootstrap-tagsinput {
   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   box-shadow: 0 0 0 #000 !important;
+  font-weight: lighter;
   height: auto;
   min-height: 35px;
   margin-bottom: 0;

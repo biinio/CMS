@@ -2,10 +2,50 @@
 <div ng-controller="GiftsController as giftCtrl" class="block-center">
     <div id="wrapperContent" class="container-fluid">
         <div class="right-section-content">
-            <div ng-if="objectsSidebarService.selectedObject!=null && objectsSidebarService.selectedObject != {}">
+            <div>
                 <!-- START panel-->
                 <div class="panel panel-default">
-                    <h1>Prueba</h1>
+                    <!-- NutShell Section -->
+                    <section>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <legend translate="GIFT.TITLE"></legend>
+                                <form name="myForm" role="form" class="form-validate">
+                                    <!--Title name:"title"-->
+                                    <div class="form-group">
+                                        <label for="title" translate="GIFT.GIFT_TITLE" class="control-label"></label>
+                                        <input id="title" ng-model="objectsSidebarService.selectedObject.title"
+                                           name="title"
+                                           type="text" placeholder="{{ 'GIFT.TITLE_PLACEHOLDER' | translate }}"
+                                           required="required" class="form-control title-value"/>
+                                    </div>
+                                    <!--Message name="message"-->
+                                    <div class="form-group">
+                                        <label for="title" translate="GIFT.MESSAGE" class="control-label"></label>
+                                        <input id="message" ng-model="objectsSidebarService.selectedObject.message"
+                                           name="message"
+                                           type="text" placeholder="{{ 'GIFT.MESSAGE_PLACEHOLDER' | translate }}"
+                                           required="required" class="form-control title-value"/>
+                                    </div>
+                                    <!--Gift Product name="productToGift"-->
+                                    <div class="form-group">
+                                        <label translate="GIFT.GIFT" class="form-label"></label>
+                                        <select name="productToGift"
+                                                ng-model="objectsSidebarService.selectedObject.productToGift"
+                                                class="form-control bootstrap-select">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="4">3</option>
+                                        </select>
+                                    </div>
+                                    <!--Bonus Period-->
+                                    <div class="form-group">
+                                        <label translate="GIFT.BONUS_PERIOD" class="form-label"></label>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>

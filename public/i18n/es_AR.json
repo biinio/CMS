@@ -72,7 +72,7 @@
     "DELETED_TEXT" : "Su organización ha sido eliminado correctamente."
   },
   "TYPE":{
-    "TITLE":"Tipo de Producto",
+    "TITLE": "Tipo de Producto",
     "SUB_TITLE": "Seleccione el tipo apropiado para el producto.",
     "INFO": "Informativo",
     "BENEFIT": "Beneficio",
@@ -90,6 +90,15 @@
     "APPLY": "Aplicar",
     "LOADING": "Subiendo imágenes, por favor espere...",
     "NOIMAGEUPLOADED":"En este momento no hay ninguna imagen en la galería, puedes subir imagenes con el botón de agregar."
+  },
+  "GIFT":{
+    "TITLE": "Información del regalo",
+    "GIFT_TITLE": "Título",
+    "TITLE_PLACEHOLDER": "Ingrese el título de tu regalo",
+    "MESSAGE": "Mensaje",
+    "MESSAGE_PLACEHOLDER": "Escribe el motivo de tu regalo",
+    "GIFT": "Regalo",
+    "BONUS_PERIOD": "Periodo de regalía"
   },
   "LOADER":{
     "LOADING": "Cargando la información, por favor espere..."

@@ -5119,10 +5119,14 @@ angular.module('gifts').config(['$stateProvider',
         .module('gifts')
         .controller('GiftsController', GiftsController);
 
-    GiftsController.$inject = [];
+    GiftsController.$inject = ['$scope', 'ObjectsSidebar', 'Loading'];
 
-    function GiftsController() {
+    function GiftsController($scope, ObjectsSidebar, Loading) {
+        var vm = this;
 
+        $scope.objectsSidebarService = ObjectsSidebar;
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = false;
     }
 })();
 
@@ -7809,7 +7813,7 @@ angular.module('showcases').config(['$stateProvider',
         $scope.save = function () {
 
 
-            //save sites
+            //Save showcases
 
             for(var i = 0; i< $scope.sites.length; i++){
                 for(var j = 0; j<$scope.sites[i].showcases.length;j++){

@@ -76,6 +76,15 @@
     "APPLY": "Apply",
     "LOADING": "Loading images, please wait..."
   },
+  "GIFT":{
+    "TITLE": "About the gift",
+    "GIFT_TITLE": "Título",
+    "TITLE_PLACEHOLDER": "Write a cool title for your gift",
+    "MESSAGE": "Message",
+    "MESSAGE_PLACEHOLDER": "Write the reason of your gift",
+    "GIFT": "Gift",
+    "BONUS_PERIOD": "Bonus period"
+  },
   "LOADER":{
     "LOADING": "Loading your information, please wait..."
   },
