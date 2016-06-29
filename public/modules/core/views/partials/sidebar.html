@@ -1,7 +1,7 @@
 <!-- Inline template with sidebar items markup and ng-directives-->
 <script type="text/ng-template" id="sidebar-renderer.html">
   <span ng-if="item.heading">{{(item.translate | translate) || item.title}}</span>
-  <a href="/#!/{{item.link}}" title="{{item.title}}">
+  <a ui-sref="{{item.uiRoute}}" title="{{item.title}}">
     <div ng-if="item.alert" ng-class="item.label || 'label label-success'" class="pull-right">{{item.alert}}</div>
     <em ng-hide="inSubmenu" class="{{item.iconClass}}"></em>
     <span>{{(item.translate | translate) || item.title}}</span>
@@ -13,12 +13,12 @@
       class="nav sidebar-subnav">
         <li class="sidebar-subnav-header">{{(item.translate | translate) || item.title}}</li>
         <li ng-repeat="item in item.items | orderBy: 'position'" 
-            ng-include="'sidebar-renderer.html'" 
-            ng-class="{active: ($uiRoute)}"
+            ng-include="'sidebar-renderer.html'"
+            ui-sref-active="active"
             ng-init="pIndex=(pIndex+'-'+$index); inSubmenu = true;"
             ng-click="toggleCollapse(pIndex)"
             data-ng-if="item.shouldRender(authentication.user);"
-            ui-route="{{item.uiRoute}}"></li>
+            ui-sref="{{item.uiRoute}}"></li>
   </ul>
 </script>
 <!-- START Sidebar (left)-->
@@ -26,11 +26,11 @@
    <nav sidebar="" sidebar-anyclick-close="" class="sidebar">
       <!-- START sidebar nav-->
       <ul class="nav">
-         <li  ng-class="{active: ($uiRoute)}" 
-              ng-repeat="item in menu.items | orderBy: 'position'" 
+         <li  ui-sref-active="active"
+              ng-repeat="item in menu.items | orderBy: 'position'"
               ng-include="'sidebar-renderer.html'" 
               data-ng-if="item.shouldRender(authentication.user);"
-              ui-route="{{item.uiRoute}}"
+              ui-sref="{{item.uiRoute}}"
               ng-init="pIndex = $index;"
               ng-click="toggleCollapse(pIndex, true)"
               ></li>

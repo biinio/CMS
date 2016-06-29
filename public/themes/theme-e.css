@@ -3,7 +3,7 @@
  ========================================================================== */
 body,
 .wrapper > section {
-  background-color: #fff;
+  background-color: #f3f3f3;
 }
 .wrapper > .aside {
   background-color: #3a3f51;
@@ -15,12 +15,7 @@ body,
   background-color: #fff;
 }
 .topnavbar .navbar-header {
-  background-color: transparent;
-  background-image: -webkit-linear-gradient(left, #1797be 0%, #23b7e5 100%);
-  background-image: -o-linear-gradient(left, #1797be 0%, #23b7e5 100%);
-  background-image: linear-gradient(to right, #1797be 0%, #23b7e5 100%);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1797be', endColorstr='#ff23b7e5', GradientType=1);
+  background-color: #fff;
 }
 @media only screen and (min-width: 768px) {
   .topnavbar .navbar-header {
@@ -49,21 +44,11 @@ body,
   color: #ffffff;
 }
 .topnavbar .nav-wrapper {
-  background-color: #1797be;
-  background-image: -webkit-linear-gradient(left, #1797be 0%, #23b7e5 100%);
-  background-image: -o-linear-gradient(left, #1797be 0%, #23b7e5 100%);
-  background-image: linear-gradient(to right, #1797be 0%, #23b7e5 100%);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1797be', endColorstr='#ff23b7e5', GradientType=1);
+  background-color: #fff;
 }
 @media only screen and (min-width: 768px) {
   .topnavbar {
-    background-color: #1797be;
-    background-image: -webkit-linear-gradient(left, #1797be 0%, #23b7e5 100%);
-    background-image: -o-linear-gradient(left, #1797be 0%, #23b7e5 100%);
-    background-image: linear-gradient(to right, #1797be 0%, #23b7e5 100%);
-    background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1797be', endColorstr='#ff23b7e5', GradientType=1);
+    background-color: #fff;
   }
   .topnavbar .navbar-nav > .open > a,
   .topnavbar .navbar-nav > .open > a:hover,
@@ -85,7 +70,7 @@ body,
    Component: sidebar
  ========================================================================== */
 .sidebar {
-  background-color: #3a3f51;
+  background-color: #4a484b;
 }
 .sidebar .nav-heading {
   color: #919da8;
@@ -94,11 +79,9 @@ body,
 .sidebar .nav > li > .nav-item {
   color: #e1e2e3;
 }
-.sidebar .nav > li > a:focus,
-.sidebar .nav > li > .nav-item:focus,
 .sidebar .nav > li > a:hover,
 .sidebar .nav > li > .nav-item:hover {
-  color: #1797be;
+  color: #fc8a05;
 }
 .sidebar .nav > li > a > em,
 .sidebar .nav > li > .nav-item > em {
@@ -110,8 +93,8 @@ body,
 .sidebar .nav > li.open > a,
 .sidebar .nav > li.active .nav,
 .sidebar .nav > li.open .nav {
-  background-color: #383d4e;
-  color: #1797be;
+  background-color: #e1e2e3;
+  color: #4a484b;
 }
 .sidebar .nav > li.active > a > em,
 .sidebar .nav > li.open > a > em {
