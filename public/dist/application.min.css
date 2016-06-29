@@ -15494,9 +15494,12 @@ Component: sidemenu.less
 .btnAdd {
   height: 35px;
   padding: 8px 14px 6px 14px;
-  background-color: #fe5621;
+  background-color: #1da1f2;
   color: #FFFFFF;
   border-radius: 5px;
+}
+.btnAdd:hover {
+  background-color: #1996e2;
 }
 .title-sidebar-object {
   overflow: hidden;
@@ -15542,11 +15545,20 @@ Component: sidemenu.less
   display: inline-block;
   float: right;
   margin-right: 6px;
+  position: relative;
 }
 .searchBox-wrapper > input {
+  text-indent: 26px;
   border-radius: 6px;
   padding-left: 8px;
   padding-right: 11px;
+}
+.searchBox-wrapper span {
+  font-size: 15px;
+  position: absolute;
+  color: #bec0ce;
+  top: 10px;
+  left: 14px;
 }
 .searchBox-wrapper-without-add-button {
   margin-right: 6px;
