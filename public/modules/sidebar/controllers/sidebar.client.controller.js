@@ -10,8 +10,8 @@
         .module('app.sidebar')
         .controller('SidebarController', SidebarController);
 
-    SidebarController.$inject = ['$rootScope', '$scope', '$state', 'SidebarLoader', 'Utils', 'Authentication'];
-    function SidebarController($rootScope, $scope, $state, SidebarLoader,  Utils, Authentication) {
+    SidebarController.$inject = ['$rootScope', '$scope', '$state', 'SidebarLoader', 'Utils', 'Authentication', 'Organization'];
+    function SidebarController($rootScope, $scope, $state, SidebarLoader,  Utils, Authentication, Organization) {
 
         activate();
 
@@ -21,6 +21,8 @@
           var collapseList = [];
 
           $scope.authentication = Authentication;
+          $scope.selectedOrganization = Organization.selectedOrganization;
+          console.log($scope.selectedOrganization );
 
           // demo: when switch from collapse to hover, close all items
           $rootScope.$watch('app.layout.asideHover', function(oldVal, newVal){
@@ -29,6 +31,12 @@
             }
           });
 
+          //Load the selected Organization
+          $rootScope.$watch(function(){
+            return Organization.selectedOrganization
+          }, function(newVal, oldVal){
+            $scope.selectedOrganization = newVal;
+          });
 
           // Load menu from json file
           // ----------------------------------- 

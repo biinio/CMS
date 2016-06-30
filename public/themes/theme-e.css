@@ -24,13 +24,13 @@ body,
 }
 .topnavbar .navbar-nav > li > a,
 .topnavbar .navbar-nav > .open > a {
-  color: #1797be;
+  color: #656565;
 }
 .topnavbar .navbar-nav > li > a:hover,
 .topnavbar .navbar-nav > .open > a:hover,
 .topnavbar .navbar-nav > li > a:focus,
 .topnavbar .navbar-nav > .open > a:focus {
-  color: #0c4f63;
+  color: #fc8a05;
 }
 .topnavbar .navbar-nav > .active > a,
 .topnavbar .navbar-nav > .open > a,
@@ -57,13 +57,13 @@ body,
   }
   .topnavbar .navbar-nav > li > a,
   .topnavbar .navbar-nav > .open > a {
-    color: #ffffff;
+    color: #656565;
   }
   .topnavbar .navbar-nav > li > a:hover,
   .topnavbar .navbar-nav > .open > a:hover,
   .topnavbar .navbar-nav > li > a:focus,
   .topnavbar .navbar-nav > .open > a:focus {
-    color: #0c4f63;
+    color: #fc8a05;
   }
 }
 /* ========================================================================
@@ -81,11 +81,12 @@ body,
 }
 .sidebar .nav > li > a:hover,
 .sidebar .nav > li > .nav-item:hover {
-  color: #fc8a05;
+  background-color: #e1e2e3;
+  color: #4a484b;
 }
 .sidebar .nav > li > a > em,
 .sidebar .nav > li > .nav-item > em {
-  color: inherits;
+  color: inherit;
 }
 .sidebar .nav > li.active,
 .sidebar .nav > li.open,

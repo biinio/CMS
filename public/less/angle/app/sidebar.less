@@ -21,8 +21,25 @@ Component: sidebar.less
 @sidebar-item-border-wd:          3px;
 @scrollbar-wd:                    17px;
 
+.aside-inner{
+  background-color: #4a484b;
+}
+.organization-info{
+  padding-top: 15px;
+  background-color: #373538;
+
+  .organization-image{
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 10px;
+    border: solid 2px #e1e2e3;
+  }
+  .organization-name{
+    color: #1da1f2;
+    padding-bottom: 10px;
+  }
+}
 .sidebar {
-  height: 100%;
   padding-bottom: 20px;
   background-color: @sidebar-bg; 
   overflow-x: hidden;
