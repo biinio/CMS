@@ -10150,6 +10150,7 @@ Component: sidebar.less
 .organization-info .organization-name {
   color: #1da1f2;
   padding-bottom: 10px;
+  margin-bottom: 0;
 }
 .sidebar {
   padding-bottom: 20px;
@@ -10315,7 +10316,6 @@ Component: sidebar.less
 }
 .aside-collapsed .sidebar > .nav > li > a,
 .aside-collapsed .sidebar > .nav > li > .nav-item {
-  text-indent: -3px;
   padding: 20px 0;
   text-align: center;
 }
@@ -16007,9 +16007,12 @@ Component: elements.less
 .color-biin-brand {
   color: #FE5621;
 }
+.filter-button-large:focus {
+  color: #fff;
+}
 .filter-button-active {
   color: #FFF;
-  background-color: #FE5621;
+  background-color: #1da1f2;
 }
 .filter-button-inactive {
   color: #FFF;
@@ -16163,7 +16166,7 @@ body {
   margin-top: -55px;
 }
 .on-no-object-selected {
-  color: #fe5621;
+  color: #fc8a05;
   font-size: 24px;
   margin-left: 15%;
   margin-right: 15%;
