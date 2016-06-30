@@ -85,7 +85,9 @@
     "MESSAGE_PLACEHOLDER": "Write the reason of your gift",
     "MESSAGE_REQUIRED": "*Must write a message",
     "GIFT": "Gift",
-    "BONUS_PERIOD": "Bonus period"
+    "BONUS_PERIOD": "Bonus period",
+    "PRODUCT_SELECT": "Chose an option...",
+    "PRODUCT_REQUIRED": "*Must select a product"
   },
   "LOADER":{
     "LOADING": "Loading your information, please wait..."

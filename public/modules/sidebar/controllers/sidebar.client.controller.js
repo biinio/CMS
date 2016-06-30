@@ -22,7 +22,6 @@
 
           $scope.authentication = Authentication;
           $scope.selectedOrganization = Organization.selectedOrganization;
-          console.log($scope.selectedOrganization );
 
           // demo: when switch from collapse to hover, close all items
           $rootScope.$watch('app.layout.asideHover', function(oldVal, newVal){

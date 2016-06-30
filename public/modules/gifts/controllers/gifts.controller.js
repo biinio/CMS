@@ -10,13 +10,31 @@
         .module('gifts')
         .controller('GiftsController', GiftsController);
 
-    GiftsController.$inject = ['$scope', 'ObjectsSidebar', 'Loading'];
+    GiftsController.$inject = ['$scope', 'Loading', 'ElementsService', 'Organization', 'ObjectsSidebar'];
 
-    function GiftsController($scope, ObjectsSidebar, Loading) {
-        var vm = this;
+    function GiftsController($scope, Loading, ElementsService, Organization, ObjectsSidebar) {
 
-        $scope.objectsSidebarService = ObjectsSidebar;
-        $scope.loadingService = Loading;
-        $scope.loadingService.isLoading = false;
+        function init() {
+            //----Services needed----//
+            //Loading Service
+            $scope.loadingService = Loading;
+            //Organization Service
+            $scope.organizationService = Organization;
+            //Objects Sidebar Service
+            $scope.objectsSidebarService = ObjectsSidebar;
+
+            //----Variables----//
+            //State of loading screen
+            $scope.elements = [];
+            $scope.loadingService.isLoading = false;
+
+            //----Functions----//
+            //Get the List of Elements
+            ElementsService.getList($scope.organizationService.selectedOrganization.identifier).then(function (promise) {
+                $scope.products = promise.data.data.elements;
+            });
+        }
+
+        $scope.init = init();
     }
 })();

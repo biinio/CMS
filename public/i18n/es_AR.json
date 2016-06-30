@@ -100,7 +100,9 @@
     "MESSAGE_PLACEHOLDER": "Escribe el motivo de tu regalo",
     "MESSAGE_REQUIRED": "*Debe escribir un mensaje",
     "GIFT": "Regalo",
-    "BONUS_PERIOD": "Periodo de regalía"
+    "BONUS_PERIOD": "Periodo de regalía",
+    "PRODUCT_SELECT": "Elija una opción...",
+    "PRODUCT_REQUIRED": "*Debe seleccionar un producto"
   },
   "LOADER":{
     "LOADING": "Cargando la información, por favor espere..."

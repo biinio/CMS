@@ -36,17 +36,21 @@
                                             <small ng-message="required" translate="GIFT.MESSAGE_REQUIRED"></small>
                                         </div>
                                     </div>
-
                                     <!--Gift Product name="productToGift"-->
                                     <div class="form-group">
                                         <label translate="GIFT.GIFT" class="form-label"></label>
                                         <select name="productToGift"
-                                                ng-model="objectsSidebarService.selectedObject.productToGift"
-                                                class="form-control bootstrap-select">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="4">3</option>
+                                                ng-model="objectsSidebarService.selectedObject.productToGift.title"
+                                                ng-options="product as product.title for product in products"
+                                                class="form-control" required>
+                                            <option value="" translate="GIFT.PRODUCT_SELECT"></option>
                                         </select>
+                                        <!-- Input title errors -->
+                                        <div ng-messages="myForm.productToGift.$error" ng-if="myForm.productToGift.$touched"class="help-block">
+                                            <small ng-message="required" translate="GIFT.PRODUCT_REQUIRED"></small>
+                                        </div>
+                                        {{objectsSidebarService.selectedObject.productToGift.title.title |json}}
+
                                     </div>
                                     <!--Bonus Period-->
                                     <div class="form-group">
