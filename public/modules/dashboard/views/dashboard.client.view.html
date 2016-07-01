@@ -10,8 +10,8 @@
             </ul>
         </div>
     </div>
-    {{ 'dashboard.TITLE' | translate }}
-    <small>{{ 'dashboard.WELCOME' | translate:{ appName: app.name } }} !</small>
+    {{ 'DASHBOARD.TITLE' | translate }}
+    <small>{{ 'DASHBOARD.WELCOME' | translate:{ appName: app.name } }} !</small>
 </h3>-->
 <div ng-controller="DashboardController" class="block-center">
     <div>
@@ -19,7 +19,7 @@
             <div class="panel-wrapper">
                 <div class="panel-body">
                     <div class="col-md-6">
-                        <label class="text-19px select-site-label">{{ 'dashboard.SITE_FILTER' | translate }}   </label>
+                        <label class="text-19px select-site-label">{{ 'DASHBOARD.SITE_FILTER' | translate }}   </label>
                         <!-- Single button -->
                         <div class="btn-group" uib-dropdown is-open="status.isopen">
                             <button id="single-button" type="button" class="btn btn-default text-14px" uib-dropdown-toggle ng-disabled="disabled">
@@ -33,13 +33,13 @@
                     </div>
                     <div class="col-md-6">
                         <div class="pull-right">
-                            <button ng-click="changeChartRange(7)" class="mb-sm btn filter-button-large" data-ng-class="globalFilters.dateRange == 7? 'filter-button-active' :'filter-button-inactive'">{{ 'dashboard.FILTER_7DAYS' |
+                            <button ng-click="changeChartRange(7)" class="mb-sm btn filter-button-large" data-ng-class="globalFilters.dateRange == 7? 'filter-button-active' :'filter-button-inactive'">{{ 'DASHBOARD.FILTER_7DAYS' |
                                 translate }}
                             </button>
-                            <button ng-click="changeChartRange(30)" class="mb-sm btn filter-button-large" data-ng-class="globalFilters.dateRange == 30? 'filter-button-active' :'filter-button-inactive'">{{ 'dashboard.FILTER_30DAYS' |
+                            <button ng-click="changeChartRange(30)" class="mb-sm btn filter-button-large" data-ng-class="globalFilters.dateRange == 30? 'filter-button-active' :'filter-button-inactive'">{{ 'DASHBOARD.FILTER_30DAYS' |
                                 translate }}
                             </button>
-                            <button ng-click="changeChartRange(180)" class="mb-sm btn filter-button-large" data-ng-class="globalFilters.dateRange == 180? 'filter-button-active' :'filter-button-inactive'">{{ 'dashboard.FILTER_6MONTHS' |
+                            <button ng-click="changeChartRange(180)" class="mb-sm btn filter-button-large" data-ng-class="globalFilters.dateRange == 180? 'filter-button-active' :'filter-button-inactive'">{{ 'DASHBOARD.FILTER_6MONTHS' |
                                 translate }}
                             </button>
                         </div>
