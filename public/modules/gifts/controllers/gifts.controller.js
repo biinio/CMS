@@ -27,6 +27,12 @@
             //State of loading screen
             $scope.elements = [];
             $scope.loadingService.isLoading = false;
+            //Gift Object
+            $scope.objectsSidebarService.selectedObject = {};
+            //Default bonus period state
+            $scope.objectsSidebarService.selectedObject.bonusPeriodState = '0';
+            //Current Date
+            $scope.currentDate = new Date();
 
             //----Functions----//
             //Get the List of Elements

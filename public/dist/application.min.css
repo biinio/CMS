@@ -16426,6 +16426,29 @@ input.cmn-toggle-round:checked + label:before {
 input.cmn-toggle-round:checked + label:after {
   margin-left: 30px;
 }
+/*Gift View Styles*/
+.gift-section .period-negative {
+  margin-left: 40px;
+  margin-bottom: 15px;
+}
+.gift-section .bonusPeriodControl {
+  float: left;
+  width: 50%;
+}
+.gift-section .bonusPeriod input {
+  float: left;
+  width: 90%;
+}
+.gift-section .bonusPeriod p {
+  float: left;
+  width: 10%;
+  line-height: 35px;
+  padding: 0;
+  text-align: center;
+}
+.gift-section .bonusPeriod .help-block {
+  margin-left: 10%;
+}
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');
 }

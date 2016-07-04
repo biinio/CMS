@@ -1763,16 +1763,16 @@ angular.module('biins').config(['$stateProvider',
         // Add default menu entry
         //Menus.addMenuItem('sidebar', 'Home', 'home', null, '/home', true, null, null, 'icon-home');
 
-        Menus.addMenuItem('sidebar', 'Dashboard'    , 'dashboard'       , null, 'app.dashboard'    , false, null, null, 'icon-speedometer', "sidebar.MENU_DASHBOARD");
-        Menus.addMenuItem('sidebar', 'Elements'     , 'elements'        , null, 'app.elements'     , false, null, null, 'icon-book-open', "sidebar.MENU_ELEMENTS");
-        Menus.addMenuItem('sidebar', 'Showcase'     , 'showcases'       , null, 'app.showcases'     , false, null, null, 'icon-docs', "sidebar.MENU_SHOWCASES");
-        Menus.addMenuItem('sidebar', 'Biins'        , 'biins'           , null, 'app.biins'        , false, null, null, 'icon-feed', "sidebar.MENU_BIINS");
-        Menus.addMenuItem('sidebar', 'Sites'        , 'sites'           , null, 'app.sites'        , false, null, null, 'icon-pointer', "sidebar.MENU_SITES");
-        Menus.addMenuItem('sidebar', 'Gifts'        , 'gifts'           , null, 'app.gifts'        , false, null, null, 'icon-present', "sidebar.MENU_GIFTS");
-        Menus.addMenuItem('sidebar', 'Organizations', 'organization'   , null, 'app.organization'  , false, null, null, 'icon-globe', "sidebar.MENU_ORGANIZATIONS");
-        Menus.addMenuItem('sidebar', 'Profile'      , 'profile'         , null, 'app.profile'      , false, null, null, 'icon-user', "sidebar.MENU_PROFILE");
+        Menus.addMenuItem('sidebar', 'Resumen'    , 'dashboard'       , null, 'app.dashboard'    , false, null, null, 'icon-speedometer', "SIDEBAR.MENU_DASHBOARD");
+        Menus.addMenuItem('sidebar', 'Productos'     , 'elements'        , null, 'app.elements'     , false, null, null, 'icon-book-open', "SIDEBAR.MENU_ELEMENTS");
+        Menus.addMenuItem('sidebar', 'Vitrinas'     , 'showcases'       , null, 'app.showcases'     , false, null, null, 'icon-docs', "SIDEBAR.MENU_SHOWCASES");
+        Menus.addMenuItem('sidebar', 'Avisos'        , 'biins'           , null, 'app.biins'        , false, null, null, 'icon-feed', "SIDEBAR.MENU_BIINS");
+        Menus.addMenuItem('sidebar', 'Locales'        , 'sites'           , null, 'app.sites'        , false, null, null, 'icon-pointer', "SIDEBAR.MENU_SITES");
+        Menus.addMenuItem('sidebar', 'Regalos'        , 'gifts'           , null, 'app.gifts'        , false, null, null, 'icon-present', "SIDEBAR.MENU_GIFTS");
+        Menus.addMenuItem('sidebar', 'Organizaciones', 'organization'   , null, 'app.organization'  , false, null, null, 'icon-globe', "SIDEBAR.MENU_ORGANIZATIONS");
+        Menus.addMenuItem('sidebar', 'Perfil'      , 'profile'         , null, 'app.profile'      , false, null, null, 'icon-user', "SIDEBAR.MENU_PROFILE");
         //Maintenance has role field: maintenance
-        Menus.addMenuItem('sidebar', 'Maintenance', 'maintenance', null, 'app.maintenance', false, 'maintenance', null, 'icon-settings', "sidebar.MENU_MAINTENANCE");
+        Menus.addMenuItem('sidebar', 'Mantenimiento', 'maintenance', null, 'app.maintenance', false, 'maintenance', null, 'icon-settings', "SIDEBAR.MENU_MAINTENANCE");
     }
 
 })();
@@ -5119,14 +5119,36 @@ angular.module('gifts').config(['$stateProvider',
         .module('gifts')
         .controller('GiftsController', GiftsController);
 
-    GiftsController.$inject = ['$scope', 'ObjectsSidebar', 'Loading'];
+    GiftsController.$inject = ['$scope', 'Loading', 'ElementsService', 'Organization', 'ObjectsSidebar'];
 
-    function GiftsController($scope, ObjectsSidebar, Loading) {
-        var vm = this;
+    function GiftsController($scope, Loading, ElementsService, Organization, ObjectsSidebar) {
 
-        $scope.objectsSidebarService = ObjectsSidebar;
-        $scope.loadingService = Loading;
-        $scope.loadingService.isLoading = false;
+        function init() {
+            //----Services needed----//
+            //Loading Service
+            $scope.loadingService = Loading;
+            //Organization Service
+            $scope.organizationService = Organization;
+            //Objects Sidebar Service
+            $scope.objectsSidebarService = ObjectsSidebar;
+
+            //----Variables----//
+            //State of loading screen
+            $scope.elements = [];
+            $scope.loadingService.isLoading = false;
+            //Gift Object
+            $scope.objectsSidebarService.selectedObject = {};
+            //Default bonus period state
+            $scope.objectsSidebarService.selectedObject.bonusPeriodState = '0';
+
+            //----Functions----//
+            //Get the List of Elements
+            ElementsService.getList($scope.organizationService.selectedOrganization.identifier).then(function (promise) {
+                $scope.products = promise.data.data.elements;
+            });
+        }
+
+        $scope.init = init();
     }
 })();
 
@@ -8069,7 +8091,6 @@ angular.module('showcases').config(['$stateProvider',
 
           $scope.authentication = Authentication;
           $scope.selectedOrganization = Organization.selectedOrganization;
-          console.log($scope.selectedOrganization );
 
           // demo: when switch from collapse to hover, close all items
           $rootScope.$watch('app.layout.asideHover', function(oldVal, newVal){

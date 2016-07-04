@@ -1,6 +1,8 @@
+<!-- Objects Sidebar Include -->
 <div ng-include="'/modules/core/views/partials/objectssidebar.html'" ng-controller="ObjectsSideBar" class=""></div>
+<!-- Gifts Section View -->
 <div ng-controller="GiftsController as giftCtrl" class="block-center">
-    <div id="wrapperContent" class="container-fluid">
+    <div id="wrapperContent" class="container-fluid gift-section">
         <div class="right-section-content">
             <div>
                 <!-- START panel-->
@@ -13,8 +15,8 @@
                                 <form name="myForm" role="form">
                                     <!--Title name:"title"-->
                                     <div class="form-group">
-                                        <label for="title" translate="GIFT.GIFT_TITLE" class="control-label"></label>
-                                        <input id="title" ng-model="objectsSidebarService.selectedObject.title"
+                                        <label for="giftTitle" translate="GIFT.GIFT_TITLE" class="control-label"></label>
+                                        <input id="giftTitle" ng-model="objectsSidebarService.selectedObject.title"
                                            name="title"
                                            type="text" placeholder="{{ 'GIFT.TITLE_PLACEHOLDER' | translate }}"
                                            required class="form-control title-value"/>
@@ -26,16 +28,17 @@
 
                                     <!--Message name="message"-->
                                     <div class="form-group">
-                                        <label for="title" translate="GIFT.MESSAGE" class="control-label"></label>
-                                        <input id="message" ng-model="objectsSidebarService.selectedObject.message"
+                                        <label for="giftMessage" translate="GIFT.MESSAGE" class="control-label"></label>
+                                        <input id="giftMessage" ng-model="objectsSidebarService.selectedObject.message"
                                            name="message"
                                            type="text" placeholder="{{ 'GIFT.MESSAGE_PLACEHOLDER' | translate }}"
                                            required="required" class="form-control title-value"/>
-                                        <!-- Input title errors -->
+                                        <!-- Input message errors -->
                                         <div ng-messages="myForm.message.$error" ng-if="myForm.message.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.MESSAGE_REQUIRED"></small>
                                         </div>
                                     </div>
+
                                     <!--Gift Product name="productToGift"-->
                                     <div class="form-group">
                                         <label translate="GIFT.GIFT" class="form-label"></label>
@@ -45,16 +48,70 @@
                                                 class="form-control" required>
                                             <option value="" translate="GIFT.PRODUCT_SELECT"></option>
                                         </select>
-                                        <!-- Input title errors -->
+                                        <!-- Input productToGift errors -->
                                         <div ng-messages="myForm.productToGift.$error" ng-if="myForm.productToGift.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.PRODUCT_REQUIRED"></small>
                                         </div>
+                                    </div>
 
-                                    </div>
-                                    <!--Bonus Period-->
+                                    <!--Bonus Period Question name="bonusPeriodState"-->
                                     <div class="form-group">
-                                        <label translate="GIFT.BONUS_PERIOD" class="form-label"></label>
+                                        <label translate="GIFT.BONUS_PERIOD_QUESTION" class="form-label"></label>
+                                        <div class="clearfix"></div>
+                                        <!--Positive checkbox-->
+                                        <div class="checkbox c-checkbox pull-left mt0">
+                                            <label>
+                                                <input type="radio" value="1" name="bonusPeriodState" ng-model="objectsSidebarService.selectedObject.bonusPeriodState" />
+                                                <span class="fa fa-check"></span>{{ 'GENERIC.POSITIVE' | translate }}
+                                            </label>
+                                        </div>
+                                        <!--Negative checkbox-->
+                                        <div class="checkbox c-checkbox pull-left mt0 period-negative">
+                                            <label>
+                                                <input type="radio" value="0"  name="bonusPeriodState" ng-model="objectsSidebarService.selectedObject.bonusPeriodState" />
+                                                <span class="fa fa-check"></span>{{ 'GENERIC.NEGATIVE' | translate }}
+                                            </label>
+                                        </div>
                                     </div>
+                                    <div class="clearfix"></div>
+
+                                    <!--Bonus Period-->
+                                    <div class="form-group bonusPeriod" ng-if="objectsSidebarService.selectedObject.bonusPeriodState == '1'">
+                                        <label  class="form-label" translate="GIFT.BONUS_PERIOD"></label>
+                                        <div class="clearfix"></div>
+                                        <!--Start Date input name="startDate"-->
+                                        <div class="bonusPeriodControl">
+                                            <p class="col-sm-1">Del</p>
+                                            <input id="giftStartDate" ng-model="objectsSidebarService.selectedObject.startDate"
+                                                   name="startDate"
+                                                   type="date"
+                                                   min="{{currentDate | date:'yyyy-MM-dd'}}"
+                                                   required class="form-control title-value"/>
+                                            <div class="clearfix"></div>
+                                            <!-- Input startDate errors -->
+                                            <div ng-messages="myForm.startDate.$error" ng-if="myForm.startDate.$touched"class="help-block">
+                                                <small ng-message="date" translate="GIFT.DATE_VALIDATE"></small>
+                                                <small ng-message="required" translate="GIFT.START_DATE_REQUIRED"></small>
+                                            </div>
+                                        </div>
+                                        <!--End Date input name="endDate"-->
+                                        <div class="bonusPeriodControl">
+                                            <p class="col-sm-1">al</p>
+                                            <input id="giftEndDate" ng-model="objectsSidebarService.selectedObject.endDate"
+                                                   name="endDate"
+                                                   type="date"
+                                                   min="{{objectsSidebarService.selectedObject.startDate | date:'yyyy-MM-dd'}}"
+                                                   required class="form-control title-value "/>
+                                            <div class="clearfix"></div>
+                                            <!-- Input endDate errors -->
+                                            <div ng-messages="myForm.endDate.$error" ng-if="myForm.endDate.$touched"class="help-block">
+                                                <small ng-message="date" translate="GIFT.DATE_VALIDATE"></small>
+                                                <small ng-message="required" translate="GIFT.END_DATE_REQUIRED"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                 </form>
                             </div>
                         </div>

@@ -73,7 +73,9 @@
     "DELETE_ORGANIZATION_CONFIRMATION": "Al eliminar la organizacion todos los locales, elementos y vitrinas asignados a este se borrarán.",
     "DELETE_IMAGES_CONFIRMATION": "¿Desea eliminar las imágenes seleccionadas?",
     "CANCEL": "Cancelar",
-    "DELETED" : "Eliminado"
+    "DELETED" : "Eliminado",
+    "POSITIVE": "Si",
+    "NEGATIVE": "No"
   },
   "GIFT":{
     "TITLE": "Información del regalo",
@@ -84,9 +86,13 @@
     "MESSAGE_PLACEHOLDER": "Escribe el motivo de tu regalo",
     "MESSAGE_REQUIRED": "*Debe escribir un mensaje",
     "GIFT": "Regalo",
-    "BONUS_PERIOD": "Periodo de regalía",
+    "BONUS_PERIOD_QUESTION": "¿Dispone el regalo de un período de regalía?",
+    "BONUS_PERIOD": "Período de regalía",
     "PRODUCT_SELECT": "Elija una opción...",
-    "PRODUCT_REQUIRED": "*Debe seleccionar un producto"
+    "PRODUCT_REQUIRED": "*Debe seleccionar un producto",
+    "START_DATE_REQUIRED": "*Debe seleccionar una fecha de inicio",
+    "END_DATE_REQUIRED": "*Debe seleccionar una fecha de finalización",
+    "DATE_VALIDATE": "Debe seleccionar una fecha válida"
   },
   "HIGHLIGHT": {
     "INSERT": "Inserte detalles de oferta",

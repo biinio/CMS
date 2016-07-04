@@ -64,7 +64,9 @@
     "DELETE_SHOWCASE_CONFIRMATION": "Do you wish to delete this showcase?",
     "DELETE_ORGANIZATION": "Delete organization",
     "DELETE_ORGANIZATION_CONFIRMATION": "Do you wish to delete this organization?",
-    "DELETE_IMAGES_CONFIRMATION": "Do you wish to delete the selected images?"
+    "DELETE_IMAGES_CONFIRMATION": "Do you wish to delete the selected images?",
+    "POSITIVE": "Yes",
+    "NEGATIVE": "No"
   },
   "GIFT":{
     "TITLE": "About the gift",
@@ -75,9 +77,13 @@
     "MESSAGE_PLACEHOLDER": "Write the reason of your gift",
     "MESSAGE_REQUIRED": "*Must write a message",
     "GIFT": "Gift",
+    "BONUS_PERIOD_QUESTION": "Does the gift have a bonus period?",
     "BONUS_PERIOD": "Bonus period",
     "PRODUCT_SELECT": "Chose an option...",
-    "PRODUCT_REQUIRED": "*Must select a product"
+    "PRODUCT_REQUIRED": "*Must select a product",
+    "START_DATE_REQUIRED": "*Must select a start date",
+    "END_DATE_REQUIRED": "*Must select an end date",
+    "DATE_VALIDATE": "Must select a valid date"
   },
   "HIGHLIGHT": {
     "INSERT": "Enter highlight details",
