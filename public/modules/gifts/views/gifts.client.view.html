@@ -4,7 +4,7 @@
 <div ng-controller="GiftsController as giftCtrl" class="block-center">
     <div id="wrapperContent" class="container-fluid gift-section">
         <div class="right-section-content">
-            <div>
+            <div ng-if="objectsSidebarService.selectedObject!=null && objectsSidebarService.selectedObject != {}">
                 <!-- START panel-->
                 <div class="panel panel-default">
                     <!-- NutShell Section -->
@@ -111,7 +111,33 @@
                                         </div>
                                     </div>
 
-
+                                    <!--expireTime name="expireTime"-->
+                                    <div class="form-group expireTime">
+                                        <label  class="form-label" translate="GIFT.EXPIRE_TIME"></label>
+                                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                            <div class="btn-group col-sm-4" role="group" aria-label="First group">
+                                                <input type="radio" value="1"  name="expireTime"
+                                                       ng-model="objectsSidebarService.selectedObject.expireTime" class="btn btn-default"
+                                                       ng-class="{ 'active': objectsSidebarService.selectedObject.expireTime == '1'}" />
+                                                <p class="text-center" translate="GIFT.A_DAY"
+                                                   ng-class="{ 'active-text': objectsSidebarService.selectedObject.expireTime == '1'}"></p>
+                                            </div>
+                                            <div class="btn-group col-sm-4" role="group" aria-label="Second group">
+                                                <input type="radio" value="7"  name="expireTime"
+                                                       ng-model="objectsSidebarService.selectedObject.expireTime" class="btn btn-default"
+                                                       ng-class="{ 'active': objectsSidebarService.selectedObject.expireTime == '7'}" />
+                                                <p class="text-center" translate="GIFT.A_WEEK"
+                                                   ng-class="{ 'active-text': objectsSidebarService.selectedObject.expireTime == '7'}"></p>
+                                            </div>
+                                            <div class="btn-group col-sm-4" role="group" aria-label="Third group">
+                                                <input type="radio" value="0"  name="expireTime"
+                                                       ng-model="objectsSidebarService.selectedObject.expireTime" class="btn btn-default"
+                                                       ng-class="{ 'active': objectsSidebarService.selectedObject.expireTime == '0'}" />
+                                                <p class="text-center" translate="GIFT.NOT_OVERCOME"
+                                                   ng-class="{ 'active-text': objectsSidebarService.selectedObject.expireTime == '0'}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>

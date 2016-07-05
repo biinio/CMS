@@ -92,7 +92,11 @@
     "PRODUCT_REQUIRED": "*Debe seleccionar un producto",
     "START_DATE_REQUIRED": "*Debe seleccionar una fecha de inicio",
     "END_DATE_REQUIRED": "*Debe seleccionar una fecha de finalización",
-    "DATE_VALIDATE": "Debe seleccionar una fecha válida"
+    "DATE_VALIDATE": "Debe seleccionar una fecha válida",
+    "EXPIRE_TIME": "Tiempo de vencimiento despúes de asignarlo",
+    "A_DAY": "Un día",
+    "A_WEEK": "Una semana",
+    "NOT_OVERCOME": "No vence"
   },
   "HIGHLIGHT": {
     "INSERT": "Inserte detalles de oferta",

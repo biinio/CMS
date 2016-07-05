@@ -83,7 +83,11 @@
     "PRODUCT_REQUIRED": "*Must select a product",
     "START_DATE_REQUIRED": "*Must select a start date",
     "END_DATE_REQUIRED": "*Must select an end date",
-    "DATE_VALIDATE": "Must select a valid date"
+    "DATE_VALIDATE": "Must select a valid date",
+    "EXPIRE_TIME": "Expire time after assigning",
+    "A_DAY": "One day",
+    "A_WEEK": "One week",
+    "NOT_OVERCOME": "Not overcome"
   },
   "HIGHLIGHT": {
     "INSERT": "Enter highlight details",

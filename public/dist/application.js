@@ -5119,9 +5119,9 @@ angular.module('gifts').config(['$stateProvider',
         .module('gifts')
         .controller('GiftsController', GiftsController);
 
-    GiftsController.$inject = ['$scope', 'Loading', 'ElementsService', 'Organization', 'ObjectsSidebar'];
+    GiftsController.$inject = ['$http', '$scope', 'Loading', 'ElementsService', 'Organization', 'ObjectsSidebar'];
 
-    function GiftsController($scope, Loading, ElementsService, Organization, ObjectsSidebar) {
+    function GiftsController($http, $scope, Loading, ElementsService, Organization, ObjectsSidebar) {
 
         function init() {
             //----Services needed----//
@@ -5140,11 +5140,15 @@ angular.module('gifts').config(['$stateProvider',
             $scope.objectsSidebarService.selectedObject = {};
             //Default bonus period state
             $scope.objectsSidebarService.selectedObject.bonusPeriodState = '0';
+            //Current Date
+            $scope.currentDate = new Date();
+            //Draggable Properties
+            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
 
             //----Functions----//
             //Get the List of Elements
-            ElementsService.getList($scope.organizationService.selectedOrganization.identifier).then(function (promise) {
-                $scope.products = promise.data.data.elements;
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function (data) {
+                $scope.products = data.data.elements;
             });
         }
 

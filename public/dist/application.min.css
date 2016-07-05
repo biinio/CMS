@@ -15375,7 +15375,7 @@ Component: sidemenu.less
 .sidemenu-object {
   height: 100%;
   padding-bottom: 5px;
-  background-color: #cccccc;
+  background-color: #efefef;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -15443,7 +15443,7 @@ Component: sidemenu.less
   /* Standard */
   height: calc(100% - 55px);
   position: fixed;
-  background-color: #cccccc;
+  background-color: #efefef;
   z-index: 116;
   -webkit-transition: width 0.3s;
   /* For Safari 3.1 to 6.0 */
@@ -15534,6 +15534,7 @@ Component: sidemenu.less
   margin-bottom: 6px;
   margin-left: 6px;
   margin-right: 6px;
+  border-radius: 5px;
 }
 .object-item.active .list-items-side-menu div .twoRowTitle {
   color: #fe5621;
@@ -15585,7 +15586,9 @@ Component: sidemenu.less
   border-radius: 6px;
 }
 .sidebar-filter {
-  margin-bottom: 6px;
+  margin: 0 auto;
+  padding-bottom: 15px;
+  padding-top: 15px;
 }
 .list-items-side-menu div .twoRowTitle {
   overflow: hidden;
@@ -16448,6 +16451,35 @@ input.cmn-toggle-round:checked + label:after {
 }
 .gift-section .bonusPeriod .help-block {
   margin-left: 10%;
+}
+.gift-section .expireTime .btn-group {
+  margin-left: 0;
+  padding-left: 0;
+}
+.gift-section .expireTime .btn-group:last-child {
+  padding-right: 0;
+}
+.gift-section .expireTime .btn-group .btn {
+  width: 100%;
+  height: 35px;
+  border-radius: 5px !important;
+}
+.gift-section .expireTime .btn-group .btn:focus {
+  background-color: #eaeaea;
+}
+.gift-section .expireTime .btn-group p {
+  cursor: pointer;
+  pointer-events: none;
+  position: relative;
+  top: -30px;
+  z-index: 2;
+}
+.gift-section .active {
+  background-color: #1da1f2;
+  box-shadow: none;
+}
+.gift-section .active-text {
+  color: white;
 }
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');

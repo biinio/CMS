@@ -28,7 +28,7 @@ Component: sidemenu.less
 .sidemenu-object {
   height: 100%;
   padding-bottom: 5px;
-  background-color: @sidebar-object-bg;
+  background-color: #efefef;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -124,7 +124,7 @@ Component: sidemenu.less
 
   position: fixed;
   //height: 1px;
-  background-color: @sidebar-object-bg;
+  background-color: #efefef;
   z-index: @z-index-main-section + 5;
   -webkit-transition: width 0.3s; /* For Safari 3.1 to 6.0 */
   transition: width 0.3s;
@@ -235,6 +235,7 @@ Component: sidemenu.less
   margin-bottom: 6px;
   margin-left: 6px;
   margin-right: 6px;
+  border-radius: 5px;
 }
 
 .object-item:hover{
@@ -303,8 +304,11 @@ Component: sidemenu.less
 }
 
 .sidebar-filter{
-  margin-bottom: 6px;
+  margin: 0 auto;
+  padding-bottom: 15px;
+  padding-top: 15px;
 }
+
 .list-items-side-menu{
   div{
     .twoRowTitle{
