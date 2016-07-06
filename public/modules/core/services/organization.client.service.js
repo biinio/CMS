@@ -33,7 +33,7 @@ angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope',
             getOrganizations: function () {
 
                 if (Authentication.user) {
-                    var promise = $http.get('/api/organization');
+                    var promise = $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations', {headers:{user: Authentication.user.accountIdentifier}});
                     deferObject = deferObject || $q.defer();
 
                     promise.then(function (result) {

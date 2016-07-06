@@ -33,14 +33,17 @@
     "ACTION_TITLE": "Action title",
     "ACTION_TITLE_PLACEHOLDER": "Add the name of the action to be performed",
     "ACTION_URL": "URL",
-    "ACTION_URL_PLACEHOLDER": "www.example.com"
+    "ACTION_URL_PLACEHOLDER": "www.example.com",
+    "CREATING" : "Your product is being created.",
+    "DELETED_TEXT" : "Your product was successfully removed ."
   },
   "GALLERY":{
     "TITLE": "Image gallery",
     "SUB_TITLE": "Add images that will allow your establishment to be identified by your brand.",
     "UPLOAD": "Upload",
     "APPLY": "Apply",
-    "LOADING": "Loading images, please wait..."
+    "LOADING": "Loading images, please wait...",
+    "NOIMAGEUPLOADED":"At this time there is no picture in the gallery , you can upload images with the add button."
   },
   "GENERIC":{
     "SEARCH_TAGS": "Search tags",
@@ -87,7 +90,8 @@
     "EXPIRE_TIME": "Expire time after assigning",
     "A_DAY": "One day",
     "A_WEEK": "One week",
-    "NOT_OVERCOME": "Not overcome"
+    "NOT_OVERCOME": "Not overcome",
+    "CREATING": "Your gift is being created."
   },
   "HIGHLIGHT": {
     "INSERT": "Enter highlight details",
