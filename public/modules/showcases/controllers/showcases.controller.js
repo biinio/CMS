@@ -302,18 +302,18 @@
 
         $scope.filteredElements = function ( element ) {
             var index = -1;
-            for(var i = 0; i < $scope.objectsSidebarService.selectedObject.elements.length; i++){
-                if($scope.objectsSidebarService.selectedObject.elements[i].elementIdentifier == element.elementIdentifier){
-                    index = i;
-                    break;
+            if($scope.objectsSidebarService.selectedObject.elements.length > 0){
+                for(var i = 0; i < $scope.objectsSidebarService.selectedObject.elements.length; i++){
+                    if($scope.objectsSidebarService.selectedObject.elements[i].elementIdentifier == element.elementIdentifier){
+                        index = i;
+                        break;
+                    }
                 }
             }
+
             return  index == -1;
         };
-
-
-
-
+        
         //Remove an element of a Showcase
         $scope.removeElementAt = function (index) {
             $scope.objectsSidebarService.selectedObject.elements.splice(index, 1);
