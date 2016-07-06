@@ -112,7 +112,6 @@
 
         $scope.$on("Biin: On Object Created", function(){
             $scope.create();
-
         });
 
         //Get the List of Objects

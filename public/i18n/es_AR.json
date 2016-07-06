@@ -96,7 +96,8 @@
     "EXPIRE_TIME": "Tiempo de vencimiento despúes de asignarlo",
     "A_DAY": "Un día",
     "A_WEEK": "Una semana",
-    "NOT_OVERCOME": "No vence"
+    "NOT_OVERCOME": "No vence",
+    "CREATING": "Su regalo se esta creando"
   },
   "HIGHLIGHT": {
     "INSERT": "Inserte detalles de oferta",

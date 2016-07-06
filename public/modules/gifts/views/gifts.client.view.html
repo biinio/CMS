@@ -4,7 +4,8 @@
 <div ng-controller="GiftsController as giftCtrl" class="block-center">
     <div id="wrapperContent" class="container-fluid gift-section">
         <div class="right-section-content">
-            <div ng-if="objectsSidebarService.selectedObject!=null && objectsSidebarService.selectedObject != {}">
+            <div ng-if="ready">
+                {{objectsSidebarService.selectedObject}}
                 <!-- START panel-->
                 <div class="panel panel-default">
                     <!-- NutShell Section -->
@@ -144,6 +145,13 @@
                         </div>
                     </section>
                 </div>
+            </div>
+            <!--Display if form is not ready to fill-->
+            <div ng-if="ready == false"
+                 class="no-object-container">
+                <section class="text-center on-no-object-selected">
+                    <span>Por favor seleccione un regalo en la barra lateral o cree uno presionando el botón de crear nuevo.</span>
+                </section>
             </div>
         </div>
     </div>
