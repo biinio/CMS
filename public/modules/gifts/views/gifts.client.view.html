@@ -12,18 +12,18 @@
                     <section>
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <legend translate="GIFT.TITLE"></legend>
+                                <legend translate="GIFT.NAME"></legend>
                                 <form name="myForm" role="form">
-                                    <!--Title name:"title"-->
+                                    <!--Name name:"name"-->
                                     <div class="form-group">
-                                        <label for="giftTitle" translate="GIFT.GIFT_TITLE" class="control-label"></label>
-                                        <input id="giftTitle" ng-model="objectsSidebarService.selectedObject.title"
-                                           name="title"
-                                           type="text" placeholder="{{ 'GIFT.TITLE_PLACEHOLDER' | translate }}"
+                                        <label for="giftName" translate="GIFT.GIFT_NAME" class="control-label"></label>
+                                        <input id="giftName" ng-model="objectsSidebarService.selectedObject.name"
+                                           name="name"
+                                           type="text" placeholder="{{ 'GIFT.NAME_PLACEHOLDER' | translate }}"
                                            required class="form-control title-value"/>
                                         <!-- Input title errors -->
-                                        <div ng-messages="myForm.title.$error" ng-if="myForm.title.$touched"class="help-block">
-                                            <small ng-message="required" translate="GIFT.TITLE_REQUIRED"></small>
+                                        <div ng-messages="myForm.name.$error" ng-if="myForm.name.$touched"class="help-block">
+                                            <small ng-message="required" translate="GIFT.NAME_REQUIRED"></small>
                                         </div>
                                     </div>
 
@@ -44,32 +44,33 @@
                                     <div class="form-group">
                                         <label translate="GIFT.GIFT" class="form-label"></label>
                                         <select name="productToGift"
-                                                ng-model="objectsSidebarService.selectedObject.productToGift.title"
-                                                ng-options="product as product.title for product in products"
+                                                ng-model="objectsSidebarService.selectedObject.productToGift"
+                                                ng-options="product.elementIdentifier as product.title for product in products"
                                                 class="form-control" required>
                                             <option value="" translate="GIFT.PRODUCT_SELECT"></option>
                                         </select>
+
                                         <!-- Input productToGift errors -->
                                         <div ng-messages="myForm.productToGift.$error" ng-if="myForm.productToGift.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.PRODUCT_REQUIRED"></small>
                                         </div>
                                     </div>
 
-                                    <!--Bonus Period Question name="bonusPeriodState"-->
+                                    <!--Bonus Period Question name="availablePeriod"-->
                                     <div class="form-group">
                                         <label translate="GIFT.BONUS_PERIOD_QUESTION" class="form-label"></label>
                                         <div class="clearfix"></div>
                                         <!--Positive checkbox-->
                                         <div class="checkbox c-checkbox pull-left mt0">
                                             <label>
-                                                <input type="radio" value="1" name="bonusPeriodState" ng-model="objectsSidebarService.selectedObject.bonusPeriodState" />
+                                                <input type="radio" value="1" name="availablePeriod" ng-model="objectsSidebarService.selectedObject.availablePeriod" />
                                                 <span class="fa fa-check"></span>{{ 'GENERIC.POSITIVE' | translate }}
                                             </label>
                                         </div>
                                         <!--Negative checkbox-->
                                         <div class="checkbox c-checkbox pull-left mt0 period-negative">
                                             <label>
-                                                <input type="radio" value="0"  name="bonusPeriodState" ng-model="objectsSidebarService.selectedObject.bonusPeriodState" />
+                                                <input type="radio" value="0"  name="availablePeriod" ng-model="objectsSidebarService.selectedObject.availablePeriod" />
                                                 <span class="fa fa-check"></span>{{ 'GENERIC.NEGATIVE' | translate }}
                                             </label>
                                         </div>
@@ -77,7 +78,7 @@
                                     <div class="clearfix"></div>
 
                                     <!--Bonus Period-->
-                                    <div class="form-group bonusPeriod" ng-if="objectsSidebarService.selectedObject.bonusPeriodState == '1'">
+                                    <div class="form-group bonusPeriod" ng-if="objectsSidebarService.selectedObject.availablePeriod == '1'">
                                         <label  class="form-label" translate="GIFT.BONUS_PERIOD"></label>
                                         <div class="clearfix"></div>
                                         <!--Start Date input name="startDate"-->

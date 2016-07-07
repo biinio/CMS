@@ -78,10 +78,10 @@
     "NEGATIVE": "No"
   },
   "GIFT":{
-    "TITLE": "Información del regalo",
-    "GIFT_TITLE": "Título",
-    "TITLE_PLACEHOLDER": "Ingrese el título de tu regalo",
-    "TITLE_REQUIRED": "*Debe escribir un título para el regalo",
+    "NAME": "Información del regalo",
+    "GIFT_NAME": "Título",
+    "NAME_PLACEHOLDER": "Ingrese el título de tu regalo",
+    "NAME_REQUIRED": "*Debe escribir un título para el regalo",
     "MESSAGE": "Mensaje",
     "MESSAGE_PLACEHOLDER": "Escribe el motivo de tu regalo",
     "MESSAGE_REQUIRED": "*Debe escribir un mensaje",

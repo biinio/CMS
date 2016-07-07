@@ -135,8 +135,6 @@
                     setTimeout(function(){
                         swal.close();
                     },2000);
-                }else{
-                    displayErrorMessage(element,"Element Creation",status);
                 }
             });
         };

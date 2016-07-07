@@ -48,7 +48,6 @@
 
         /**=============================================================================================================
          * Events Listeners
-         *
          =============================================================================================================*/
 
         $scope.$on('$stateChangeStart', function(){
@@ -196,7 +195,6 @@
 
         };
 
-
         $scope.hasValidElements = function(selectedShowcase) {
             var validElement = _.findWhere(selectedShowcase, {isReady: 1});
             if (validElement)
@@ -242,7 +240,6 @@
             }
 
             return missingMinData;
-
         };
 
         //Save detail model object
@@ -313,7 +310,7 @@
 
             return  index == -1;
         };
-        
+
         //Remove an element of a Showcase
         $scope.removeElementAt = function (index) {
             $scope.objectsSidebarService.selectedObject.elements.splice(index, 1);
