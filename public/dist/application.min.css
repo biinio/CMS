@@ -16472,9 +16472,9 @@ input.cmn-toggle-round:checked + label:after {
   height: 35px;
   border-radius: 5px !important;
 }
-.gift-section .expireTime .btn-group .btn:focus,
-.gift-section .isAutomatic .btn-group .btn:focus,
-.gift-section .availableIn .btn-group .btn:focus {
+.gift-section .expireTime .btn-group input.btn:focus,
+.gift-section .isAutomatic .btn-group input.btn:focus,
+.gift-section .availableIn .btn-group input.btn:focus {
   background-color: #1da1f2;
 }
 .gift-section .expireTime .btn-group .btn:active + p,
@@ -16495,15 +16495,23 @@ input.cmn-toggle-round:checked + label:after {
   z-index: 2;
   height: 0;
 }
-.gift-section .expireTime .btn-group button.btn:focus,
-.gift-section .isAutomatic .btn-group button.btn:focus,
-.gift-section .availableIn .btn-group button.btn:focus {
+.gift-section .expireTime .btn-group button:focus,
+.gift-section .isAutomatic .btn-group button:focus,
+.gift-section .availableIn .btn-group button:focus {
   background-color: white;
 }
-.gift-section .active,
-.gift-section .active:hover {
+.gift-section .expireTime .btn-group .active,
+.gift-section .isAutomatic .btn-group .active,
+.gift-section .availableIn .btn-group .active,
+.gift-section .expireTime .btn-group .active:hover,
+.gift-section .isAutomatic .btn-group .active:hover,
+.gift-section .availableIn .btn-group .active:hover,
+.gift-section .expireTime .btn-group .active:focus,
+.gift-section .isAutomatic .btn-group .active:focus,
+.gift-section .availableIn .btn-group .active:focus {
   background-color: #1da1f2;
   box-shadow: none;
+  color: white;
 }
 .gift-section .active-text {
   color: white;

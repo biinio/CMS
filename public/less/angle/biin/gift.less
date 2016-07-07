@@ -37,7 +37,7 @@
         height: 35px;
         border-radius: 5px !important;
       }
-      .btn:focus{
+      input.btn:focus{
         background-color: #1da1f2;
       }
       .btn:active + p, .btn:focus + p{
@@ -51,14 +51,15 @@
         z-index: 2;
         height: 0;
       }
-      button.btn:focus{
+      button:focus{
         background-color: white;
       }
+      .active, .active:hover, .active:focus{
+        background-color: #1da1f2;
+        box-shadow: none;
+        color: white;
+      }
     }
-  }
-  .active, .active:hover{
-    background-color: #1da1f2;
-    box-shadow: none;
   }
   .active-text{
     color: white;
