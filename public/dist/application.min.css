@@ -16454,29 +16454,54 @@ input.cmn-toggle-round:checked + label:after {
 .gift-section .bonusPeriod .help-block {
   margin-left: 10%;
 }
-.gift-section .expireTime .btn-group {
+.gift-section .expireTime .btn-group,
+.gift-section .isAutomatic .btn-group,
+.gift-section .availableIn .btn-group {
   margin-left: 0;
   padding-left: 0;
 }
-.gift-section .expireTime .btn-group:last-child {
+.gift-section .expireTime .btn-group:last-child,
+.gift-section .isAutomatic .btn-group:last-child,
+.gift-section .availableIn .btn-group:last-child {
   padding-right: 0;
 }
-.gift-section .expireTime .btn-group .btn {
+.gift-section .expireTime .btn-group .btn,
+.gift-section .isAutomatic .btn-group .btn,
+.gift-section .availableIn .btn-group .btn {
   width: 100%;
   height: 35px;
   border-radius: 5px !important;
 }
-.gift-section .expireTime .btn-group .btn:focus {
+.gift-section .expireTime .btn-group .btn:focus,
+.gift-section .isAutomatic .btn-group .btn:focus,
+.gift-section .availableIn .btn-group .btn:focus {
   background-color: #1da1f2;
 }
-.gift-section .expireTime .btn-group p {
+.gift-section .expireTime .btn-group .btn:active + p,
+.gift-section .isAutomatic .btn-group .btn:active + p,
+.gift-section .availableIn .btn-group .btn:active + p,
+.gift-section .expireTime .btn-group .btn:focus + p,
+.gift-section .isAutomatic .btn-group .btn:focus + p,
+.gift-section .availableIn .btn-group .btn:focus + p {
+  color: white;
+}
+.gift-section .expireTime .btn-group p,
+.gift-section .isAutomatic .btn-group p,
+.gift-section .availableIn .btn-group p {
   cursor: pointer;
   pointer-events: none;
   position: relative;
   top: -30px;
   z-index: 2;
+  height: 0;
 }
-.gift-section .active {
+.gift-section .expireTime .btn-group button.btn:focus,
+.gift-section .isAutomatic .btn-group button.btn:focus,
+.gift-section .availableIn .btn-group button.btn:focus {
+  background-color: white;
+}
+.gift-section .active,
+.gift-section .active:hover {
   background-color: #1da1f2;
   box-shadow: none;
 }

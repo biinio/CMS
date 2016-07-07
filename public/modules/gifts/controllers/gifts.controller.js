@@ -76,7 +76,12 @@
         });
 
         $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
+            //Parsing dates to work on AngularJS
+            objectClicked.startDate = new Date(objectClicked.startDate);
+            objectClicked.endDate = new Date(objectClicked.endDate);
+            //All ready to show the gift info
             $scope.ready = true;
+
             console.log(objectClicked);
             console.log(event);
         });
@@ -97,8 +102,6 @@
             var titleText = $translate.instant("GIFT.CREATING");
             swal({   title: titleText,  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + "/gifts").success(function(gift,status){
-                console.log(gift);
-                console.log(status);
                 if(status == 201){
                     var gifts = $scope.objectsSidebarService.getObjects();
 
@@ -111,6 +114,42 @@
                     },2000);
                 }
             });
+        }
+
+        //Function to send just the available types of gift mechanics
+        $scope.availableStore = function (type) {
+            var exist = false;
+            $scope.types = $scope.objectsSidebarService.selectedObject.availableIn;
+
+            if($scope.types.length == 0){
+                $scope.types.push(type);
+            }else{
+                //Validate if the option was already selected
+                for(var i in $scope.types){
+                    if(type == $scope.types[i]){
+                        $scope.types.splice(i, 1);
+                        exist = true;
+                    }
+                }
+                if(!exist){
+                    if(type == 'all'){
+                        $scope.types = ['all'];
+                    }else{
+                        //Validate if you have all and select another option
+                        for(var i in $scope.types){
+                            if($scope.types[i] == 'all'){
+                                $scope.types.splice(i, 1);
+                            }
+                        }
+                        $scope.types.push(type);
+                        //Validate if all option are selected
+                        if($scope.types.length == 3){
+                            $scope.types = ['all'];
+                        }
+                    }
+                }
+            }
+            $scope.objectsSidebarService.selectedObject.availableIn = $scope.types;
         }
     }
 })();
