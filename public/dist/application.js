@@ -5138,31 +5138,31 @@ angular.module('gifts').config(['$stateProvider',
             //----Variables----//
             //Ready to fill
             $scope.ready = false;
-            //State of loading screen
             $scope.products = [];
             $scope.gifts = [];
+            //Image of the current product
+            $scope.actualImage = null;
+            //State of loading screen
             $scope.loadingService.isLoading = true;
             //Gift Object
             $scope.objectsSidebarService.selectedObject = {};
-            //Default bonus period state
-            $scope.objectsSidebarService.selectedObject.bonusPeriodState = '0';
             //Current Date
             $scope.currentDate = new Date();
             //Draggable Properties
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             $scope.sidebarTemplate =
                 "<div class='col-md-3 thumbListImage'>" +
-                    "<img src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
-                    "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}' pending-indicator='pending-indicator'/>"+
-                "</div>"+
+                    "<img ng-if='item.productIdentifier.length==0' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
+                    "<img ng-if='item.productIdentifier.length>0' ng-src='{{actualImage}}' pending-indicator='pending-indicator'/>"+
+                "</div>" +
                 "<div class='col-md-9 leftInformationArea'>"+
                     "<label class='twoRowTitle'>{{item.name}}</label>"+
-                    "<label class='twoRowSubtitle'>{{item.title2}}</label>"+
+                    "<label ng-hide='item.productIdentifier!=null' class='twoRowSubtitle'>{{setProductImage(item.productIdentifier)}}</label>"+
                 "</div>";
             $scope.objectsSidebarService.template =$scope.sidebarTemplate;
 
             //----Functions----//
-            //Get the List of Elements
+            //Get the List of Products
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
                 $scope.products = data.data.elements;
             });
@@ -5185,11 +5185,9 @@ angular.module('gifts').config(['$stateProvider',
             //Parsing dates to work on AngularJS
             objectClicked.startDate = new Date(objectClicked.startDate);
             objectClicked.endDate = new Date(objectClicked.endDate);
+            $scope.actualImage
             //All ready to show the gift info
             $scope.ready = true;
-
-            console.log(objectClicked);
-            console.log(event);
         });
 
         /**=============================================================================================================
@@ -5257,6 +5255,7 @@ angular.module('gifts').config(['$stateProvider',
             }
             $scope.objectsSidebarService.selectedObject.availableIn = $scope.types;
         }
+        
     }
 })();
 
@@ -6351,16 +6350,36 @@ angular.module('nps').config(['$stateProvider',
         .module('objectssidebar')
         .controller('ObjectsSideBar', ObjectsSideBar);
 
-    ObjectsSideBar.$inject = ['$http', '$state','$scope','$rootScope','ObjectsSidebar'];
-    function ObjectsSideBar($http, $state, $scope,$rootScope,ObjectsSidebar) {
+    ObjectsSideBar.$inject = ['$http', '$state','$scope','$rootScope','ObjectsSidebar','Organization'];
+    function ObjectsSideBar($http, $state, $scope,$rootScope,ObjectsSidebar,Organization) {
         var vm = this;
         activate();
 
-        $scope.isHidden = false;
-        $scope.objectsSidebarService = ObjectsSidebar;
         ////////////////
 
         function activate() {
+            $scope.isHidden = false;
+            $scope.objectsSidebarService = ObjectsSidebar;
+            //Organization Service
+            $scope.organizationService = Organization;
+            //Draggable Properties
+            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.perro = 'Hola';
+
+            //----Functions----//
+            //Get the List of Products
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+                $scope.products = data.data.elements;
+            });
+        }
+
+        //Function to set the image of the current product into the thumbnail in the Objects Sidebar
+        $scope.setProductImage = function (product) {
+            for(var i in $scope.products){
+                if(product == $scope.products[i].elementIdentifier){
+                    return $scope.actualImage = $scope.products[i].media[0].url;
+                }
+            }
         }
 
         $scope.onObjectClick = function( index ){
