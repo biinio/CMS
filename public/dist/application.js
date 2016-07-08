@@ -2256,7 +2256,7 @@ angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope',
             getOrganizations: function () {
 
                 if (Authentication.user) {
-                    var promise = $http.get('/api/organization');
+                    var promise = $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations', {headers:{user: Authentication.user.accountIdentifier}});
                     deferObject = deferObject || $q.defer();
 
                     promise.then(function (result) {
@@ -3470,7 +3470,6 @@ angular.module('elements').config(['$stateProvider',
 
         $scope.$on("Biin: On Object Created", function(){
             $scope.create();
-
         });
 
         //Get the List of Objects
@@ -3494,8 +3493,6 @@ angular.module('elements').config(['$stateProvider',
                     setTimeout(function(){
                         swal.close();
                     },2000);
-                }else{
-                    displayErrorMessage(element,"Element Creation",status);
                 }
             });
         };
@@ -5119,9 +5116,13 @@ angular.module('gifts').config(['$stateProvider',
         .module('gifts')
         .controller('GiftsController', GiftsController);
 
-    GiftsController.$inject = ['$http', '$scope', 'Loading', 'ElementsService', 'Organization', 'ObjectsSidebar'];
+    GiftsController.$inject = ['$http', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate'];
 
-    function GiftsController($http, $scope, Loading, ElementsService, Organization, ObjectsSidebar) {
+    function GiftsController($http, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate) {
+        init();
+        /**=============================================================================================================
+         * Init Function
+         =============================================================================================================*/
 
         function init() {
             //----Services needed----//
@@ -5131,11 +5132,16 @@ angular.module('gifts').config(['$stateProvider',
             $scope.organizationService = Organization;
             //Objects Sidebar Service
             $scope.objectsSidebarService = ObjectsSidebar;
+            //Authentication Service
+            $scope.authentication = Authentication;
 
             //----Variables----//
+            //Ready to fill
+            $scope.ready = false;
             //State of loading screen
-            $scope.elements = [];
-            $scope.loadingService.isLoading = false;
+            $scope.products = [];
+            $scope.gifts = [];
+            $scope.loadingService.isLoading = true;
             //Gift Object
             $scope.objectsSidebarService.selectedObject = {};
             //Default bonus period state
@@ -5144,15 +5150,113 @@ angular.module('gifts').config(['$stateProvider',
             $scope.currentDate = new Date();
             //Draggable Properties
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.sidebarTemplate =
+                "<div class='col-md-3 thumbListImage'>" +
+                    "<img src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
+                    "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}' pending-indicator='pending-indicator'/>"+
+                "</div>"+
+                "<div class='col-md-9 leftInformationArea'>"+
+                    "<label class='twoRowTitle'>{{item.name}}</label>"+
+                    "<label class='twoRowSubtitle'>{{item.title2}}</label>"+
+                "</div>";
+            $scope.objectsSidebarService.template =$scope.sidebarTemplate;
 
             //----Functions----//
             //Get the List of Elements
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function (data) {
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
                 $scope.products = data.data.elements;
             });
         }
 
-        $scope.init = init();
+        /**=============================================================================================================
+         * Event Listeners
+         =============================================================================================================*/
+
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
+            $scope.objectsSidebarService.reset();
+        });
+
+        $scope.$on("Biin: On Object Created", function(){
+            $scope.create();
+        });
+
+        $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
+            //Parsing dates to work on AngularJS
+            objectClicked.startDate = new Date(objectClicked.startDate);
+            objectClicked.endDate = new Date(objectClicked.endDate);
+            //All ready to show the gift info
+            $scope.ready = true;
+
+            console.log(objectClicked);
+            console.log(event);
+        });
+
+        /**=============================================================================================================
+         * Functions
+         =============================================================================================================*/
+
+        //Get the List of Gifts
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+            $scope.gifts = gifts;
+            $scope.objectsSidebarService.setObjects($scope.gifts);
+            $scope.loadingService.isLoading = false;
+        });
+
+        //Create a gift
+        $scope.create = function(){
+            var titleText = $translate.instant("GIFT.CREATING");
+            swal({   title: titleText,  type: "info",   showConfirmButton: false });
+            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + "/gifts").success(function(gift,status){
+                if(status == 201){
+                    var gifts = $scope.objectsSidebarService.getObjects();
+
+                    gifts.push(gift);
+                    $scope.objectsSidebarService.setObjects(gifts);
+                    $scope.objectsSidebarService.setSelectedObject(gift);
+
+                    setTimeout(function(){
+                        swal.close();
+                    },2000);
+                }
+            });
+        }
+
+        //Function to send just the available types of gift mechanics
+        $scope.availableStore = function (type) {
+            var exist = false;
+            $scope.types = $scope.objectsSidebarService.selectedObject.availableIn;
+
+            if($scope.types.length == 0){
+                $scope.types.push(type);
+            }else{
+                //Validate if the option was already selected
+                for(var i in $scope.types){
+                    if(type == $scope.types[i]){
+                        $scope.types.splice(i, 1);
+                        exist = true;
+                    }
+                }
+                if(!exist){
+                    if(type == 'all'){
+                        $scope.types = ['all'];
+                    }else{
+                        //Validate if you have all and select another option
+                        for(var i in $scope.types){
+                            if($scope.types[i] == 'all'){
+                                $scope.types.splice(i, 1);
+                            }
+                        }
+                        $scope.types.push(type);
+                        //Validate if all option are selected
+                        if($scope.types.length == 3){
+                            $scope.types = ['all'];
+                        }
+                    }
+                }
+            }
+            $scope.objectsSidebarService.selectedObject.availableIn = $scope.types;
+        }
     }
 })();
 
@@ -7638,7 +7742,6 @@ angular.module('showcases').config(['$stateProvider',
 
         /**=============================================================================================================
          * Events Listeners
-         *
          =============================================================================================================*/
 
         $scope.$on('$stateChangeStart', function(){
@@ -7786,7 +7889,6 @@ angular.module('showcases').config(['$stateProvider',
 
         };
 
-
         $scope.hasValidElements = function(selectedShowcase) {
             var validElement = _.findWhere(selectedShowcase, {isReady: 1});
             if (validElement)
@@ -7832,7 +7934,6 @@ angular.module('showcases').config(['$stateProvider',
             }
 
             return missingMinData;
-
         };
 
         //Save detail model object
@@ -7892,17 +7993,17 @@ angular.module('showcases').config(['$stateProvider',
 
         $scope.filteredElements = function ( element ) {
             var index = -1;
-            for(var i = 0; i < $scope.objectsSidebarService.selectedObject.elements.length; i++){
-                if($scope.objectsSidebarService.selectedObject.elements[i].elementIdentifier == element.elementIdentifier){
-                    index = i;
-                    break;
+            if($scope.objectsSidebarService.selectedObject.elements.length > 0){
+                for(var i = 0; i < $scope.objectsSidebarService.selectedObject.elements.length; i++){
+                    if($scope.objectsSidebarService.selectedObject.elements[i].elementIdentifier == element.elementIdentifier){
+                        index = i;
+                        break;
+                    }
                 }
             }
+
             return  index == -1;
         };
-
-
-
 
         //Remove an element of a Showcase
         $scope.removeElementAt = function (index) {
@@ -8499,7 +8600,6 @@ angular.module('sites').config(['$stateProvider',
 
         /**=============================================================================================================
          * ObjectsSidebar Configuration
-         *
          =============================================================================================================*/
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.sidebarTemplate =
@@ -8514,9 +8614,9 @@ angular.module('sites').config(['$stateProvider',
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
         $scope.objectsSidebarService.isHidden = false;
+
         /**=============================================================================================================
          * Events Listeners
-         *
          =============================================================================================================*/
 
         $scope.$on('$stateChangeStart', function(){
@@ -8565,7 +8665,6 @@ angular.module('sites').config(['$stateProvider',
 
         /**=============================================================================================================
          * Variables
-         *
          =============================================================================================================*/
 
         //Init the the sites
@@ -8583,7 +8682,6 @@ angular.module('sites').config(['$stateProvider',
 
         /**=============================================================================================================
          * Self called functions
-         *
          =============================================================================================================*/
 
         //Get the List of Sites
