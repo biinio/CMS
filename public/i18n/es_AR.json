@@ -85,7 +85,8 @@
     "MESSAGE": "Mensaje",
     "MESSAGE_PLACEHOLDER": "Escribe el motivo de tu regalo",
     "MESSAGE_REQUIRED": "*Debe escribir un mensaje",
-    "GIFT": "Regalo",
+    "GIFT": "Producto",
+    "GIFT_DETAIL": "Detalles del regalo",
     "AVAILABLE_PERIOD_QUESTION": "¿Presenta periodo de disponibilidad?",
     "AVAILABLE_PERIOD": "Periodo de disponibilidad",
     "PRODUCT_SELECT": "Elija una opción...",
@@ -104,10 +105,13 @@
     "IS_AUTOMATIC": "Modo de asignación",
     "MANUAL": "Manual",
     "AUTOMATIC": "Automático",
+    "AVAILABLE_IN": "Presente en:",
     "AVAILABLE_NPS": "NPS",
     "AVAILABLE_MEC": "MEC",
     "AVAILABLE_VIP": "Clientes VIP",
     "AVAILABLE_ALL": "Todos",
+    "LOCALS": "Locales disponibles",
+    "LOCALS_AVAILABLE": "Seleccione el o los locales donde se activará el regalo",
     "CREATING": "Su regalo se esta creando"
   },
   "HIGHLIGHT": {

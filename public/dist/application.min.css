@@ -16432,6 +16432,9 @@ input.cmn-toggle-round:checked + label:after {
   margin-left: 30px;
 }
 /*Gift View Styles*/
+.gift-section form {
+  background-color: #efefef;
+}
 .gift-section .period-negative {
   margin-left: 40px;
   margin-bottom: 15px;

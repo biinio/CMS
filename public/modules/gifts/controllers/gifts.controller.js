@@ -34,6 +34,7 @@
             $scope.ready = false;
             $scope.products = [];
             $scope.gifts = [];
+            $scope.locals = [];
             //Image of the current product
             $scope.actualImage = null;
             //State of loading screen
@@ -59,6 +60,10 @@
             //Get the List of Products
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
                 $scope.products = data.data.elements;
+            });
+            //Get the List of Sites
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
+                $scope.locals = data.data.sites;
             });
         }
 
@@ -149,6 +154,6 @@
             }
             $scope.objectsSidebarService.selectedObject.availableIn = $scope.types;
         }
-        
+
     }
 })();

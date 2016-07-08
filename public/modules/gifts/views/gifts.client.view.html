@@ -8,18 +8,18 @@
                 <!-- START panel-->
                 <div class="panel panel-default">
                     <!-- NutShell Section -->
-                    <section>
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <legend translate="GIFT.NAME"></legend>
-                                <form name="myForm" role="form">
+                    <form name="myForm" role="form">
+                        <section>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <legend translate="GIFT.NAME"></legend>
                                     <!--Name name:"name"-->
                                     <div class="form-group">
                                         <label for="giftName" translate="GIFT.GIFT_NAME" class="control-label"></label>
                                         <input id="giftName" ng-model="objectsSidebarService.selectedObject.name"
-                                           name="name"
-                                           type="text" placeholder="{{ 'GIFT.NAME_PLACEHOLDER' | translate }}"
-                                           required class="form-control title-value"/>
+                                               name="name"
+                                               type="text" placeholder="{{ 'GIFT.NAME_PLACEHOLDER' | translate }}"
+                                               required class="form-control title-value"/>
                                         <!-- Input title errors -->
                                         <div ng-messages="myForm.name.$error" ng-if="myForm.name.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.NAME_REQUIRED"></small>
@@ -30,9 +30,9 @@
                                     <div class="form-group">
                                         <label for="giftMessage" translate="GIFT.MESSAGE" class="control-label"></label>
                                         <input id="giftMessage" ng-model="objectsSidebarService.selectedObject.message"
-                                           name="message"
-                                           type="text" placeholder="{{ 'GIFT.MESSAGE_PLACEHOLDER' | translate }}"
-                                           required="required" class="form-control title-value"/>
+                                               name="message"
+                                               type="text" placeholder="{{ 'GIFT.MESSAGE_PLACEHOLDER' | translate }}"
+                                               required="required" class="form-control title-value"/>
                                         <!-- Input message errors -->
                                         <div ng-messages="myForm.message.$error" ng-if="myForm.message.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.MESSAGE_REQUIRED"></small>
@@ -55,7 +55,13 @@
                                             <small ng-message="required" translate="GIFT.PRODUCT_REQUIRED"></small>
                                         </div>
                                     </div>
-
+                                </div>
+                            </div>
+                        </section>
+                        <section>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <legend translate="GIFT.GIFT_DETAIL"></legend>
                                     <!--Bonus Period Question name="hasAvailablePeriod"-->
                                     <div class="form-group">
                                         <label translate="GIFT.AVAILABLE_PERIOD_QUESTION" class="form-label"></label>
@@ -179,7 +185,7 @@
 
                                     <!--AvailableIn name="availableIn"-->
                                     <div class="form-group availableIn">
-                                        <label  class="form-label" translate="GIFT.EXPIRE_TIME"></label>
+                                        <label  class="form-label" translate="GIFT.AVAILABLE_IN"></label>
                                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                             <div class="btn-group col-sm-3" role="group" aria-label="First group">
                                                 <button ng-click="availableStore('nps')" type="button"
@@ -207,10 +213,32 @@
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
+                        <section>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <!--siteAssignedTo name="siteAssignedTo"-->
+                                    <div class="form-group">
+                                        <legend translate="GIFT.LOCALS"></legend>
+                                        <label translate="GIFT.LOCALS_AVAILABLE" class="form-label"></label>
+                                        <div class="clearfix"></div>
+                                        <div ng-repeat="local in locals" class="col-md-4 catModule">
+                                            <div class="checkbox c-checkbox">
+                                                <label>
+                                                    <!--<input ng-click="updateSelectedCategories(local.)" ng-checked="containsCategory(cat) == true" type="checkbox"/>-->
+                                                    <input  type="checkbox" />
+                                                    <span class="fa fa-check"></span>
+                                                    {{local.title1}} <small>({{local.title2}})</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </form>
                 </div>
             </div>
             <!--Display if form is not ready to fill-->

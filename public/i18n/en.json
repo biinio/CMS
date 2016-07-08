@@ -79,7 +79,8 @@
     "MESSAGE": "Message",
     "MESSAGE_PLACEHOLDER": "Write the reason of your gift",
     "MESSAGE_REQUIRED": "*Must write a message",
-    "GIFT": "Gift",
+    "GIFT": "Product",
+    "GIFT_DETAIL": "Gift Details",
     "AVAILABLE_PERIOD_QUESTION": "Does the gift have an available period?",
     "AVAILABLE_PERIOD": "Available period",
     "PRODUCT_SELECT": "Chose an option...",
@@ -98,10 +99,13 @@
     "IS_AUTOMATIC": "Mapping Mode",
     "MANUAL": "Manual",
     "AUTOMATIC": "Automatic",
+    "AVAILABLE_IN": "Available in:",
     "AVAILABLE_NPS": "NPS",
     "AVAILABLE_MEC": "MEC",
     "AVAILABLE_VIP": "VIP Clients",
     "AVAILABLE_ALL": "All",
+    "LOCALS": "Available locals",
+    "LOCALS_AVAILABLE": "Select the locals that will have this gift",
     "CREATING": "Your gift is being created."
   },
   "HIGHLIGHT": {
