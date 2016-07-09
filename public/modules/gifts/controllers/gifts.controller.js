@@ -34,7 +34,7 @@
             $scope.ready = false;
             $scope.products = [];
             $scope.gifts = [];
-            $scope.locals = [];
+            $scope.sites = [];
             //Image of the current product
             $scope.actualImage = null;
             //State of loading screen
@@ -120,7 +120,7 @@
         }
 
         //Function to send just the available types of gift mechanics
-        $scope.availableStore = function (type) {
+        $scope.availableIn = function (type) {
             var exist = false;
             $scope.types = $scope.objectsSidebarService.selectedObject.availableIn;
 
@@ -155,5 +155,27 @@
             $scope.objectsSidebarService.selectedObject.availableIn = $scope.types;
         }
 
+
+        //Function to control the locals available for the gift
+        $scope.availableLocal = function (local) {
+            var exist = false;
+            $scope.localsAvailable = $scope.objectsSidebarService.selectedObject.sites;
+
+            if($scope.localsAvailable.length == 0){
+                 $scope.localsAvailable.push(local);
+            }else{
+                 //Validate if the local was already selected
+                for(var i in $scope.localsAvailable){
+                    if(local == $scope.localsAvailable[i]){
+                        $scope.localsAvailable.splice(i, 1);
+                        exist = true;
+                    }
+                }
+                if(!exist){
+                    $scope.localsAvailable.push(local);
+                }
+            }
+            $scope.objectsSidebarService.selectedObject.sites = $scope.localsAvailable;
+        }
     }
 })();

@@ -188,25 +188,25 @@
                                         <label  class="form-label" translate="GIFT.AVAILABLE_IN"></label>
                                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                             <div class="btn-group col-sm-3" role="group" aria-label="First group">
-                                                <button ng-click="availableStore('nps')" type="button"
+                                                <button ng-click="availableIn('nps')" type="button"
                                                         class="btn btn-default" translate="GIFT.AVAILABLE_NPS"
                                                         ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('nps')}">
                                                 </button>
                                             </div>
                                             <div class="btn-group col-sm-3" role="group" aria-label="Second group">
-                                                <button ng-click="availableStore('mec')" type="button"
+                                                <button ng-click="availableIn('mec')" type="button"
                                                         class="btn btn-default" translate="GIFT.AVAILABLE_MEC"
                                                         ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('mec')}">
                                                 </button>
                                             </div>
                                             <div class="btn-group col-sm-3" role="group" aria-label="Third group">
-                                                <button ng-click="availableStore('vip')" type="button"
+                                                <button ng-click="availableIn('vip')" type="button"
                                                         class="btn btn-default" translate="GIFT.AVAILABLE_VIP"
                                                         ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('vip')}">
                                                 </button>
                                             </div>
                                             <div class="btn-group col-sm-3" role="group" aria-label="Third group">
-                                                <button ng-click="availableStore('all')" type="button"
+                                                <button ng-click="availableIn('all')" type="button"
                                                         class="btn btn-default" translate="GIFT.AVAILABLE_ALL"
                                                         ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('all')}">
                                                 </button>
@@ -228,7 +228,7 @@
                                             <div class="checkbox c-checkbox">
                                                 <label>
                                                     <!--<input ng-click="updateSelectedCategories(local.)" ng-checked="containsCategory(cat) == true" type="checkbox"/>-->
-                                                    <input  type="checkbox" />
+                                                    <input  ng-click="availableLocal(local.identifier)" type="checkbox" />
                                                     <span class="fa fa-check"></span>
                                                     {{local.title1}} <small>({{local.title2}})</small>
                                                 </label>
@@ -241,6 +241,7 @@
                     </form>
                 </div>
             </div>
+            {{objectsSidebarService.selectedObject | json}}
             <!--Display if form is not ready to fill-->
             <div ng-if="ready == false"
                  class="no-object-container">

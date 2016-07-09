@@ -5140,6 +5140,7 @@ angular.module('gifts').config(['$stateProvider',
             $scope.ready = false;
             $scope.products = [];
             $scope.gifts = [];
+            $scope.sites = [];
             //Image of the current product
             $scope.actualImage = null;
             //State of loading screen
@@ -5165,6 +5166,10 @@ angular.module('gifts').config(['$stateProvider',
             //Get the List of Products
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
                 $scope.products = data.data.elements;
+            });
+            //Get the List of Sites
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
+                $scope.locals = data.data.sites;
             });
         }
 
@@ -5221,7 +5226,7 @@ angular.module('gifts').config(['$stateProvider',
         }
 
         //Function to send just the available types of gift mechanics
-        $scope.availableStore = function (type) {
+        $scope.availableIn = function (type) {
             var exist = false;
             $scope.types = $scope.objectsSidebarService.selectedObject.availableIn;
 
@@ -5255,7 +5260,29 @@ angular.module('gifts').config(['$stateProvider',
             }
             $scope.objectsSidebarService.selectedObject.availableIn = $scope.types;
         }
-        
+
+
+        //Function to control the locals available for the gift
+        $scope.availableLocal = function (local) {
+            var exist = false;
+            $scope.localsAvailable = $scope.objectsSidebarService.selectedObject.sites;
+
+            if($scope.localsAvailable.length == 0){
+                 $scope.localsAvailable.push(local);
+            }else{
+                 //Validate if the local was already selected
+                for(var i in $scope.localsAvailable){
+                    if(local == $scope.localsAvailable[i]){
+                        $scope.localsAvailable.splice(i, 1);
+                        exist = true;
+                    }
+                }
+                if(!exist){
+                    $scope.localsAvailable.push(local);
+                }
+            }
+            $scope.objectsSidebarService.selectedObject.sites = $scope.localsAvailable;
+        }
     }
 })();
 
