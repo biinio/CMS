@@ -227,13 +227,25 @@
                                         <div ng-repeat="local in locals" class="col-md-4 catModule">
                                             <div class="checkbox c-checkbox">
                                                 <label>
-                                                    <!--<input ng-click="updateSelectedCategories(local.)" ng-checked="containsCategory(cat) == true" type="checkbox"/>-->
                                                     <input  ng-click="availableLocal(local.identifier)" type="checkbox" />
                                                     <span class="fa fa-check"></span>
                                                     {{local.title1}} <small>({{local.title2}})</small>
                                                 </label>
                                             </div>
                                         </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <!--isActive-->
+                                    <div class="form-group activate-gift">
+                                        <button type="button" class="btn btn-danger col-sm-2">
+                                            <span class="fa fa-trash"></span>
+                                            <span translate="GENERIC.DELETE"></span>
+                                        </button>
+                                        <button type="button" ng-click="activate()" ng-model="objectsSidebarService.selectedObject.isValid" class="btn btn-success col-sm-9 col-sm-offset-1">
+                                            <span ng-if="objectsSidebarService.selectedObject.isValid == false" translate="GENERIC.ACTIVATE"></span>
+                                            <span ng-if="objectsSidebarService.selectedObject.isValid == true" translate="GENERIC.DESACTIVATE"></span>
+                                        </button>
+                                        <small translate="GIFT.INFO"></small>
                                     </div>
                                 </div>
                             </div>

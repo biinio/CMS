@@ -69,7 +69,9 @@
     "DELETE_ORGANIZATION_CONFIRMATION": "Do you wish to delete this organization?",
     "DELETE_IMAGES_CONFIRMATION": "Do you wish to delete the selected images?",
     "POSITIVE": "Yes",
-    "NEGATIVE": "No"
+    "NEGATIVE": "No",
+    "ACTIVATE":  "Activate",
+    "DESACTIVATE": "Desactivate"
   },
   "GIFT":{
     "NAME": "About the gift",
@@ -106,6 +108,7 @@
     "AVAILABLE_ALL": "All",
     "LOCALS": "Available locals",
     "LOCALS_AVAILABLE": "Select the locals that will have this gift",
+    "INFO": "*A gift can be deleted or desactivated, just if it was'nt reclaimed",
     "CREATING": "Your gift is being created."
   },
   "HIGHLIGHT": {

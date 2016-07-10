@@ -16519,6 +16519,9 @@ input.cmn-toggle-round:checked + label:after {
 .gift-section .active-text {
   color: white;
 }
+.gift-section .activate-gift {
+  margin-top: 40px;
+}
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');
 }

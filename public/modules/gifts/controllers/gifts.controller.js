@@ -155,7 +155,6 @@
             $scope.objectsSidebarService.selectedObject.availableIn = $scope.types;
         }
 
-
         //Function to control the locals available for the gift
         $scope.availableLocal = function (local) {
             var exist = false;
@@ -177,5 +176,8 @@
             }
             $scope.objectsSidebarService.selectedObject.sites = $scope.localsAvailable;
         }
+
+        //Function to activate a gift
+        
     }
 })();

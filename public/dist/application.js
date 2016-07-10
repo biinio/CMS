@@ -5261,7 +5261,6 @@ angular.module('gifts').config(['$stateProvider',
             $scope.objectsSidebarService.selectedObject.availableIn = $scope.types;
         }
 
-
         //Function to control the locals available for the gift
         $scope.availableLocal = function (local) {
             var exist = false;
@@ -5283,6 +5282,9 @@ angular.module('gifts').config(['$stateProvider',
             }
             $scope.objectsSidebarService.selectedObject.sites = $scope.localsAvailable;
         }
+
+        //Function to activate a gift
+        
     }
 })();
 

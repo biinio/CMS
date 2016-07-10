@@ -75,7 +75,9 @@
     "CANCEL": "Cancelar",
     "DELETED" : "Eliminado",
     "POSITIVE": "Si",
-    "NEGATIVE": "No"
+    "NEGATIVE": "No",
+    "ACTIVATE":  "Activar",
+    "DESACTIVATE": "Desactivar"
   },
   "GIFT":{
     "NAME": "Información del regalo",
@@ -112,6 +114,7 @@
     "AVAILABLE_ALL": "Todos",
     "LOCALS": "Locales disponibles",
     "LOCALS_AVAILABLE": "Seleccione el o los locales donde se activará el regalo",
+    "INFO": "*Un regalo puede ser eliminado o desactivado solo si no ha sido reclamado",
     "CREATING": "Su regalo se esta creando"
   },
   "HIGHLIGHT": {
