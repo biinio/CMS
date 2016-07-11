@@ -221,7 +221,9 @@
                 showLoaderOnConfirm: true,
                 closeOnConfirm: false
             }, function () {
-                $scope.removeGiftAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
+                if($scope.objectsSidebarService.selectedObject.amountSpent == 0) {
+                    $scope.removeGiftAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
+                }
             });
         };
 
@@ -246,7 +248,7 @@
 
             if(giftCtrl.myForm.$valid && $scope.objectsSidebarService.selectedObject.amountSpent == 0) {
                 $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
-                    console.log('Regalo actualizado');
+                    $scope.succesSaveShow=true;
                 });
             }
         }
