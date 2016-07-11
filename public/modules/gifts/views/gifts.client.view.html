@@ -2,7 +2,7 @@
 <div ng-include="'/modules/core/views/partials/objectssidebar.html'" ng-controller="ObjectsSideBar" class=""></div>
 <!-- Gifts Section View -->
 <div ng-controller="GiftsController as giftCtrl" class="block-center">
-    <div id="wrapperContent" class="container-fluid gift-section" ng-mouseleave="save()">
+    <div id="wrapperContent" class="container-fluid gift-section" ng-mouseleave="update()">
         <div class="right-section-content">
             <div ng-if="ready">
                 <!-- START panel-->
@@ -44,7 +44,7 @@
                                         <label translate="GIFT.GIFT" class="form-label"></label>
                                         <select name="productIdentifier"
                                                 ng-model="objectsSidebarService.selectedObject.productIdentifier"
-                                                ng-change="setProductImage(objectsSidebarService.selectedObject.productIdentifier)"
+
                                                 ng-options="product.elementIdentifier as product.title for product in products"
                                                 class="form-control" required>
                                             <option value="" translate="GIFT.PRODUCT_SELECT"></option>

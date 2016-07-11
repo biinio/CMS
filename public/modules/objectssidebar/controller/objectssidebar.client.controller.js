@@ -27,7 +27,6 @@
             $scope.organizationService = Organization;
             //Draggable Properties
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-            $scope.perro = 'Hola';
 
             //----Functions----//
             //Get the List of Products
@@ -40,10 +39,15 @@
         $scope.setProductImage = function (product) {
             for(var i in $scope.products){
                 if(product == $scope.products[i].elementIdentifier){
-                    return $scope.actualImage = $scope.products[i].media[0].url;
+                    return $scope.products[i].media[0].url;
                 }
             }
-        }
+        };
+
+        //Mainly to update the images from the objects
+        $scope.$on('organizationChanged',function() {
+            $state.reload();
+        });
 
         $scope.onObjectClick = function( index ){
             var objectClicked = $scope.objectsSidebarService.getObjects()[index];

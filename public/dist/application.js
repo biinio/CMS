@@ -5141,8 +5141,6 @@ angular.module('gifts').config(['$stateProvider',
             $scope.products = [];
             $scope.gifts = [];
             $scope.sites = [];
-            //Image of the current product
-            $scope.actualImage = null;
             //State of loading screen
             $scope.loadingService.isLoading = true;
             //Gift Object
@@ -5154,11 +5152,10 @@ angular.module('gifts').config(['$stateProvider',
             $scope.sidebarTemplate =
                 "<div class='col-md-3 thumbListImage'>" +
                     "<img ng-if='item.productIdentifier.length==0' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
-                    "<img ng-if='item.productIdentifier.length>0' ng-src='{{actualImage}}' pending-indicator='pending-indicator'/>"+
+                    "<img ng-if='item.productIdentifier.length>0' ng-src='{{setProductImage(item.productIdentifier)}}' pending-indicator='pending-indicator'/>"+
                 "</div>" +
                 "<div class='col-md-9 leftInformationArea'>"+
                     "<label class='twoRowTitle'>{{item.name}}</label>"+
-                    "<label ng-hide='item.productIdentifier!=null' class='twoRowSubtitle'>{{setProductImage(item.productIdentifier)}}</label>"+
                 "</div>";
             $scope.objectsSidebarService.template =$scope.sidebarTemplate;
 
@@ -5190,9 +5187,27 @@ angular.module('gifts').config(['$stateProvider',
             //Parsing dates to work on AngularJS
             objectClicked.startDate = new Date(objectClicked.startDate);
             objectClicked.endDate = new Date(objectClicked.endDate);
-            $scope.actualImage
             //All ready to show the gift info
             $scope.ready = true;
+        });
+        $scope.$on('organizationChanged',function(){
+            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.loadingService.isLoading = true;
+            //Get the List of Gifts
+            $scope.ready = false;
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+                $scope.gifts = gifts;
+                $scope.objectsSidebarService.setObjects($scope.gifts);
+                $scope.loadingService.isLoading = false;
+            });
+            //Get the List of Products
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+                $scope.products = data.data.elements;
+            });
+            //Get the List of Sites
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
+                $scope.locals = data.data.sites;
+            });
         });
 
         /**=============================================================================================================
@@ -5319,7 +5334,6 @@ angular.module('gifts').config(['$stateProvider',
             var giftToDelete = $scope.objectsSidebarService.objects[index];
             var translatedTexts  = $translate.instant(["ELEMENT.DELETED_TEXT","GENERIC.DELETED"]);
             $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToDelete.identifier,{data:giftToDelete}).success(function(data){
-                console.log(data);
                     $scope.ready = false;
                     $scope.objectsSidebarService.objects.splice(index,1);
                     swal(translatedTexts["GENERIC.DELETED"], translatedTexts["ELEMENT.DELETED_TEXT"], "success");
@@ -5328,16 +5342,15 @@ angular.module('gifts').config(['$stateProvider',
         };
 
         //Save gift information
-        $scope.save = function(){
-            var giftToDelete = $scope.objectsSidebarService.selectedObject;
+        $scope.update = function(){
+            var giftToUpdate = $scope.objectsSidebarService.selectedObject;
             // Don't do anything if there is no selected gift
             if ($scope.ready == false)
                 return;
 
             if(giftCtrl.myForm.$valid && $scope.objectsSidebarService.selectedObject.amountSpent == 0) {
-                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToDelete.identifier,giftToDelete).success(function(data,status){
-                    console.log(data);
-                    console.log(status);
+                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
+                    console.log('Regalo actualizado');
                 });
             }
         }
@@ -6449,7 +6462,6 @@ angular.module('nps').config(['$stateProvider',
             $scope.organizationService = Organization;
             //Draggable Properties
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-            $scope.perro = 'Hola';
 
             //----Functions----//
             //Get the List of Products
@@ -6462,10 +6474,15 @@ angular.module('nps').config(['$stateProvider',
         $scope.setProductImage = function (product) {
             for(var i in $scope.products){
                 if(product == $scope.products[i].elementIdentifier){
-                    return $scope.actualImage = $scope.products[i].media[0].url;
+                    return $scope.products[i].media[0].url;
                 }
             }
-        }
+        };
+
+        //Mainly to update the images from the objects
+        $scope.$on('organizationChanged',function() {
+            $state.reload();
+        });
 
         $scope.onObjectClick = function( index ){
             var objectClicked = $scope.objectsSidebarService.getObjects()[index];
