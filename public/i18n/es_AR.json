@@ -68,6 +68,9 @@
     "DELETE_SHOWCASE": "Eliminar vitrina",
     "DELETE_SHOWCASE_TITLE": "¿Desea eliminar esta vitrina?",
     "DELETE_SHOWCASE_CONFIRMATION": "Al eliminar esta vitrina dejará de estar disponible en todos los locales.",
+    "DELETE_GIFT": "Eliminar regalo",
+    "DELETE_GIFT_TITLE": "¿Desea eliminar este regalo?",
+    "DELETE_GIFT_CONFIRMATION": "Al eliminar este regalo dejará de estar disponible en todos los locales.",
     "DELETE_ORGANIZATION": "Eliminar organización",
     "DELETE_ORGANIZATION_TITLE": "¿Desea eliminar esta organización?",
     "DELETE_ORGANIZATION_CONFIRMATION": "Al eliminar la organizacion todos los locales, elementos y vitrinas asignados a este se borrarán.",
@@ -115,7 +118,8 @@
     "LOCALS": "Locales disponibles",
     "LOCALS_AVAILABLE": "Seleccione el o los locales donde se activará el regalo",
     "INFO": "*Un regalo puede ser eliminado o desactivado solo si no ha sido reclamado",
-    "CREATING": "Su regalo se esta creando"
+    "CREATING": "Su regalo se esta creando",
+    "DELETED_TEXT" : "Su regalo fue eliminado con éxito."
   },
   "HIGHLIGHT": {
     "INSERT": "Inserte detalles de oferta",

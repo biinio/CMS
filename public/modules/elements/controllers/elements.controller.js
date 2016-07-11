@@ -180,9 +180,7 @@
                 }
             );
         };
-
-
-
+        
         //Check min data has been filled
         $scope.hasMissingData = function() {
 

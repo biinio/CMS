@@ -2,13 +2,13 @@
 <div ng-include="'/modules/core/views/partials/objectssidebar.html'" ng-controller="ObjectsSideBar" class=""></div>
 <!-- Gifts Section View -->
 <div ng-controller="GiftsController as giftCtrl" class="block-center">
-    <div id="wrapperContent" class="container-fluid gift-section">
+    <div id="wrapperContent" class="container-fluid gift-section" ng-mouseleave="save()">
         <div class="right-section-content">
             <div ng-if="ready">
                 <!-- START panel-->
                 <div class="panel panel-default">
                     <!-- NutShell Section -->
-                    <form name="myForm" role="form">
+                    <form name="giftCtrl.myForm" role="form">
                         <section>
                             <div class="panel panel-default">
                                 <div class="panel-body">
@@ -237,23 +237,23 @@
                                     </div>
                                     <!--isActive-->
                                     <div class="form-group activate-gift">
-                                        <button type="button" class="btn btn-danger col-sm-2">
+                                        <button type="button" class="btn btn-danger col-sm-2" ng-click="deleteGift(' {{'GENERIC.DELETE_GIFT_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">
                                             <span class="fa fa-trash"></span>
                                             <span translate="GENERIC.DELETE"></span>
                                         </button>
-                                        <button type="button" ng-click="activate()" ng-model="objectsSidebarService.selectedObject.isValid" class="btn btn-success col-sm-9 col-sm-offset-1">
-                                            <span ng-if="objectsSidebarService.selectedObject.isValid == false" translate="GENERIC.ACTIVATE"></span>
-                                            <span ng-if="objectsSidebarService.selectedObject.isValid == true" translate="GENERIC.DESACTIVATE"></span>
+                                        <button type="button" ng-click="activate()" class="btn btn-success col-sm-9 col-sm-offset-1" ng-class="{ 'btn-danger': objectsSidebarService.selectedObject.isActive==true , 'btn-success' : !objectsSidebarService.selectedObject.isActive==true}">
+                                            <span ng-if="objectsSidebarService.selectedObject.isActive == false" translate="GENERIC.ACTIVATE"></span>
+                                            <span ng-if="objectsSidebarService.selectedObject.isActive == true" translate="GENERIC.DESACTIVATE"></span>
                                         </button>
                                         <small translate="GIFT.INFO"></small>
                                     </div>
                                 </div>
                             </div>
                         </section>
+                        {{objectsSidebarService.selectedObject}}
                     </form>
                 </div>
             </div>
-            {{objectsSidebarService.selectedObject | json}}
             <!--Display if form is not ready to fill-->
             <div ng-if="ready == false"
                  class="no-object-container">

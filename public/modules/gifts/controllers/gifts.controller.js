@@ -13,6 +13,8 @@
     GiftsController.$inject = ['$http', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate'];
 
     function GiftsController($http, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate) {
+        var giftCtrl = this;
+
         init();
         /**=============================================================================================================
          * Init Function
@@ -104,7 +106,7 @@
         $scope.create = function(){
             var titleText = $translate.instant("GIFT.CREATING");
             swal({   title: titleText,  type: "info",   showConfirmButton: false });
-            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + "/gifts").success(function(gift,status){
+            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gift,status){
                 if(status == 201){
                     var gifts = $scope.objectsSidebarService.getObjects();
 
@@ -178,6 +180,62 @@
         }
 
         //Function to activate a gift
-        
+        $scope.activate = function () {
+            if($scope.objectsSidebarService.selectedObject.amountSpent == 0 && $scope.objectsSidebarService.selectedObject.isActive == false){
+                $scope.objectsSidebarService.selectedObject.isActive = true;
+            }else if($scope.objectsSidebarService.selectedObject.amountSpent == 0 && $scope.objectsSidebarService.selectedObject.isActive == true){
+                $scope.objectsSidebarService.selectedObject.isActive = false;
+            }
+            if($scope.objectsSidebarService.selectedObject.amountSpent > 0){
+                console.log('No puede realizar esta acción, porque el regalo ya fue esta siendo reclamado');
+            }
+        }
+
+        //Function that display the swal as a confirmation to remove gift
+        $scope.deleteGift = function(message, selectedObject) {
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_GIFT_TITLE","GENERIC.DELETE_GIFT_CONFIRMATION","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.DELETE_GIFT_TITLE"],
+                text: translatedTexts["GENERIC.DELETE_GIFT_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
+                $scope.removeGiftAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
+            });
+        };
+
+        //Remove element at specific position
+        $scope.removeGiftAt = function(index){
+            var giftToDelete = $scope.objectsSidebarService.objects[index];
+            var translatedTexts  = $translate.instant(["ELEMENT.DELETED_TEXT","GENERIC.DELETED"]);
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToDelete.identifier,{data:giftToDelete}).success(function(data){
+                console.log(data);
+                    $scope.ready = false;
+                    $scope.objectsSidebarService.objects.splice(index,1);
+                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["ELEMENT.DELETED_TEXT"], "success");
+                }
+            );
+        };
+
+        //Save gift information
+        $scope.save = function(){
+            var giftToDelete = $scope.objectsSidebarService.selectedObject;
+            // Don't do anything if there is no selected gift
+            if ($scope.ready == false)
+                return;
+
+            if(giftCtrl.myForm.$valid && $scope.objectsSidebarService.selectedObject.amountSpent == 0) {
+                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToDelete.identifier,giftToDeletegit).success(function(data,status){
+                    console.log(data);
+                    console.log(status);
+                });
+            }
+        }
     }
 })();
