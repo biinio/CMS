@@ -21,7 +21,7 @@
                                                type="text" placeholder="{{ 'GIFT.NAME_PLACEHOLDER' | translate }}"
                                                required class="form-control title-value"/>
                                         <!-- Input title errors -->
-                                        <div ng-messages="myForm.name.$error" ng-if="myForm.name.$touched"class="help-block">
+                                        <div ng-messages="giftCtrl.myForm.name.$error" ng-if="giftCtrl.myForm.name.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.NAME_REQUIRED"></small>
                                         </div>
                                     </div>
@@ -34,7 +34,7 @@
                                                type="text" placeholder="{{ 'GIFT.MESSAGE_PLACEHOLDER' | translate }}"
                                                required="required" class="form-control title-value"/>
                                         <!-- Input message errors -->
-                                        <div ng-messages="myForm.message.$error" ng-if="myForm.message.$touched"class="help-block">
+                                        <div ng-messages="giftCtrl.myForm.message.$error" ng-if="giftCtrl.myForm.message.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.MESSAGE_REQUIRED"></small>
                                         </div>
                                     </div>
@@ -51,7 +51,7 @@
                                         </select>
 
                                         <!-- Input productIdentifier errors -->
-                                        <div ng-messages="myForm.productIdentifier.$error" ng-if="myForm.productIdentifier.$touched"class="help-block">
+                                        <div ng-messages="giftCtrl.myForm.productIdentifier.$error" ng-if="giftCtrl.myForm.productIdentifier.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.PRODUCT_REQUIRED"></small>
                                         </div>
                                     </div>
@@ -97,7 +97,7 @@
                                                    required class="form-control title-value"/>
                                             <div class="clearfix"></div>
                                             <!-- Input startDate errors -->
-                                            <div ng-messages="myForm.startDate.$error" ng-if="myForm.startDate.$touched"class="help-block">
+                                            <div ng-messages="giftCtrl.myForm.startDate.$error" ng-if="giftCtrl.myForm.startDate.$touched"class="help-block">
                                                 <small ng-message="date" translate="GIFT.DATE_VALIDATE"></small>
                                                 <small ng-message="required" translate="GIFT.START_DATE_REQUIRED"></small>
                                             </div>
@@ -112,7 +112,7 @@
                                                    required class="form-control title-value "/>
                                             <div class="clearfix"></div>
                                             <!-- Input endDate errors -->
-                                            <div ng-messages="myForm.endDate.$error" ng-if="myForm.endDate.$touched"class="help-block">
+                                            <div ng-messages="giftCtrl.myForm.endDate.$error" ng-if="giftCtrl.myForm.endDate.$touched"class="help-block">
                                                 <small ng-message="date" translate="GIFT.DATE_VALIDATE"></small>
                                                 <small ng-message="required" translate="GIFT.END_DATE_REQUIRED"></small>
                                                 <small ng-message="min" translate="GIFT.END_DATE_HIGHER"></small>
@@ -157,7 +157,7 @@
                                                type="number" placeholder="{{ 'GIFT.AMOUNT_PLACEHOLDER' | translate }}"
                                                required class="form-control"/>
                                         <!-- Input title errors -->
-                                        <div ng-messages="myForm.amount.$error" ng-if="myForm.amount.$touched"class="help-block">
+                                        <div ng-messages="giftCtrl.myForm.amount.$error" ng-if="giftCtrl.myForm.amount.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.AMOUNT_REQUIRED"></small>
                                         </div>
                                     </div>
@@ -210,6 +210,10 @@
                                                         class="btn btn-default" translate="GIFT.AVAILABLE_ALL"
                                                         ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('all')}">
                                                 </button>
+                                            </div>
+                                            <!-- AvailableIn errors -->
+                                            <div ng-if="objectsSidebarService.selectedObject.availableIn.length == 0" class="help-block">
+                                                <small>**Debe seleccionar al menos una opción de las anteriores</small>
                                             </div>
                                         </div>
                                     </div>

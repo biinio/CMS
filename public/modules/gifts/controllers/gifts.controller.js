@@ -246,9 +246,9 @@
             if ($scope.ready == false)
                 return;
 
-            if(giftCtrl.myForm.$valid && $scope.objectsSidebarService.selectedObject.amountSpent == 0) {
+            if(giftCtrl.myForm.$valid && $scope.objectsSidebarService.selectedObject.amountSpent == 0 && $scope.objectsSidebarService.selectedObject.availableIn.length > 0) {
                 $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
-                    $scope.succesSaveShow=true;
+                    console.log('Actualizado');
                 });
             }
         }
