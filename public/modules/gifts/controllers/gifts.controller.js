@@ -10,9 +10,9 @@
         .module('gifts')
         .controller('GiftsController', GiftsController);
 
-    GiftsController.$inject = ['$http', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate'];
+    GiftsController.$inject = ['$http', '$state', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate'];
 
-    function GiftsController($http, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate) {
+    function GiftsController($http, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate) {
         var giftCtrl = this;
 
         init();
@@ -94,6 +94,7 @@
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
                 $scope.gifts = gifts;
                 $scope.objectsSidebarService.setObjects($scope.gifts);
+                $state.reload();
                 $scope.loadingService.isLoading = false;
             });
             //Get the List of Products
@@ -250,6 +251,15 @@
                 $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
                     console.log('Actualizado');
                 });
+            }
+        }
+        //Check locals in initial data
+        $scope.checkLocal = function(local){
+            $scope.localsAvailable = $scope.objectsSidebarService.selectedObject.sites;
+            for(var i in $scope.localsAvailable){
+                if(local == $scope.localsAvailable[i]){
+                    return true;
+                }
             }
         }
     }

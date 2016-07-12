@@ -13,6 +13,12 @@
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <legend translate="GIFT.NAME"></legend>
+                                    <div ng-if="giftCtrl.myForm.$invalid || objectsSidebarService.selectedObject.availableIn.length == 0">
+                                        <label class="error-icon fa fa-times-circle enlarge-icon"></label>
+                                    </div>
+                                    <div ng-if="giftCtrl.myForm.$valid && objectsSidebarService.selectedObject.availableIn.length > 0">
+                                        <label class="ready-icon fa fa-check-circle enlarge-icon"></label>
+                                    </div>
                                     <!--Name name:"name"-->
                                     <div class="form-group">
                                         <label for="giftName" translate="GIFT.GIFT_NAME" class="control-label"></label>
@@ -231,7 +237,7 @@
                                         <div ng-repeat="local in locals" class="col-md-4 catModule">
                                             <div class="checkbox c-checkbox">
                                                 <label>
-                                                    <input  ng-click="availableLocal(local.identifier)" type="checkbox" />
+                                                    <input  ng-click="availableLocal(local.identifier)" type="checkbox" ng-checked="checkLocal(local.identifier)"/>
                                                     <span class="fa fa-check"></span>
                                                     {{local.title1}} <small>({{local.title2}})</small>
                                                 </label>
