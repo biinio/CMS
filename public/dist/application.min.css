@@ -15667,6 +15667,10 @@ Component: sidemenu.less
 .list-items-side-menu .invalid-color {
   color: #f05050;
 }
+.list-items-side-menu .leftInformationArea small,
+.list-items-side-menu .leftInformationArea label {
+  margin-left: 4px;
+}
 .maintenanceList {
   padding-left: 15px;
 }
