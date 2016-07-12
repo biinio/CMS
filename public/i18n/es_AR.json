@@ -115,9 +115,12 @@
     "AVAILABLE_MEC": "MEC",
     "AVAILABLE_VIP": "Clientes VIP",
     "AVAILABLE_ALL": "Todos",
+    "AVAILABLE_REQUIRED": "*Debe seleccionar al menos una opción de las anteriores",
     "LOCALS": "Locales disponibles",
     "LOCALS_AVAILABLE": "Seleccione el o los locales donde se activará el regalo",
+    "LOCALS_REQUIRED": "*Debe seleccionar al menos un local",
     "INFO": "*Un regalo puede ser eliminado o desactivado solo si no ha sido reclamado",
+    "INFO2": "**Si el regalo fue reclamado, solo puedes actualiza los locales donde se encuentra",
     "CREATING": "Su regalo se esta creando",
     "DELETED_TEXT" : "Su regalo fue eliminado con éxito."
   },

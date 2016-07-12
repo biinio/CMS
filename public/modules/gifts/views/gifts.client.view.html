@@ -13,10 +13,10 @@
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <legend translate="GIFT.NAME"></legend>
-                                    <div ng-if="giftCtrl.myForm.$invalid || objectsSidebarService.selectedObject.availableIn.length == 0">
+                                    <div ng-if="giftCtrl.myForm.$invalid || objectsSidebarService.selectedObject.availableIn.length == 0 || objectsSidebarService.selectedObject.sites.length == 0">
                                         <label class="error-icon fa fa-times-circle enlarge-icon"></label>
                                     </div>
-                                    <div ng-if="giftCtrl.myForm.$valid && objectsSidebarService.selectedObject.availableIn.length > 0">
+                                    <div ng-if="giftCtrl.myForm.$valid && objectsSidebarService.selectedObject.availableIn.length > 0 && objectsSidebarService.selectedObject.sites.length > 0">
                                         <label class="ready-icon fa fa-check-circle enlarge-icon"></label>
                                     </div>
                                     <!--Name name:"name"-->
@@ -25,7 +25,8 @@
                                         <input id="giftName" ng-model="objectsSidebarService.selectedObject.name"
                                                name="name"
                                                type="text" placeholder="{{ 'GIFT.NAME_PLACEHOLDER' | translate }}"
-                                               required class="form-control title-value"/>
+                                               required class="form-control title-value"
+                                               ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                         <!-- Input title errors -->
                                         <div ng-messages="giftCtrl.myForm.name.$error" ng-if="giftCtrl.myForm.name.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.NAME_REQUIRED"></small>
@@ -38,7 +39,8 @@
                                         <input id="giftMessage" ng-model="objectsSidebarService.selectedObject.message"
                                                name="message"
                                                type="text" placeholder="{{ 'GIFT.MESSAGE_PLACEHOLDER' | translate }}"
-                                               required="required" class="form-control title-value"/>
+                                               required="required" class="form-control title-value"
+                                               ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                         <!-- Input message errors -->
                                         <div ng-messages="giftCtrl.myForm.message.$error" ng-if="giftCtrl.myForm.message.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.MESSAGE_REQUIRED"></small>
@@ -50,7 +52,7 @@
                                         <label translate="GIFT.GIFT" class="form-label"></label>
                                         <select name="productIdentifier"
                                                 ng-model="objectsSidebarService.selectedObject.productIdentifier"
-
+                                                ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"
                                                 ng-options="product.elementIdentifier as product.title for product in products"
                                                 class="form-control" required>
                                             <option value="" translate="GIFT.PRODUCT_SELECT"></option>
@@ -75,14 +77,16 @@
                                         <!--Positive checkbox-->
                                         <div class="checkbox c-checkbox pull-left mt0">
                                             <label>
-                                                <input type="radio" ng-value="true" name="hasAvailablePeriod" ng-model="objectsSidebarService.selectedObject.hasAvailablePeriod" />
+                                                <input type="radio" ng-value="true" name="hasAvailablePeriod" ng-model="objectsSidebarService.selectedObject.hasAvailablePeriod"
+                                                       ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                                 <span class="fa fa-check"></span>{{ 'GENERIC.POSITIVE' | translate }}
                                             </label>
                                         </div>
                                         <!--Negative checkbox-->
                                         <div class="checkbox c-checkbox pull-left mt0 period-negative">
                                             <label>
-                                                <input type="radio" ng-value="false"  name="hasAvailablePeriod" ng-model="objectsSidebarService.selectedObject.hasAvailablePeriod" />
+                                                <input type="radio" ng-value="false"  name="hasAvailablePeriod" ng-model="objectsSidebarService.selectedObject.hasAvailablePeriod"
+                                                       ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                                 <span class="fa fa-check"></span>{{ 'GENERIC.NEGATIVE' | translate }}
                                             </label>
                                         </div>
@@ -100,10 +104,11 @@
                                                    name="startDate"
                                                    type="date"
                                                    min="{{currentDate | date:'yyyy-MM-dd'}}"
-                                                   required class="form-control title-value"/>
+                                                   required class="form-control title-value"
+                                                   ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                             <div class="clearfix"></div>
                                             <!-- Input startDate errors -->
-                                            <div ng-messages="giftCtrl.myForm.startDate.$error" ng-if="giftCtrl.myForm.startDate.$touched"class="help-block">
+                                            <div ng-messages="giftCtrl.myForm.startDate.$error" class="help-block">
                                                 <small ng-message="date" translate="GIFT.DATE_VALIDATE"></small>
                                                 <small ng-message="required" translate="GIFT.START_DATE_REQUIRED"></small>
                                             </div>
@@ -115,7 +120,8 @@
                                                    name="endDate"
                                                    type="date"
                                                    min="{{objectsSidebarService.selectedObject.startDate | date:'yyyy-MM-dd'}}"
-                                                   required class="form-control title-value "/>
+                                                   required class="form-control title-value "
+                                                   ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                             <div class="clearfix"></div>
                                             <!-- Input endDate errors -->
                                             <div ng-messages="giftCtrl.myForm.endDate.$error" ng-if="giftCtrl.myForm.endDate.$touched"class="help-block">
@@ -134,21 +140,24 @@
                                             <div class="btn-group col-sm-4" role="group" aria-label="First group">
                                                 <input type="radio" ng-value="1"  name="expireTime"
                                                        ng-model="objectsSidebarService.selectedObject.expireTime" class="btn btn-default"
-                                                       ng-class="{ 'active': objectsSidebarService.selectedObject.expireTime == '1'}" />
+                                                       ng-class="{ 'active': objectsSidebarService.selectedObject.expireTime == '1'}"
+                                                       ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                                 <p class="text-center" translate="GIFT.A_DAY"
                                                    ng-class="{ 'active-text': objectsSidebarService.selectedObject.expireTime == '1'}"></p>
                                             </div>
                                             <div class="btn-group col-sm-4" role="group" aria-label="Second group">
                                                 <input type="radio" ng-value="7"  name="expireTime"
                                                        ng-model="objectsSidebarService.selectedObject.expireTime" class="btn btn-default"
-                                                       ng-class="{ 'active': objectsSidebarService.selectedObject.expireTime == '7'}" />
+                                                       ng-class="{ 'active': objectsSidebarService.selectedObject.expireTime == '7'}"
+                                                       ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                                 <p class="text-center" translate="GIFT.A_WEEK"
                                                    ng-class="{ 'active-text': objectsSidebarService.selectedObject.expireTime == '7'}"></p>
                                             </div>
                                             <div class="btn-group col-sm-4" role="group" aria-label="Third group">
                                                 <input type="radio" ng-value="-1"  name="expireTime"
                                                        ng-model="objectsSidebarService.selectedObject.expireTime" class="btn btn-default"
-                                                       ng-class="{ 'active': objectsSidebarService.selectedObject.expireTime == '-1'}" />
+                                                       ng-class="{ 'active': objectsSidebarService.selectedObject.expireTime == '-1'}"
+                                                       ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                                 <p class="text-center" translate="GIFT.NOT_OVERCOME"
                                                    ng-class="{ 'active-text': objectsSidebarService.selectedObject.expireTime == '-1'}"></p>
                                             </div>
@@ -161,7 +170,8 @@
                                         <input id="giftAmount" ng-model="objectsSidebarService.selectedObject.amount"
                                                name="amount"
                                                type="number" placeholder="{{ 'GIFT.AMOUNT_PLACEHOLDER' | translate }}"
-                                               required class="form-control"/>
+                                               required class="form-control"
+                                               ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                         <!-- Input title errors -->
                                         <div ng-messages="giftCtrl.myForm.amount.$error" ng-if="giftCtrl.myForm.amount.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.AMOUNT_REQUIRED"></small>
@@ -175,14 +185,16 @@
                                             <div class="btn-group col-sm-6" role="group" aria-label="First group">
                                                 <input type="radio" ng-value="false"  name="isAutomatic"
                                                        ng-model="objectsSidebarService.selectedObject.isAutomatic" class="btn btn-default"
-                                                       ng-class="{ 'active': objectsSidebarService.selectedObject.isAutomatic == false}" />
+                                                       ng-class="{ 'active': objectsSidebarService.selectedObject.isAutomatic == false}"
+                                                       ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                                 <p class="text-center" translate="GIFT.MANUAL"
                                                    ng-class="{ 'active-text': objectsSidebarService.selectedObject.isAutomatic == false}"></p>
                                             </div>
                                             <div class="btn-group col-sm-6" role="group" aria-label="Second group">
                                                 <input type="radio" ng-value="true"  name="isAutomatic"
                                                        ng-model="objectsSidebarService.selectedObject.isAutomatic" class="btn btn-default"
-                                                       ng-class="{ 'active': objectsSidebarService.selectedObject.isAutomatic == true}" />
+                                                       ng-class="{ 'active': objectsSidebarService.selectedObject.isAutomatic == true}"
+                                                       ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                                 <p class="text-center" translate="GIFT.AUTOMATIC"
                                                    ng-class="{ 'active-text': objectsSidebarService.selectedObject.isAutomatic == true}"></p>
                                             </div>
@@ -196,30 +208,34 @@
                                             <div class="btn-group col-sm-3" role="group" aria-label="First group">
                                                 <button ng-click="availableIn('nps')" type="button"
                                                         class="btn btn-default" translate="GIFT.AVAILABLE_NPS"
-                                                        ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('nps')}">
+                                                        ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('nps')}"
+                                                        ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0">
                                                 </button>
                                             </div>
                                             <div class="btn-group col-sm-3" role="group" aria-label="Second group">
                                                 <button ng-click="availableIn('mec')" type="button"
                                                         class="btn btn-default" translate="GIFT.AVAILABLE_MEC"
-                                                        ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('mec')}">
+                                                        ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('mec')}"
+                                                        ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0">
                                                 </button>
                                             </div>
                                             <div class="btn-group col-sm-3" role="group" aria-label="Third group">
                                                 <button ng-click="availableIn('vip')" type="button"
                                                         class="btn btn-default" translate="GIFT.AVAILABLE_VIP"
-                                                        ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('vip')}">
+                                                        ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('vip')}"
+                                                        ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0">
                                                 </button>
                                             </div>
                                             <div class="btn-group col-sm-3" role="group" aria-label="Third group">
                                                 <button ng-click="availableIn('all')" type="button"
                                                         class="btn btn-default" translate="GIFT.AVAILABLE_ALL"
-                                                        ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('all')}">
+                                                        ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('all')}"
+                                                        ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0">
                                                 </button>
                                             </div>
                                             <!-- AvailableIn errors -->
                                             <div ng-if="objectsSidebarService.selectedObject.availableIn.length == 0" class="help-block">
-                                                <small>**Debe seleccionar al menos una opción de las anteriores</small>
+                                                <small translate="GIFT.AVAILABLE_REQUIRED"></small>
                                             </div>
                                         </div>
                                     </div>
@@ -244,6 +260,10 @@
                                             </div>
                                         </div>
                                         <div class="clearfix"></div>
+                                        <!-- AvailableIn errors -->
+                                        <div ng-if="objectsSidebarService.selectedObject.sites.length == 0" class="help-block">
+                                            <small translate="GIFT.LOCALS_REQUIRED"></small>
+                                        </div>
                                     </div>
                                     <!--isActive-->
                                     <div class="form-group activate-gift">
@@ -255,7 +275,16 @@
                                             <span ng-if="objectsSidebarService.selectedObject.isActive == false" translate="GENERIC.ACTIVATE"></span>
                                             <span ng-if="objectsSidebarService.selectedObject.isActive == true" translate="GENERIC.DESACTIVATE"></span>
                                         </button>
-                                        <small translate="GIFT.INFO"></small>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <!--Alerts-->
+                                    <div class="form-group">
+                                        <div class="alert alert-warning alert-dismissible" ng-show="show_alert">
+                                            <span class="close" ng-click="show_alert=false"><span aria-hidden="true">&times;</span></span>
+                                            <small translate="GIFT.INFO"></small>
+                                            <div class="clearfix"></div>
+                                            <small translate="GIFT.INFO2"></small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

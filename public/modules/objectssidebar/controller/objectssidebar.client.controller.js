@@ -45,11 +45,6 @@
             }
         };
 
-        //Mainly to update the images from the objects
-        // $scope.$on('organizationChanged',function() {
-        //    $state.reload();
-        // });
-
         $scope.onObjectClick = function( index ){
             var objectClicked = $scope.objectsSidebarService.getObjects()[index];
             $scope.objectsSidebarService.selectedObject = objectClicked;

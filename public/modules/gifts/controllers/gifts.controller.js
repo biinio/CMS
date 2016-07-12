@@ -43,6 +43,8 @@
             $scope.objectsSidebarService.selectedObject = {};
             //Current Date
             $scope.currentDate = new Date();
+            //Default alerts
+            $scope.show_alert = true;
             //Draggable Properties
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             $scope.sidebarTemplate =
@@ -249,7 +251,7 @@
             if ($scope.ready == false)
                 return;
 
-            if(giftCtrl.myForm.$valid && $scope.objectsSidebarService.selectedObject.amountSpent == 0 && $scope.objectsSidebarService.selectedObject.availableIn.length > 0) {
+            if(giftCtrl.myForm.$valid  && $scope.objectsSidebarService.selectedObject.sites.length > 0 && $scope.objectsSidebarService.selectedObject.availableIn.length > 0) {
                 $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
                     console.log('Actualizado');
                 });

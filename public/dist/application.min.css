@@ -5119,15 +5119,15 @@ a.thumbnail.active {
   color: #e6e6e6;
 }
 .alert-warning {
-  background-color: #ff902b;
-  border-color: rgba(0, 0, 0, 0.1);
-  color: #ffffff;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  color: #8a6d3b;
 }
 .alert-warning hr {
-  border-top-color: rgba(0, 0, 0, 0.1);
+  border-top-color: #f8e2b5;
 }
 .alert-warning .alert-link {
-  color: #e6e6e6;
+  color: #66512c;
 }
 .alert-danger {
   background-color: #f05050;
