@@ -27,7 +27,8 @@
             $scope.organizationService = Organization;
             //Draggable Properties
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-
+            $scope.currentDate = new Date();
+            
             //----Functions----//
             //Get the List of Products
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
