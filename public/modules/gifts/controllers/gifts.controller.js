@@ -207,7 +207,7 @@
                 $scope.objectsSidebarService.selectedObject.isActive = false;
             }
             if($scope.objectsSidebarService.selectedObject.amountSpent > 0){
-                console.log('No puede realizar esta acción, porque el regalo ya fue esta siendo reclamado');
+                console.log('No puede realizar esta acción, porque el regalo ya fue reclamado');
             }
         }
 
