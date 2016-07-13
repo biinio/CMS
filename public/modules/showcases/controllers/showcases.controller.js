@@ -299,7 +299,7 @@
 
         $scope.filteredElements = function ( element ) {
             var index = -1;
-            if($scope.objectsSidebarService.selectedObject.elements.length > 0){
+            if($scope.objectsSidebarService.selectedObject.elements){
                 for(var i = 0; i < $scope.objectsSidebarService.selectedObject.elements.length; i++){
                     if($scope.objectsSidebarService.selectedObject.elements[i].elementIdentifier == element.elementIdentifier){
                         index = i;

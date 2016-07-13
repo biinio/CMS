@@ -5117,8 +5117,9 @@ angular.module('gifts').config(['$stateProvider',
     GiftsController.$inject = ['$http', '$state', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate'];
 
     function GiftsController($http, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate) {
-        var giftCtrl = this;
+        var gift = this;
 
+        //Running init function
         init();
         /**=============================================================================================================
          * Init Function
@@ -5127,9 +5128,10 @@ angular.module('gifts').config(['$stateProvider',
         function init() {
             //----Services needed----//
             //Loading Service
-            $scope.loadingService = Loading;
+            gift.loadingService = Loading;
             //Organization Service
-            $scope.organizationService = Organization;
+            gift.organizationService = Organization;
+            gift.organizationId = gift.organizationService.selectedOrganization.identifier;
             //Objects Sidebar Service
             $scope.objectsSidebarService = ObjectsSidebar;
             //Authentication Service
@@ -5142,7 +5144,7 @@ angular.module('gifts').config(['$stateProvider',
             $scope.gifts = [];
             $scope.sites = [];
             //State of loading screen
-            $scope.loadingService.isLoading = true;
+            gift.loadingService.isLoading = true;
             //Gift Object
             $scope.objectsSidebarService.selectedObject = {};
             //Current Date
@@ -5150,7 +5152,7 @@ angular.module('gifts').config(['$stateProvider',
             //Default alerts
             $scope.show_alert = true;
             //Draggable Properties
-            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+
             $scope.sidebarTemplate =
                 "<div class='col-md-3 thumbListImage'>" +
                     "<img ng-if='item.productIdentifier.length==0' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
@@ -5165,11 +5167,11 @@ angular.module('gifts').config(['$stateProvider',
             $scope.objectsSidebarService.template =$scope.sidebarTemplate;
             //----Functions----//
             //Get the List of Products
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + gift.organizationId + '/readyElements/').success(function(data) {
                 $scope.products = data.data.elements;
             });
             //Get the List of Sites
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ gift.organizationId +'/sites').success(function(data){
                 $scope.locals = data.data.sites;
             });
         }
@@ -5179,7 +5181,7 @@ angular.module('gifts').config(['$stateProvider',
          =============================================================================================================*/
 
         $scope.$on('$stateChangeStart', function(){
-            $scope.loadingService.isLoading = true;
+            gift.loadingService.isLoading = true;
             $scope.objectsSidebarService.reset();
         });
 
@@ -5195,22 +5197,22 @@ angular.module('gifts').config(['$stateProvider',
             $scope.ready = true;
         });
         $scope.$on('organizationChanged',function(){
-            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-            $scope.loadingService.isLoading = true;
+            gift.organizationId = gift.organizationService.selectedOrganization.identifier;
+            gift.loadingService.isLoading = true;
             //Get the List of Gifts
             $scope.ready = false;
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + gift.organizationId + '/gifts').success(function(gifts) {
                 $scope.gifts = gifts;
                 $scope.objectsSidebarService.setObjects($scope.gifts);
                 $state.reload();
-                $scope.loadingService.isLoading = false;
+                gift.loadingService.isLoading = false;
             });
             //Get the List of Products
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + gift.organizationId + '/readyElements/').success(function(data) {
                 $scope.products = data.data.elements;
             });
             //Get the List of Sites
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ gift.organizationId +'/sites').success(function(data){
                 $scope.locals = data.data.sites;
             });
         });
@@ -5220,17 +5222,17 @@ angular.module('gifts').config(['$stateProvider',
          =============================================================================================================*/
 
         //Get the List of Gifts
-        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + gift.organizationId + '/gifts').success(function(gifts) {
             $scope.gifts = gifts;
             $scope.objectsSidebarService.setObjects($scope.gifts);
-            $scope.loadingService.isLoading = false;
+            gift.loadingService.isLoading = false;
         });
 
         //Create a gift
         $scope.create = function(){
             var titleText = $translate.instant("GIFT.CREATING");
             swal({   title: titleText,  type: "info",   showConfirmButton: false });
-            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gift,status){
+            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + gift.organizationId + '/gifts').success(function(gift,status){
                 if(status == 201){
                     var gifts = $scope.objectsSidebarService.getObjects();
 
@@ -5340,7 +5342,7 @@ angular.module('gifts').config(['$stateProvider',
         $scope.removeGiftAt = function(index){
             var giftToDelete = $scope.objectsSidebarService.objects[index];
             var translatedTexts  = $translate.instant(["ELEMENT.DELETED_TEXT","GENERIC.DELETED"]);
-            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToDelete.identifier,{data:giftToDelete}).success(function(data){
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + gift.organizationId + '/gifts/'+giftToDelete.identifier,{data:giftToDelete}).success(function(data){
                     $scope.ready = false;
                     $scope.objectsSidebarService.objects.splice(index,1);
                     swal(translatedTexts["GENERIC.DELETED"], translatedTexts["ELEMENT.DELETED_TEXT"], "success");
@@ -5355,8 +5357,8 @@ angular.module('gifts').config(['$stateProvider',
             if ($scope.ready == false)
                 return;
 
-            if(giftCtrl.myForm.$valid  && $scope.objectsSidebarService.selectedObject.sites.length > 0 && $scope.objectsSidebarService.selectedObject.availableIn.length > 0) {
-                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
+            if(gift.myForm.$valid  && $scope.objectsSidebarService.selectedObject.sites.length > 0 && $scope.objectsSidebarService.selectedObject.availableIn.length > 0) {
+                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + gift.organizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
                     console.log('Actualizado');
                 });
             }
@@ -8126,7 +8128,7 @@ angular.module('showcases').config(['$stateProvider',
 
         $scope.filteredElements = function ( element ) {
             var index = -1;
-            if($scope.objectsSidebarService.selectedObject.elements.length > 0){
+            if($scope.objectsSidebarService.selectedObject.elements){
                 for(var i = 0; i < $scope.objectsSidebarService.selectedObject.elements.length; i++){
                     if($scope.objectsSidebarService.selectedObject.elements[i].elementIdentifier == element.elementIdentifier){
                         index = i;

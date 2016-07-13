@@ -1,22 +1,24 @@
 <!-- Objects Sidebar Include -->
 <div ng-include="'/modules/core/views/partials/objectssidebar.html'" ng-controller="ObjectsSideBar" class=""></div>
 <!-- Gifts Section View -->
-<div ng-controller="GiftsController as giftCtrl" class="block-center">
+<div ng-controller="GiftsController as gift" class="block-center">
     <div id="wrapperContent" class="container-fluid gift-section" ng-mouseleave="update()">
         <div class="right-section-content">
+            <!--Display if form is ready to fill (ready means someone click an item in the Sidebar)-->
             <div ng-if="ready">
-                <!-- START panel-->
                 <div class="panel panel-default">
-                    <!-- NutShell Section -->
-                    <form name="giftCtrl.myForm" role="form">
+                    <!-- Gift Form-->
+                    <form name="gift.myForm" role="form">
+                        <!--Gift info-->
                         <section>
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <legend translate="GIFT.NAME"></legend>
-                                    <div ng-if="giftCtrl.myForm.$invalid || objectsSidebarService.selectedObject.availableIn.length == 0 || objectsSidebarService.selectedObject.sites.length == 0">
+                                    <!--Icons that show up depending if the form is valid or invalid-->
+                                    <div ng-if="gift.myForm.$invalid || objectsSidebarService.selectedObject.availableIn.length == 0 || objectsSidebarService.selectedObject.sites.length == 0">
                                         <label class="error-icon fa fa-times-circle enlarge-icon"></label>
                                     </div>
-                                    <div ng-if="giftCtrl.myForm.$valid && objectsSidebarService.selectedObject.availableIn.length > 0 && objectsSidebarService.selectedObject.sites.length > 0">
+                                    <div ng-if="gift.myForm.$valid && objectsSidebarService.selectedObject.availableIn.length > 0 && objectsSidebarService.selectedObject.sites.length > 0">
                                         <label class="ready-icon fa fa-check-circle enlarge-icon"></label>
                                     </div>
                                     <!--Name name:"name"-->
@@ -28,7 +30,7 @@
                                                required class="form-control title-value"
                                                ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                         <!-- Input title errors -->
-                                        <div ng-messages="giftCtrl.myForm.name.$error" ng-if="giftCtrl.myForm.name.$touched"class="help-block">
+                                        <div ng-messages="gift.myForm.name.$error" ng-if="gift.myForm.name.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.NAME_REQUIRED"></small>
                                         </div>
                                     </div>
@@ -42,7 +44,7 @@
                                                required="required" class="form-control title-value"
                                                ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                         <!-- Input message errors -->
-                                        <div ng-messages="giftCtrl.myForm.message.$error" ng-if="giftCtrl.myForm.message.$touched"class="help-block">
+                                        <div ng-messages="gift.myForm.message.$error" ng-if="gift.myForm.message.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.MESSAGE_REQUIRED"></small>
                                         </div>
                                     </div>
@@ -59,13 +61,14 @@
                                         </select>
 
                                         <!-- Input productIdentifier errors -->
-                                        <div ng-messages="giftCtrl.myForm.productIdentifier.$error" ng-if="giftCtrl.myForm.productIdentifier.$touched"class="help-block">
+                                        <div ng-messages="gift.myForm.productIdentifier.$error" ng-if="gift.myForm.productIdentifier.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.PRODUCT_REQUIRED"></small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
+                        <!--Gift details-->
                         <section>
                             <div class="panel panel-default">
                                 <div class="panel-body">
@@ -108,7 +111,7 @@
                                                    ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                             <div class="clearfix"></div>
                                             <!-- Input startDate errors -->
-                                            <div ng-messages="giftCtrl.myForm.startDate.$error" class="help-block">
+                                            <div ng-messages="gift.myForm.startDate.$error" class="help-block">
                                                 <small ng-message="date" translate="GIFT.DATE_VALIDATE"></small>
                                                 <small ng-message="required" translate="GIFT.START_DATE_REQUIRED"></small>
                                             </div>
@@ -124,7 +127,7 @@
                                                    ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                             <div class="clearfix"></div>
                                             <!-- Input endDate errors -->
-                                            <div ng-messages="giftCtrl.myForm.endDate.$error" ng-if="giftCtrl.myForm.endDate.$touched"class="help-block">
+                                            <div ng-messages="gift.myForm.endDate.$error" ng-if="gift.myForm.endDate.$touched"class="help-block">
                                                 <small ng-message="date" translate="GIFT.DATE_VALIDATE"></small>
                                                 <small ng-message="required" translate="GIFT.END_DATE_REQUIRED"></small>
                                                 <small ng-message="min" translate="GIFT.END_DATE_HIGHER"></small>
@@ -173,7 +176,7 @@
                                                required class="form-control"
                                                ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                         <!-- Input title errors -->
-                                        <div ng-messages="giftCtrl.myForm.amount.$error" ng-if="giftCtrl.myForm.amount.$touched"class="help-block">
+                                        <div ng-messages="gift.myForm.amount.$error" ng-if="gift.myForm.amount.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.AMOUNT_REQUIRED"></small>
                                         </div>
                                     </div>
@@ -242,6 +245,7 @@
                                 </div>
                             </div>
                         </section>
+                        <!--Gift locals and activation-->
                         <section>
                             <div class="panel panel-default">
                                 <div class="panel-body">
@@ -298,7 +302,7 @@
             <div ng-if="ready == false"
                  class="no-object-container">
                 <section class="text-center on-no-object-selected">
-                    <span>Por favor seleccione un regalo en la barra lateral o cree uno presionando el botón de crear nuevo.</span>
+                    <span></span>
                 </section>
             </div>
         </div>
