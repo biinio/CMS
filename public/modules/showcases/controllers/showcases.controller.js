@@ -245,9 +245,7 @@
         //Save detail model object
         $scope.save = function () {
 
-
             //Save showcases
-
             for(var i = 0; i< $scope.sites.length; i++){
                 for(var j = 0; j<$scope.sites[i].showcases.length;j++){
 
@@ -272,9 +270,7 @@
 
             if ($scope.hasMissingData()) {
                 $scope.objectsSidebarService.selectedObject.isReady = 0;
-            }
-
-            else {
+            }else {
                 $scope.objectsSidebarService.selectedObject.isReady = 1;
             }
 

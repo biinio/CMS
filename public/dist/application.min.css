@@ -15533,28 +15533,21 @@ Component: sidemenu.less
 }
 .object-item {
   background-color: #ffffff;
+  border-radius: 5px;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 2px 0px #e4e4e4;
   margin-bottom: 6px;
   margin-left: 6px;
   margin-right: 6px;
-  border-radius: 5px;
 }
-.object-item.active .list-items-side-menu div .twoRowTitle {
-  color: #1da1f2;
+.object-item .twoRowTitle {
+  cursor: pointer;
 }
-.object-item.active .list-items-side-menu div .twoRowSubtitle {
-  color: #1da1f2;
+.object-item:hover {
+  background: #fbfbfb;
 }
-.object-item.active .list-items-side-menu div .oneRowTitle {
-  color: #1da1f2;
-}
-.object-item.active .list-items-side-menu div .threeRowTitle {
-  color: #1da1f2;
-}
-.object-item.active .list-items-side-menu div .threeRowSubTitle {
-  color: #1da1f2;
-}
-.object-item.active .list-items-side-menu div .threeRowThirdLine {
-  color: #1da1f2;
+.object-item.active {
+  box-shadow: inset -5px 0px #1da1f2;
 }
 .btn-add {
   margin-left: 6px;

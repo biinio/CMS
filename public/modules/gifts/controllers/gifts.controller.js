@@ -57,20 +57,22 @@
                 "<div class='col-md-9 leftInformationArea'>"+
                     "<label class='twoRowTitle'>{{item.name}}</label>"+
                     "<small ng-if='item.amount>item.amountSpent && item.hasAvailablePeriod==false || item.amount>item.amountSpent && ((currentDate | date) <= (item.endDate | date)) && item.hasAvailablePeriod==true' class='valid-color'>Disponible</small>"+
+                    "<small ng-if='item.amount>item.amountSpent'>{{item.amount-item.amountSpent}} u.</small>"
                     "<small ng-if='item.amount==item.amountSpent && item.hasAvailablePeriod==false || item.amount==item.amountSpent && ((currentDate |date) <= (item.endDate | date)) && item.hasAvailablePeriod==true' class='invalid-color'>Agotado</small>"+
                     "<small ng-if='((currentDate | date) > (item.endDate | date)) && item.hasAvailablePeriod==true' class='invalid-color'>Vencido</small>"+
                 "</div>";
             $scope.objectsSidebarService.template =$scope.sidebarTemplate;
-            //----Functions----//
-            //Get the List of Products
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + gift.organizationId + '/readyElements/').success(function(data) {
-                $scope.products = data.data.elements;
-            });
-            //Get the List of Sites
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ gift.organizationId +'/sites').success(function(data){
-                $scope.locals = data.data.sites;
-            });
         }
+
+        //----Functions----//
+        //Get the List of Products
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + gift.organizationId + '/readyElements/').success(function(data) {
+            $scope.products = data.data.elements;
+        });
+        //Get the List of Sites
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ gift.organizationId +'/sites').success(function(data){
+            $scope.locals = data.data.sites;
+        });
 
         /**=============================================================================================================
          * Event Listeners
@@ -262,9 +264,11 @@
         //Check locals in initial data
         $scope.checkLocal = function(local){
             $scope.localsAvailable = $scope.objectsSidebarService.selectedObject.sites;
-            for(var i in $scope.localsAvailable){
-                if(local == $scope.localsAvailable[i]){
-                    return true;
+            if($scope.objectsSidebarService.selectedObject){
+                for(var i in $scope.localsAvailable){
+                    if(local == $scope.localsAvailable[i]){
+                        return true;
+                    }
                 }
             }
         }

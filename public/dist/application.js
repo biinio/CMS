@@ -5161,20 +5161,22 @@ angular.module('gifts').config(['$stateProvider',
                 "<div class='col-md-9 leftInformationArea'>"+
                     "<label class='twoRowTitle'>{{item.name}}</label>"+
                     "<small ng-if='item.amount>item.amountSpent && item.hasAvailablePeriod==false || item.amount>item.amountSpent && ((currentDate | date) <= (item.endDate | date)) && item.hasAvailablePeriod==true' class='valid-color'>Disponible</small>"+
+                    "<small ng-if='item.amount>item.amountSpent'>{{item.amount-item.amountSpent}} u.</small>"
                     "<small ng-if='item.amount==item.amountSpent && item.hasAvailablePeriod==false || item.amount==item.amountSpent && ((currentDate |date) <= (item.endDate | date)) && item.hasAvailablePeriod==true' class='invalid-color'>Agotado</small>"+
                     "<small ng-if='((currentDate | date) > (item.endDate | date)) && item.hasAvailablePeriod==true' class='invalid-color'>Vencido</small>"+
                 "</div>";
             $scope.objectsSidebarService.template =$scope.sidebarTemplate;
-            //----Functions----//
-            //Get the List of Products
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + gift.organizationId + '/readyElements/').success(function(data) {
-                $scope.products = data.data.elements;
-            });
-            //Get the List of Sites
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ gift.organizationId +'/sites').success(function(data){
-                $scope.locals = data.data.sites;
-            });
         }
+
+        //----Functions----//
+        //Get the List of Products
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + gift.organizationId + '/readyElements/').success(function(data) {
+            $scope.products = data.data.elements;
+        });
+        //Get the List of Sites
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ gift.organizationId +'/sites').success(function(data){
+            $scope.locals = data.data.sites;
+        });
 
         /**=============================================================================================================
          * Event Listeners
@@ -5366,9 +5368,11 @@ angular.module('gifts').config(['$stateProvider',
         //Check locals in initial data
         $scope.checkLocal = function(local){
             $scope.localsAvailable = $scope.objectsSidebarService.selectedObject.sites;
-            for(var i in $scope.localsAvailable){
-                if(local == $scope.localsAvailable[i]){
-                    return true;
+            if($scope.objectsSidebarService.selectedObject){
+                for(var i in $scope.localsAvailable){
+                    if(local == $scope.localsAvailable[i]){
+                        return true;
+                    }
                 }
             }
         }
@@ -5550,10 +5554,12 @@ function GmapController($scope, $modalInstance) {
                     }
 
                     var imageElement = document.createElement("img");
-                    imageElement.setAttribute("src", "https://maps.googleapis.com/maps/api/staticmap?center=" + position.coords.latitude + "," + position.coords.longitude +
-                        "&zoom=" + zoom + "&size=1024x512&markers=" + ObjectsSidebar.selectedObject.lat + "," + ObjectsSidebar.selectedObject.lng);
-                    imageElement.className += "img-responsive";
-                    element[0].appendChild(imageElement);
+                    if(ObjectsSidebar.selectedObject){
+                        imageElement.setAttribute("src", "https://maps.googleapis.com/maps/api/staticmap?center=" + position.coords.latitude + "," + position.coords.longitude +
+                            "&zoom=" + zoom + "&size=1024x512&markers=" + ObjectsSidebar.selectedObject.lat + "," + ObjectsSidebar.selectedObject.lng);
+                        imageElement.className += "img-responsive";
+                        element[0].appendChild(imageElement);
+                    }
                 }
 
                 function errorCallback(err) {
@@ -8074,9 +8080,7 @@ angular.module('showcases').config(['$stateProvider',
         //Save detail model object
         $scope.save = function () {
 
-
             //Save showcases
-
             for(var i = 0; i< $scope.sites.length; i++){
                 for(var j = 0; j<$scope.sites[i].showcases.length;j++){
 
@@ -8101,9 +8105,7 @@ angular.module('showcases').config(['$stateProvider',
 
             if ($scope.hasMissingData()) {
                 $scope.objectsSidebarService.selectedObject.isReady = 0;
-            }
-
-            else {
+            }else {
                 $scope.objectsSidebarService.selectedObject.isReady = 1;
             }
 

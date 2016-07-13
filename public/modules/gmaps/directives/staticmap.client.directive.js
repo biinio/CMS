@@ -53,10 +53,12 @@
                     }
 
                     var imageElement = document.createElement("img");
-                    imageElement.setAttribute("src", "https://maps.googleapis.com/maps/api/staticmap?center=" + position.coords.latitude + "," + position.coords.longitude +
-                        "&zoom=" + zoom + "&size=1024x512&markers=" + ObjectsSidebar.selectedObject.lat + "," + ObjectsSidebar.selectedObject.lng);
-                    imageElement.className += "img-responsive";
-                    element[0].appendChild(imageElement);
+                    if(ObjectsSidebar.selectedObject){
+                        imageElement.setAttribute("src", "https://maps.googleapis.com/maps/api/staticmap?center=" + position.coords.latitude + "," + position.coords.longitude +
+                            "&zoom=" + zoom + "&size=1024x512&markers=" + ObjectsSidebar.selectedObject.lat + "," + ObjectsSidebar.selectedObject.lng);
+                        imageElement.className += "img-responsive";
+                        element[0].appendChild(imageElement);
+                    }
                 }
 
                 function errorCallback(err) {
