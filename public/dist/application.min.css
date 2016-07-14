@@ -16027,7 +16027,7 @@ Component: elements.less
   border-radius: 0;
 }
 .dashboard .widget {
-  height: 230px;
+  height: 252.5px;
 }
 .visitsvsretorning-graph {
   min-height: 95px;
@@ -16161,6 +16161,9 @@ Component: elements.less
   min-width: 100%;
   background-color: white;
   display: table;
+}
+.select-gift {
+  margin-bottom: 10px;
 }
 .centerloader {
   display: table-cell;

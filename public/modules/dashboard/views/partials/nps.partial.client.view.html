@@ -60,6 +60,7 @@
             </div>
         </div>
         <div class="col-lg-6">
+            <button class="btn btn-primary btn-block select-gift">Seleccionar regalo</button>
             <uib-tabset active="active">
                 <!--Surveyed tab-->
                 <uib-tab index="0" heading="Encuestados">
@@ -75,13 +76,19 @@
                                              class="media-box-object img-circle thumb64"/>
                                     </div>
                                     <div class="media-box-body clearfix">
-                                        <button class="mb-sm btn filter-button-large pull-right">Premiar</button>
+                                        <button class="mb-sm btn btn-primary pull-right"><span class="fa fa-trophy"></span> Premiar</button>
                                         <strong class="media-box-heading">
                                             <span class="circle circle-success circle-lg text-left"></span>
                                             {{commentData.user}}
                                         </strong>
+                                        <!--<p class="mb-sm">-->
+                                            <!--<small>{{commentData.user.email}}</small>-->
+                                        <!--</p>-->
+                                        <!--<p class="mb-sm">-->
+                                            <!--<small>{{commentData.user.telephone}}</small>-->
+                                        <!--</p>-->
                                         <p class="mb-sm" data-ng-class="{ 'text-success': commentData.rating>=9, 'text-warning': commentData.rating<9 && commentData.rating>=7, 'text-danger':commentData.rating<7}">
-                                            <strong>Calificación: </strong><strong>{{commentData.rating}}</strong>
+                                            <small><strong>Calificación: </strong><strong>{{commentData.rating}}</strong></small>
                                         </p>
                                         <p class="mb-sm">
                                             <small>{{commentData.comment}}</small>
@@ -113,7 +120,6 @@
                     </div>
                 </uib-tab>
             </uib-tabset>
-
         </div>
     </div>
 </div>

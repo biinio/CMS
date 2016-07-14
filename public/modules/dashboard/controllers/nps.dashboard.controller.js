@@ -134,6 +134,7 @@
                     $scope.isLoading = false;
                     if (data.result == "1") {
                         updateNPSValues(data.data);
+                        console.log(data);
                     }
                 });
             } else {
