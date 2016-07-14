@@ -13,10 +13,12 @@
         .module('profile')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','Loading'];
-    function ProfileController($http, $state, $scope, Authentication, toaster, $location, Organization,Loading) {
+    ProfileController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','Loading', 'ObjectsSidebar'];
+    function ProfileController($http, $state, $scope, Authentication, toaster, $location, Organization, Loading, ObjectsSidebar) {
         var vm = this;
         $scope.organizationService = Organization;
+        $scope.objectsSidebarService = ObjectsSidebar;
+
         if (!Authentication.user) {
             $location.path('/');
         }

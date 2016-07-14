@@ -50,8 +50,8 @@
   position: relative;
 
   .navbar-header {
-    background-color: @nav-header-bg;
-    #gradient.horizontal(@nav-top-bg-start, @nav-top-bg-end);
+    background-color: #fff;
+
     @media @tablet {
       background-image: none;
     }
@@ -81,12 +81,13 @@
     .brand-logo-collapsed { 
       display: none; 
       padding: 6px 15px;
+      margin-top: 4px;
     }
   }
   
   .navbar-nav > li > a,
   .navbar-nav > .open > a {
-    color: @nav-top-item-mobile;
+    color: #656565;
     &:hover, &:focus {
       color: @nav-top-item-mobile-active;
     }
@@ -244,9 +245,9 @@
 
     .navbar-nav > li > a,
     .navbar-nav > .open > a {
-      color: @nav-top-item-desktop !important;
+      color: #656565;
       &:hover, &:focus {
-        color: @nav-top-item-desktop-active;
+        color: #fc8a05;
       }
     }
 

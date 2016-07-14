@@ -13,17 +13,37 @@
         .module('objectssidebar')
         .controller('ObjectsSideBar', ObjectsSideBar);
 
-    ObjectsSideBar.$inject = ['$http', '$state','$scope','$rootScope','ObjectsSidebar'];
-    function ObjectsSideBar($http, $state, $scope,$rootScope,ObjectsSidebar) {
+    ObjectsSideBar.$inject = ['$http', '$state','$scope','$rootScope','ObjectsSidebar','Organization'];
+    function ObjectsSideBar($http, $state, $scope,$rootScope,ObjectsSidebar,Organization) {
         var vm = this;
         activate();
 
-        $scope.isHidden = false;
-        $scope.objectsSidebarService = ObjectsSidebar;
         ////////////////
 
         function activate() {
+            $scope.isHidden = false;
+            $scope.objectsSidebarService = ObjectsSidebar;
+            //Organization Service
+            $scope.organizationService = Organization;
+            //Draggable Properties
+            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.currentDate = new Date();
+            
+            //----Functions----//
+            //Get the List of Products
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+                $scope.products = data.data.elements;
+            });
         }
+
+        //Function to set the image of the current product into the thumbnail in the Objects Sidebar
+        $scope.setProductImage = function (product) {
+            for(var i in $scope.products){
+                if(product == $scope.products[i].elementIdentifier){
+                    return $scope.products[i].media[0].url;
+                }
+            }
+        };
 
         $scope.onObjectClick = function( index ){
             var objectClicked = $scope.objectsSidebarService.getObjects()[index];

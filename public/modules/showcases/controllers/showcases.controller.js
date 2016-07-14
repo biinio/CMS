@@ -48,7 +48,6 @@
 
         /**=============================================================================================================
          * Events Listeners
-         *
          =============================================================================================================*/
 
         $scope.$on('$stateChangeStart', function(){
@@ -196,7 +195,6 @@
 
         };
 
-
         $scope.hasValidElements = function(selectedShowcase) {
             var validElement = _.findWhere(selectedShowcase, {isReady: 1});
             if (validElement)
@@ -242,14 +240,13 @@
             }
 
             return missingMinData;
-
         };
 
         //Save detail model object
         $scope.save = function () {
 
 
-            //save sites
+            //Save showcases
 
             for(var i = 0; i< $scope.sites.length; i++){
                 for(var j = 0; j<$scope.sites[i].showcases.length;j++){
@@ -302,17 +299,17 @@
 
         $scope.filteredElements = function ( element ) {
             var index = -1;
-            for(var i = 0; i < $scope.objectsSidebarService.selectedObject.elements.length; i++){
-                if($scope.objectsSidebarService.selectedObject.elements[i].elementIdentifier == element.elementIdentifier){
-                    index = i;
-                    break;
+            if($scope.objectsSidebarService.selectedObject.elements.length > 0){
+                for(var i = 0; i < $scope.objectsSidebarService.selectedObject.elements.length; i++){
+                    if($scope.objectsSidebarService.selectedObject.elements[i].elementIdentifier == element.elementIdentifier){
+                        index = i;
+                        break;
+                    }
                 }
             }
+
             return  index == -1;
         };
-
-
-
 
         //Remove an element of a Showcase
         $scope.removeElementAt = function (index) {

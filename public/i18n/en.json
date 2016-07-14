@@ -1,5 +1,8 @@
 {
-  "dashboard": {
+  "CATEGORY": {
+    "CATEGORIES_DESCRIPTION": "Categories allow your site and products to be visible on searches. Select the ones you think need to be associated with your site and products."
+  },
+  "DASHBOARD": {
     "TITLE": "Dashboard",
     "WELCOME": "Welcome to {{appName}}",
     "SITE_FILTER": "Site",
@@ -14,69 +17,6 @@
     "FILTER_7DAYS": "7 Days",
     "FILTER_30DAYS": "30 Days",
     "FILTER_6MONTHS": "6 Months"
-  },
-  "topbar": {
-    "EDIT_PROFILE": "Edit profile",
-    "EDIT_SOCIALMEDIA": "Manage social networks",
-    "EDIT_PASSWORD": "Change password",
-    "SIGN_OUT": "Sign out",
-    "search": {
-      "PLACEHOLDER": "Type and hit enter.."
-    }
-  },
-  "sidebar": {
-    "WELCOME": "Welcome",
-    "MENU_DASHBOARD": "Dashboard",
-    "MENU_SITES": "Sites",
-    "MENU_ELEMENTS": "Elements",
-    "MENU_SHOWCASES": "Showcases",
-    "MENU_BIINS": "Notices",
-    "MENU_ADMINISTRATION": "Administration",
-    "MENU_MAINTENANCE": "Maintenance",
-    "MENU_PROFILE": "Profile",
-    "MENU_ORGANIZATIONS": "Organizations",
-    "MENU_NPS": "Net Promoter Score"
-  },
-  "PROFILE": {
-    "FIRST_NAME": "First name",
-    "LAST_NAME": "Last name",
-    "USER_NAME": "Username",
-    "EMAIL": "Email",
-    "PHONE": "Phone",
-    "UPLOAD_IMAGE": "Upload image"
-  },
-  "ORGANIZATION":{
-    "TITLE": "Organizations",
-    "SUB_TITLE": "Manage your organizations that are handled by Biin",
-    "ADD_NEW": "Add new",
-    "NAME": "Name",
-    "BRAND": "Brand",
-    "INFORMATION": "About",
-    "MORE_INFO": "Additional Information",
-    "ORG_ID": "Identifier",
-    "PUBLISHED": "PUBLISHED"
-  },
-  "TYPE":{
-    "TITLE":"Type of element",
-    "SUB_TITLE": "Select the type that best describes your element.",
-    "INFO": "Informative",
-    "BENEFIT": "Benefits",
-    "SELECT": "Please select a type that classifies your element to continue",
-    "INFO1": "Element description",
-    "INFO_DESC": "This allows you to create information relevant to the visitors of your establishment",
-    "BENEFIT1": "Product or Sale",
-    "BENEFIT_DESC": "Informs about products, sales or coupons",
-    "IDENTIFIER": "Identifier"
-  },
-  "GALLERY":{
-    "TITLE": "Image gallery",
-    "SUB_TITLE": "Add images that will allow your establishment to be identified by your brand.",
-    "UPLOAD": "Upload",
-    "APPLY": "Apply",
-    "LOADING": "Loading images, please wait..."
-  },
-  "LOADER":{
-    "LOADING": "Loading your information, please wait..."
   },
   "ELEMENT":{
     "TITLE": "About the element",
@@ -93,7 +33,17 @@
     "ACTION_TITLE": "Action title",
     "ACTION_TITLE_PLACEHOLDER": "Add the name of the action to be performed",
     "ACTION_URL": "URL",
-    "ACTION_URL_PLACEHOLDER": "www.example.com"
+    "ACTION_URL_PLACEHOLDER": "www.example.com",
+    "CREATING" : "Your product is being created.",
+    "DELETED_TEXT" : "Your product was successfully removed ."
+  },
+  "GALLERY":{
+    "TITLE": "Image gallery",
+    "SUB_TITLE": "Add images that will allow your establishment to be identified by your brand.",
+    "UPLOAD": "Upload",
+    "APPLY": "Apply",
+    "LOADING": "Loading images, please wait...",
+    "NOIMAGEUPLOADED":"At this time there is no picture in the gallery , you can upload images with the add button."
   },
   "GENERIC":{
     "SEARCH_TAGS": "Search tags",
@@ -115,64 +65,56 @@
     "DELETE_ELEMENT_CONFIRMATION": "Do you wish to delete this element?",
     "DELETE_SHOWCASE": "Delete showcase",
     "DELETE_SHOWCASE_CONFIRMATION": "Do you wish to delete this showcase?",
+    "DELETE_GIFT": "Delete gift",
+    "DELETE_GIFT_TITLE": "Do you wish to delete this gift?",
     "DELETE_ORGANIZATION": "Delete organization",
     "DELETE_ORGANIZATION_CONFIRMATION": "Do you wish to delete this organization?",
-    "DELETE_IMAGES_CONFIRMATION": "Do you wish to delete the selected images?"
+    "DELETE_IMAGES_CONFIRMATION": "Do you wish to delete the selected images?",
+    "POSITIVE": "Yes",
+    "NEGATIVE": "No",
+    "ACTIVATE":  "Activate",
+    "DESACTIVATE": "Desactivate"
   },
-  "SITES":{
-    "TITLE": "Establishment Details",
-    "NAME": "Name",
-    "NAME_PLACEHOLDER": "Enter the name of your establishment",
-    "AT": "Located at",
-    "AT_PLACEHOLDER": "Enter the name of your location",
-    "EMAIL": "Email",
-    "EMAIL_PLACEHOLDER": "my-site@example.com",
-    "NUTSHELL": "Brief Description",
-    "NUTSHELL_PLACEHOLDER": "Enter a short description of your establishment",
-    "SCHEDULE":"Schedule",
-    "SCHEDULE_PLACEHOLDER":"Enter site's schedule",
-
-    "LOCATION":{
-      "TITLE": "Establishment location",
-      "SUB_TITLE": "Add information about the location of your establishment to help clients find you easily",
-      "COUNTRY": "Country",
-      "CITY": "City",
-      "STATE": "Province/State",
-      "ZIP": "Postal Code",
-      "ADDRESS": "Address 1",
-      "PHONE": "Phone",
-      "DETAIL_LOC": "Address 2",
-      "MAP_LOCATION": "Map Location",
-      "MAP_LOCATION_SUB": "Locate you establishment in the map to determine its latitude and longitude",
-      "LATITUDE": "Latitude",
-      "LONGITUDE": "Longitude"
-    }
-  },
-  "PRICELIST": {
-    "INSERT": "Insert price list",
-    "ADD": " Add Item",
-    "CURRENCY": "Currency",
-    "NAME": "Name",
-    "NAME_PLACEHOLDER": "Enter product name",
-    "TITLE": "Title",
-    "TITLE_PLACEHOLDER": "Enter price list title",
-    "DESCRIPTION": "Description",
-    "DESCRIPTION_PLACEHOLDER": "Enter product details",
-    "PRICE": "Price"
-  },
-  "CATEGORY": {
-    "CATEGORIES_DESCRIPTION": "Categories allow your site and products to be visible on searches. Select the ones you think need to be associated with your site and products."
-  },
-  "TEXTANGULAR": {
-    "INSERT_BUTTON": "Add",
-    "CANCEL_BUTTON": "Cancel",
-    "QUOTE_BUTTON": "Annotation",
-    "TITLE_BUTTON": "Title",
-    "SUBTITLE_BUTTON": "Subtitle",
-    "TEXT_BUTTON": "Text",
-    "FOOTNOTE_BUTTON": "Small text",
-    "PRICELIST_BUTTON": "Price list",
-    "HIGHLIGHT_BUTTON": "Highlight"
+  "GIFT":{
+    "NAME": "About the gift",
+    "GIFT_NAME": "Título",
+    "NAME_PLACEHOLDER": "Write a cool title for your gift",
+    "NAME_REQUIRED": "*You must write a title for the gift",
+    "MESSAGE": "Message",
+    "MESSAGE_PLACEHOLDER": "Write the reason of your gift",
+    "MESSAGE_REQUIRED": "*You must write a message",
+    "GIFT": "Product",
+    "GIFT_DETAIL": "Gift Details",
+    "AVAILABLE_PERIOD_QUESTION": "Does the gift have an available period?",
+    "AVAILABLE_PERIOD": "Available period",
+    "PRODUCT_SELECT": "Chose an option...",
+    "PRODUCT_REQUIRED": "*You must select a product",
+    "START_DATE_REQUIRED": "*You must select a start date",
+    "END_DATE_REQUIRED": "*You must select an end date",
+    "END_DATE_HIGHER": "*You must be higher than start date",
+    "DATE_VALIDATE": "*You must select a valid date",
+    "EXPIRE_TIME": "Expire time after assigning",
+    "A_DAY": "One day",
+    "A_WEEK": "One week",
+    "NOT_OVERCOME": "Not overcome",
+    "AMOUNT": "Amount of gift available",
+    "AMOUNT_PLACEHOLDER":"Number of gifts",
+    "AMOUNT_REQUIRED": "Must write a gift amount",
+    "IS_AUTOMATIC": "Mapping Mode",
+    "MANUAL": "Manual",
+    "AUTOMATIC": "Automatic",
+    "AVAILABLE_IN": "Available in:",
+    "AVAILABLE_NPS": "NPS",
+    "AVAILABLE_MEC": "MEC",
+    "AVAILABLE_VIP": "VIP Clients",
+    "AVAILABLE_ALL": "All",
+    "AVAILABLE_REQUIRED": "You must select at least one of the above options",
+    "LOCALS": "Available locals",
+    "LOCALS_AVAILABLE": "Select the locals that will have this gift",
+    "LOCALS_REQUIRED": "You must select at least one local",
+    "INFO": "*A gift can be deleted or desactivated, just if it was'nt reclaimed",
+    "INFO2": "**If the gift was claimed , you can only updates the locals where it is",
+    "CREATING": "Your gift is being created."
   },
   "HIGHLIGHT": {
     "INSERT": "Enter highlight details",
@@ -206,18 +148,76 @@
     "LIMITEDQTY_TOOLTIPT": "Allow promotions with limited quantities",
     "LIMITEDQTY_PLACEHOLDER": "Quantity **"
   },
+  "LOADER":{
+    "LOADING": "Loading your information, please wait..."
+  },
   "LOGIN": {
-    "SIGN_IN": "Sign in with your biin account",
-    "EMAIL_PLACEHOLDER": "Enter your e-mail address",
-    "REQUIRED": "This field is required",
-    "VALID_EMAIL": "This field must be a valid email address",
+    "SIGN_IN": "Login",
+    "EMAIL_PLACEHOLDER": "E-mail address",
+    "REQUIRED_EMAIL": "The email is required",
+    "VALID_EMAIL": "Insert a valid email address",
     "PASSWORD": "Password",
+    "REQUIRED_PASSWORD": "The password is required",
     "REMEMBER_ME": "Remember Me",
     "FORGOT_PASSWORD": "Forgot your password?",
-    "LOGIN_BUTTON": "Continue",
+    "LOGIN_BUTTON": "Login",
     "SIGN_UP": "Need to sign up?",
-    "REGISTER_NOW": "Register Now"
-    "NEED_HELP":"If you're having problems, let us know at "
+    "REGISTER_NOW": "Register Now",
+    "NEED_HELP":"If you're having problems, let us know at ",
+    "NEED_HELP2":" or call us at (506) 8706-6660",
+    "COPYRIGHT":" .All rights reserved",
+    "INVALID_CREDENTIALS":"Invalid credentials",
+    "SERVER_ERROR":"Connection Error"
+  },
+  "NOTICES":{
+    "CREATING" : "Your ad is being created.",
+    "DELETED_TEXT" : "Your ad was remove succesfully.",
+    "DELETE_TITLE":"¿Do you want to delete this ad?",
+    "DELETE_CONFIRMATION" : "When an ad is removed, it is not available for other users.",
+    "DELETED" : "Deleted",
+    "DELETE_NOTICE": "Delete ad"
+  },
+  "NPS":{
+    "TITLE" : "NPS",
+    "ACTIVATE_TITLE":"Activate survey of net promoter score",
+    "ACTIVATE_HELP":"Activating this option, your visitants will receive a satisfaction survey using the Net Promoter Score tool.",
+    "LOADING":"Getting data for calculate the NPS",
+    "PROMOTERS":"PROMOTERS",
+    "DETRACTORS":"DETRACTORS",
+    "PASSIVE":"PASSIVE",
+    "THIS_WEEK":"This week",
+    "NPS":"Net Promoter Score"
+  },
+  "ORGANIZATION":{
+    "TITLE": "Organizations",
+    "SUB_TITLE": "Manage your organizations that are handled by Biin",
+    "ADD_NEW": "Add new",
+    "NAME": "Name",
+    "BRAND": "Brand",
+    "INFORMATION": "About",
+    "MORE_INFO": "Additional Information",
+    "ORG_ID": "Identifier",
+    "PUBLISHED": "PUBLISHED"
+  },
+  "PRICELIST": {
+    "INSERT": "Insert price list",
+    "ADD": " Add Item",
+    "CURRENCY": "Currency",
+    "NAME": "Name",
+    "NAME_PLACEHOLDER": "Enter product name",
+    "TITLE": "Title",
+    "TITLE_PLACEHOLDER": "Enter price list title",
+    "DESCRIPTION": "Description",
+    "DESCRIPTION_PLACEHOLDER": "Enter product details",
+    "PRICE": "Price"
+  },
+  "PROFILE": {
+    "FIRST_NAME": "First name",
+    "LAST_NAME": "Last name",
+    "USER_NAME": "Username",
+    "EMAIL": "Email",
+    "PHONE": "Phone",
+    "UPLOAD_IMAGE": "Upload image"
   },
   "SHOWCASE": {
     "DETAILS": "Showcase details",
@@ -232,15 +232,79 @@
     "SITES_INFO": "Please select the showcases you wish to enable at each site.",
     "ELEMENTS_REQUIRED_MESSAGE": "Please assign at least one valid element to this showcase"
   },
-  "NPS":{
-    "TITLE" : "NPS",
-    "ACTIVATE_TITLE":"Activate survey of net promoter score",
-    "ACTIVATE_HELP":"Activating this option, your visitants will receive a satisfaction survey using the Net Promoter Score tool.",
-    "LOADING":"Getting data for calculate the NPS",
-    "PROMOTERS":"PROMOTERS",
-    "DETRACTORS":"DETRACTORS",
-    "PASSIVE":"PASSIVE",
-    "THIS_WEEK":"This week",
-    "NPS":"Net Promoter Score"
+  "SIDEBAR": {
+    "WELCOME": "Welcome",
+    "MENU_DASHBOARD": "Dashboard",
+    "MENU_SITES": "Sites",
+    "MENU_ELEMENTS": "Elements",
+    "MENU_SHOWCASES": "Showcases",
+    "MENU_BIINS": "Notices",
+    "MENU_ADMINISTRATION": "Administration",
+    "MENU_MAINTENANCE": "Maintenance",
+    "MENU_PROFILE": "Profile",
+    "MENU_ORGANIZATIONS": "Organizations",
+    "MENU_NPS": "Net Promoter Score",
+    "MENU_GIFTS":"Gifts"
+  },
+  "SITES":{
+    "TITLE": "Establishment Details",
+    "NAME": "Name",
+    "NAME_PLACEHOLDER": "Enter the name of your establishment",
+    "AT": "Located at",
+    "AT_PLACEHOLDER": "Enter the name of your location",
+    "EMAIL": "Email",
+    "EMAIL_PLACEHOLDER": "my-site@example.com",
+    "NUTSHELL": "Brief Description",
+    "NUTSHELL_PLACEHOLDER": "Enter a short description of your establishment",
+    "SCHEDULE":"Schedule",
+    "SCHEDULE_PLACEHOLDER":"Enter site's schedule",
+
+    "LOCATION":{
+      "TITLE": "Establishment location",
+      "SUB_TITLE": "Add information about the location of your establishment to help clients find you easily",
+      "COUNTRY": "Country",
+      "CITY": "City",
+      "STATE": "Province/State",
+      "ZIP": "Postal Code",
+      "ADDRESS": "Address 1",
+      "PHONE": "Phone",
+      "DETAIL_LOC": "Address 2",
+      "MAP_LOCATION": "Map Location",
+      "MAP_LOCATION_SUB": "Locate you establishment in the map to determine its latitude and longitude",
+      "LATITUDE": "Latitude",
+      "LONGITUDE": "Longitude"
+    }
+  },
+  "TEXTANGULAR": {
+    "INSERT_BUTTON": "Add",
+    "CANCEL_BUTTON": "Cancel",
+    "QUOTE_BUTTON": "Annotation",
+    "TITLE_BUTTON": "Title",
+    "SUBTITLE_BUTTON": "Subtitle",
+    "TEXT_BUTTON": "Text",
+    "FOOTNOTE_BUTTON": "Small text",
+    "PRICELIST_BUTTON": "Price list",
+    "HIGHLIGHT_BUTTON": "Highlight"
+  },
+  "TOPBAR": {
+    "EDIT_PROFILE": "Edit profile",
+    "EDIT_SOCIALMEDIA": "Manage social networks",
+    "EDIT_PASSWORD": "Change password",
+    "SIGN_OUT": "Sign out",
+    "search": {
+      "PLACEHOLDER": "Type and hit enter.."
+    }
+  },
+  "TYPE":{
+    "TITLE":"Type of element",
+    "SUB_TITLE": "Select the type that best describes your element.",
+    "INFO": "Informative",
+    "BENEFIT": "Benefits",
+    "SELECT": "Please select a type that classifies your element to continue",
+    "INFO1": "Element description",
+    "INFO_DESC": "This allows you to create information relevant to the visitors of your establishment",
+    "BENEFIT1": "Product or Sale",
+    "BENEFIT_DESC": "Informs about products, sales or coupons",
+    "IDENTIFIER": "Identifier"
   }
 }

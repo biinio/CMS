@@ -10,8 +10,8 @@
         .module('dashboard')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','ObjectsSidebar','GlobalFilters','Loading'];
-    function DashboardController($http, $state, $scope, Authentication, Organization,ObjectsSidebar,GlobalFilters,Loading) {
+    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization', 'ObjectsSidebar', 'GlobalFilters', 'Loading'];
+    function DashboardController($http, $state, $scope, Authentication, Organization, ObjectsSidebar, GlobalFilters, Loading) {
 
         if (!Authentication.user) {
             $location.path('/');
@@ -61,7 +61,7 @@
 
         $scope.$on('$stateChangeStart', function(){
             $scope.loadingService.isLoading = true;
-            $scope.objectsSidebarService.reset();
+            $scope.objectsSidebar.reset();
         });
 
         $scope.$on('Biin: Finished Presential Children To Load', function(scope, children){

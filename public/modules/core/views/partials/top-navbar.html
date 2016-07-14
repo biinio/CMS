@@ -4,10 +4,10 @@
     <div class="navbar-header">
         <a href="#/" class="navbar-brand">
             <div class="brand-logo">
-                <img src="modules/core/img/brand/biinLogo85x34.png" alt="App Logo" class="img-responsive"/>
+                <img src="modules/core/img/brand/biinLogo85x34.svg" alt="App Logo" class="img-responsive" width="70px"/>
             </div>
             <div class="brand-logo-collapsed">
-                <img src="modules/core/img/brand/biinLogo40x42.png" alt="App Logo" class="img-responsive"/>
+                <img src="modules/core/img/brand/biinLogo.svg" alt="App Logo" class="img-responsive" width="27px"/>
             </div>
         </a>
     </div>
@@ -75,17 +75,17 @@
                 </a>
                 <ul class="dropdown-menu"">
                     <!--<li>
-                        <a href="/#!/settings/profile">{{'topbar.EDIT_PROFILE' | translate}}</a>
+                        <a href="/#!/settings/profile">{{'TOPBAR.EDIT_PROFILE' | translate}}</a>
                     </li>
                     <li>
-                        <a href="/#!/settings/accounts">{{'topbar.EDIT_SOCIALMEDIA' | translate}}</a>
+                        <a href="/#!/settings/accounts">{{'TOPBAR.EDIT_SOCIALMEDIA' | translate}}</a>
                     </li>-->
                     <li data-ng-show="authentication.user.provider === 'local'">
-                        <a href="/#!/settings/password">{{'topbar.EDIT_PASSWORD' | translate}}</a>
+                        <a href="/#!/settings/password">{{'TOPBAR.EDIT_PASSWORD' | translate}}</a>
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="/auth/signout">{{'topbar.SIGN_OUT' | translate}}</a>
+                        <a href="/auth/signout">{{'TOPBAR.SIGN_OUT' | translate}}</a>
                     </li>
                 </ul>
             </li>
@@ -118,7 +118,7 @@
     <!-- START Search form-->
     <!--<form role="search" action="search.html" class="navbar-form">
         <div class="form-group has-feedback">
-            <input type="text" placeholder="{{ 'topbar.search.PLACEHOLDER' | translate }}" class="form-control"/>
+            <input type="text" placeholder="{{ 'TOPBAR.search.PLACEHOLDER' | translate }}" class="form-control"/>
 
             <div search-dismiss="search-dismiss" class="fa fa-times form-control-feedback"></div>
         </div>

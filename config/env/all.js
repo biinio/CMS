@@ -26,6 +26,7 @@ module.exports = {
                 'public/lib/angular-touch/angular-touch.js',
                 'public/lib/angular-ui-router/release/angular-ui-router.js',
                 'public/lib/ngstorage/ngStorage.js',
+                'public/lib/angular-messages/angular-messages.js',
                 'public/lib/angular-ui-utils/index.js',
                 'public/lib/angular-ui-mask/dist/mask.js',
                 'public/lib/angular-ui-event/dist/event.js',

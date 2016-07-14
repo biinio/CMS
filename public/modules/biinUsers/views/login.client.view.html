@@ -1,30 +1,46 @@
-<div data-ng-controller="LoginFormController as login" class="block-center mt-xl wd-xl">
+<div data-ng-controller="LoginFormController as login" class="login container-fluid">
    <!-- START panel-->
-   <div class="panel panel-dark panel-flat">
+   <div class="content col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
       <div class="panel-heading text-center">
          <a href="#">
-            <img src="modules/core/img/brand/logo-biin-dark.png" alt="Image" class="block-center img-rounded" />
+            <img src="modules/core/img/brand/logo-biin-dark.svg" alt="Image" class="block-center" width="260" height="134"/>
          </a>
       </div>
       <div class="panel-body">
-         <p class="text-center pv" translate="LOGIN.SIGN_IN"></p>
-         <form role="form" data-ng-submit="login.login()" name="login.loginForm" novalidate="" class="form-validate mb-lg">
-            <div class="form-group has-feedback">
-               <input id="exampleInputEmail1" type="email" name="account_email" placeholder="{{ 'LOGIN.EMAIL_PLACEHOLDER' | translate }}" autocomplete="off" data-ng-model="login.account.email" required="" class="form-control" />
-               <span class="fa fa-envelope form-control-feedback text-muted"></span>
-               <span data-ng-show="login.loginForm.account_email.$dirty &amp;&amp; login.loginForm.account_email.$error.required" class="text-danger">{{ 'LOGIN.REQUIRED' | translate }}</span>
-               <span data-ng-show="login.loginForm.account_email.$dirty &amp;&amp; login.loginForm.account_email.$error.email" class="text-danger">{{ 'LOGIN.VALID_EMAIL' | translate }}</span>
+         <h1 class="text-center pv" translate="LOGIN.SIGN_IN"></h1>
+         <form role="form" data-ng-submit="login.login()" name="login.loginForm" novalidate="" class="mb-lg">
+            <!--Email name:"account_email"-->
+            <div class="form-group">
+               <div class="input-group">
+                  <span class="input-group-addon" id="email-addon"><i class="fa fa-envelope"></i></span>
+                  <input aria-describedby="email-addon" id="exampleInputEmail1" type="email" name="account_email" placeholder="{{ 'LOGIN.EMAIL_PLACEHOLDER' | translate }}" autocomplete="off" data-ng-model="login.account.email" required class="form-control" />
+               </div>
+               <!-- Input account_email errors -->
+               <div ng-messages="login.loginForm.account_email.$error" ng-if="login.loginForm.account_email.$touched"class="help-block">
+                  <small ng-message="required">{{ 'LOGIN.REQUIRED_EMAIL' | translate }}</small>
+                  <small ng-message="email">{{ 'LOGIN.VALID_EMAIL' | translate }}</small>
+               </div>
             </div>
-            <div class="form-group has-feedback">
-               <input id="exampleInputPassword1" type="password" name="account_password" placeholder="{{ 'LOGIN.PASSWORD' | translate }}" data-ng-model="login.account.password" required="" class="form-control" />
-               <span class="fa fa-lock form-control-feedback text-muted"></span>
-               <span data-ng-show="login.loginForm.account_password.$dirty &amp;&amp; login.loginForm.account_password.$error.required" class="text-danger">{{ 'LOGIN.REQUIRED' | translate }}</span>
+
+            <!--Password name:"account_password"-->
+            <div class="form-group">
+               <div class="input-group">
+                  <span class="input-group-addon" id="password-addon"><i class="fa fa-lock"></i></span>
+                  <input id="exampleInputPassword1" type="password" name="account_password" placeholder="{{ 'LOGIN.PASSWORD' | translate }}" data-ng-model="login.account.password" required class="form-control" />
+               </div>
+               <!-- Input password_email errors -->
+               <div ng-messages="login.loginForm.account_password.$error" ng-if="login.loginForm.account_password.$touched"class="help-block">
+                  <small ng-message="required">{{ 'LOGIN.REQUIRED_PASSWORD' | translate }}</small>
+               </div>
             </div>
+
             <div class="clearfix">
                <div class="checkbox c-checkbox pull-left mt0">
-                  <label>
-                     <input type="checkbox" value="" name="account_remember" data-ng-model="login.account.remember" />
-                     <span class="fa fa-check"></span>{{ 'LOGIN.REMEMBER_ME' | translate }}</label>
+                     <div class="switch">
+                        <input id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox" name="account_remember" data-ng-model="login.account.remember">
+                        <label for="cmn-toggle-1"></label>
+                     </div>
+                     <p class="rememberLabel">{{ 'LOGIN.REMEMBER_ME' | translate }}</p>
                </div>
                <!--<div class="pull-right"><a ui-sref="page.recover" class="text-muted">{{ 'LOGIN.FORGOT_PASSWORD' | translate }}</a>
                </div>-->
@@ -32,7 +48,8 @@
             <button type="submit" class="btn btn-block btn-primary mt-lg">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</button>
          </form>
          <div data-ng-show="login.authMsg" class="alert alert-danger text-center">{{login.authMsg}}</div>
-         <p>{{'LOGIN.NEED_HELP' | translate}} <a href="mailto:contact@biin.io">contact@biin.io</a></p>
+         <hr>
+         <p class="text-center">{{'LOGIN.NEED_HELP' | translate}} <a href="mailto:contact@biin.io">contact@biin.io</a> {{'LOGIN.NEED_HELP2' | translate}}</p>
          <!-- SIGN UP SECTION -->
          <!--
          <p class="pt-lg text-center">{{ 'LOGIN.SIGN_UP' | translate }}</p><a ui-sref="page.register" class="btn btn-block btn-default">{{ 'LOGIN.REGISTER_NOW' | translate }}</a>
@@ -40,11 +57,12 @@
       </div>
    </div>
    <!-- END panel-->
-   <div class="p-lg text-center">
+   <div class="footer p-lg text-center col-xs-12">
       <span>&copy;</span>
       <span data-ng-bind="app.year"></span>
       <span>-</span>
       <span data-ng-bind="app.name"></span>
+      <span>{{'LOGIN.COPYRIGHT' | translate}}</span>
       <br/>
       <!--<span ng-bind="app.description"></span>-->
    </div>

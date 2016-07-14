@@ -16,7 +16,7 @@ var ApplicationConfiguration = (function() {
 
 	var applicationModuleVendorDependencies = ['ngRoute', 'ngAnimate', 'ngStorage', 'ngTouch', 'ngCookies',
         'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize',
-        'ngResource', 'ui.utils','ngAnimate', 'toaster','textAngular','bootstrap-tagsinput','angular-bind-html-compile',
+        'ngResource', 'ngMessages', 'ui.utils','ngAnimate', 'toaster','textAngular','bootstrap-tagsinput','angular-bind-html-compile',
 		'datePicker','ui.bootstrap-slider','ngDragDrop','nvd3','ngImgCrop','color.picker'];
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
@@ -130,6 +130,14 @@ ApplicationConfiguration.registerModule('app.forms');
 
 'use strict';
 ApplicationConfiguration.registerModule('gallery');
+
+/**
+ * Created by Carlos on 6/27/16.
+ */
+'use strict';
+
+// Use Application configuration module to register a new module
+ApplicationConfiguration.registerModule('gifts');
 
 'use strict';
 ApplicationConfiguration.registerModule('gmaps');
@@ -558,13 +566,14 @@ angular.module('biinUsers').config(['$stateProvider',
 
 (function() {
     'use strict';
-
+      
     angular
         .module('biinUsers')
         .controller('LoginFormController', LoginFormController);
 
-    LoginFormController.$inject = ['$http', '$state','$location','$scope','Authentication','Organization'];
-    function LoginFormController($http, $state,$location,$scope,Authentication,Organization) {
+    LoginFormController.$inject = ['$http', '$state','$location','$scope','$translate','Authentication','Organization'];
+
+    function LoginFormController($http, $state,$location,$scope,$translate,Authentication,Organization) {
         var vm = this;
         $scope.authentication = Authentication;
 
@@ -577,52 +586,46 @@ angular.module('biinUsers').config(['$stateProvider',
         ////////////////
 
         function activate() {
-          // bind here all data from the form
-          vm.account = {};
-          // place the message if something goes wrong
-          vm.authMsg = '';
-
-          vm.login = function() {
+            // Bind here all data from the form
+            vm.account = {};
+            // Place the message if something goes wrong
             vm.authMsg = '';
 
-            if(vm.loginForm.$valid) {
+            vm.login = function() {
+                vm.authMsg = '';
 
-              $http
-                .post('api/account/login', {email: vm.account.email, password: vm.account.password})
-                .then(function(response) {
-                  // assumes if ok, response is an object with some data, if not, a string with error
-                  // customize according to your api
-                  if ( !response.data.account ) {
-                    vm.authMsg = 'Incorrect credentials';
-                  }else{
-                      $scope.authentication.user = response.data.account;
-                      Organization.getSelectedOrganization().then(function() {
-                          Organization.getOrganizations().then( function() {
-                              $state.go('app.dashboard');
-                          });
-                      });
-
-                  }
-                }, function(reason) {
-                      console.log(reason);
-                      if (reason.status == "401") {
-                          vm.authMsg = 'Incorrect credentials';
-                      } else {
-                          vm.authMsg = 'Server Request Error';
-                      }
-                      $state.go('page.login');
-                });
-            }
-            else {
-              // set as dirty if the user click directly to login so we show the validation messages
-              /*jshint -W106*/
-              vm.loginForm.account_email.$dirty = true;
-              vm.loginForm.account_password.$dirty = true;
-            }
-          };
+                if(vm.loginForm.$valid) {
+                    $http
+                    .post('api/account/login', {email: vm.account.email, password: vm.account.password})
+                    .then(function(response) {
+                    // Assumes if ok, response is an object with some data, if not, a string with error
+                    // Customize according to your api
+                    if ( !response.data.account ) {
+                        vm.authMsg = $translate('LOGIN.INVALID_CREDENTIALS');
+                    }else{
+                        $scope.authentication.user = response.data.account;
+                        Organization.getSelectedOrganization().then(function() {
+                            Organization.getOrganizations().then( function() {
+                                $state.go('app.dashboard');
+                            });
+                        });
+                    }
+                    }, function(reason) {
+                        if (reason.status == "401") {
+                            vm.authMsg = $translate.instant('LOGIN.INVALID_CREDENTIALS');
+                        } else {
+                            vm.authMsg = $translate.instant('SERVER_ERROR');
+                        }
+                        $state.go('page.login');
+                    });
+                }else {
+                // Set as dirty if the user click directly to login so we show the validation messages
+                /*jshint -W106*/
+                vm.loginForm.account_email.$dirty = true;
+                vm.loginForm.account_password.$dirty = true;
+                }
+            };
         }
-
-
     }
 })();
 
@@ -1726,7 +1729,6 @@ angular.module('biins').config(['$stateProvider',
       core.service    = $provide.service;
       core.constant   = $provide.constant;
       core.value      = $provide.value;
-
     }
 
 })();
@@ -1761,15 +1763,16 @@ angular.module('biins').config(['$stateProvider',
         // Add default menu entry
         //Menus.addMenuItem('sidebar', 'Home', 'home', null, '/home', true, null, null, 'icon-home');
 
-        Menus.addMenuItem('sidebar', 'Dashboard'    , 'dashboard'       , null, '/dashboard'    , false, null, null, 'icon-speedometer', "sidebar.MENU_DASHBOARD");
-        Menus.addMenuItem('sidebar', 'Elements'     , 'elements'        , null, '/elements'     , false, null, null, 'icon-book-open', "sidebar.MENU_ELEMENTS");
-        Menus.addMenuItem('sidebar', 'Showcase'     , 'showcases'       , null, '/showcase'     , false, null, null, 'icon-docs', "sidebar.MENU_SHOWCASES");
-        Menus.addMenuItem('sidebar', 'Biins'        , 'biins'           , null, '/biins'        , false, null, null, 'icon-feed', "sidebar.MENU_BIINS");
-        Menus.addMenuItem('sidebar', 'Sites'        , 'sites'           , null, '/sites'        , false, null, null, 'icon-pointer', "sidebar.MENU_SITES");
-        Menus.addMenuItem('sidebar', 'Organizations', 'organization'   , null, '/organization'  , false, null, null, 'icon-globe', "sidebar.MENU_ORGANIZATIONS");
-        Menus.addMenuItem('sidebar', 'Profile'      , 'profile'         , null, '/profile'      , false, null, null, 'icon-user', "sidebar.MENU_PROFILE");
+        Menus.addMenuItem('sidebar', 'Resumen'    , 'dashboard'       , null, 'app.dashboard'    , false, null, null, 'icon-speedometer', "SIDEBAR.MENU_DASHBOARD");
+        Menus.addMenuItem('sidebar', 'Productos'     , 'elements'        , null, 'app.elements'     , false, null, null, 'icon-book-open', "SIDEBAR.MENU_ELEMENTS");
+        Menus.addMenuItem('sidebar', 'Vitrinas'     , 'showcases'       , null, 'app.showcases'     , false, null, null, 'icon-docs', "SIDEBAR.MENU_SHOWCASES");
+        Menus.addMenuItem('sidebar', 'Avisos'        , 'biins'           , null, 'app.biins'        , false, null, null, 'icon-feed', "SIDEBAR.MENU_BIINS");
+        Menus.addMenuItem('sidebar', 'Locales'        , 'sites'           , null, 'app.sites'        , false, null, null, 'icon-pointer', "SIDEBAR.MENU_SITES");
+        Menus.addMenuItem('sidebar', 'Regalos'        , 'gifts'           , null, 'app.gifts'        , false, null, null, 'icon-present', "SIDEBAR.MENU_GIFTS");
+        Menus.addMenuItem('sidebar', 'Organizaciones', 'organization'   , null, 'app.organization'  , false, null, null, 'icon-globe', "SIDEBAR.MENU_ORGANIZATIONS");
+        Menus.addMenuItem('sidebar', 'Perfil'      , 'profile'         , null, 'app.profile'      , false, null, null, 'icon-user', "SIDEBAR.MENU_PROFILE");
         //Maintenance has role field: maintenance
-        Menus.addMenuItem('sidebar', 'Maintenance', 'maintenance', null, '/maintenance', false, 'maintenance', null, 'icon-settings', "sidebar.MENU_MAINTENANCE");
+        Menus.addMenuItem('sidebar', 'Mantenimiento', 'maintenance', null, 'app.maintenance', false, 'maintenance', null, 'icon-settings', "SIDEBAR.MENU_MAINTENANCE");
     }
 
 })();
@@ -2253,7 +2256,7 @@ angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope',
             getOrganizations: function () {
 
                 if (Authentication.user) {
-                    var promise = $http.get('/api/organization');
+                    var promise = $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations', {headers:{user: Authentication.user.accountIdentifier}});
                     deferObject = deferObject || $q.defer();
 
                     promise.then(function (result) {
@@ -2410,8 +2413,8 @@ angular.module('dashboard').config(['$stateProvider',
         .module('dashboard')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization','ObjectsSidebar','GlobalFilters','Loading'];
-    function DashboardController($http, $state, $scope, Authentication, Organization,ObjectsSidebar,GlobalFilters,Loading) {
+    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization', 'ObjectsSidebar', 'GlobalFilters', 'Loading'];
+    function DashboardController($http, $state, $scope, Authentication, Organization, ObjectsSidebar, GlobalFilters, Loading) {
 
         if (!Authentication.user) {
             $location.path('/');
@@ -2461,7 +2464,7 @@ angular.module('dashboard').config(['$stateProvider',
 
         $scope.$on('$stateChangeStart', function(){
             $scope.loadingService.isLoading = true;
-            $scope.objectsSidebarService.reset();
+            $scope.objectsSidebar.reset();
         });
 
         $scope.$on('Biin: Finished Presential Children To Load', function(scope, children){
@@ -3335,21 +3338,21 @@ angular.module('elements').config(['$stateProvider',
     function($stateProvider) {
         // Users state routing
         $stateProvider.
-            state('app.elements', {
-                url: '/elements',
-                templateUrl: 'modules/elements/views/elements.client.view.html',
-                resolve:{
-                    permissions: function(Permission) {
-                        return Permission.getPermissions();
-                    },
-                    selectedOrganization: function (Organization) {
-                        return Organization.getSelectedOrganization();
-                    },
-                    organization: function (Organization) {
-                        return Organization.getOrganizations();
-                    }
+        state('app.elements', {
+            url: '/elements',
+            templateUrl: 'modules/elements/views/elements.client.view.html',
+            resolve:{
+                permissions: function(Permission) {
+                    return Permission.getPermissions();
+                },
+                selectedOrganization: function (Organization) {
+                    return Organization.getSelectedOrganization();
+                },
+                organization: function (Organization) {
+                    return Organization.getOrganizations();
                 }
-            });
+            }
+        });
     }
 ]);
 
@@ -3467,7 +3470,6 @@ angular.module('elements').config(['$stateProvider',
 
         $scope.$on("Biin: On Object Created", function(){
             $scope.create();
-
         });
 
         //Get the List of Objects
@@ -3491,8 +3493,6 @@ angular.module('elements').config(['$stateProvider',
                     setTimeout(function(){
                         swal.close();
                     },2000);
-                }else{
-                    displayErrorMessage(element,"Element Creation",status);
                 }
             });
         };
@@ -3538,9 +3538,7 @@ angular.module('elements').config(['$stateProvider',
                 }
             );
         };
-
-
-
+        
         //Check min data has been filled
         $scope.hasMissingData = function() {
 
@@ -5077,6 +5075,304 @@ function GalleryController($scope, $modalInstance,$http, galleries,Organization)
     }
 })();
 
+/**
+ * Created by Carlos on 6/27/15.
+ */
+'use strict';
+
+// Setting up route
+angular.module('gifts').config(['$stateProvider',
+    function($stateProvider) {
+        // Users state routing
+        $stateProvider.
+        state('app.gifts', {
+            url: '/gifts',
+            templateUrl: 'modules/gifts/views/gifts.client.view.html',
+            resolve:{
+                permissions: function(Permission) {
+                    return Permission.getPermissions();
+                },
+                selectedOrganization: function (Organization) {
+                    return Organization.getSelectedOrganization();
+                },
+                organization: function (Organization) {
+                    return Organization.getOrganizations();
+                }
+            }
+        });
+    }
+]);
+/**=========================================================
+ * Module: gifts.controller.js
+ * Controller of gifts
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('gifts')
+        .controller('GiftsController', GiftsController);
+
+    GiftsController.$inject = ['$http', '$state', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate'];
+
+    function GiftsController($http, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate) {
+        var giftCtrl = this;
+
+        init();
+        /**=============================================================================================================
+         * Init Function
+         =============================================================================================================*/
+
+        function init() {
+            //----Services needed----//
+            //Loading Service
+            $scope.loadingService = Loading;
+            //Organization Service
+            $scope.organizationService = Organization;
+            //Objects Sidebar Service
+            $scope.objectsSidebarService = ObjectsSidebar;
+            //Authentication Service
+            $scope.authentication = Authentication;
+
+            //----Variables----//
+            //Ready to fill
+            $scope.ready = false;
+            $scope.products = [];
+            $scope.gifts = [];
+            $scope.sites = [];
+            //State of loading screen
+            $scope.loadingService.isLoading = true;
+            //Gift Object
+            $scope.objectsSidebarService.selectedObject = {};
+            //Current Date
+            $scope.currentDate = new Date();
+            //Default alerts
+            $scope.show_alert = true;
+            //Draggable Properties
+            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.sidebarTemplate =
+                "<div class='col-md-3 thumbListImage'>" +
+                    "<img ng-if='item.productIdentifier.length==0' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
+                    "<img ng-if='item.productIdentifier.length>0' ng-src='{{setProductImage(item.productIdentifier)}}' pending-indicator='pending-indicator'/>"+
+                "</div>" +
+                "<div class='col-md-9 leftInformationArea'>"+
+                    "<label class='twoRowTitle'>{{item.name}}</label>"+
+                    "<small ng-if='item.amount>item.amountSpent && item.hasAvailablePeriod==false || item.amount>item.amountSpent && ((currentDate | date) <= (item.endDate | date)) && item.hasAvailablePeriod==true' class='valid-color'>Disponible</small>"+
+                    "<small ng-if='item.amount==item.amountSpent && item.hasAvailablePeriod==false || item.amount==item.amountSpent && ((currentDate |date) <= (item.endDate | date)) && item.hasAvailablePeriod==true' class='invalid-color'>Agotado</small>"+
+                    "<small ng-if='((currentDate | date) > (item.endDate | date)) && item.hasAvailablePeriod==true' class='invalid-color'>Vencido</small>"+
+                "</div>";
+            $scope.objectsSidebarService.template =$scope.sidebarTemplate;
+            //----Functions----//
+            //Get the List of Products
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+                $scope.products = data.data.elements;
+            });
+            //Get the List of Sites
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
+                $scope.locals = data.data.sites;
+            });
+        }
+
+        /**=============================================================================================================
+         * Event Listeners
+         =============================================================================================================*/
+
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
+            $scope.objectsSidebarService.reset();
+        });
+
+        $scope.$on("Biin: On Object Created", function(){
+            $scope.create();
+        });
+
+        $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
+            //Parsing dates to work on AngularJS
+            objectClicked.startDate = new Date(objectClicked.startDate);
+            objectClicked.endDate = new Date(objectClicked.endDate);
+            //All ready to show the gift info
+            $scope.ready = true;
+        });
+        $scope.$on('organizationChanged',function(){
+            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.loadingService.isLoading = true;
+            //Get the List of Gifts
+            $scope.ready = false;
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+                $scope.gifts = gifts;
+                $scope.objectsSidebarService.setObjects($scope.gifts);
+                $state.reload();
+                $scope.loadingService.isLoading = false;
+            });
+            //Get the List of Products
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+                $scope.products = data.data.elements;
+            });
+            //Get the List of Sites
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
+                $scope.locals = data.data.sites;
+            });
+        });
+
+        /**=============================================================================================================
+         * Functions
+         =============================================================================================================*/
+
+        //Get the List of Gifts
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+            $scope.gifts = gifts;
+            $scope.objectsSidebarService.setObjects($scope.gifts);
+            $scope.loadingService.isLoading = false;
+        });
+
+        //Create a gift
+        $scope.create = function(){
+            var titleText = $translate.instant("GIFT.CREATING");
+            swal({   title: titleText,  type: "info",   showConfirmButton: false });
+            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gift,status){
+                if(status == 201){
+                    var gifts = $scope.objectsSidebarService.getObjects();
+
+                    gifts.push(gift);
+                    $scope.objectsSidebarService.setObjects(gifts);
+                    $scope.objectsSidebarService.setSelectedObject(gift);
+
+                    setTimeout(function(){
+                        swal.close();
+                    },2000);
+                }
+            });
+        }
+
+        //Function to send just the available types of gift mechanics
+        $scope.availableIn = function (type) {
+            var exist = false;
+            $scope.types = $scope.objectsSidebarService.selectedObject.availableIn;
+
+            if($scope.types.length == 0){
+                $scope.types.push(type);
+            }else{
+                //Validate if the option was already selected
+                for(var i in $scope.types){
+                    if(type == $scope.types[i]){
+                        $scope.types.splice(i, 1);
+                        exist = true;
+                    }
+                }
+                if(!exist){
+                    if(type == 'all'){
+                        $scope.types = ['all'];
+                    }else{
+                        //Validate if you have all and select another option
+                        for(var i in $scope.types){
+                            if($scope.types[i] == 'all'){
+                                $scope.types.splice(i, 1);
+                            }
+                        }
+                        $scope.types.push(type);
+                        //Validate if all option are selected
+                        if($scope.types.length == 3){
+                            $scope.types = ['all'];
+                        }
+                    }
+                }
+            }
+            $scope.objectsSidebarService.selectedObject.availableIn = $scope.types;
+        }
+
+        //Function to control the locals available for the gift
+        $scope.availableLocal = function (local) {
+            var exist = false;
+            $scope.localsAvailable = $scope.objectsSidebarService.selectedObject.sites;
+
+            if($scope.localsAvailable.length == 0){
+                 $scope.localsAvailable.push(local);
+            }else{
+                 //Validate if the local was already selected
+                for(var i in $scope.localsAvailable){
+                    if(local == $scope.localsAvailable[i]){
+                        $scope.localsAvailable.splice(i, 1);
+                        exist = true;
+                    }
+                }
+                if(!exist){
+                    $scope.localsAvailable.push(local);
+                }
+            }
+            $scope.objectsSidebarService.selectedObject.sites = $scope.localsAvailable;
+        }
+
+        //Function to activate a gift
+        $scope.activate = function () {
+            if($scope.objectsSidebarService.selectedObject.amountSpent == 0 && $scope.objectsSidebarService.selectedObject.isActive == false){
+                $scope.objectsSidebarService.selectedObject.isActive = true;
+            }else if($scope.objectsSidebarService.selectedObject.amountSpent == 0 && $scope.objectsSidebarService.selectedObject.isActive == true){
+                $scope.objectsSidebarService.selectedObject.isActive = false;
+            }
+            if($scope.objectsSidebarService.selectedObject.amountSpent > 0){
+                console.log('No puede realizar esta acción, porque el regalo ya fue reclamado');
+            }
+        }
+
+        //Function that display the swal as a confirmation to remove gift
+        $scope.deleteGift = function(message, selectedObject) {
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_GIFT_TITLE","GENERIC.DELETE_GIFT_CONFIRMATION","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.DELETE_GIFT_TITLE"],
+                text: translatedTexts["GENERIC.DELETE_GIFT_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
+                if($scope.objectsSidebarService.selectedObject.amountSpent == 0) {
+                    $scope.removeGiftAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
+                }
+            });
+        };
+
+        //Remove element at specific position
+        $scope.removeGiftAt = function(index){
+            var giftToDelete = $scope.objectsSidebarService.objects[index];
+            var translatedTexts  = $translate.instant(["ELEMENT.DELETED_TEXT","GENERIC.DELETED"]);
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToDelete.identifier,{data:giftToDelete}).success(function(data){
+                    $scope.ready = false;
+                    $scope.objectsSidebarService.objects.splice(index,1);
+                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["ELEMENT.DELETED_TEXT"], "success");
+                }
+            );
+        };
+
+        //Save gift information
+        $scope.update = function(){
+            var giftToUpdate = $scope.objectsSidebarService.selectedObject;
+            // Don't do anything if there is no selected gift
+            if ($scope.ready == false)
+                return;
+
+            if(giftCtrl.myForm.$valid  && $scope.objectsSidebarService.selectedObject.sites.length > 0 && $scope.objectsSidebarService.selectedObject.availableIn.length > 0) {
+                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
+                    console.log('Actualizado');
+                });
+            }
+        }
+        //Check locals in initial data
+        $scope.checkLocal = function(local){
+            $scope.localsAvailable = $scope.objectsSidebarService.selectedObject.sites;
+            for(var i in $scope.localsAvailable){
+                if(local == $scope.localsAvailable[i]){
+                    return true;
+                }
+            }
+        }
+    }
+})();
+
 'use strict';
 
 angular
@@ -6168,17 +6464,37 @@ angular.module('nps').config(['$stateProvider',
         .module('objectssidebar')
         .controller('ObjectsSideBar', ObjectsSideBar);
 
-    ObjectsSideBar.$inject = ['$http', '$state','$scope','$rootScope','ObjectsSidebar'];
-    function ObjectsSideBar($http, $state, $scope,$rootScope,ObjectsSidebar) {
+    ObjectsSideBar.$inject = ['$http', '$state','$scope','$rootScope','ObjectsSidebar','Organization'];
+    function ObjectsSideBar($http, $state, $scope,$rootScope,ObjectsSidebar,Organization) {
         var vm = this;
         activate();
 
-        $scope.isHidden = false;
-        $scope.objectsSidebarService = ObjectsSidebar;
         ////////////////
 
         function activate() {
+            $scope.isHidden = false;
+            $scope.objectsSidebarService = ObjectsSidebar;
+            //Organization Service
+            $scope.organizationService = Organization;
+            //Draggable Properties
+            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.currentDate = new Date();
+            
+            //----Functions----//
+            //Get the List of Products
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+                $scope.products = data.data.elements;
+            });
         }
+
+        //Function to set the image of the current product into the thumbnail in the Objects Sidebar
+        $scope.setProductImage = function (product) {
+            for(var i in $scope.products){
+                if(product == $scope.products[i].elementIdentifier){
+                    return $scope.products[i].media[0].url;
+                }
+            }
+        };
 
         $scope.onObjectClick = function( index ){
             var objectClicked = $scope.objectsSidebarService.getObjects()[index];
@@ -7210,10 +7526,12 @@ angular.module('dashboard').config(['$stateProvider',
         .module('profile')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','Loading'];
-    function ProfileController($http, $state, $scope, Authentication, toaster, $location, Organization,Loading) {
+    ProfileController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','Loading', 'ObjectsSidebar'];
+    function ProfileController($http, $state, $scope, Authentication, toaster, $location, Organization, Loading, ObjectsSidebar) {
         var vm = this;
         $scope.organizationService = Organization;
+        $scope.objectsSidebarService = ObjectsSidebar;
+
         if (!Authentication.user) {
             $location.path('/');
         }
@@ -7557,7 +7875,6 @@ angular.module('showcases').config(['$stateProvider',
 
         /**=============================================================================================================
          * Events Listeners
-         *
          =============================================================================================================*/
 
         $scope.$on('$stateChangeStart', function(){
@@ -7705,7 +8022,6 @@ angular.module('showcases').config(['$stateProvider',
 
         };
 
-
         $scope.hasValidElements = function(selectedShowcase) {
             var validElement = _.findWhere(selectedShowcase, {isReady: 1});
             if (validElement)
@@ -7751,14 +8067,13 @@ angular.module('showcases').config(['$stateProvider',
             }
 
             return missingMinData;
-
         };
 
         //Save detail model object
         $scope.save = function () {
 
 
-            //save sites
+            //Save showcases
 
             for(var i = 0; i< $scope.sites.length; i++){
                 for(var j = 0; j<$scope.sites[i].showcases.length;j++){
@@ -7811,17 +8126,17 @@ angular.module('showcases').config(['$stateProvider',
 
         $scope.filteredElements = function ( element ) {
             var index = -1;
-            for(var i = 0; i < $scope.objectsSidebarService.selectedObject.elements.length; i++){
-                if($scope.objectsSidebarService.selectedObject.elements[i].elementIdentifier == element.elementIdentifier){
-                    index = i;
-                    break;
+            if($scope.objectsSidebarService.selectedObject.elements.length > 0){
+                for(var i = 0; i < $scope.objectsSidebarService.selectedObject.elements.length; i++){
+                    if($scope.objectsSidebarService.selectedObject.elements[i].elementIdentifier == element.elementIdentifier){
+                        index = i;
+                        break;
+                    }
                 }
             }
+
             return  index == -1;
         };
-
-
-
 
         //Remove an element of a Showcase
         $scope.removeElementAt = function (index) {
@@ -8002,8 +8317,8 @@ angular.module('showcases').config(['$stateProvider',
         .module('app.sidebar')
         .controller('SidebarController', SidebarController);
 
-    SidebarController.$inject = ['$rootScope', '$scope', '$state', 'SidebarLoader', 'Utils', 'Authentication'];
-    function SidebarController($rootScope, $scope, $state, SidebarLoader,  Utils, Authentication) {
+    SidebarController.$inject = ['$rootScope', '$scope', '$state', 'SidebarLoader', 'Utils', 'Authentication', 'Organization'];
+    function SidebarController($rootScope, $scope, $state, SidebarLoader,  Utils, Authentication, Organization) {
 
         activate();
 
@@ -8013,6 +8328,7 @@ angular.module('showcases').config(['$stateProvider',
           var collapseList = [];
 
           $scope.authentication = Authentication;
+          $scope.selectedOrganization = Organization.selectedOrganization;
 
           // demo: when switch from collapse to hover, close all items
           $rootScope.$watch('app.layout.asideHover', function(oldVal, newVal){
@@ -8021,6 +8337,12 @@ angular.module('showcases').config(['$stateProvider',
             }
           });
 
+          //Load the selected Organization
+          $rootScope.$watch(function(){
+            return Organization.selectedOrganization
+          }, function(newVal, oldVal){
+            $scope.selectedOrganization = newVal;
+          });
 
           // Load menu from json file
           // ----------------------------------- 
@@ -8411,7 +8733,6 @@ angular.module('sites').config(['$stateProvider',
 
         /**=============================================================================================================
          * ObjectsSidebar Configuration
-         *
          =============================================================================================================*/
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.sidebarTemplate =
@@ -8426,9 +8747,9 @@ angular.module('sites').config(['$stateProvider',
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
         $scope.objectsSidebarService.isHidden = false;
+
         /**=============================================================================================================
          * Events Listeners
-         *
          =============================================================================================================*/
 
         $scope.$on('$stateChangeStart', function(){
@@ -8477,7 +8798,6 @@ angular.module('sites').config(['$stateProvider',
 
         /**=============================================================================================================
          * Variables
-         *
          =============================================================================================================*/
 
         //Init the the sites
@@ -8495,7 +8815,6 @@ angular.module('sites').config(['$stateProvider',
 
         /**=============================================================================================================
          * Self called functions
-         *
          =============================================================================================================*/
 
         //Get the List of Sites

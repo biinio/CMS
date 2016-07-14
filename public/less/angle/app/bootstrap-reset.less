@@ -147,10 +147,19 @@ now {
   }
 }
 
+.btn-primary{
+  background-color: #1da1f2;
+
+  &:hover{
+     background-color: #1996e2;
+     border-color: #1996e2;
+  }
+}
 // FORMS
 
 .form-control {
   box-shadow: 0 0 0 #000 !important;
+  font-weight: lighter;
 }
 
 .input-sm,
@@ -287,6 +296,13 @@ fieldset {
   }
 }
 
+//Error messages
+
+.help-block{
+  small{
+    color: #E15252;
+  }
+}
 // Angular UI.Bootstrap
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 

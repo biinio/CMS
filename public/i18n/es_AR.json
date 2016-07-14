@@ -1,5 +1,8 @@
 {
-  "dashboard": {
+  "CATEGORY": {
+    "CATEGORIES_DESCRIPTION": "Las categorías permiten que su local y sus productos aparezcan en las búsquedas. Seleccione las categorías que considere que deben ser asociados a su local y a sus productos."
+  },
+  "DASHBOARD": {
     "TITLE": "Resumen",
     "WELCOME": "Bienvenido a {{appName}}",
     "SITE_FILTER": "Seleccionar Local",
@@ -14,84 +17,6 @@
     "FILTER_7DAYS": "7 Días",
     "FILTER_30DAYS": "30 Días",
     "FILTER_6MONTHS": "6 Meses"
-  },
-  "topbar": {
-    "EDIT_PROFILE": "Editar perfil",
-    "EDIT_SOCIALMEDIA": "Manejar redes sociales",
-    "EDIT_PASSWORD": "Cambiar contraseña",
-    "SIGN_OUT": "Cerrar sesión",
-    "search": {
-      "PLACEHOLDER": "Escribe y presiona enter.."
-    }
-  },
-  "sidebar": {
-    "WELCOME": "Bienvenido",
-    "MENU_DASHBOARD": "Resumen",
-    "MENU_SITES": "Locales",
-    "MENU_ELEMENTS": "Productos",
-    "MENU_SHOWCASES": "Vitrinas",
-    "MENU_BIINS": "Avisos",
-    "MENU_ADMINISTRATION": "Administración",
-    "MENU_MAINTENANCE": "Mantenimiento",
-    "MENU_PROFILE": "Perfil",
-    "MENU_ORGANIZATIONS": "Organizaciones",
-    "MENU_NPS": "Senso de Clientes"
-  },
-  "PROFILE": {
-    "FIRST_NAME": "Nombre",
-    "LAST_NAME" : "Apellidos",
-    "USER_NAME" : "Nombre de usuario",
-    "EMAIL": "Email",
-    "PHONE":"Telefono",
-    "UPLOAD_IMAGE":"Subir imagen"
-  },
-  "NOTICES":{
-    "CREATING" : "Su aviso se está creando.",
-    "DELETED_TEXT" : "Su aviso fue eliminado con éxito.",
-    "DELETE_TITLE":"¿Desea eliminar este aviso?",
-    "DELETE_CONFIRMATION" : "Cuando se elimina un aviso no estará dispoible para los usuarios.",
-    "DELETED" : "Eliminado",
-    "DELETE_NOTICE": "Eliminar aviso"
-  },
-  "ORGANIZATION":{
-    "TITLE": "Organizaciones",
-    "SUB_TITLE": "Aquí puedes administrar las organizaciones que manejas en Biin",
-    "ADD_NEW": "Añadir nueva",
-    "NAME": "Nombre",
-    "BRAND": "Marca",
-    "INFORMATION": "Acerca de",
-    "MORE_INFO": "Información Adicional",
-    "ORG_ID": "Identificador",
-    "PUBLISHED": "Publicado",
-    "PUBLISHED_TOOLTIP":"Marcar esta casilla si esta la organizacion lista para ser puesta al público",
-    "USECOLORBRAND_TOOLTIP":"Marcar esta casilla para poner sus colores como prioridad en sus productos",
-    "USEBRANDCOLOR":"Usar Colores de Marca",
-    "PRIMARYCOLOR":"Color Primario",
-    "SECONDARYCOLOR":" Color De Texto",
-    "DELETED_TEXT" : "Su organización ha sido eliminado correctamente."
-  },
-  "TYPE":{
-    "TITLE":"Tipo de Producto",
-    "SUB_TITLE": "Seleccione el tipo apropiado para el producto.",
-    "INFO": "Informativo",
-    "BENEFIT": "Beneficio",
-    "SELECT": "Por favor seleccione el tipo de producto para continuar",
-    "INFO1": "Producto informativo",
-    "INFO_DESC": "Permite crear información relevante para los visitantes de su estableciemiento",
-    "BENEFIT1": "Producto o promoción",
-    "BENEFIT_DESC": "informa sobre productos, promociones o cupones",
-    "IDENTIFIER": "Identificador"
-  },
-  "GALLERY":{
-    "TITLE": "Galería de imagenes",
-    "SUB_TITLE": "Agregue y use las imagenes de su marca para darle identidad a su local.",
-    "UPLOAD": "Agregar Imagen",
-    "APPLY": "Aplicar",
-    "LOADING": "Subiendo imágenes, por favor espere...",
-    "NOIMAGEUPLOADED":"En este momento no hay ninguna imagen en la galería, puedes subir imagenes con el botón de agregar."
-  },
-  "LOADER":{
-    "LOADING": "Cargando la información, por favor espere..."
   },
   "ELEMENT":{
     "TITLE": "Información del producto",
@@ -111,6 +36,14 @@
     "ACTION_URL_PLACEHOLDER": "www.ejemplo.com",
     "CREATING" : "Su producto se está creando.",
     "DELETED_TEXT" : "Su producto fue eliminado con éxito."
+  },
+  "GALLERY":{
+    "TITLE": "Galería de imagenes",
+    "SUB_TITLE": "Agregue y use las imagenes de su marca para darle identidad a su local.",
+    "UPLOAD": "Agregar Imagen",
+    "APPLY": "Aplicar",
+    "LOADING": "Subiendo imágenes, por favor espere...",
+    "NOIMAGEUPLOADED":"En este momento no hay ninguna imagen en la galería, puedes subir imagenes con el botón de agregar."
   },
   "GENERIC":{
     "SEARCH_TAGS": "Etiquetas de búsqueda",
@@ -135,68 +68,61 @@
     "DELETE_SHOWCASE": "Eliminar vitrina",
     "DELETE_SHOWCASE_TITLE": "¿Desea eliminar esta vitrina?",
     "DELETE_SHOWCASE_CONFIRMATION": "Al eliminar esta vitrina dejará de estar disponible en todos los locales.",
+    "DELETE_GIFT": "Eliminar regalo",
+    "DELETE_GIFT_TITLE": "¿Desea eliminar este regalo?",
+    "DELETE_GIFT_CONFIRMATION": "Al eliminar este regalo dejará de estar disponible en todos los locales.",
     "DELETE_ORGANIZATION": "Eliminar organización",
     "DELETE_ORGANIZATION_TITLE": "¿Desea eliminar esta organización?",
     "DELETE_ORGANIZATION_CONFIRMATION": "Al eliminar la organizacion todos los locales, elementos y vitrinas asignados a este se borrarán.",
     "DELETE_IMAGES_CONFIRMATION": "¿Desea eliminar las imágenes seleccionadas?",
     "CANCEL": "Cancelar",
-    "DELETED" : "Eliminado"
+    "DELETED" : "Eliminado",
+    "POSITIVE": "Si",
+    "NEGATIVE": "No",
+    "ACTIVATE":  "Activar",
+    "DESACTIVATE": "Desactivar"
   },
-  "SITES":{
-    "TITLE": "Detalles del Local",
-    "NAME": "Nombre",
-    "NAME_PLACEHOLDER": "Ingrese nombre del local",
-    "AT": "Está en",
-    "AT_PLACEHOLDER": "Ingrese el nombre del lugar en el que se encuentra su local",
-    "EMAIL": "Correo Electrónico",
-    "EMAIL_PLACEHOLDER": "mi-local@ejemplo.com",
-    "NUTSHELL": "Mini Descripción",
-    "NUTSHELL_PLACEHOLDER": "Ingrese una descripción breve de su local",
-    "SCHEDULE":"Horario",
-    "SCHEDULE_PLACEHOLDER":"Ingrese el horario del local",
-    "DELETED_TEXT":"Su local ha sido eliminado correctamente",
-
-    "LOCATION":{
-      "TITLE": "Ubicación del Local",
-      "SUB_TITLE": "Agregue la informacón sobre la Ubicación de su local para ayudar a sus clientes a encontrarlo mas fácilmente",
-      "COUNTRY": "País",
-      "CITY": "Ciudad",
-      "STATE": "Estado/Provincia",
-      "ZIP": "Código Postal",
-      "ADDRESS": "Ubicación",
-      "PHONE": "Teléfono",
-      "DETAIL_LOC": "Ubicación Detallada",
-      "MAP_LOCATION": "Ubicación en el Mapa",
-      "MAP_LOCATION_SUB": "Ubique su Local en el Mapa para determinar la Latitud y Longitud",
-      "LATITUDE": "Latitud",
-      "LONGITUDE": "Longitud"
-    }
-  },
-  "PRICELIST": {
-    "INSERT": "Inserte lista de precios",
-    "ADD": " Agregar item",
-    "CURRENCY": "Moneda",
-    "TITLE": "Título",
-    "TITLE_PLACEHOLDER": "Ingrese el título de la lista de precios",
-    "NAME": "Nombre",
-    "NAME_PLACEHOLDER": "Ingrese el nombre del producto",
-    "DESCRIPTION" : "Descripción",
-    "DESCRIPTION_PLACEHOLDER": "Ingrese una descripción del producto",
-    "PRICE": "Precio"
-  },
-  "CATEGORY": {
-    "CATEGORIES_DESCRIPTION": "Las categorías permiten que su local y sus productos aparezcan en las búsquedas. Seleccione las categorías que considere que deben ser asociados a su local y a sus productos."
-  },
-  "TEXTANGULAR" : {
-    "INSERT_BUTTON": "Insertar",
-    "CANCEL_BUTTON": "Cancelar",
-    "QUOTE_BUTTON": "Anotación",
-    "TITLE_BUTTON": "Título",
-    "SUBTITLE_BUTTON": "Subtítulo",
-    "TEXT_BUTTON": "Texto",
-    "FOOTNOTE_BUTTON": "Nota pequeña",
-    "PRICELIST_BUTTON": "Lista de precios",
-    "HIGHLIGHT_BUTTON": "Texto grande"
+  "GIFT":{
+    "NAME": "Información del regalo",
+    "GIFT_NAME": "Título",
+    "NAME_PLACEHOLDER": "Ingrese el título de tu regalo",
+    "NAME_REQUIRED": "*Debe escribir un título para el regalo",
+    "MESSAGE": "Mensaje",
+    "MESSAGE_PLACEHOLDER": "Escribe el motivo de tu regalo",
+    "MESSAGE_REQUIRED": "*Debe escribir un mensaje",
+    "GIFT": "Producto",
+    "GIFT_DETAIL": "Detalles del regalo",
+    "AVAILABLE_PERIOD_QUESTION": "¿Presenta periodo de disponibilidad?",
+    "AVAILABLE_PERIOD": "Periodo de disponibilidad",
+    "PRODUCT_SELECT": "Elija una opción...",
+    "PRODUCT_REQUIRED": "*Debe seleccionar un producto",
+    "START_DATE_REQUIRED": "*Debe seleccionar una fecha de inicio",
+    "END_DATE_REQUIRED": "*Debe seleccionar una fecha de finalización",
+    "END_DATE_HIGHER": "*La fecha debe ser mayor a la de inicio",
+    "DATE_VALIDATE": "*Debe seleccionar una fecha válida",
+    "EXPIRE_TIME": "Tiempo de vencimiento despúes de asignarlo",
+    "A_DAY": "Un día",
+    "A_WEEK": "Una semana",
+    "NOT_OVERCOME": "No vence",
+    "AMOUNT": "Cantidad disponible de regalos",
+    "AMOUNT_PLACEHOLDER":"Número de regalos",
+    "AMOUNT_REQUIRED": "*Debe escribir la cantidad de regalos disponible",
+    "IS_AUTOMATIC": "Modo de asignación",
+    "MANUAL": "Manual",
+    "AUTOMATIC": "Automático",
+    "AVAILABLE_IN": "Presente en:",
+    "AVAILABLE_NPS": "NPS",
+    "AVAILABLE_MEC": "MEC",
+    "AVAILABLE_VIP": "Clientes VIP",
+    "AVAILABLE_ALL": "Todos",
+    "AVAILABLE_REQUIRED": "*Debe seleccionar al menos una opción de las anteriores",
+    "LOCALS": "Locales disponibles",
+    "LOCALS_AVAILABLE": "Seleccione el o los locales donde se activará el regalo",
+    "LOCALS_REQUIRED": "*Debe seleccionar al menos un local",
+    "INFO": "*Un regalo puede ser eliminado o desactivado solo si no ha sido reclamado",
+    "INFO2": "**Si el regalo fue reclamado, solo puedes actualizar los locales donde se encuentra",
+    "CREATING": "Su regalo se esta creando",
+    "DELETED_TEXT" : "Su regalo fue eliminado con éxito."
   },
   "HIGHLIGHT": {
     "INSERT": "Inserte detalles de oferta",
@@ -232,19 +158,82 @@
     "TAXINCLUDED": "Impuestos Incluidos",
     "TAXINCLUDED_TOOLTIP":"El precio incluye los impuestos"
   },
+  "LOADER":{
+    "LOADING": "Cargando la información, por favor espere..."
+  },
   "LOGIN": {
-    "SIGN_IN": "Acceder con su cuenta de Biin",
-    "EMAIL_PLACEHOLDER": "Introduzca su correo electrónico",
-    "REQUIRED": "Este campo es requerido",
-    "VALID_EMAIL": "Este campo requiere un correo electrónico válido",
+    "SIGN_IN": "Iniciar sesión",
+    "EMAIL_PLACEHOLDER": "Correo electrónico",
+    "REQUIRED_EMAIL": "*El correo electrónico es requerido",
+    "VALID_EMAIL": "*Ingrese un correo válido",
     "PASSWORD": "Contraseña",
-    "REMEMBER_ME": "No cerrar sesión",
+    "REQUIRED_PASSWORD": "*La contraseña es requerida",
+    "REMEMBER_ME": "Recordarme",
     "FORGOT_PASSWORD": "¿Has olvidado la contraseña?",
-    "LOGIN_BUTTON": "Continuar",
+    "LOGIN_BUTTON": "Ingresar",
     "SIGN_UP": "¿Necesita registrarse?",
     "REGISTER_NOW": "Regístrese ahora",
-    "NEED_HELP":"Si tiene problemas, escribanos a "
-
+    "NEED_HELP":"Si tiene algún incoveniente para iniciar sesión, escribanos a ",
+    "NEED_HELP2":" o llámenos al (506) 8706-6660",
+    "COPYRIGHT":" .Todos los derechos reservados",
+    "INVALID_CREDENTIALS":"Credenciales inválidos",
+    "SERVER_ERROR":"Error de conexión"
+  },
+  "NOTICES":{
+    "CREATING" : "Su aviso se está creando.",
+    "DELETED_TEXT" : "Su aviso fue eliminado con éxito.",
+    "DELETE_TITLE":"¿Desea eliminar este aviso?",
+    "DELETE_CONFIRMATION" : "Cuando se elimina un aviso no estará dispoible para los usuarios.",
+    "DELETED" : "Eliminado",
+    "DELETE_NOTICE": "Eliminar aviso"
+  },
+  "NPS":{
+    "TITLE" : "NPS",
+    "ACTIVATE_TITLE":"Activar encuesta de índice de promotor neto",
+    "ACTIVATE_HELP":"Al activar esta opción, los visitantes de sus locales recibirán una encuesta de satisfacción usando la herramienta del índice de promotor neto.",
+    "LOADING":"Recuperando la informacion para el calculo del NPS",
+    "PROMOTERS":"Promotores",
+    "DETRACTORS":"Detractores",
+    "PASSIVE":"Pasivos",
+    "THIS_WEEK":"Esta semana",
+    "NPS":"Indice de promotor neto"
+  },
+  "ORGANIZATION":{
+    "TITLE": "Organizaciones",
+    "SUB_TITLE": "Aquí puedes administrar las organizaciones que manejas en Biin",
+    "ADD_NEW": "Añadir nueva",
+    "NAME": "Nombre",
+    "BRAND": "Marca",
+    "INFORMATION": "Acerca de",
+    "MORE_INFO": "Información Adicional",
+    "ORG_ID": "Identificador",
+    "PUBLISHED": "Publicado",
+    "PUBLISHED_TOOLTIP":"Marcar esta casilla si esta la organizacion lista para ser puesta al público",
+    "USECOLORBRAND_TOOLTIP":"Marcar esta casilla para poner sus colores como prioridad en sus productos",
+    "USEBRANDCOLOR":"Usar Colores de Marca",
+    "PRIMARYCOLOR":"Color Primario",
+    "SECONDARYCOLOR":" Color De Texto",
+    "DELETED_TEXT" : "Su organización ha sido eliminado correctamente."
+  },
+  "PRICELIST": {
+    "INSERT": "Inserte lista de precios",
+    "ADD": " Agregar item",
+    "CURRENCY": "Moneda",
+    "TITLE": "Título",
+    "TITLE_PLACEHOLDER": "Ingrese el título de la lista de precios",
+    "NAME": "Nombre",
+    "NAME_PLACEHOLDER": "Ingrese el nombre del producto",
+    "DESCRIPTION" : "Descripción",
+    "DESCRIPTION_PLACEHOLDER": "Ingrese una descripción del producto",
+    "PRICE": "Precio"
+  },
+  "PROFILE": {
+    "FIRST_NAME": "Nombre",
+    "LAST_NAME" : "Apellidos",
+    "USER_NAME" : "Nombre de usuario",
+    "EMAIL": "Email",
+    "PHONE":"Telefono",
+    "UPLOAD_IMAGE":"Subir imagen"
   },
   "SHOWCASE": {
     "DETAILS": "Detalles de Vitrinas",
@@ -260,15 +249,80 @@
     "ELEMENTS_REQUIRED_MESSAGE": "Por favor asigne al menos un productos válido a esta vitrina",
     "DELETED_TEXT" : "Su vitrina ha sido eliminado correctamente"
   },
-  "NPS":{
-    "TITLE" : "NPS",
-    "ACTIVATE_TITLE":"Activar encuesta de índice de promotor neto",
-    "ACTIVATE_HELP":"Al activar esta opción, los visitantes de sus locales recibirán una encuesta de satisfacción usando la herramienta del índice de promotor neto.",
-    "LOADING":"Recuperando la informacion para el calculo del NPS",
-    "PROMOTERS":"Promotores",
-    "DETRACTORS":"Detractores",
-    "PASSIVE":"Pasivos",
-    "THIS_WEEK":"Esta semana",
-    "NPS":"Indice de promotor neto"
+  "SIDEBAR": {
+    "WELCOME": "Bienvenido",
+    "MENU_DASHBOARD": "Resumen",
+    "MENU_SITES": "Locales",
+    "MENU_ELEMENTS": "Productos",
+    "MENU_SHOWCASES": "Vitrinas",
+    "MENU_BIINS": "Avisos",
+    "MENU_ADMINISTRATION": "Administración",
+    "MENU_MAINTENANCE": "Mantenimiento",
+    "MENU_PROFILE": "Perfil",
+    "MENU_ORGANIZATIONS": "Organizaciones",
+    "MENU_NPS": "Senso de Clientes",
+    "MENU_GIFTS":"Regalos"
+  },
+  "SITES":{
+    "TITLE": "Detalles del Local",
+    "NAME": "Nombre",
+    "NAME_PLACEHOLDER": "Ingrese nombre del local",
+    "AT": "Está en",
+    "AT_PLACEHOLDER": "Ingrese el nombre del lugar en el que se encuentra su local",
+    "EMAIL": "Correo Electrónico",
+    "EMAIL_PLACEHOLDER": "mi-local@ejemplo.com",
+    "NUTSHELL": "Mini Descripción",
+    "NUTSHELL_PLACEHOLDER": "Ingrese una descripción breve de su local",
+    "SCHEDULE":"Horario",
+    "SCHEDULE_PLACEHOLDER":"Ingrese el horario del local",
+    "DELETED_TEXT":"Su local ha sido eliminado correctamente",
+
+    "LOCATION":{
+      "TITLE": "Ubicación del Local",
+      "SUB_TITLE": "Agregue la informacón sobre la Ubicación de su local para ayudar a sus clientes a encontrarlo mas fácilmente",
+      "COUNTRY": "País",
+      "CITY": "Ciudad",
+      "STATE": "Estado/Provincia",
+      "ZIP": "Código Postal",
+      "ADDRESS": "Ubicación",
+      "PHONE": "Teléfono",
+      "DETAIL_LOC": "Ubicación Detallada",
+      "MAP_LOCATION": "Ubicación en el Mapa",
+      "MAP_LOCATION_SUB": "Ubique su Local en el Mapa para determinar la Latitud y Longitud",
+      "LATITUDE": "Latitud",
+      "LONGITUDE": "Longitud"
+    }
+  },
+  "TEXTANGULAR" : {
+    "INSERT_BUTTON": "Insertar",
+    "CANCEL_BUTTON": "Cancelar",
+    "QUOTE_BUTTON": "Anotación",
+    "TITLE_BUTTON": "Título",
+    "SUBTITLE_BUTTON": "Subtítulo",
+    "TEXT_BUTTON": "Texto",
+    "FOOTNOTE_BUTTON": "Nota pequeña",
+    "PRICELIST_BUTTON": "Lista de precios",
+    "HIGHLIGHT_BUTTON": "Texto grande"
+  },
+  "TOPBAR": {
+    "EDIT_PROFILE": "lEditar perfil",
+    "EDIT_SOCIALMEDIA": "Manejar redes sociales",
+    "EDIT_PASSWORD": "Cambiar contraseña",
+    "SIGN_OUT": "Cerrar sesión",
+    "search": {
+      "PLACEHOLDER": "Escribe y presiona enter.."
+    }
+  },
+  "TYPE":{
+    "TITLE": "Tipo de Producto",
+    "SUB_TITLE": "Seleccione el tipo apropiado para el producto.",
+    "INFO": "Informativo",
+    "BENEFIT": "Beneficio",
+    "SELECT": "Por favor seleccione el tipo de producto para continuar",
+    "INFO1": "Producto informativo",
+    "INFO_DESC": "Permite crear información relevante para los visitantes de su estableciemiento",
+    "BENEFIT1": "Producto o promoción",
+    "BENEFIT_DESC": "informa sobre productos, promociones o cupones",
+    "IDENTIFIER": "Identificador"
   }
 }

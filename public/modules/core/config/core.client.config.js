@@ -17,7 +17,6 @@
       core.service    = $provide.service;
       core.constant   = $provide.constant;
       core.value      = $provide.value;
-
     }
 
 })();

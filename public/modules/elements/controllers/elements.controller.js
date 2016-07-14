@@ -112,7 +112,6 @@
 
         $scope.$on("Biin: On Object Created", function(){
             $scope.create();
-
         });
 
         //Get the List of Objects
@@ -136,8 +135,6 @@
                     setTimeout(function(){
                         swal.close();
                     },2000);
-                }else{
-                    displayErrorMessage(element,"Element Creation",status);
                 }
             });
         };
@@ -183,9 +180,7 @@
                 }
             );
         };
-
-
-
+        
         //Check min data has been filled
         $scope.hasMissingData = function() {
 
