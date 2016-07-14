@@ -16189,6 +16189,10 @@ body {
   height: 100%;
   position: relative;
 }
+.wrapper {
+  height: 100%;
+  background-color: white;
+}
 .no-object-container {
   position: absolute;
   height: 100%;
@@ -16354,6 +16358,7 @@ body {
 }
 .login input {
   padding: 21px;
+  border-radius: 0;
 }
 @media (max-width: 425px) {
   .login input {
@@ -16378,7 +16383,8 @@ body {
 .login .input-group-addon {
   border: none;
   min-width: 60px;
-  background-color: #fc8a05;
+  background-color: #e1e1e1;
+  border-radius: 0;
 }
 .login .checkbox {
   margin-bottom: 5px;
