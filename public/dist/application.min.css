@@ -6879,12 +6879,15 @@ now {
 }
 .nav-tabs > li > a {
   font-weight: bold;
-  color: #515253;
-  background-color: #edf1f2;
+  color: #fff;
+  background-color: #1da1f2;
   margin: 0;
   border: 1px solid #dde6e9;
   border-radius: 0;
   padding: 10px 20px;
+}
+.nav-tabs > li > a:hover {
+  color: #4a484b;
 }
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
@@ -6906,7 +6909,7 @@ now {
   padding: 0 !important;
 }
 .btn {
-  border-radius: 3px;
+  border-radius: 0;
   font-size: 13px;
   border-color: transparent;
   -webkit-appearance: none;
@@ -16010,6 +16013,22 @@ Component: elements.less
 .modal-size {
   height: 600px;
 }
+.dashboard .tab-content {
+  padding-bottom: 0;
+}
+.dashboard .tab-content .list-group {
+  max-height: 340px;
+  min-height: 340px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-top: 0px;
+}
+.dashboard .panel {
+  border-radius: 0;
+}
+.dashboard .widget {
+  height: 230px;
+}
 .visitsvsretorning-graph {
   min-height: 95px;
 }
@@ -16031,7 +16050,6 @@ Component: elements.less
   padding: 10px 50px;
   font-size: 14px;
   line-height: 1.1;
-  border-radius: 4px;
 }
 .filter-button-large:hover {
   color: #FFF;
@@ -16194,6 +16212,7 @@ body {
 }
 .nps-last-comments-title {
   font-size: 18px;
+  padding: 10px 0;
 }
 .nps-last-comments-wrapper {
   margin-top: 15px;

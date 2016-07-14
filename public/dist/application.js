@@ -5367,8 +5367,8 @@ angular.module('gifts').config(['$stateProvider',
         }
         //Check locals in initial data
         $scope.checkLocal = function(local){
-            $scope.localsAvailable = $scope.objectsSidebarService.selectedObject.sites;
             if($scope.objectsSidebarService.selectedObject){
+                $scope.localsAvailable = $scope.objectsSidebarService.selectedObject.sites;
                 for(var i in $scope.localsAvailable){
                     if(local == $scope.localsAvailable[i]){
                         return true;

@@ -60,41 +60,60 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <div class="">
-                <div class="custom-border comments-section-padding">
-                    <div class="nps-last-comments-title">Ultimos 20 comentarios</div>
-                    <!-- START list group-->
-                    <div class="list-group custom-border" style="overflow-x: hidden; overflow-y: auto; max-height: 392px; min-height: 392px; padding-top: 0px" data-ng-if="lastComments.length > 0">
-                        <!-- START list group item-->
-                        <a class="list-group-item" data-ng-repeat="commentData in lastComments">
-                            <div class="media-box">
-                                <div class="pull-left border-round" data-ng-class="{ 'nps-green-border': commentData.rating>=9, 'nps-orange-border': commentData.rating<9 && commentData.rating>=7, 'nps-red-border':commentData.rating<7}">
-                                    <img ng-src="{{commentData.image}}" alt="Image"
-                                         class="media-box-object img-circle thumb64"/>
+            <uib-tabset active="active">
+                <!--Surveyed tab-->
+                <uib-tab index="0" heading="Encuestados">
+                    <div>
+                        <div class="nps-last-comments-title">Últimos 20 comentarios</div>
+                        <!-- START list group-->
+                        <div class="list-group" data-ng-if="lastComments.length > 0">
+                            <!-- START list group item-->
+                            <a class="list-group-item" data-ng-repeat="commentData in lastComments">
+                                <div class="media-box">
+                                    <div class="pull-left border-round" data-ng-class="{ 'nps-green-border': commentData.rating>=9, 'nps-orange-border': commentData.rating<9 && commentData.rating>=7, 'nps-red-border':commentData.rating<7}">
+                                        <img ng-src="{{commentData.image}}" alt="Image"
+                                             class="media-box-object img-circle thumb64"/>
+                                    </div>
+                                    <div class="media-box-body clearfix">
+                                        <button class="mb-sm btn filter-button-large pull-right">Premiar</button>
+                                        <strong class="media-box-heading">
+                                            <span class="circle circle-success circle-lg text-left"></span>
+                                            {{commentData.user}}
+                                        </strong>
+                                        <p class="mb-sm" data-ng-class="{ 'text-success': commentData.rating>=9, 'text-warning': commentData.rating<9 && commentData.rating>=7, 'text-danger':commentData.rating<7}">
+                                            <strong>Calificación: </strong><strong>{{commentData.rating}}</strong>
+                                        </p>
+                                        <p class="mb-sm">
+                                            <small>{{commentData.comment}}</small>
+                                        </p>
+                                        <small class="pull-right">{{commentData.date}}</small>
+                                    </div>
                                 </div>
-                                <div class="media-box-body clearfix">
-                                    <small class="pull-right">{{commentData.date}}</small>
-                                    <strong class="media-box-heading">
-                                        <span class="circle circle-success circle-lg text-left"></span>
-                                        {{commentData.user}}
-                                    </strong>
-                                    <p class="mb-sm" data-ng-class="{ 'text-success': commentData.rating>=9, 'text-warning': commentData.rating<9 && commentData.rating>=7, 'text-danger':commentData.rating<7}">
-                                        <strong>Calificación: </strong><strong>{{commentData.rating}}</strong>
-                                    </p>
-                                    <p class="mb-sm">
-                                        <small>{{commentData.comment}}</small>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                        <!-- END list group item-->
+                            </a>
+                            <!-- END list group item-->
+                        </div>
+                        <div class="list-group center-text" data-ng-if="lastComments.length <= 0">
+                            No hay comentarios
+                        </div>
+                        <!-- END list group-->
                     </div>
-                    <div class="list-group custom-border center-text" style="overflow-x: hidden; overflow-y: auto; max-height: 392px; min-height: 392px; padding-top: 0px" data-ng-if="lastComments.length <= 0">
-                        No hay comentarios
+                </uib-tab>
+                <!--Pending tab-->
+                <uib-tab index="1" heading="Pendientes">
+                    <div class="nps-last-comments-title">Usuarios pendientes de reclamar regalo</div>
+                    <div class="list-group">
+
                     </div>
-                    <!-- END list group-->
-                </div>
-            </div>
+                </uib-tab>
+                <!--Awarded tab-->
+                <uib-tab index="2" heading="Premiados">
+                    <div class="nps-last-comments-title">Usuarios que han sido premiados</div>
+                    <div class="list-group">
+
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+
         </div>
     </div>
 </div>
