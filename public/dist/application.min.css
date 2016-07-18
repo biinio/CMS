@@ -7053,8 +7053,23 @@ fieldset .form-group {
   border-bottom: 0;
 }
 .modal-backdrop {
-  position: fixed;
-  bottom: 0;
+  display: none;
+}
+.modal {
+  margin-top: 55px;
+}
+.modal:before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: black;
+  background-image: none;
+  opacity: 0.5;
+}
+.modal .modal-body {
+  overflow: hidden;
 }
 .topnavbar,
 .navbar,
@@ -9313,7 +9328,7 @@ body {
   top: 0;
   left: 0;
   bottom: 0;
-  z-index: 116;
+  z-index: 110;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -16028,6 +16043,38 @@ Component: elements.less
 }
 .dashboard .widget {
   height: 252.5px;
+}
+.selectGiftModal ul {
+  overflow: hidden;
+}
+.selectGiftModal li {
+  list-style: none;
+  cursor: pointer;
+}
+.selectGiftModal li:focus .gift-image,
+.selectGiftModal li:focus .nameDisplay {
+  opacity: 1;
+  border-color: #4a484b;
+}
+.selectGiftModal li:hover .gift-image {
+  opacity: 1;
+}
+.selectGiftModal .gift-image,
+.selectGiftModal .nameDisplay {
+  opacity: 0.7;
+  width: 100%;
+  border: solid 1px #e4eaec;
+}
+.selectGiftModal .nameDisplay {
+  color: white;
+  background-color: #4a484b;
+  margin-left: 5px;
+  margin: 0;
+  border-top: none;
+  padding: 5px;
+  text-align: center;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 .visitsvsretorning-graph {
   min-height: 95px;

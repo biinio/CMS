@@ -18,6 +18,44 @@
     height:252.5px;
   }
 }
+
+.selectGiftModal{
+  ul{
+    overflow: hidden;
+  }
+  li{
+    list-style: none;
+    cursor: pointer;
+
+    &:focus{
+      .gift-image, .nameDisplay{
+        opacity: 1;
+        border-color: #4a484b;
+      }
+    }
+    &:hover{
+      .gift-image{
+        opacity: 1;
+      }
+    }
+  }
+  .gift-image, .nameDisplay{
+    opacity: 0.7;
+    width: 100%;
+    border: solid 1px #e4eaec;
+  }
+  .nameDisplay{
+    color: white;
+    background-color: #4a484b;
+    margin-left: 5px;
+    margin: 0;
+    border-top: none;
+    padding: 5px;
+    text-align: center;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+}
 .visitsvsretorning-graph{
   min-height: 95px;
 }

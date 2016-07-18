@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <button class="btn btn-primary btn-block select-gift" modal="open" target="giftsAvailable" ng-click="displayGifts()">Seleccionar regalo</button>
+            <button class="btn btn-primary btn-block select-gift" ng-click="displayGifts('automatic')" modal="open" target="giftsAvailable">Seleccionar regalo</button>
             <uib-tabset active="active">
                 <!--Surveyed tab-->
                 <uib-tab index="0" heading="Encuestados">
@@ -76,7 +76,7 @@
                                              class="media-box-object img-circle thumb64"/>
                                     </div>
                                     <div class="media-box-body clearfix">
-                                        <button class="mb-sm btn btn-primary pull-right"><span class="fa fa-trophy"></span> Premiar</button>
+                                        <button class="mb-sm btn btn-primary pull-right" ng-click="displayGifts('manual')" modal="open" target="giftsAvailable"><span class="fa fa-trophy"></span> Premiar</button>
                                         <strong class="media-box-heading">
                                             <span class="circle circle-success circle-lg text-left"></span>
                                             {{commentData.user}}

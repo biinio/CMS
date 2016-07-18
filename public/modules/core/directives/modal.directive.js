@@ -14,7 +14,6 @@
             link:function($scope, element, attributes){
                 $scope.open = function() {
                     $('#' + attributes.target).modal('show');
-                    $('#' + attributes.target).insertBefore($(document.body));
                 }
                 $scope.close = function() {
                     $('#' + attributes.target).modal('hide');

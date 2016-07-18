@@ -54,7 +54,6 @@ html, body {
   &.ng-leave {
     display: none;
   }
-
   // Contains the main sidebar
   > .aside {
     // visibility: hidden;
@@ -63,7 +62,7 @@ html, body {
     
     top: 0; left: 0;
     bottom: 0;
-    z-index: @z-index-main-section + 5;
+    z-index: @z-index-main-section - 1;
     // .transition(visibility 0s linear .3s);
     .backface-visibility(hidden);
     background-color: @aside-bg;
@@ -386,7 +385,7 @@ html, body {
       position: fixed;
       top: 0;
       width: 100%;
-      z-index: @z-index-main-section + 10;
+      z-index: 121;
     }
     > aside {
       position: fixed;

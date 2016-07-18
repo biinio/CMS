@@ -38,7 +38,6 @@
             getNPSData();
         });
 
-
         $scope.indexBGColor = "";
         $scope.lineOptions = {
             series: {
@@ -119,13 +118,11 @@
         function getNPSData() {
             $scope.isLoading = true;
             var filters = {};
-            var organizationId = $scope.organizationService.selectedOrganization.identifier;
-            var siteId = $scope.globalFilters.selectedSite.identifier;
-            filters.organizationId = organizationId;
+            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
             filters.dateRange = $scope.globalFilters.dateRange;
 
             if($scope.globalFilters.selectedSite){
-                filters.siteId = siteId;
+                filters.siteId = $scope.globalFilters.selectedSite.identifier;
                 $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/nps', {
                         headers: {
                             organizationid: $scope.organizationService.selectedOrganization.identifier,
@@ -133,23 +130,34 @@
                             offset : new Date().getTimezoneOffset()
                         }
                     }).success(function (data) {
+                    getGiftsData();
                     $scope.isLoading = false;
                     if (data.result == "1") {
                         updateNPSValues(data.data);
                         console.log(data);
                     }
                 });
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
-                    .success(function (data) {
-                        console.log(data);
-                    });
-                // $http.get(ApplicationConfiguration.applicationBackendURL + 'organizations/' + $scope.organizationId + '/sites/' + $scope.siteId + '/getavailablegifts/nps/false')
-                //     .success(function (data) {
-                //         console.log(data);
-                //     });
             } else {
                 $scope.isLoading = false;
             }
+        }
+
+        function getGiftsData() {
+            var organizationId = $scope.organizationService.selectedOrganization.identifier;
+            var siteId = $scope.globalFilters.selectedSite.identifier;
+
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/true')
+                .success(function (data) {
+                    $scope.npsGiftsAutomatic = data;
+                });
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
+                .success(function (data) {
+                    $scope.npsGiftsManual = data;
+                });
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + /readyElements/)
+                .success(function (data) {
+                    $scope.products = data.data.elements;
+                });
         }
 
         function updateNPSValues(data) {
@@ -244,6 +252,20 @@
             }
         }
 
+        $scope.getGiftImage = function (productIdentifier){
+            for(var i in $scope.products){
+                if(productIdentifier == $scope.products[i].elementIdentifier){
+                    return $scope.products[i].media[0].url;
+                }
+            }
+        }
+
+        $scope.displayGifts = function (type) {
+            $scope.giftDisplay = type;
+            console.log(type);
+            console.log($scope.giftDisplay);
+        }
+
         function resetNPS() {
             $scope.promotersQuantity = 0;
             $scope.passiveQuantity = 0;
@@ -253,6 +275,9 @@
             $scope.passivePercentage = 0;
             $scope.detractorsPercentage = 0;
             $scope.lastComments = [];
+            $scope.products = [];
+            $scope.npsGiftsManual = [];
+            $scope.npsGiftsAutomatic = [];
             $scope.totalCases = 0;
             $scope.indexBGColor = "bg-danger";
         }

@@ -1,6 +1,6 @@
 <!--**Created by Carlos on 15/07/2016-->
 <!--Gifts available-->
-<div class="modal fade" id="giftsAvailable" tabindex="-1" role="dialog">
+<div class="modal fade selectGiftModal" id="giftsAvailable" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <!-- Modal Header -->
@@ -10,9 +10,22 @@
             </div>
             <!-- Modal Body -->
             <div class="modal-body">
-                <div>
-                    <button type="button" class="btn btn-warning" modal="close" target="giftsAvailable">Cerrar</button>
-                    <button class="btn btn-secondary" type="submit" ng-click="" modal="close" target="giftsAvailable">Seleccionar</button>
+                <ul ng-if="giftDisplay=='automatic'">
+                    <li ng-repeat="gift in npsGiftsAutomatic" class="col-sm-4 col-xs-2" tabindex="0">
+                        <img ng-src="{{getGiftImage(gift.productIdentifier)}}" alt="{{gift.name}}" class="gift-image"/>
+                        <p class="nameDisplay">{{gift.name}}</p>
+                    </li>
+                </ul>
+                <ul ng-if="giftDisplay=='manual'">
+                    <li ng-repeat="gift in npsGiftsManual" class="col-sm-4 col-xs-2" tabindex="0">
+                        <img ng-src="{{getGiftImage(gift.productIdentifier)}}" alt="{{gift.name}}" class="gift-image"/>
+                        <p class="nameDisplay">{{gift.name}}</p>
+                    </li>
+                </ul>
+                <hr>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-default" modal="close" target="giftsAvailable">Cerrar</button>
+                    <button class="btn btn-primary" type="submit" modal="close" target="giftsAvailable">Seleccionar</button>
                 </div>
             </div>
         </div>
