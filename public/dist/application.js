@@ -1946,6 +1946,36 @@ angular.module('app.core').controller('LoadingController', ['$scope','Loading',
     }
 ]);
 
+// **Created by Carlos on 15/07/2016
+/*  Modal directive  */
+(function() {
+    'use strict';
+
+    angular /*  Module getter */
+        .module('app.core')
+        .directive('modal', modal);
+
+    function modal() {
+        return {
+            restrict: 'A',
+
+            link:function($scope, element, attributes){
+                $scope.open = function() {
+                    $('#' + attributes.target).modal('show');
+                    $('#' + attributes.target).insertBefore($(document.body));
+                }
+                $scope.close = function() {
+                    $('#' + attributes.target).modal('hide');
+                }
+
+                var action = attributes['modal'];
+                element.on('click', $scope[action]);
+            }
+        };
+    }
+
+})();
+
 /**=========================================================
  * Module: scroll.js
  * Make a content box scrollable
@@ -2850,11 +2880,13 @@ angular.module('dashboard').config(['$stateProvider',
         function getNPSData() {
             $scope.isLoading = true;
             var filters = {};
-            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            var organizationId = $scope.organizationService.selectedOrganization.identifier;
+            var siteId = $scope.globalFilters.selectedSite.identifier;
+            filters.organizationId = organizationId;
             filters.dateRange = $scope.globalFilters.dateRange;
 
             if($scope.globalFilters.selectedSite){
-                filters.siteId = $scope.globalFilters.selectedSite.identifier;
+                filters.siteId = siteId;
                 $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/nps', {
                         headers: {
                             organizationid: $scope.organizationService.selectedOrganization.identifier,
@@ -2868,6 +2900,14 @@ angular.module('dashboard').config(['$stateProvider',
                         console.log(data);
                     }
                 });
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/true')
+                    .success(function (data) {
+                        console.log(data);
+                    });
+                // $http.get(ApplicationConfiguration.applicationBackendURL + 'organizations/' + $scope.organizationId + '/sites/' + $scope.siteId + '/getavailablegifts/nps/false')
+                //     .success(function (data) {
+                //         console.log(data);
+                //     });
             } else {
                 $scope.isLoading = false;
             }

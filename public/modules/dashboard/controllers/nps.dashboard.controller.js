@@ -119,11 +119,13 @@
         function getNPSData() {
             $scope.isLoading = true;
             var filters = {};
-            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            var organizationId = $scope.organizationService.selectedOrganization.identifier;
+            var siteId = $scope.globalFilters.selectedSite.identifier;
+            filters.organizationId = organizationId;
             filters.dateRange = $scope.globalFilters.dateRange;
 
             if($scope.globalFilters.selectedSite){
-                filters.siteId = $scope.globalFilters.selectedSite.identifier;
+                filters.siteId = siteId;
                 $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/nps', {
                         headers: {
                             organizationid: $scope.organizationService.selectedOrganization.identifier,
@@ -137,6 +139,14 @@
                         console.log(data);
                     }
                 });
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
+                    .success(function (data) {
+                        console.log(data);
+                    });
+                // $http.get(ApplicationConfiguration.applicationBackendURL + 'organizations/' + $scope.organizationId + '/sites/' + $scope.siteId + '/getavailablegifts/nps/false')
+                //     .success(function (data) {
+                //         console.log(data);
+                //     });
             } else {
                 $scope.isLoading = false;
             }

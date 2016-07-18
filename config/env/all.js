@@ -54,6 +54,7 @@ module.exports = {
                 'public/lib/textAngular/dist/textAngularSetup.js',
                 'public/lib/textAngular/dist/textAngular-sanitize.js',
                 'public/lib/underscore/underscore.js',
+                'public/lib/bootstrap/dist/js/bootstrap.js',
                 'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.js',
                 'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput-angular.js',
                 'public/lib/angular-bind-html-compile/angular-bind-html-compile.js',
