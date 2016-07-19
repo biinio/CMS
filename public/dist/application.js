@@ -2894,7 +2894,6 @@ angular.module('dashboard').config(['$stateProvider',
                     $scope.isLoading = false;
                     if (data.result == "1") {
                         updateNPSValues(data.data);
-                        console.log(data);
                     }
                 });
             } else {
@@ -2966,11 +2965,13 @@ angular.module('dashboard').config(['$stateProvider',
         }
 
         function generateLastComments(data){
-
+            console.log(data);
             $scope.lastComments = [];
             if (Array.isArray(data)) {
                 for(var i = 0; i < data.length; i++){
                     var newComment = {};
+                    newComment.userIdentifier = data[i].userIdentifier;
+                    newComment.identifier = data[i].identifier;
                     newComment.date = generateElapsedTimeString(data[i].date);
                     newComment.user = data[i].user? data[i].user.name : "Usuario Eliminado de Biin";
                     newComment.comment = data[i].comment == "Optional" || data[i].comment.trim() == ""  ? "No hay comentario" : data[i].comment;
@@ -3020,12 +3021,37 @@ angular.module('dashboard').config(['$stateProvider',
             }
         }
 
-        $scope.displayGifts = function (type) {
+        $scope.displayGifts = function (type, commentIdentifier, userIdentifier) {
             $scope.giftDisplay = type;
-            console.log(type);
-            console.log($scope.giftDisplay);
+            $scope.selectedGift = null;
+            $scope.npsCommentIdentifier = commentIdentifier;
+            $scope.userCommentIdentifier = userIdentifier;
         }
+        
+        $scope.setSelectedGift = function (productIdentifier) {
+            $scope.selectedGift = productIdentifier;
+        }
+        $scope.assignGift = function () {
+            var npsCommentIdentifier = $scope.npsCommentIdentifier;
+            var biinieIdentifier = $scope.userCommentIdentifier;
+            var giftIdentifier = $scope.selectedGift;
+            console.log(npsCommentIdentifier);
+            console.log(biinieIdentifier);
+            console.log(giftIdentifier);
 
+            if(npsCommentIdentifier && biinieIdentifier && giftIdentifier){
+                // $http.post(ApplicationConfiguration.applicationBackendURL + 'api/gift/assign/nps',{
+                //     data: {
+                //         biinieIdentifier: biinieIdentifier,
+                //         giftIdentifier: giftIdentifier,
+                //         npsCommentIdentifier: npsCommentIdentifier
+                //     }
+                // }).success(function (data) {
+                //      console.log(data);
+                // });
+            }
+        }
+        
         function resetNPS() {
             $scope.promotersQuantity = 0;
             $scope.passiveQuantity = 0;

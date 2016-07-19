@@ -76,7 +76,7 @@
                                              class="media-box-object img-circle thumb64"/>
                                     </div>
                                     <div class="media-box-body clearfix">
-                                        <button class="mb-sm btn btn-primary pull-right" ng-click="displayGifts('manual')" modal="open" target="giftsAvailable"><span class="fa fa-trophy"></span> Premiar</button>
+                                        <button ng-if="commentData.user!='Usuario Eliminado de Biin'" class="mb-sm btn btn-primary pull-right" ng-click="displayGifts('manual', commentData.identifier, commentData.userIdentifier);selectedGift=null" modal="open" target="giftsAvailable"><span class="fa fa-trophy"></span> Premiar</button>
                                         <strong class="media-box-heading">
                                             <span class="circle circle-success circle-lg text-left"></span>
                                             {{commentData.user}}

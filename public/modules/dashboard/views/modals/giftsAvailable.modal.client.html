@@ -12,22 +12,26 @@
             <div class="modal-body">
                 <ul ng-if="giftDisplay=='automatic'">
                     <p ng-if="npsGiftsAutomatic==0" class="text-center">(No hay regalos automáticos para asignar)</p>
-                    <li ng-repeat="gift in npsGiftsAutomatic" class="col-sm-4 col-xs-2" tabindex="0">
-                        <img ng-src="{{getGiftImage(gift.productIdentifier)}}" alt="{{gift.name}}" class="gift-image"/>
-                        <p class="nameDisplay">{{gift.name}}</p>
+                    <li ng-repeat="gift in npsGiftsAutomatic" class="col-sm-4 col-xs-2">
+                        <div ng-click="setSelectedGift(gift.productIdentifier)" tabindex="0">
+                            <img ng-src="{{getGiftImage(gift.productIdentifier)}}" alt="{{gift.name}}" class="gift-image"/>
+                            <p class="nameDisplay">{{gift.name}}</p>
+                        </div>
                     </li>
                 </ul>
                 <ul ng-if="giftDisplay=='manual'">
                     <p ng-if="npsGiftsManual==0" class="text-center">(No hay regalos para asignar)</p>
-                    <li ng-repeat="gift in npsGiftsManual" class="col-sm-4 col-xs-2" tabindex="0">
-                        <img ng-src="{{getGiftImage(gift.productIdentifier)}}" alt="{{gift.name}}" class="gift-image"/>
-                        <p class="nameDisplay">{{gift.name}}</p>
+                    <li ng-repeat="gift in npsGiftsManual" class="col-sm-4 col-xs-2">
+                        <div ng-click="setSelectedGift(gift.productIdentifier)" tabindex="0">
+                            <img ng-src="{{getGiftImage(gift.productIdentifier)}}" alt="{{gift.name}}" class="gift-image"/>
+                            <p class="nameDisplay">{{gift.name}}</p>
+                        </div>
                     </li>
                 </ul>
                 <hr>
                 <div class="pull-right">
                     <button type="button" class="btn btn-default" modal="close" target="giftsAvailable">Cerrar</button>
-                    <button ng-disabled="!selectedGift" class="btn btn-primary" type="submit" modal="close" target="giftsAvailable">Asignar</button>
+                    <button ng-disabled="selectedGift==null" class="btn btn-primary" type="submit" modal="close" target="giftsAvailable" ng-click="assignGift()">Asignar</button>
                 </div>
             </div>
         </div>
