@@ -12,6 +12,7 @@
             restrict: 'A',
 
             link:function($scope, element, attributes){
+
                 $scope.open = function() {
                     $('#' + attributes.target).modal('show');
                 }

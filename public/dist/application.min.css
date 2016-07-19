@@ -7071,10 +7071,8 @@ fieldset .form-group {
 .modal .modal-body {
   overflow: hidden;
 }
-.modal-open {
-  overflow: hidden;
-  position: fixed;
-  width: 100%;
+.modal-dialog {
+  margin-bottom: 100px;
 }
 .topnavbar,
 .navbar,
@@ -16058,8 +16056,10 @@ Component: elements.less
 }
 .selectGiftModal li {
   list-style: none;
-  cursor: pointer;
   margin-top: 20px;
+}
+.selectGiftModal li div {
+  cursor: pointer;
 }
 .selectGiftModal li div:focus .gift-image,
 .selectGiftModal li div:focus .nameDisplay {
