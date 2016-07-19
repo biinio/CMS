@@ -22,10 +22,15 @@
 .selectGiftModal{
   ul{
     overflow: hidden;
+    min-height: 198px;
+    max-height: 396px;
+    padding-left: 0;
+    overflow-y:auto;
   }
   li{
     list-style: none;
     cursor: pointer;
+    margin-top: 20px;
 
     &:focus{
       .gift-image, .nameDisplay{
@@ -54,6 +59,9 @@
     text-align: center;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 }
 .visitsvsretorning-graph{

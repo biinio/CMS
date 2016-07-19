@@ -16046,10 +16046,15 @@ Component: elements.less
 }
 .selectGiftModal ul {
   overflow: hidden;
+  min-height: 198px;
+  max-height: 396px;
+  padding-left: 0;
+  overflow-y: auto;
 }
 .selectGiftModal li {
   list-style: none;
   cursor: pointer;
+  margin-top: 20px;
 }
 .selectGiftModal li:focus .gift-image,
 .selectGiftModal li:focus .nameDisplay {
@@ -16075,6 +16080,9 @@ Component: elements.less
   text-align: center;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .visitsvsretorning-graph {
   min-height: 95px;
