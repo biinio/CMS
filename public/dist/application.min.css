@@ -16034,6 +16034,18 @@ Component: elements.less
 .dashboard .tab-content {
   padding-bottom: 0;
 }
+.dashboard .tab-content .actions-box {
+  height: 100%;
+}
+.dashboard .tab-content small {
+  display: block;
+}
+.dashboard .tab-content button {
+  margin-top: 5px;
+  width: 110px;
+  bottom: 0;
+  position: relative;
+}
 .dashboard .tab-content .list-group {
   max-height: 340px;
   min-height: 340px;
@@ -16046,6 +16058,11 @@ Component: elements.less
 }
 .dashboard .widget {
   height: 252.5px;
+}
+.selectGiftModal .activeGift .gift-image,
+.selectGiftModal .activeGift .nameDisplay {
+  opacity: 1;
+  border-color: #4a484b;
 }
 .selectGiftModal ul {
   overflow: hidden;

@@ -69,32 +69,34 @@
                         <!-- START list group-->
                         <div class="list-group" data-ng-if="lastComments.length > 0">
                             <!-- START list group item-->
-                            <a class="list-group-item" data-ng-repeat="commentData in lastComments">
-                                <div class="media-box">
+                            <a class="list-group-item clearfix" data-ng-repeat="commentData in lastComments">
+                                <div class="media-box col-sm-8">
                                     <div class="pull-left border-round" data-ng-class="{ 'nps-green-border': commentData.rating>=9, 'nps-orange-border': commentData.rating<9 && commentData.rating>=7, 'nps-red-border':commentData.rating<7}">
                                         <img ng-src="{{commentData.image}}" alt="Image"
                                              class="media-box-object img-circle thumb64"/>
                                     </div>
                                     <div class="media-box-body clearfix">
-                                        <button ng-if="commentData.user!='Usuario Eliminado de Biin'" class="mb-sm btn btn-primary pull-right" ng-click="displayGifts('manual', commentData.identifier, commentData.userIdentifier);selectedGift=null" modal="open" target="giftsAvailable"><span class="fa fa-trophy"></span> Premiar</button>
                                         <strong class="media-box-heading">
                                             <span class="circle circle-success circle-lg text-left"></span>
                                             {{commentData.user}}
                                         </strong>
-                                        <!--<p class="mb-sm">-->
-                                            <!--<small>{{commentData.user.email}}</small>-->
-                                        <!--</p>-->
-                                        <!--<p class="mb-sm">-->
-                                            <!--<small>{{commentData.user.telephone}}</small>-->
-                                        <!--</p>-->
                                         <p class="mb-sm" data-ng-class="{ 'text-success': commentData.rating>=9, 'text-warning': commentData.rating<9 && commentData.rating>=7, 'text-danger':commentData.rating<7}">
                                             <small><strong>Calificación: </strong><strong>{{commentData.rating}}</strong></small>
                                         </p>
                                         <p class="mb-sm">
                                             <small>{{commentData.comment}}</small>
                                         </p>
-                                        <small class="pull-right">{{commentData.date}}</small>
+                                        <p>
+                                            <small>Hace {{commentData.date}}</small>
+                                        </p>
                                     </div>
+                                </div>
+                                <div class="actions-box col-sm-4">
+                                    <small ng-if="commentData.gift.recievedDate" class="pull-right">Enviado: {{commentData.gift.recievedDate | date:'dd-MM-yyyy'}}</small>
+                                    <button ng-if="commentData.user!='Usuario Eliminado de Biin' && commentData.gift==0" class="mb-sm btn btn-primary pull-right" ng-click="displayGifts('manual', commentData);selectedGift=null" modal="open" target="giftsAvailable"><span class="fa fa-trophy"></span> Premiar</button>
+                                    <button ng-disabled="commentData.gift.status=='SENT' || commentData.gift.status=='APPROVED'" ng-if="commentData.gift.status=='SENT' || commentData.gift.status=='APPROVED'" class="mb-sm btn btn-default pull-right"><span class="fa fa-clock-o"></span> Pendiente</button>
+                                    <button ng-if="commentData.gift.status=='CLAIMED'"  class="mb-sm btn btn-primary pull-right" ng-click="deliverGift(commentData.identifier, commentData.userIdentifier)"><span class="fa fa-envelope"></span> Entregar</button>
+                                    <button ng-disabled="commentData.gift.status=='DELIVERED'" ng-if="commentData.gift.status=='DELIVERED'" class="mb-sm btn btn-default pull-right"><span class="fa fa-check"></span> Entregado</button>
                                 </div>
                             </a>
                             <!-- END list group item-->
@@ -109,14 +111,81 @@
                 <uib-tab index="1" heading="Pendientes">
                     <div class="nps-last-comments-title">Usuarios pendientes de reclamar regalo</div>
                     <div class="list-group">
-
+                        <div class="list-group" data-ng-if="lastComments.length > 0">
+                            <!-- START list group item-->
+                            <a class="list-group-item clearfix" data-ng-repeat="commentData in lastComments" ng-if="commentData.gift.status=='SENT' || commentData.gift.status=='CLAIMED' || commentData.gift.status=='APPROVED'">
+                                <div class="media-box col-sm-8">
+                                    <div class="pull-left border-round" data-ng-class="{ 'nps-green-border': commentData.rating>=9, 'nps-orange-border': commentData.rating<9 && commentData.rating>=7, 'nps-red-border':commentData.rating<7}">
+                                        <img ng-src="{{commentData.image}}" alt="Image"
+                                             class="media-box-object img-circle thumb64"/>
+                                    </div>
+                                    <div class="media-box-body clearfix">
+                                        <strong class="media-box-heading">
+                                            <span class="circle circle-success circle-lg text-left"></span>
+                                            {{commentData.user}}
+                                        </strong>
+                                        <p class="mb-sm" data-ng-class="{ 'text-success': commentData.rating>=9, 'text-warning': commentData.rating<9 && commentData.rating>=7, 'text-danger':commentData.rating<7}">
+                                            <small><strong>Calificación: </strong><strong>{{commentData.rating}}</strong></small>
+                                        </p>
+                                        <p class="mb-sm">
+                                            <small>{{commentData.comment}}</small>
+                                        </p>
+                                        <p>
+                                            <small>Hace {{commentData.date}}</small>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="actions-box col-sm-4">
+                                    <small class="pull-right">Enviado: {{commentData.gift.recievedDate | date:'dd-MM-yyyy'}}</small>
+                                    <button ng-disabled="commentData.gift.status=='SENT' || commentData.gift.status=='APPROVED'" ng-if="commentData.gift.status=='SENT' || commentData.gift.status=='APPROVED'" class="mb-sm btn btn-default pull-right"><span class="fa fa-clock-o"></span> Pendiente</button>
+                                    <button ng-if="commentData.gift.status=='CLAIMED'"  class="mb-sm btn btn-primary pull-right" ng-click="deliverGift(commentData.identifier, commentData.userIdentifier)"><span class="fa fa-envelope"></span> Entregar</button>
+                                </div>
+                            </a>
+                            <!-- END list group item-->
+                        </div>
+                        <div class="list-group center-text" data-ng-if="lastComments.length <= 0">
+                            No hay comentarios
+                        </div>
                     </div>
                 </uib-tab>
                 <!--Awarded tab-->
                 <uib-tab index="2" heading="Premiados">
                     <div class="nps-last-comments-title">Usuarios que han sido premiados</div>
                     <div class="list-group">
-
+                        <div class="list-group" data-ng-if="lastComments.length > 0">
+                            <!-- START list group item-->
+                            <a class="list-group-item clearfix" data-ng-repeat="commentData in lastComments" ng-if="commentData.gift.status=='DELIVERED'">
+                                <div class="media-box col-sm-8">
+                                    <div class="pull-left border-round" data-ng-class="{ 'nps-green-border': commentData.rating>=9, 'nps-orange-border': commentData.rating<9 && commentData.rating>=7, 'nps-red-border':commentData.rating<7}">
+                                        <img ng-src="{{commentData.image}}" alt="Image"
+                                             class="media-box-object img-circle thumb64"/>
+                                    </div>
+                                    <div class="media-box-body clearfix">
+                                        <strong class="media-box-heading">
+                                            <span class="circle circle-success circle-lg text-left"></span>
+                                            {{commentData.user}}
+                                        </strong>
+                                        <p class="mb-sm" data-ng-class="{ 'text-success': commentData.rating>=9, 'text-warning': commentData.rating<9 && commentData.rating>=7, 'text-danger':commentData.rating<7}">
+                                            <small><strong>Calificación: </strong><strong>{{commentData.rating}}</strong></small>
+                                        </p>
+                                        <p class="mb-sm">
+                                            <small>{{commentData.comment}}</small>
+                                        </p>
+                                        <p>
+                                            <small>Hace {{commentData.date}}</small>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="actions-box col-sm-4">
+                                    <small class="pull-right">Enviado: {{commentData.gift.recievedDate | date:'dd-MM-yyyy'}}</small>
+                                    <button ng-disabled="commentData.gift.status=='DELIVERED'" ng-if="commentData.gift.status=='DELIVERED'" class="mb-sm btn btn-default pull-right"><span class="fa fa-check"></span> Entregado</button>
+                                </div>
+                            </a>
+                            <!-- END list group item-->
+                        </div>
+                        <div class="list-group center-text" data-ng-if="lastComments.length <= 0">
+                            No hay comentarios
+                        </div>
                     </div>
                 </uib-tab>
             </uib-tabset>

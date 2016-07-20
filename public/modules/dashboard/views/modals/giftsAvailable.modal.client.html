@@ -10,19 +10,26 @@
             </div>
             <!-- Modal Body -->
             <div class="modal-body">
-                <ul ng-if="giftDisplay=='automatic'">
+                <div class="clearfix activeGift" ng-if="isActiveGift.gift">
+                    <p class="text-center">Tienes un regalo activo, debes desactivarlo si queires activar algún otro</p>
+                    <div class="col-sm-4 col-sm-offset-4 col-xs-10 col-xs-offset-1">
+                        <img ng-src="{{getGiftImage(isGiftActive.gift.productIdentifier)}}" alt="{{isGiftActive.gift.name}}" class="gift-image"/>
+                        <p class="nameDisplay">{{isGiftActive.gift.name}}</p>
+                    </div>
+                </div>
+                <ul ng-if="giftDisplay=='automatic' && isGiftActive.gift==null">
                     <p ng-if="npsGiftsAutomatic==0" class="text-center">(No hay regalos automáticos para asignar)</p>
-                    <li ng-repeat="gift in npsGiftsAutomatic" class="col-sm-4 col-xs-2">
-                        <div ng-click="setSelectedGift(gift.productIdentifier)" tabindex="0">
+                    <li ng-repeat="gift in npsGiftsAutomatic" class="col-sm-4 col-xs-2" ng-if="gift.amount>gift.amountSpent && gift.hasAvailablePeriod==false || gift.amount>gift.amountSpent && ((currentDate | date) <= (gift.endDate | date)) && gift.hasAvailablePeriod==true">
+                        <div ng-click="setSelectedGift(gift.identifier)" tabindex="0">
                             <img ng-src="{{getGiftImage(gift.productIdentifier)}}" alt="{{gift.name}}" class="gift-image"/>
                             <p class="nameDisplay">{{gift.name}}</p>
                         </div>
                     </li>
                 </ul>
-                <ul ng-if="giftDisplay=='manual'">
+                <ul ng-if="giftDisplay=='manual' && isGiftActive.gift==null">
                     <p ng-if="npsGiftsManual==0" class="text-center">(No hay regalos para asignar)</p>
-                    <li ng-repeat="gift in npsGiftsManual" class="col-sm-4 col-xs-2">
-                        <div ng-click="setSelectedGift(gift.productIdentifier)" tabindex="0">
+                    <li ng-repeat="gift in npsGiftsManual" class="col-sm-4 col-xs-2" ng-if="gift.amount>gift.amountSpent && gift.hasAvailablePeriod==false || gift.amount>gift.amountSpent && ((currentDate | date) <= (gift.endDate | date)) && gift.hasAvailablePeriod==true">
+                        <div ng-click="setSelectedGift(gift.identifier)" tabindex="0">
                             <img ng-src="{{getGiftImage(gift.productIdentifier)}}" alt="{{gift.name}}" class="gift-image"/>
                             <p class="nameDisplay">{{gift.name}}</p>
                         </div>
@@ -31,7 +38,8 @@
                 <hr>
                 <div class="pull-right">
                     <button type="button" class="btn btn-default" modal="close" target="giftsAvailable">Cerrar</button>
-                    <button ng-disabled="selectedGift==null" class="btn btn-primary" type="submit" modal="close" target="giftsAvailable" ng-click="assignGift()">Asignar</button>
+                    <button ng-if="isGiftActive.gift==null" ng-disabled="selectedGift==null" class="btn btn-primary" type="submit" modal="close" target="giftsAvailable" ng-click="assignGift()">Asignar</button>
+                    <button ng-if="isGiftActive.gift" class="btn btn-danger" type="submit" modal="close" target="giftsAvailable" ng-click="desactivateGift()">Desactivar</button>
                 </div>
             </div>
         </div>

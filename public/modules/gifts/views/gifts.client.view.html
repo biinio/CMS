@@ -171,7 +171,7 @@
                                     <div class="form-group">
                                         <label for="giftAmount" translate="GIFT.AMOUNT" class="control-label"></label>
                                         <input id="giftAmount" ng-model="objectsSidebarService.selectedObject.amount"
-                                               name="amount"
+                                               name="amount" min="0"
                                                type="number" placeholder="{{ 'GIFT.AMOUNT_PLACEHOLDER' | translate }}"
                                                required class="form-control"
                                                ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>

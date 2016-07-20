@@ -3,6 +3,19 @@
   .tab-content{
     padding-bottom: 0;
 
+    .actions-box{
+      height: 100%;
+    }
+    small{
+      display: block;
+    }
+    button{
+      margin-top: 5px;
+      width: 110px;
+      bottom: 0;
+      position: relative;
+    }
+
     .list-group{
       max-height: 340px;
       min-height: 340px;
@@ -20,6 +33,12 @@
 }
 
 .selectGiftModal{
+  .activeGift{
+    .gift-image, .nameDisplay{
+      opacity: 1;
+      border-color: #4a484b;
+    }
+  }
   ul{
     overflow: hidden;
     min-height: 198px;
