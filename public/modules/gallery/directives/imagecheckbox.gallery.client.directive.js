@@ -5,7 +5,7 @@
         .module('gallery')
         .directive('imageCheckbox', ImageCheckbox);
 
-    ImageCheckbox.$inject = ['$modal'];
+    ImageCheckbox.$inject = [];
     function ImageCheckbox() {
         return {
             restrict: 'A',

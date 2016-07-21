@@ -171,13 +171,14 @@
                                     <div class="form-group">
                                         <label for="giftAmount" translate="GIFT.AMOUNT" class="control-label"></label>
                                         <input id="giftAmount" ng-model="objectsSidebarService.selectedObject.amount"
-                                               name="amount" min="0"
+                                               name="amount" min="0" ng-pattern="/^\+?([1-9]\d*)$/"
                                                type="number" placeholder="{{ 'GIFT.AMOUNT_PLACEHOLDER' | translate }}"
                                                required class="form-control"
                                                ng-disabled="objectsSidebarService.selectedObject.amountSpent > 0"/>
                                         <!-- Input title errors -->
                                         <div ng-messages="gift.myForm.amount.$error" ng-if="gift.myForm.amount.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.AMOUNT_REQUIRED"></small>
+                                            <small ng-message="pattern">*La cantidad de regalos debe ser positiva.</small>
                                         </div>
                                     </div>
 

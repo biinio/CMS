@@ -10,7 +10,7 @@
             </div>
             <!-- Modal Body -->
             <div class="modal-body">
-                <div class="clearfix activeGift" ng-if="isActiveGift.gift">
+                <div class="clearfix activeGift" ng-if="isGiftActive.gift">
                     <p class="text-center">Tienes un regalo activo, debes desactivarlo si queires activar algún otro</p>
                     <div class="col-sm-4 col-sm-offset-4 col-xs-10 col-xs-offset-1">
                         <img ng-src="{{getGiftImage(isGiftActive.gift.productIdentifier)}}" alt="{{isGiftActive.gift.name}}" class="gift-image"/>
