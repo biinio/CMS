@@ -5381,30 +5381,33 @@ angular.module('gifts').config(['$stateProvider',
             $scope.types = $scope.objectsSidebarService.selectedObject.availableIn;
 
             if($scope.types.length == 0){
-                $scope.types.push(type);
-            }else{
-                //Validate if the option was already selected
-                for(var i in $scope.types){
-                    if(type == $scope.types[i]){
-                        $scope.types.splice(i, 1);
-                        exist = true;
-                    }
+                //If any button is clicked
+                if (type=='all'){
+                    $scope.types = $scope.types = ['nps','mec','vip'];
+                } else {
+                    $scope.types.push(type);
                 }
-                if(!exist){
-                    if(type == 'all'){
-                        $scope.types = ['all'];
-                    }else{
-                        //Validate if you have all and select another option
-                        for(var i in $scope.types){
-                            if($scope.types[i] == 'all'){
-                                $scope.types.splice(i, 1);
-                            }
+            }else if ($scope.types.length == 3){
+                if (type=='all'){
+                    $scope.types = [];
+                } else {
+                    $scope.types = [];
+                    $scope.types.push(type);
+                }
+            } else if($scope.types.length == 2){
+                $scope.types = $scope.types = ['nps','mec','vip'];
+            } else {
+                if (type=='all'){
+                    $scope.types = $scope.types = ['nps','mec','vip'];
+                } else {
+                    for(var i in $scope.types){
+                        if(type == $scope.types[i]){
+                            $scope.types.splice(i, 1);
+                            exist = true;
                         }
+                    }
+                    if(!exist){
                         $scope.types.push(type);
-                        //Validate if all option are selected
-                        if($scope.types.length == 3){
-                            $scope.types = ['all'];
-                        }
                     }
                 }
             }
@@ -6991,34 +6994,34 @@ angular.module('organization').config(['$stateProvider',
 
                     //scope.loadingImagesChange(true);
                     // now post a new XHR request
-                    var xhr = new XMLHttpRequest();
+                    if(formData.get('file')){
+                        var xhr = new XMLHttpRequest();
 
-                    var organization= ObjectsSidebar.selectedObject.identifier;
+                        var organization= ObjectsSidebar.selectedObject.identifier;
 
-                    xhr.open('POST', ApplicationConfiguration.applicationBackendURL +'api/organizations/'+organization+"/image");
-                    xhr.setRequestHeader('accountidentifier',Authentication.user.accountIdentifier);
-                    xhr.onload = function (data) {
-                        if (xhr.status === 200) {
-                            var obj= $.parseJSON(xhr.response);
+                        xhr.open('POST', ApplicationConfiguration.applicationBackendURL +'api/organizations/'+organization+"/image");
+                        xhr.setRequestHeader('accountidentifier',Authentication.user.accountIdentifier);
+                        xhr.onload = function (data) {
+                            if (xhr.status === 200) {
+                                var obj= $.parseJSON(xhr.response);
 
-                            $rootScope.$broadcast("changeOrganizationImage",obj.data);
+                                $rootScope.$broadcast("changeOrganizationImage",obj.data);
 
-                            console.log('all done: ' + xhr.status);
-                            //scope.loadingImagesChange(false);
-                        } else {
-                            console.log('Something went terribly wrong...');
-                        }
-                    };
+                                console.log('all done: ' + xhr.status);
+                                //scope.loadingImagesChange(false);
+                            } else {
+                                console.log('Something went terribly wrong...');
+                            }
+                        };
 
-                    xhr.upload.onprogress = function (event) {
-                        if (event.lengthComputable) {
-                            var complete = (event.loaded / event.total * 100 | 0);
-                            //progress.value = progress.innerHTML = complete;
-                        }
-                    };
-
-                    xhr.send(formData);
-
+                        xhr.upload.onprogress = function (event) {
+                            if (event.lengthComputable) {
+                                var complete = (event.loaded / event.total * 100 | 0);
+                                //progress.value = progress.innerHTML = complete;
+                            }
+                        };
+                        xhr.send(formData);
+                    }
                 })
                 //Click event of the style button
                 $(element[0]).on('click touch',function(e){

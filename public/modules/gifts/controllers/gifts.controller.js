@@ -153,30 +153,33 @@
             $scope.types = $scope.objectsSidebarService.selectedObject.availableIn;
 
             if($scope.types.length == 0){
-                $scope.types.push(type);
-            }else{
-                //Validate if the option was already selected
-                for(var i in $scope.types){
-                    if(type == $scope.types[i]){
-                        $scope.types.splice(i, 1);
-                        exist = true;
-                    }
+                //If any button is clicked
+                if (type=='all'){
+                    $scope.types = $scope.types = ['nps','mec','vip'];
+                } else {
+                    $scope.types.push(type);
                 }
-                if(!exist){
-                    if(type == 'all'){
-                        $scope.types = ['all'];
-                    }else{
-                        //Validate if you have all and select another option
-                        for(var i in $scope.types){
-                            if($scope.types[i] == 'all'){
-                                $scope.types.splice(i, 1);
-                            }
+            }else if ($scope.types.length == 3){
+                if (type=='all'){
+                    $scope.types = [];
+                } else {
+                    $scope.types = [];
+                    $scope.types.push(type);
+                }
+            } else if($scope.types.length == 2){
+                $scope.types = $scope.types = ['nps','mec','vip'];
+            } else {
+                if (type=='all'){
+                    $scope.types = $scope.types = ['nps','mec','vip'];
+                } else {
+                    for(var i in $scope.types){
+                        if(type == $scope.types[i]){
+                            $scope.types.splice(i, 1);
+                            exist = true;
                         }
+                    }
+                    if(!exist){
                         $scope.types.push(type);
-                        //Validate if all option are selected
-                        if($scope.types.length == 3){
-                            $scope.types = ['all'];
-                        }
                     }
                 }
             }

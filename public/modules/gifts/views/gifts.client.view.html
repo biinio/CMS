@@ -212,28 +212,28 @@
                                             <div class="btn-group col-sm-3" role="group" aria-label="First group">
                                                 <button ng-click="availableIn('nps')" type="button"
                                                         class="btn btn-default" translate="GIFT.AVAILABLE_NPS"
-                                                        ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('nps')}"
+                                                        ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('nps') && (objectsSidebarService.selectedObject.availableIn.length==1 || objectsSidebarService.selectedObject.availableIn.length==2)}"
                                                         ng-disabled="objectsSidebarService.selectedObject.isActive">
                                                 </button>
                                             </div>
                                             <div class="btn-group col-sm-3" role="group" aria-label="Second group">
                                                 <button ng-click="availableIn('mec')" type="button"
                                                         class="btn btn-default" translate="GIFT.AVAILABLE_MEC"
-                                                        ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('mec')}"
+                                                        ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('mec') && (objectsSidebarService.selectedObject.availableIn.length==1 || objectsSidebarService.selectedObject.availableIn.length==2)}"
                                                         ng-disabled="objectsSidebarService.selectedObject.isActive">
                                                 </button>
                                             </div>
                                             <div class="btn-group col-sm-3" role="group" aria-label="Third group">
                                                 <button ng-click="availableIn('vip')" type="button"
                                                         class="btn btn-default" translate="GIFT.AVAILABLE_VIP"
-                                                        ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('vip')}"
+                                                        ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('vip') && (objectsSidebarService.selectedObject.availableIn.length==1 || objectsSidebarService.selectedObject.availableIn.length==2)}"
                                                         ng-disabled="objectsSidebarService.selectedObject.isActive">
                                                 </button>
                                             </div>
                                             <div class="btn-group col-sm-3" role="group" aria-label="Third group">
                                                 <button ng-click="availableIn('all')" type="button"
                                                         class="btn btn-default" translate="GIFT.AVAILABLE_ALL"
-                                                        ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.includes('all')}"
+                                                        ng-class="{ 'active': objectsSidebarService.selectedObject.availableIn.length==3}"
                                                         ng-disabled="objectsSidebarService.selectedObject.isActive">
                                                 </button>
                                             </div>
@@ -284,6 +284,7 @@
                                         </button>
                                         <div class="clearfix"></div>
                                     </div>
+                                    {{objectsSidebarService.selectedObject | json}}
                                     <!--Alerts-->
                                     <div class="form-group">
                                         <div class="alert alert-warning alert-dismissible" ng-show="show_alert">
