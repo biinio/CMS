@@ -5260,7 +5260,8 @@ angular.module('gifts').config(['$stateProvider',
             $scope.objectsSidebarService = ObjectsSidebar;
             //Authentication Service
             $scope.authentication = Authentication;
-
+            //Gift Object
+            $scope.objectsSidebarService.selectedObject = {};
             //----Variables----//
             //Ready to fill
             $scope.ready = false;
@@ -5269,13 +5270,11 @@ angular.module('gifts').config(['$stateProvider',
             $scope.sites = [];
             //State of loading screen
             $scope.loadingService.isLoading = true;
-            //Gift Object
-            $scope.objectsSidebarService.selectedObject = {};
             //Current Date
             $scope.currentDate = new Date();
             //Default alerts
             $scope.show_alert = true;
-            //Draggable Properties
+
 
             $scope.sidebarTemplate =
                 "<div class='col-md-3 thumbListImage'>" +
@@ -5293,14 +5292,16 @@ angular.module('gifts').config(['$stateProvider',
         }
 
         //----Functions----//
-        //Get the List of Products
-        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
-            $scope.products = data.data.elements;
-        });
-        //Get the List of Sites
-        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
-            $scope.locals = data.data.sites;
-        });
+        if($scope.organizationId){
+            //Get the List of Products
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+                $scope.products = data.data.elements;
+            });
+            //Get the List of Sites
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
+                $scope.locals = data.data.sites;
+            });
+        }
 
         /**=============================================================================================================
          * Event Listeners
@@ -5321,6 +5322,9 @@ angular.module('gifts').config(['$stateProvider',
             objectClicked.endDate = new Date(objectClicked.endDate);
             //All ready to show the gift info
             $scope.ready = true;
+            //Validation variables
+            $scope.spent = objectClicked.amount == objectClicked.amountSpent;
+            $scope.expire = (($scope.currentDate).getDate() > (objectClicked.endDate).getDate()) && objectClicked.hasAvailablePeriod==true;
         });
         $scope.$on('organizationChanged',function(){
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
@@ -5463,7 +5467,7 @@ angular.module('gifts').config(['$stateProvider',
                 showLoaderOnConfirm: true,
                 closeOnConfirm: false
             }, function () {
-                if($scope.objectsSidebarService.selectedObject.amountSpent == 0) {
+                if($scope.objectsSidebarService.selectedObject.amountSpent == 0 || $scope.objectsSidebarService.selectedObject.amountSpent == $scope.objectsSidebarService.selectedObject.amountSpent || (($scope.currentDate | date) > ($scope.objectsSidebarService.selectedObject.endDate | date))) {
                     $scope.removeGiftAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
                 }
             });
@@ -5491,6 +5495,9 @@ angular.module('gifts').config(['$stateProvider',
             if(gift.myForm.$valid  && $scope.objectsSidebarService.selectedObject.sites.length > 0 && $scope.objectsSidebarService.selectedObject.availableIn.length > 0) {
                 $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
                     console.log('Actualizado');
+                    //Validation variables
+                    $scope.spent = $scope.objectsSidebarService.selectedObject.amount == $scope.objectsSidebarService.selectedObject.amountSpent;
+                    $scope.expire = (($scope.currentDate).getDate() > ($scope.objectsSidebarService.selectedObject.endDate).getDate()) && $scope.objectsSidebarService.selectedObject.hasAvailablePeriod==true;
                 });
             }
         }

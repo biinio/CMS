@@ -273,7 +273,7 @@
                                     <!--isActive-->
                                     <div class="form-group activate-gift">
                                         <button type="button" class="btn btn-danger col-sm-2" ng-click="deleteGift(' {{'GENERIC.DELETE_GIFT_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)"
-                                                ng-disabled="objectsSidebarService.selectedObject.isActive">
+                                                ng-disabled="!spent && !expire && objectsSidebarService.selectedObject.isActive ">
                                             <span class="fa fa-trash"></span>
                                             <span translate="GENERIC.DELETE"></span>
                                         </button>
