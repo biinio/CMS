@@ -5456,10 +5456,8 @@ angular.module('gifts').config(['$stateProvider',
 
         //Function to activate a gift
         $scope.activate = function () {
-            if($scope.objectsSidebarService.selectedObject.amountSpent == 0 && $scope.objectsSidebarService.selectedObject.isActive == false){
+            if($scope.objectsSidebarService.selectedObject.amountSpent == 0 && $scope.objectsSidebarService.selectedObject.isActive == false && gift.myForm.$valid && $scope.objectsSidebarService.selectedObject.sites.length > 0 && $scope.objectsSidebarService.selectedObject.availableIn.length > 0){
                 $scope.objectsSidebarService.selectedObject.isActive = true;
-            }else if($scope.objectsSidebarService.selectedObject.amountSpent == 0 && $scope.objectsSidebarService.selectedObject.isActive == true){
-                $scope.objectsSidebarService.selectedObject.isActive = false;
             }
             if($scope.objectsSidebarService.selectedObject.amountSpent > 0){
                 console.log('No puede realizar esta acción, porque el regalo ya fue reclamado');

@@ -258,7 +258,7 @@
                                         <div ng-repeat="local in locals" class="col-md-4 catModule">
                                             <div class="checkbox c-checkbox">
                                                 <label>
-                                                    <input  ng-click="availableLocal(local.identifier)" type="checkbox" ng-checked="checkLocal(local.identifier)"/>
+                                                    <input ng-click="availableLocal(local.identifier)" type="checkbox" ng-checked="checkLocal(local.identifier)"/>
                                                     <span class="fa fa-check"></span>
                                                     {{local.title1}} <small>({{local.title2}})</small>
                                                 </label>
@@ -284,7 +284,6 @@
                                         </button>
                                         <div class="clearfix"></div>
                                     </div>
-                                    {{objectsSidebarService.selectedObject | json}}
                                     <!--Alerts-->
                                     <div class="form-group">
                                         <div class="alert alert-warning alert-dismissible" ng-show="show_alert">
