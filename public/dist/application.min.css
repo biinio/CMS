@@ -16250,6 +16250,13 @@ Component: elements.less
 .npsContainer {
   position: relative;
 }
+.npsContainer .nav-tabs > li {
+  width: 20%;
+}
+.npsContainer .nav-tabs > li a {
+  padding: 10px 0;
+  text-align: center;
+}
 .loadernps {
   display: inline-block;
 }

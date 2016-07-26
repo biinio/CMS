@@ -40,6 +40,12 @@
 
         //Current Date
         $scope.currentDate = new Date();
+        $scope.tabs = [{id:1, name:'Encuestados', active:true, status:undefined},
+                       {id:2, name:'Pendientes', active:false, status:'SENT'},
+                       {id:3, name:'Reclamados', active:false, status:'CLAIMED'},
+                       {id:4, name:'Aprobados', active:false, status:'APPROVED'},
+                       {id:5, name:'Entregados', active:false, status:'DELIVERED'}];
+        $scope.status = undefined;
         $scope.indexBGColor = "";
         $scope.lineOptions = {
             series: {
@@ -326,6 +332,12 @@
                 console.log(data);
             });
         }
+
+        //Change tab status
+        $scope.changeStatus = function (status) {
+            $scope.status = status;
+        }
+
         function resetNPS() {
             $scope.promotersQuantity = 0;
             $scope.passiveQuantity = 0;
