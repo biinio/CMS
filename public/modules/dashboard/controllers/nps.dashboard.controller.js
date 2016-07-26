@@ -151,10 +151,12 @@
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/true')
                 .success(function (data) {
                     $scope.npsGiftsAutomatic = data;
+                    console.log(data);
                 });
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
                 .success(function (data) {
                     $scope.npsGiftsManual = data;
+                    console.log(data);
                 });
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + /readyElements/)
                 .success(function (data) {

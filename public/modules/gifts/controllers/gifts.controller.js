@@ -269,7 +269,9 @@
                     console.log('Actualizado');
                     //Validation variables
                     $scope.spent = $scope.objectsSidebarService.selectedObject.amount == $scope.objectsSidebarService.selectedObject.amountSpent;
-                    $scope.expire = (($scope.currentDate).getDate() > ($scope.objectsSidebarService.selectedObject.endDate).getDate()) && $scope.objectsSidebarService.selectedObject.hasAvailablePeriod==true;
+                    if($scope.objectsSidebarService.selectedObject.endDate){
+                        $scope.expire = (($scope.currentDate).getDate() > ($scope.objectsSidebarService.selectedObject.endDate).getDate()) && $scope.objectsSidebarService.selectedObject.hasAvailablePeriod==true;
+                    }
                 });
             }
         }

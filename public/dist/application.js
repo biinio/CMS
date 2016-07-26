@@ -2912,10 +2912,12 @@ angular.module('dashboard').config(['$stateProvider',
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/true')
                 .success(function (data) {
                     $scope.npsGiftsAutomatic = data;
+                    console.log(data);
                 });
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
                 .success(function (data) {
                     $scope.npsGiftsManual = data;
+                    console.log(data);
                 });
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + /readyElements/)
                 .success(function (data) {
@@ -5497,7 +5499,9 @@ angular.module('gifts').config(['$stateProvider',
                     console.log('Actualizado');
                     //Validation variables
                     $scope.spent = $scope.objectsSidebarService.selectedObject.amount == $scope.objectsSidebarService.selectedObject.amountSpent;
-                    $scope.expire = (($scope.currentDate).getDate() > ($scope.objectsSidebarService.selectedObject.endDate).getDate()) && $scope.objectsSidebarService.selectedObject.hasAvailablePeriod==true;
+                    if($scope.objectsSidebarService.selectedObject.endDate){
+                        $scope.expire = (($scope.currentDate).getDate() > ($scope.objectsSidebarService.selectedObject.endDate).getDate()) && $scope.objectsSidebarService.selectedObject.hasAvailablePeriod==true;
+                    }
                 });
             }
         }
