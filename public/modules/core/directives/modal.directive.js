@@ -14,10 +14,9 @@
             link:function($scope, element, attributes){
 
                 $scope.open = function() {
-
                     // console.log($scope.npsTimeout.$$timeoutId);
+                    $('#' + attributes.target).modal({backdrop:'static',keyboard:false});
                     $('#' + attributes.target).modal('show');
-                    // clearTimeout($scope.npsTimeout.$$timeoutId);
                 }
                 $scope.close = function() {
                     $('#' + attributes.target).modal('hide');

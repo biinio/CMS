@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <button class="btn btn-primary btn-block select-gift" ng-click="displayGifts('automatic')" modal="open" target="giftsAvailable">Seleccionar regalo</button>
+            <button class="btn btn-primary btn-block select-gift" ng-click="displayGifts('automatic')" modal="open" target="giftsAvailable">Seleccionar regalo automático</button>
             <uib-tabset active="active">
                 <uib-tab ng-repeat="tab in tabs" heading="{{tab.name}}" ng-click="changeStatus(tab.status)">
                     <div class="nps-last-comments-title" ng-if="status==undefined">Últimos 20 comentarios</div>
@@ -96,7 +96,7 @@
                             <!--<div class="actions-box col-sm-4">-->
                                 <small ng-if="commentData.gift.recievedDate" class="pull-right">Enviado: {{commentData.gift.recievedDate | date:'dd-MM-yyyy'}}</small>
                                 <button ng-if="commentData.user!='Usuario Eliminado de Biin' && commentData.gift==0" class="mb-sm btn btn-primary pull-right" ng-click="displayGifts('manual', commentData);selectedGift=null" modal="open" target="giftsAvailable"><span class="fa fa-trophy"></span> Premiar</button>
-                                <button ng-disabled="commentData.gift.status=='SENT'" ng-if="commentData.gift.status=='SENT'" class="mb-sm btn btn-default pull-right"><span class="fa fa-clock-o"></span> Pendiente</button>
+                                <button ng-disabled="commentData.gift.status=='SENT'" ng-if="commentData.gift.status=='SENT'" class="mb-sm btn btn-default pull-right"><span class="fa fa-clock-o"></span> Enviado</button>
                                 <button ng-disabled="commentData.gift.status=='REFUSED'" ng-if="commentData.gift.status=='REFUSED'" class="mb-sm btn btn-default pull-right"><span class="fa fa-clock-o"></span> Rechazado</button>
                                 <button ng-if="commentData.gift.status=='CLAIMED'"  class="mb-sm btn btn-primary pull-right" ng-click="deliverGift(commentData.identifier, commentData.userIdentifier)"><span class="fa fa-envelope"></span> Entregar</button>
                                 <button ng-disabled="commentData.gift.status=='DELIVERED'" ng-if="commentData.gift.status=='DELIVERED'" class="mb-sm btn btn-default pull-right"><span class="fa fa-check"></span> Entregado</button>

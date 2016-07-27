@@ -38,10 +38,14 @@
             getNPSData();
         });
 
+        $scope.$on('$locationChangeStart', function(){
+            $timeout.cancel($scope.npsTimeout);
+        });
+
         //Current Date
         $scope.currentDate = new Date();
         $scope.tabs = [{id:1, name:'Encuestados', active:true, status:undefined},
-                       {id:2, name:'Pendientes', active:false, status:'SENT'},
+                       {id:2, name:'Enviados', active:false, status:'SENT'},
                        {id:3, name:'Reclamados', active:false, status:'CLAIMED'},
                        {id:4, name:'Aprobados', active:false, status:'APPROVED'},
                        {id:5, name:'Entregados', active:false, status:'DELIVERED'}];
@@ -136,7 +140,7 @@
             filters.dateRange = $scope.globalFilters.dateRange;
 
             //Get nps ratings
-            if($scope.globalFilters.selectedSite){
+            if($scope.globalFilters.selectedSite && organizationId){
                 filters.siteId = $scope.globalFilters.selectedSite.identifier;
 
                 $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/nps', {
@@ -147,34 +151,30 @@
                     }
                 }).success(function (data) {
                     $scope.isLoading = false;
+                    //Get gifts fir automatic tasks
+                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/true')
+                        .success(function (data) {
+                            $scope.npsGiftsAutomatic = data;
+                        });
+                    //Get gifts for manual tasks
+                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
+                        .success(function (data) {
+                            $scope.npsGiftsManual = data;
+                        });
+                    //Get products to update gifts images
+                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + /readyElements/)
+                        .success(function (data) {
+                            $scope.products = data.data.elements;
+                        });
+
                     if (data.result == "1") {
                         $scope.isGiftActive = data.data.gift;
                         updateNPSValues(data.data.ratings);
                     }
                 });
-                //Get gifts fir automatic tasks
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/true')
-                    .success(function (data) {
-                        console.log(data);
-                        $scope.npsGiftsAutomatic = data;
-                    });
-                //Get gifts for manual tasks
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
-                    .success(function (data) {
-                        console.log(data);
-                        $scope.npsGiftsManual = data;
-                    });
-                //Get products to update gifts images
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + /readyElements/)
-                    .success(function (data) {
-                        $scope.products = data.data.elements;
-                    });
 
-                //Refresh data every s
-                // $scope.npsTimeout = $timeout(function(){
-                //     getGiftsData();
-                //     console.log('Hola');
-                // },1500)
+                // Refresh data every s
+                refreshingData();
             } else {
                 $scope.isLoading = false;
             }
@@ -284,6 +284,8 @@
 
         //Display de gift when the modal is open, depending if is automatic or manual
         $scope.displayGifts = function (type, commentData) {
+            //ClearTimeOut to stop receiving data
+            clearTimeout($scope.npsTimeout.$$timeoutId);
             if (type=='manual') {
                 $scope.currentComment = commentData;
                 $scope.npsCommentIdentifier = commentData.identifier;
@@ -322,6 +324,7 @@
                     toaster.pop('error', 'Error', 'Este usuario mantiene un regalo pendiente o hubo un error en la petición');
                 });
             }
+            refreshingData();
         }
         //Deliver a gift to an user
         $scope.deliverGift = function (commentData) {
@@ -339,7 +342,7 @@
                 relationIdentifier: $scope.isGiftActive.identifier
             })
             .success(function (data) {
-                console.log(data);
+                refreshingData();
             });
         }
 
@@ -348,6 +351,15 @@
             $scope.status = status;
         }
 
+        //Function to refresh data every second
+        $scope.refresh = function () {
+            refreshingData();
+        }
+        function refreshingData() {
+            $scope.npsTimeout = $timeout(function(){
+                getGiftsData();
+            },1000)
+        }
         function resetNPS() {
             $scope.promotersQuantity = 0;
             $scope.passiveQuantity = 0;
