@@ -3096,7 +3096,7 @@ angular.module('dashboard').config(['$stateProvider',
                 biinieIdentifier: commentData.userIdentifier
             })
             .success(function (data) {
-                console.log(data);
+                toaster.pop('success', '', 'El regalo ha sido entregado exitósamente');
             });
         }
         //Desactivate an active automatic gift
