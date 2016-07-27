@@ -73,11 +73,15 @@
     "POSITIVE": "Yes",
     "NEGATIVE": "No",
     "ACTIVATE":  "Activate",
+    "ACTIVATED": "Activated",
+    "ACTIVATE_GIFT_TITLE": "Do you want to activate this gift?",
+    "ACTIVATE_GIFT_CONFIRMATION": "Once activated the gift, this can not be deleted",
     "DESACTIVATE": "Desactivate"
   },
   "GIFT":{
     "A_DAY": "One day",
     "A_WEEK": "One week",
+    "ACTIVATE_TEXT": "Gift activated",
     "AMOUNT": "Amount of gift available",
     "AMOUNT_PLACEHOLDER":"Number of gifts",
     "AMOUNT_REQUIRED": "Must write a gift amount",
