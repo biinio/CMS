@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <button class="btn btn-primary btn-block select-gift" ng-click="displayGifts('automatic')" modal="open" target="giftsAvailable">Seleccionar regalo automático</button>
+            <button class="btn btn-primary btn-block select-gift" ng-click="displayGifts('automatic')" modal="open" target="giftsAvailableAutomatic">Seleccionar regalo automático</button>
             <uib-tabset active="active">
                 <uib-tab ng-repeat="tab in tabs" heading="{{tab.name}}" ng-click="changeStatus(tab.status)">
                     <div class="nps-last-comments-title" ng-if="status==undefined">Últimos 20 comentarios</div>
@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                             <div class="actions-box col-sm-4">
-                                <button ng-if="commentData.user!='Usuario Eliminado de Biin' && commentData.gift==0" class="mb-sm btn btn-primary pull-right" ng-click="displayGifts('manual', commentData);selectedGift=null" modal="open" target="giftsAvailable"><span class="fa fa-trophy"></span> Premiar</button>
+                                <button ng-if="commentData.user!='Usuario Eliminado de Biin' && commentData.gift==0" class="mb-sm btn btn-primary pull-right" ng-click="displayGifts('manual', commentData);selectedGift=null" modal="open" target="giftsAvailableManual"><span class="fa fa-trophy"></span> Premiar</button>
                                 <button ng-disabled="commentData.gift.status=='SENT'" ng-if="commentData.gift.status=='SENT'" class="mb-sm btn btn-default pull-right"><span class="fa fa-clock-o"></span> Enviado</button>
                                 <button ng-disabled="commentData.gift.status=='REFUSED'" ng-if="commentData.gift.status=='REFUSED'" class="mb-sm btn btn-default pull-right"><span class="fa fa-clock-o"></span> Rechazado</button>
                                 <button ng-if="commentData.gift.status=='CLAIMED'"  class="mb-sm btn btn-primary pull-right" ng-click="deliverGift(commentData)"><span class="fa fa-envelope"></span> Entregar</button>
@@ -115,6 +115,7 @@
                 </uib-tab>
             </uib-tabset>
         </div>
-        <ng-include src="'/modules/dashboard/views/modals/giftsAvailable.modal.client.html'"></ng-include>
+        <ng-include src="'/modules/dashboard/views/modals/giftsAvailableAutomatic.modal.client.html'"></ng-include>
+        <ng-include src="'/modules/dashboard/views/modals/giftsAvailableManual.modal.client.html'"></ng-include>
     </div>
 </div>

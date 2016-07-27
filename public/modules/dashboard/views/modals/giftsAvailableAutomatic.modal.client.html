@@ -1,11 +1,11 @@
 <!--**Created by Carlos on 15/07/2016-->
 <!--Gifts available-->
-<div class="modal fade selectGiftModal" id="giftsAvailable" tabindex="-1" role="dialog">
+<div class="modal fade selectGiftModal" id="giftsAvailableAutomatic" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <button type="button" class="close" aria-label="Close" modal="close" ng-click="refresh()" target="giftsAvailable"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" aria-label="Close" modal="close" ng-click="refresh()" target="giftsAvailableAutomatic"><span aria-hidden="true">&times;</span></button>
                 <h3 class="modal-title text-center">Regalos disponibles</h3>
             </div>
             <!-- Modal Body -->
@@ -26,20 +26,11 @@
                         </div>
                     </li>
                 </ul>
-                <ul ng-if="giftDisplay=='manual' && isGiftActive.gift==null">
-                    <p ng-if="npsGiftsManual.length==0" class="text-center">(No hay regalos para asignar)</p>
-                    <li ng-repeat="gift in npsGiftsManual" class="col-sm-4 col-xs-2" ng-if="(gift.amount>gift.amountSpent && gift.hasAvailablePeriod==false && gift.isDeleted==false) || (gift.amount>gift.amountSpent && ((currentDate | date) <= (gift.endDate | date)) && gift.hasAvailablePeriod==true && gift.isDeleted==false)">
-                        <div ng-click="setSelectedGift(gift.identifier)" tabindex="0">
-                            <img ng-src="{{getGiftImage(gift.productIdentifier)}}" alt="{{gift.name}}" class="gift-image"/>
-                            <p class="nameDisplay">{{gift.name}}</p>
-                        </div>
-                    </li>
-                </ul>
                 <hr>
                 <div class="pull-right">
-                    <button type="button" class="btn btn-default" modal="close" ng-click="refresh()" target="giftsAvailable">Cerrar</button>
-                    <button ng-if="isGiftActive.gift==null" ng-disabled="selectedGift==null" class="btn btn-primary" type="submit" modal="close" target="giftsAvailable" ng-click="assignGift()">Asignar</button>
-                    <button ng-if="isGiftActive.gift" class="btn btn-danger" type="submit" modal="close" target="giftsAvailable" ng-click="desactivateGift()">Desactivar</button>
+                    <button type="button" class="btn btn-default" modal="close" ng-click="refresh()" target="giftsAvailableAutomatic">Cerrar</button>
+                    <button ng-if="isGiftActive.gift==null" ng-disabled="selectedGift==null" class="btn btn-primary" type="submit" modal="close" target="giftsAvailableAutomatic" ng-click="assignGift()">Asignar</button>
+                    <button ng-if="isGiftActive.gift" class="btn btn-danger" type="submit" modal="close" target="giftsAvailableAutomatic" ng-click="desactivateGift()">Desactivar</button>
                 </div>
             </div>
         </div>

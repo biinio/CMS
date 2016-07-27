@@ -24,16 +24,19 @@
          *
          =============================================================================================================*/
         $scope.$on('organizationChanged', function () {
+            $timeout.cancel($scope.npsTimeout);
             resetNPS();
             getNPSData();
         });
 
         $scope.$on('Biin: Days Range Changed', function (scope, numberdays) {
+            $timeout.cancel($scope.npsTimeout);
             resetNPS();
             getNPSData();
         });
 
         $scope.$on('Biin: Site Changed', function (scope, site) {
+            $timeout.cancel($scope.npsTimeout);
             resetNPS();
             getNPSData();
         });
@@ -342,6 +345,7 @@
                 relationIdentifier: $scope.isGiftActive.identifier
             })
             .success(function (data) {
+                toaster.pop('success', '', 'El regalo automático ha sido desactivado');
                 refreshingData();
             });
         }
