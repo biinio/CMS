@@ -139,7 +139,8 @@
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gift,status){
                 if(status == 201){
                     var gifts = $scope.objectsSidebarService.getObjects();
-
+                    gift.startDate = new Date(gift.startDate);
+                    gift.endDate = new Date(gift.endDate);
                     gifts.push(gift);
                     $scope.objectsSidebarService.setObjects(gifts);
                     $scope.objectsSidebarService.setSelectedObject(gift);
@@ -214,12 +215,24 @@
 
         //Function to activate a gift
         $scope.activate = function () {
-            if($scope.objectsSidebarService.selectedObject.amountSpent == 0 && $scope.objectsSidebarService.selectedObject.isActive == false && gift.myForm.$valid && $scope.objectsSidebarService.selectedObject.sites.length > 0 && $scope.objectsSidebarService.selectedObject.availableIn.length > 0){
+            var giftToUpdate = $scope.objectsSidebarService.selectedObject;
+            var translatedTexts  = $translate.instant(["GENERIC.ACTIVATE_GIFT_TITLE","GENERIC.ACTIVATE_GIFT_CONFIRMATION","GENERIC.ACTIVATE","GENERIC.CANCEL","GENERIC.ACTIVATED","GIFT.ACTIVATE_TEXT"]);
+            swal({
+                title: translatedTexts["GENERIC.ACTIVATE_GIFT_TITLE"],
+                text: translatedTexts["GENERIC.ACTIVATE_GIFT_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#8CD4F5",
+                confirmButtonText: translatedTexts["GENERIC.ACTIVATE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
                 $scope.objectsSidebarService.selectedObject.isActive = true;
-            }
-            if($scope.objectsSidebarService.selectedObject.amountSpent > 0){
-                console.log('No puede realizar esta acción, porque el regalo ya fue reclamado');
-            }
+                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
+                    swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["GIFT.ACTIVATE_TEXT"], "success");
+                });
+            });
         }
 
         //Function that display the swal as a confirmation to remove gift

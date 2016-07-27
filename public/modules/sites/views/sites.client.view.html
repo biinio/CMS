@@ -197,6 +197,10 @@
                 <!--code ng-hide="true">{{'GENERIC.IDENTIFIER' | translate}} :
                     {{objectsSidebarService.selectedObject.identifier }}</code-->
                 <code>IDENTIFIER: {{objectsSidebarService.selectedObject.identifier}}</code>
+                <br>
+                <code>MINOR: {{objectsSidebarService.selectedObject.minorCounter}}</code>
+                <br>
+                <code>MAJOR: {{objectsSidebarService.selectedObject.major}}</code>
             </div>
             <div ng-if="objectsSidebarService.selectedObject==null || objectsSidebarService.selectedObject == {}" class="no-object-container">
                 <section class="text-center on-no-object-selected">

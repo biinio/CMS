@@ -80,11 +80,15 @@
     "POSITIVE": "Si",
     "NEGATIVE": "No",
     "ACTIVATE":  "Activar",
+    "ACTIVATED": "Activado",
+    "ACTIVATE_GIFT_TITLE": "¿Desea activar este regalo?",
+    "ACTIVATE_GIFT_CONFIRMATION": "Una vez activado el regalo, este no podrá ser eliminado",
     "DESACTIVATE": "Desactivar"
   },
   "GIFT":{
     "A_DAY": "Un día",
     "A_WEEK": "Una semana",
+    "ACTIVATE_TEXT": "Regalo activado",
     "AMOUNT": "Cantidad disponible de regalos",
     "AMOUNT_PLACEHOLDER":"Número de regalos",
     "AMOUNT_REQUIRED": "*Debe escribir la cantidad de regalos disponible",
