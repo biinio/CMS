@@ -164,7 +164,7 @@
                             $scope.npsGiftsManual = data;
                         });
                     //Get products to update gifts images
-                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + /readyElements/)
+                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/readyElements/')
                         .success(function (data) {
                             $scope.products = data.data.elements;
                         });

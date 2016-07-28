@@ -68,7 +68,7 @@
             <uib-tabset active="active">
                 <uib-tab ng-repeat="tab in tabs" ng-click="changeStatus(tab.status)">
                     <uib-tab-heading>
-                        {{tab.name}} <span ng-hide="tab.name=='Encuestados'" class="badge badge-important nps-badge">{{commentCount(tab.status)}}</span>
+                        {{tab.name}} <span ng-hide="tab.name=='Encuestados'" class="badge badge-dark nps-badge">{{commentCount(tab.status)}}</span>
                     </uib-tab-heading>
                     <div class="nps-last-comments-title" ng-if="status==undefined">Últimos 20 comentarios</div>
                     <div class="nps-last-comments-title" ng-if="status=='SENT'">Usuarios que se les envió regalo</div>

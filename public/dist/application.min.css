@@ -7079,8 +7079,8 @@ fieldset .form-group {
 .navbar .dropdown-menu {
   filter: none !important;
 }
-.badge-important {
-  background-color: #f13c2b;
+.badge-dark {
+  background-color: #4a484b;
 }
 /* ========================================================================
    Component: typo.less
