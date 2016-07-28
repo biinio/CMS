@@ -49,7 +49,7 @@
                 "</div>" +
                 "<div class='col-md-9 leftInformationArea'>"+
                     "<label class='twoRowTitle'>{{item.name}}</label>"+
-                    "<small>Tarjeta cliente frecuente</small>"+
+                    "<small>Cliente frecuente</small>"+
                 "</div>";
             $scope.objectsSidebarService.template =$scope.sidebarTemplate;
         }

@@ -101,8 +101,28 @@
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
             $scope.globalFilters = GlobalFilters;
-            getNPSData();
-            resetNPS();
+            var organizationId = $scope.organizationService.selectedOrganization.identifier;
+            var siteId = $scope.globalFilters.selectedSite.identifier;
+
+            if (organizationId) {
+                //Get gifts fir automatic tasks
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/true')
+                    .success(function (data) {
+                        $scope.npsGiftsAutomatic = data;
+                    });
+                //Get gifts for manual tasks
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
+                    .success(function (data) {
+                        $scope.npsGiftsManual = data;
+                    });
+                //Get products to update gifts images
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/readyElements/')
+                    .success(function (data) {
+                        $scope.products = data.data.elements;
+                    });
+                getNPSData();
+                resetNPS();
+            }
         }
 
         Date.prototype.addDays = function (days) {
@@ -135,14 +155,12 @@
         }
 
         function getGiftsData() {
-            var organizationId = $scope.organizationService.selectedOrganization.identifier;
-            var siteId = $scope.globalFilters.selectedSite.identifier;
             var filters = {};
             filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
             filters.dateRange = $scope.globalFilters.dateRange;
 
             //Get nps ratings
-            if($scope.globalFilters.selectedSite && organizationId){
+            if($scope.globalFilters.selectedSite){
                 filters.siteId = $scope.globalFilters.selectedSite.identifier;
 
                 $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/nps', {
@@ -153,22 +171,6 @@
                     }
                 }).success(function (data) {
                     $scope.isLoading = false;
-                    //Get gifts fir automatic tasks
-                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/true')
-                        .success(function (data) {
-                            $scope.npsGiftsAutomatic = data;
-                        });
-                    //Get gifts for manual tasks
-                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
-                        .success(function (data) {
-                            $scope.npsGiftsManual = data;
-                        });
-                    //Get products to update gifts images
-                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/readyElements/')
-                        .success(function (data) {
-                            $scope.products = data.data.elements;
-                        });
-
                     if (data.result == "1") {
                         $scope.isGiftActive = data.data.gift;
                         updateNPSValues(data.data.ratings);
@@ -187,7 +189,6 @@
             resetNPS();
 
             if (Array.isArray(data) && data.length > 0) {
-
 
                 var dateArray = getDates((new Date()).addDays(-($scope.globalFilters.dateRange-1)), new Date());
                 var totalCases = 0;
@@ -382,9 +383,6 @@
             $scope.passivePercentage = 0;
             $scope.detractorsPercentage = 0;
             $scope.lastComments = [];
-            $scope.products = [];
-            $scope.npsGiftsManual = [];
-            $scope.npsGiftsAutomatic = [];
             $scope.totalCases = 0;
             $scope.indexBGColor = "bg-danger";
         }
