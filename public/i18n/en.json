@@ -3,7 +3,8 @@
     "CATEGORIES_DESCRIPTION": "Categories allow your site and products to be visible on searches. Select the ones you think need to be associated with your site and products."
   },
   "CARD": {
-    "HINT": "Please select a card in the sidebar or create one by pressing the button to create new"
+    "HINT": "Please select a card in the sidebar or create one by pressing the button to create new",
+    "CREATING": "Your card is being created."
   },
   "DASHBOARD": {
     "TITLE": "Dashboard",

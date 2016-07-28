@@ -28,12 +28,14 @@
             //Draggable Properties
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             $scope.currentDate = new Date().getTime();
-            
-            //----Functions----//
-            //Get the List of Products
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
-                $scope.products = data.data.elements;
-            });
+
+            if($scope.organizationId) {
+                //----Functions----//
+                //Get the List of Products
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+                    $scope.products = data.data.elements;
+                });
+            }
         }
 
         //Function to set the image of the current product into the thumbnail in the Objects Sidebar

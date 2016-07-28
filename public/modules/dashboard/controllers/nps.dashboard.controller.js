@@ -50,7 +50,6 @@
         $scope.tabs = [{id:1, name:'Encuestados', active:true, status:undefined},
                        {id:2, name:'Enviados', active:false, status:'SENT'},
                        {id:3, name:'Reclamados', active:false, status:'CLAIMED'},
-                       {id:4, name:'Aprobados', active:false, status:'APPROVED'},
                        {id:5, name:'Entregados', active:false, status:'DELIVERED'}];
         $scope.status = undefined;
         $scope.indexBGColor = "";
@@ -354,11 +353,21 @@
         $scope.changeStatus = function (status) {
             $scope.status = status;
         }
-
-        //Function to refresh data every second
+        //Function to execute refreshing data from the view
         $scope.refresh = function () {
             refreshingData();
         }
+        //Count comments depending of its state
+        $scope.commentCount = function (tab) {
+            var count = 0;
+            for(var i in $scope.lastComments){
+                if(tab == $scope.lastComments[i].gift.status){
+                    count++;
+                }
+            }
+            return count;
+        }
+        //Function to refresh data every second
         function refreshingData() {
             $scope.npsTimeout = $timeout(function(){
                 getGiftsData();

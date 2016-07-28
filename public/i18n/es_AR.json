@@ -3,7 +3,8 @@
     "CATEGORIES_DESCRIPTION": "Las categorías permiten que su local y sus productos aparezcan en las búsquedas. Seleccione las categorías que considere que deben ser asociados a su local y a sus productos."
   },
   "CARD": {
-    "HINT": "Por favor seleccione una tarjeta en la barra lateral o cree uno presionando el botón de crear nuevo."
+    "HINT": "Por favor seleccione una tarjeta en la barra lateral o cree uno presionando el botón de crear nuevo.",
+    "CREATING": "Su tarjeta se esta creando"
   },
   "DASHBOARD": {
     "TITLE": "Resumen",

@@ -7079,6 +7079,9 @@ fieldset .form-group {
 .navbar .dropdown-menu {
   filter: none !important;
 }
+.badge-important {
+  background-color: #f13c2b;
+}
 /* ========================================================================
    Component: typo.less
  ========================================================================== */
@@ -16048,6 +16051,12 @@ Component: elements.less
   width: 110px;
   left: 40px;
 }
+.dashboard .tab-content a.list-group-item:hover,
+.dashboard .tab-content button.list-group-item:hover,
+.dashboard .tab-content a.list-group-item:focus,
+.dashboard .tab-content button.list-group-item:focus {
+  background-color: white;
+}
 .dashboard .tab-content .list-group {
   max-height: 340px;
   min-height: 340px;
@@ -16057,6 +16066,11 @@ Component: elements.less
 }
 .dashboard .tab-content .list-group .list-group-item {
   min-height: 117px;
+}
+.dashboard .nps-badge {
+  position: absolute;
+  top: -5px;
+  right: 5px;
 }
 .dashboard .panel {
   border-radius: 0;

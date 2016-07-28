@@ -418,10 +418,57 @@ angular.module('basiccms').config(['$stateProvider',
 
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Get the Sites Information
+            if($scope.organizationId) {
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/').success(function (data) {
+                    $scope.sites = data.data.sites;
+                    //Get the elements
+                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElementser/').success(function (data) {
+                        $scope.elements = data.data.elements;
+                        //Get the showcases
+                        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/showcases/').success(function (data) {
+                            $scope.showcases = data.data;
+                            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
+                                $scope.biins = data.data;
+                                $scope.objectsSidebarService.setObjects(data.data);
+                                $scope.loadingService.isLoading = false;
+                            }).error(function (err) {
+                                console.log(err);
+                            });
+                        }).error(function (err) {
+                            console.log(err);
+                        });
+                    }).error(function (err) {
+                        console.log(err);
+                    });
+                }).error(function (err) {
+                    console.log(err);
+                });
+            }
+        });
+
+        $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
+
+        });
+
+        /**=============================================================================================================
+         * Variables
+         *
+         =============================================================================================================*/
+
+            //Init the the sites
+        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+
+        /**=============================================================================================================
+         * Self called functions
+         *
+         =============================================================================================================*/
+
+        if($scope.organizationId) {
+            //Get the Sites Information
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/').success(function (data) {
                 $scope.sites = data.data.sites;
                 //Get the elements
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElementser/').success(function (data) {
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function (data) {
                     $scope.elements = data.data.elements;
                     //Get the showcases
                     $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/showcases/').success(function (data) {
@@ -442,52 +489,8 @@ angular.module('basiccms').config(['$stateProvider',
             }).error(function (err) {
                 console.log(err);
             });
-        });
-
-        $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
-
-        });
-
-        /**=============================================================================================================
-         * Variables
-         *
-         =============================================================================================================*/
-
-            //Init the the sites
-        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-
-        /**=============================================================================================================
-         * Self called functions
-         *
-         =============================================================================================================*/
-
-            //Get the Sites Information
-        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/').success(function (data) {
-            $scope.sites = data.data.sites;
-            //Get the elements
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function (data) {
-                $scope.elements = data.data.elements;
-                //Get the showcases
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/showcases/').success(function (data) {
-                    $scope.showcases = data.data;
-                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
-                        $scope.biins = data.data;
-                        $scope.objectsSidebarService.setObjects(data.data);
-                        $scope.loadingService.isLoading = false;
-                    }).error(function (err) {
-                        console.log(err);
-                    });
-                }).error(function (err) {
-                    console.log(err);
-                });
-            }).error(function (err) {
-                console.log(err);
-            });
-        }).error(function (err) {
-            console.log(err);
-        });
-
-
+        }
+        
         //Add an object to the objects collection
         $scope.saveObject = function (obj) {
             if (obj)
@@ -1342,11 +1345,31 @@ angular.module('cards').config(['$stateProvider',
             $scope.cards = [];
             //State of loading screen
             $scope.loadingService.isLoading = true;
+            //ObjectsSidebar card template
+            $scope.sidebarTemplate =
+                "<div class='col-md-3 thumbListImage'>" +
+                    "<img ng-if='!item.gift' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
+                    // "<img ng-if='item.productIdentifier.length>0' ng-src='{{setProductImage(item.productIdentifier)}}' pending-indicator='pending-indicator'/>"+
+                "</div>" +
+                "<div class='col-md-9 leftInformationArea'>"+
+                    "<label class='twoRowTitle'>{{item.name}}</label>"+
+                    "<small>Tarjeta cliente frecuente</small>"+
+                "</div>";
+            $scope.objectsSidebarService.template =$scope.sidebarTemplate;
         }
 
         /**=============================================================================================================
          * Event Listeners
          =============================================================================================================*/
+
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
+            $scope.objectsSidebarService.reset();
+        });
+
+        $scope.$on("Biin: On Object Created", function(){
+            $scope.create();
+        });
 
         /**=============================================================================================================
          * Functions
@@ -1355,9 +1378,30 @@ angular.module('cards').config(['$stateProvider',
         if($scope.organizationId){
             //Get the List of Cards
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards').success(function(cards) {
+                console.log(cards);
                 $scope.cards = cards;
                 $scope.objectsSidebarService.setObjects($scope.cards);
                 $scope.loadingService.isLoading = false;
+            });
+        }
+
+        //Create a card
+        $scope.create = function(){
+            var titleText = $translate.instant("GIFT.CREATING");
+            swal({   title: titleText,  type: "info",   showConfirmButton: false });
+            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards').success(function(card,status){
+                console.log(card);
+                console.log(status);
+                // if(status == 201){
+                //     var cards = $scope.objectsSidebarService.getObjects();
+                //     cards.push(gift);
+                //     $scope.objectsSidebarService.setObjects(cards);
+                //     $scope.objectsSidebarService.setSelectedObject(card);
+                //
+                //     setTimeout(function(){
+                //         swal.close();
+                //     },2000);
+                // }
             });
         }
     }
@@ -2914,7 +2958,6 @@ angular.module('dashboard').config(['$stateProvider',
         $scope.tabs = [{id:1, name:'Encuestados', active:true, status:undefined},
                        {id:2, name:'Enviados', active:false, status:'SENT'},
                        {id:3, name:'Reclamados', active:false, status:'CLAIMED'},
-                       {id:4, name:'Aprobados', active:false, status:'APPROVED'},
                        {id:5, name:'Entregados', active:false, status:'DELIVERED'}];
         $scope.status = undefined;
         $scope.indexBGColor = "";
@@ -3218,11 +3261,21 @@ angular.module('dashboard').config(['$stateProvider',
         $scope.changeStatus = function (status) {
             $scope.status = status;
         }
-
-        //Function to refresh data every second
+        //Function to execute refreshing data from the view
         $scope.refresh = function () {
             refreshingData();
         }
+        //Count comments depending of its state
+        $scope.commentCount = function (tab) {
+            var count = 0;
+            for(var i in $scope.lastComments){
+                if(tab == $scope.lastComments[i].gift.status){
+                    count++;
+                }
+            }
+            return count;
+        }
+        //Function to refresh data every second
         function refreshingData() {
             $scope.npsTimeout = $timeout(function(){
                 getGiftsData();
@@ -6776,12 +6829,14 @@ angular.module('nps').config(['$stateProvider',
             //Draggable Properties
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             $scope.currentDate = new Date().getTime();
-            
-            //----Functions----//
-            //Get the List of Products
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
-                $scope.products = data.data.elements;
-            });
+
+            if($scope.organizationId) {
+                //----Functions----//
+                //Get the List of Products
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+                    $scope.products = data.data.elements;
+                });
+            }
         }
 
         //Function to set the image of the current product into the thumbnail in the Objects Sidebar

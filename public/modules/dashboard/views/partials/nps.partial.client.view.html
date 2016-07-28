@@ -60,13 +60,19 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <button class="btn btn-primary btn-block select-gift" ng-click="displayGifts('automatic')" modal="open" target="giftsAvailableAutomatic">Seleccionar regalo automático</button>
+            <button class="btn btn-block select-gift" ng-class="{ 'btn-danger': isGiftActive , 'btn-primary' : !isGiftActive}" ng-click="displayGifts('automatic')" modal="open" target="giftsAvailableAutomatic">
+                <span ng-if="!isGiftActive">Seleccionar regalo automático</span>
+                <span ng-if="isGiftActive">Desactivar regalo automático</span>
+            </button>
+
             <uib-tabset active="active">
-                <uib-tab ng-repeat="tab in tabs" heading="{{tab.name}}" ng-click="changeStatus(tab.status)">
+                <uib-tab ng-repeat="tab in tabs" ng-click="changeStatus(tab.status)">
+                    <uib-tab-heading>
+                        {{tab.name}} <span ng-hide="tab.name=='Encuestados'" class="badge badge-important nps-badge">{{commentCount(tab.status)}}</span>
+                    </uib-tab-heading>
                     <div class="nps-last-comments-title" ng-if="status==undefined">Últimos 20 comentarios</div>
                     <div class="nps-last-comments-title" ng-if="status=='SENT'">Usuarios que se les envió regalo</div>
                     <div class="nps-last-comments-title" ng-if="status=='CLAIMED'">Usuarios que reclamaron su regalo</div>
-                    <div class="nps-last-comments-title" ng-if="status=='APPROVED'">Usuarios con regalo aprobado</div>
                     <div class="nps-last-comments-title" ng-if="status=='DELIVERED'">Usuarios que han sido premiados</div>
                     <!-- START list group-->
                     <div class="list-group" data-ng-if="lastComments.length > 0">
@@ -98,12 +104,10 @@
                                 <button ng-disabled="commentData.gift.status=='SENT'" ng-if="commentData.gift.status=='SENT'" class="mb-sm btn btn-default pull-right"><span class="fa fa-clock-o"></span> Enviado</button>
                                 <button ng-disabled="commentData.gift.status=='REFUSED'" ng-if="commentData.gift.status=='REFUSED'" class="mb-sm btn btn-default pull-right"><span class="fa fa-clock-o"></span> Rechazado</button>
                                 <button ng-if="commentData.gift.status=='CLAIMED'"  class="mb-sm btn btn-primary pull-right" ng-click="deliverGift(commentData)"><span class="fa fa-envelope"></span> Entregar</button>
-                                <button ng-disabled="commentData.gift.status=='APPROVED'" ng-if="commentData.gift.status=='APPROVED'"  class="mb-sm btn btn-default pull-right"><span class="fa fa-thumbs-up"></span> Aprovado</button>
                                 <button ng-disabled="commentData.gift.status=='DELIVERED'" ng-if="commentData.gift.status=='DELIVERED'" class="mb-sm btn btn-default pull-right"><span class="fa fa-check"></span> Entregado</button>
                                 <!--Gift state dates-->
                                 <small ng-if="commentData.gift.recievedDate" class="pull-right">Enviado: {{commentData.gift.recievedDate | date:'dd-MM-yyyy'}}</small>
                                 <small ng-if="commentData.gift.claimedDate" class="pull-right">Reclamado: {{commentData.gift.claimedDate | date:'dd-MM-yyyy'}}</small>
-                                <small ng-if="commentData.gift.approvedDate" class="pull-right">Aprovado: {{commentData.gift.approvedDate | date:'dd-MM-yyyy'}}</small>
                                 <small ng-if="commentData.gift.deliveredDate" class="pull-right">Entregado: {{commentData.gift.deliveredDate | date:'dd-MM-yyyy'}}</small>
                             </div>
                         </a>
