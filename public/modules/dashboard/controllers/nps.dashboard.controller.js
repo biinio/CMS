@@ -313,7 +313,7 @@
                     toaster.pop('success', '', 'Su regalo fue enviado con éxito');
                 })
                 .error(function (data) {
-                toaster.pop('error', 'Error', 'Este usuario mantiene un regalo pendiente o hubo un error en la petición');
+                toaster.pop('warning', 'Acción no se puede llevar a cabo', 'Este usuario ya tiene asignado ese regalo, puede intentar con uno diferente');
                 });
             } else if ($scope.giftDisplay=='automatic'){
                 $http.post(ApplicationConfiguration.applicationBackendURL + 'api/gift/assign/auto/nps', {
@@ -324,7 +324,7 @@
                     toaster.pop('success', '', 'Su regalo automático fue activado con éxito');
                 })
                 .error(function (data) {
-                    toaster.pop('error', 'Error', 'Este usuario mantiene un regalo pendiente o hubo un error en la petición');
+                    toaster.pop('warning', 'Acción no se puede llevar a cabo', 'Este usuario mantiene un regalo pendiente');
                 });
             }
             refreshingData();

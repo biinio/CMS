@@ -43,10 +43,9 @@
             //State of loading screen
             $scope.loadingService.isLoading = true;
             //Current Date
-            $scope.currentDate = new Date();
+            $scope.currentDate = new Date().getTime();
             //Default alerts
             $scope.show_alert = true;
-
 
             $scope.sidebarTemplate =
                 "<div class='col-md-3 thumbListImage'>" +
@@ -55,10 +54,10 @@
                 "</div>" +
                 "<div class='col-md-9 leftInformationArea'>"+
                     "<label class='twoRowTitle'>{{item.name}}</label>"+
-                    "<small ng-if='item.amount>item.amountSpent && item.hasAvailablePeriod==false || item.amount>item.amountSpent && ((currentDate | date) <= (item.endDate | date)) && item.hasAvailablePeriod==true' class='valid-color'>Disponible</small>"+
-                    "<small ng-if='item.amount>item.amountSpent && item.hasAvailablePeriod==false || item.amount>item.amountSpent && ((currentDate | date) <= (item.endDate | date)) && item.hasAvailablePeriod==true'>{{item.amount-item.amountSpent}} u.</small>"+
-                    "<small ng-if='item.amount==item.amountSpent && item.hasAvailablePeriod==false || item.amount==item.amountSpent && ((currentDate |date) <= (item.endDate | date)) && item.hasAvailablePeriod==true' class='invalid-color'>Agotado</small>"+
-                    "<small ng-if='((currentDate | date) > (item.endDate | date)) && item.hasAvailablePeriod==true' class='invalid-color'>Vencido</small>"+
+                    "<small ng-if='item.amount>item.amountSpent && item.hasAvailablePeriod==false || item.amount>item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true' class='valid-color'>Disponible</small>"+
+                    "<small ng-if='item.amount>item.amountSpent && item.hasAvailablePeriod==false || item.amount>item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true'>{{item.amount-item.amountSpent}} u.</small>"+
+                    "<small ng-if='item.amount==item.amountSpent && item.hasAvailablePeriod==false || item.amount==item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true' class='invalid-color'>Agotado</small>"+
+                    "<small ng-if='(currentDate > formDate(item.endDate)) && item.hasAvailablePeriod==true' class='invalid-color'>Vencido</small>"+
                 "</div>";
             $scope.objectsSidebarService.template =$scope.sidebarTemplate;
         }
@@ -90,13 +89,13 @@
 
         $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
             //Parsing dates to work on AngularJS
-            objectClicked.startDate = new Date(objectClicked.startDate);
-            objectClicked.endDate = new Date(objectClicked.endDate);
+            objectClicked.startDate = moment(new Date(objectClicked.startDate)).endOf("day").toDate();
+            objectClicked.endDate = moment(new Date(objectClicked.endDate)).endOf("day").toDate();
             //All ready to show the gift info
             $scope.ready = true;
             //Validation variables
             $scope.spent = objectClicked.amount == objectClicked.amountSpent;
-            $scope.expire = (($scope.currentDate).getDate() > (objectClicked.endDate).getDate()) && objectClicked.hasAvailablePeriod==true;
+            $scope.expire = ($scope.currentDate > (objectClicked.endDate).getTime()) && objectClicked.hasAvailablePeriod==true;
         });
         $scope.$on('organizationChanged',function(){
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
@@ -250,7 +249,7 @@
                 showLoaderOnConfirm: true,
                 closeOnConfirm: false
             }, function () {
-                if($scope.objectsSidebarService.selectedObject.amountSpent == 0 || $scope.objectsSidebarService.selectedObject.amountSpent == $scope.objectsSidebarService.selectedObject.amountSpent || (($scope.currentDate | date) > ($scope.objectsSidebarService.selectedObject.endDate | date))) {
+                if($scope.objectsSidebarService.selectedObject.amountSpent == 0 || $scope.spent || $scope.expire) {
                     $scope.removeGiftAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
                 }
             });
@@ -281,7 +280,7 @@
                     //Validation variables
                     $scope.spent = $scope.objectsSidebarService.selectedObject.amount == $scope.objectsSidebarService.selectedObject.amountSpent;
                     if($scope.objectsSidebarService.selectedObject.endDate){
-                        $scope.expire = (($scope.currentDate).getDate() > ($scope.objectsSidebarService.selectedObject.endDate).getDate()) && $scope.objectsSidebarService.selectedObject.hasAvailablePeriod==true;
+                        $scope.expire = ($scope.currentDate > ($scope.objectsSidebarService.selectedObject.endDate).getTime()) && $scope.objectsSidebarService.selectedObject.hasAvailablePeriod==true;
                     }
                 });
             }

@@ -27,7 +27,7 @@
             $scope.organizationService = Organization;
             //Draggable Properties
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-            $scope.currentDate = new Date();
+            $scope.currentDate = new Date().getTime();
             
             //----Functions----//
             //Get the List of Products
@@ -44,6 +44,11 @@
                 }
             }
         };
+
+        //Formatting dates
+        $scope.formDate = function(date) {
+            return new Date(date).getTime();
+        }
 
         $scope.onObjectClick = function( index ){
             var objectClicked = $scope.objectsSidebarService.getObjects()[index];
