@@ -62,18 +62,6 @@
             $scope.objectsSidebarService.template =$scope.sidebarTemplate;
         }
 
-        //----Functions----//
-        if($scope.organizationId){
-            //Get the List of Products
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
-                $scope.products = data.data.elements;
-            });
-            //Get the List of Sites
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
-                $scope.locals = data.data.sites;
-            });
-        }
-
         /**=============================================================================================================
          * Event Listeners
          =============================================================================================================*/
@@ -124,13 +112,23 @@
          * Functions
          =============================================================================================================*/
 
-        //Get the List of Gifts
-        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
-            $scope.gifts = gifts;
-            $scope.objectsSidebarService.setObjects($scope.gifts);
-            $scope.loadingService.isLoading = false;
-        });
-
+        if($scope.organizationId){
+            //Get the List of Products
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+                $scope.products = data.data.elements;
+            });
+            //Get the List of Sites
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
+                $scope.locals = data.data.sites;
+            });
+            //Get the List of Gifts
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+                $scope.gifts = gifts;
+                $scope.objectsSidebarService.setObjects($scope.gifts);
+                $scope.loadingService.isLoading = false;
+            });
+        }
+        
         //Create a gift
         $scope.create = function(){
             var titleText = $translate.instant("GIFT.CREATING");

@@ -1,0 +1,22 @@
+<!-- Objects Sidebar Include -->
+<div ng-include="'/modules/core/views/partials/objectssidebar.html'" ng-controller="ObjectsSideBar" class=""></div>
+<!-- Gifts Section View -->
+<div ng-controller="CardsController as card" class="block-center">
+    <div id="wrapperContent" class="container-fluid cards-section" ng-mouseleave="update()">
+        <div class="right-section-content">
+            <!--Display if form is ready to fill (ready means someone click an item in the Sidebar)-->
+            <div ng-if="ready">
+                <div class="panel panel-default">
+                    <!-- Gift Form-->
+                </div>
+            </div>
+            <!--Display if form is not ready to fill-->
+            <div ng-if="ready == false"
+                 class="no-object-container">
+                <section class="text-center on-no-object-selected">
+                    <span translate="CARD.HINT"></span>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

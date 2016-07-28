@@ -76,6 +76,14 @@ ApplicationConfiguration.registerModule('biinUsers');
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('biins');
 
+/**
+ * Created by Carlos on 7/28/16.
+ */
+'use strict';
+
+// Use Application configuration module to register a new module
+ApplicationConfiguration.registerModule('cards');
+
 'use strict';
 
 ApplicationConfiguration.registerModule('app.charts');
@@ -1263,6 +1271,98 @@ angular.module('biins').config(['$stateProvider',
 })();
 
 
+/**
+ * Created by Carlos on 7/28/15.
+ */
+'use strict';
+
+// Setting up route
+angular.module('cards').config(['$stateProvider',
+    function($stateProvider) {
+        // Users state routing
+        $stateProvider.
+        state('app.cards', {
+            url: '/cards',
+            templateUrl: 'modules/cards/views/cards.client.view.html',
+            resolve:{
+                permissions: function(Permission) {
+                    return Permission.getPermissions();
+                },
+                selectedOrganization: function (Organization) {
+                    return Organization.getSelectedOrganization();
+                },
+                organization: function (Organization) {
+                    return Organization.getOrganizations();
+                }
+            }
+        });
+    }
+]);
+
+/**=========================================================
+ * Module: cards.client.controller.js
+ * Controller of cards
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('cards')
+        .controller('CardsController', CardsController);
+
+    CardsController.$inject = ['$http', '$state', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate'];
+
+    function CardsController($http, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate) {
+        var card = this;
+
+        //Running init function
+        init();
+
+        /**=============================================================================================================
+         * Init Function
+         =============================================================================================================*/
+
+        function init() {
+            //----Services needed----//
+            //Loading Service
+            $scope.loadingService = Loading;
+            //Organization Service
+            $scope.organizationService = Organization;
+            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            //Objects Sidebar Service
+            $scope.objectsSidebarService = ObjectsSidebar;
+            //Authentication Service
+            $scope.authentication = Authentication;
+            //Card Object
+            $scope.objectsSidebarService.selectedObject = {};
+            //----Variables----//
+            //Ready to fill
+            $scope.ready = false;
+            $scope.cards = [];
+            //State of loading screen
+            $scope.loadingService.isLoading = true;
+        }
+
+        /**=============================================================================================================
+         * Event Listeners
+         =============================================================================================================*/
+
+        /**=============================================================================================================
+         * Functions
+         =============================================================================================================*/
+
+        if($scope.organizationId){
+            //Get the List of Cards
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards').success(function(cards) {
+                $scope.cards = cards;
+                $scope.objectsSidebarService.setObjects($scope.cards);
+                $scope.loadingService.isLoading = false;
+            });
+        }
+    }
+})();
+
 /**=========================================================
  * Module: chart.js
  * Wrapper directive for chartJS. 
@@ -1769,6 +1869,7 @@ angular.module('biins').config(['$stateProvider',
         Menus.addMenuItem('sidebar', 'Avisos'        , 'biins'           , null, 'app.biins'        , false, null, null, 'icon-feed', "SIDEBAR.MENU_BIINS");
         Menus.addMenuItem('sidebar', 'Locales'        , 'sites'           , null, 'app.sites'        , false, null, null, 'icon-pointer', "SIDEBAR.MENU_SITES");
         Menus.addMenuItem('sidebar', 'Regalos'        , 'gifts'           , null, 'app.gifts'        , false, null, null, 'icon-present', "SIDEBAR.MENU_GIFTS");
+        Menus.addMenuItem('sidebar', 'Tarjetas'        , 'cards'           , null, 'app.cards'        , false, null, null, 'icon-note', "SIDEBAR.MENU_CARDS");
         Menus.addMenuItem('sidebar', 'Organizaciones', 'organization'   , null, 'app.organization'  , false, null, null, 'icon-globe', "SIDEBAR.MENU_ORGANIZATIONS");
         Menus.addMenuItem('sidebar', 'Perfil'      , 'profile'         , null, 'app.profile'      , false, null, null, 'icon-user', "SIDEBAR.MENU_PROFILE");
         //Maintenance has role field: maintenance
@@ -5332,18 +5433,6 @@ angular.module('gifts').config(['$stateProvider',
             $scope.objectsSidebarService.template =$scope.sidebarTemplate;
         }
 
-        //----Functions----//
-        if($scope.organizationId){
-            //Get the List of Products
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
-                $scope.products = data.data.elements;
-            });
-            //Get the List of Sites
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
-                $scope.locals = data.data.sites;
-            });
-        }
-
         /**=============================================================================================================
          * Event Listeners
          =============================================================================================================*/
@@ -5394,13 +5483,23 @@ angular.module('gifts').config(['$stateProvider',
          * Functions
          =============================================================================================================*/
 
-        //Get the List of Gifts
-        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
-            $scope.gifts = gifts;
-            $scope.objectsSidebarService.setObjects($scope.gifts);
-            $scope.loadingService.isLoading = false;
-        });
-
+        if($scope.organizationId){
+            //Get the List of Products
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+                $scope.products = data.data.elements;
+            });
+            //Get the List of Sites
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
+                $scope.locals = data.data.sites;
+            });
+            //Get the List of Gifts
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+                $scope.gifts = gifts;
+                $scope.objectsSidebarService.setObjects($scope.gifts);
+                $scope.loadingService.isLoading = false;
+            });
+        }
+        
         //Create a gift
         $scope.create = function(){
             var titleText = $translate.instant("GIFT.CREATING");
