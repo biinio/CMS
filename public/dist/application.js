@@ -2934,18 +2934,21 @@ angular.module('dashboard').config(['$stateProvider',
         $scope.$on('organizationChanged', function () {
             $timeout.cancel($scope.npsTimeout);
             resetNPS();
+            getGiftsData();
             getNPSData();
         });
 
         $scope.$on('Biin: Days Range Changed', function (scope, numberdays) {
             $timeout.cancel($scope.npsTimeout);
             resetNPS();
+            getGiftsData();
             getNPSData();
         });
 
         $scope.$on('Biin: Site Changed', function (scope, site) {
             $timeout.cancel($scope.npsTimeout);
             resetNPS();
+            getGiftsData();
             getNPSData();
         });
 
@@ -2955,10 +2958,12 @@ angular.module('dashboard').config(['$stateProvider',
 
         //Current Date
         $scope.currentDate = new Date();
+        //Tabs in the UI (nps comments)
         $scope.tabs = [{id:1, name:'Encuestados', active:true, status:undefined},
                        {id:2, name:'Enviados', active:false, status:'SENT'},
                        {id:3, name:'Reclamados', active:false, status:'CLAIMED'},
                        {id:5, name:'Entregados', active:false, status:'DELIVERED'}];
+        //Status as filter
         $scope.status = undefined;
         $scope.indexBGColor = "";
         $scope.lineOptions = {
@@ -3009,28 +3014,10 @@ angular.module('dashboard').config(['$stateProvider',
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
             $scope.globalFilters = GlobalFilters;
-            var organizationId = $scope.organizationService.selectedOrganization.identifier;
-            var siteId = $scope.globalFilters.selectedSite.identifier;
 
-            if (organizationId) {
-                //Get gifts fir automatic tasks
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/true')
-                    .success(function (data) {
-                        $scope.npsGiftsAutomatic = data;
-                    });
-                //Get gifts for manual tasks
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
-                    .success(function (data) {
-                        $scope.npsGiftsManual = data;
-                    });
-                //Get products to update gifts images
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/readyElements/')
-                    .success(function (data) {
-                        $scope.products = data.data.elements;
-                    });
-                getNPSData();
-                resetNPS();
-            }
+            getGiftsData();
+            getNPSData();
+            resetNPS();
         }
 
         Date.prototype.addDays = function (days) {
@@ -3059,10 +3046,10 @@ angular.module('dashboard').config(['$stateProvider',
 
         function getNPSData() {
             $scope.isLoading = true;
-            getGiftsData();
+            getRatingsData();
         }
 
-        function getGiftsData() {
+        function getRatingsData() {
             var filters = {};
             filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
             filters.dateRange = $scope.globalFilters.dateRange;
@@ -3089,6 +3076,30 @@ angular.module('dashboard').config(['$stateProvider',
                 refreshingData();
             } else {
                 $scope.isLoading = false;
+            }
+        }
+
+        function getGiftsData() {
+            var organizationId = $scope.organizationService.selectedOrganization.identifier;
+            var siteId = $scope.globalFilters.selectedSite.identifier;
+
+            if (organizationId) {
+                //Get gifts fir automatic tasks
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/true')
+                    .success(function (data) {
+                        $scope.npsGiftsAutomatic = data;
+                    });
+                //Get gifts for manual tasks
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
+                    .success(function (data) {
+                        $scope.npsGiftsManual = data;
+                    });
+                //Get products to update gifts images
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/readyElements/')
+                    .success(function (data) {
+                        $scope.products = data.data.elements;
+                    });
+
             }
         }
 
@@ -3276,12 +3287,14 @@ angular.module('dashboard').config(['$stateProvider',
             }
             return count;
         }
+
         //Function to refresh data every second
         function refreshingData() {
             $scope.npsTimeout = $timeout(function(){
-                getGiftsData();
+                getRatingsData();
             },1000)
         }
+
         function resetNPS() {
             $scope.promotersQuantity = 0;
             $scope.passiveQuantity = 0;

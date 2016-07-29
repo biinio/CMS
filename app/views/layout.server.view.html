@@ -56,8 +56,19 @@
     {% endif %}
 	<!-- HTML5 Shim -->
 	<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
+	<!--Firebase Initialize configuration-->
+	<script src="https://www.gstatic.com/firebasejs/3.2.1/firebase.js"></script>
+	<script>
+		var config = {
+			apiKey: "AIzaSyA73-eBd-eRqy171w2U033rVfIYgt5yc6U",
+			authDomain: "project-1931001344700060698.firebaseapp.com",
+			databaseURL: "https://project-1931001344700060698.firebaseio.com",
+			storageBucket: "project-1931001344700060698.appspot.com",
+		};
+		firebase.initializeApp(config);
+	</script>
 </head>
 
 <body class="ng-cloak" data-ng-class="{ 'layout-fixed' : app.layout.isFixed, 'aside-collapsed' : app.layout.isCollapsed, 'layout-boxed' : app.layout.isBoxed, 'layout-fs': app.useFullLayout, 'hidden-footer': app.hiddenFooter, 'layout-h': app.layout.horizontal, 'aside-float': app.layout.isFloat, 'offsidebar-open': app.offsidebarOpen, 'aside-toggled': app.asideToggled}">
