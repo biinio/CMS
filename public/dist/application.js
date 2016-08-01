@@ -1345,6 +1345,8 @@ angular.module('cards').config(['$stateProvider',
             $scope.cards = [];
             //State of loading screen
             $scope.loadingService.isLoading = true;
+            //Default alerts/hints
+            $scope.show_alert = true;
             //ObjectsSidebar card template
             $scope.sidebarTemplate =
                 "<div class='col-md-3 thumbListImage'>" +
@@ -1352,7 +1354,7 @@ angular.module('cards').config(['$stateProvider',
                     // "<img ng-if='item.productIdentifier.length>0' ng-src='{{setProductImage(item.productIdentifier)}}' pending-indicator='pending-indicator'/>"+
                 "</div>" +
                 "<div class='col-md-9 leftInformationArea'>"+
-                    "<label class='twoRowTitle'>{{item.name}}</label>"+
+                    "<label class='twoRowTitle'>{{organizationService.selectedOrganization.name}}</label>"+
                     "<small>Cliente frecuente</small>"+
                 "</div>";
             $scope.objectsSidebarService.template =$scope.sidebarTemplate;
@@ -1369,6 +1371,30 @@ angular.module('cards').config(['$stateProvider',
 
         $scope.$on("Biin: On Object Created", function(){
             $scope.create();
+        });
+
+        $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
+            //All ready to show the gift info
+            $scope.ready = true;
+        });
+
+        $scope.$on('organizationChanged',function(){
+            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.loadingService.isLoading = true;
+            //Get the List of Gifts
+            $scope.ready = false;
+            if($scope.organizationId){
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards').success(function(cards) {
+                    $scope.cards = cards;
+                    $scope.objectsSidebarService.setObjects($scope.cards);
+                    $state.reload();
+                    $scope.loadingService.isLoading = false;
+                });
+                //Get the List of Products
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+                    $scope.products = data.data.elements;
+                });
+            }
         });
 
         /**=============================================================================================================
@@ -1390,19 +1416,63 @@ angular.module('cards').config(['$stateProvider',
             var titleText = $translate.instant("GIFT.CREATING");
             swal({   title: titleText,  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards').success(function(card,status){
-                console.log(card);
-                console.log(status);
-                // if(status == 201){
-                //     var cards = $scope.objectsSidebarService.getObjects();
-                //     cards.push(gift);
-                //     $scope.objectsSidebarService.setObjects(cards);
-                //     $scope.objectsSidebarService.setSelectedObject(card);
-                //
-                //     setTimeout(function(){
-                //         swal.close();
-                //     },2000);
-                // }
+                if(status == 201){
+                    var cards = $scope.objectsSidebarService.getObjects();
+                    cards.push(card);
+                    $scope.objectsSidebarService.setObjects(cards);
+                    $scope.objectsSidebarService.setSelectedObject(card);
+                    $scope.ready = true;
+
+                    setTimeout(function(){
+                        swal.close();
+                    },2000);
+                }
             });
+        }
+
+        //Function that display the swal as a confirmation to remove card
+        $scope.deleteCard = function(message, selectedObject) {
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_CARD_TITLE","GENERIC.DELETE_CARD_CONFIRMATION","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.DELETE_CARD_TITLE"],
+                text: translatedTexts["GENERIC.DELETE_CARD_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
+                    $scope.removeCardAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
+            });
+        };
+
+        //Remove card at specific position
+        $scope.removeCardAt = function(index){
+            var cardToDelete = $scope.objectsSidebarService.objects[index];
+            var translatedTexts  = $translate.instant(["CARD.DELETED_TEXT","GENERIC.DELETED"]);
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+ cardToDelete.identifier,{data:cardToDelete}).success(function(data){
+                    $scope.ready = false;
+                    $scope.objectsSidebarService.objects.splice(index,1);
+                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["CARD.DELETED_TEXT"], "success");
+                }
+            );
+        };
+        
+        //Save gift information
+        $scope.update = function(){
+            var cardToUpdate = $scope.objectsSidebarService.selectedObject;
+            // Don't do anything if there is no selected card
+            if ($scope.ready == false)
+                return;
+
+            if(card.myForm.$valid) {
+                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+ cardToUpdate.identifier,cardToUpdate).success(function(data,status){
+                    console.log('Actualizado');
+                });
+            }
         }
     }
 })();
@@ -2941,7 +3011,6 @@ angular.module('dashboard').config(['$stateProvider',
         $scope.$on('Biin: Days Range Changed', function (scope, numberdays) {
             $timeout.cancel($scope.npsTimeout);
             resetNPS();
-            getGiftsData();
             getNPSData();
         });
 
@@ -5479,7 +5548,7 @@ angular.module('gifts').config(['$stateProvider',
             $scope.loadingService.isLoading = true;
             //Current Date
             $scope.currentDate = new Date().getTime();
-            //Default alerts
+            //Default alerts/hints
             $scope.show_alert = true;
 
             $scope.sidebarTemplate =
@@ -5489,7 +5558,7 @@ angular.module('gifts').config(['$stateProvider',
                 "</div>" +
                 "<div class='col-md-9 leftInformationArea'>"+
                     "<label class='twoRowTitle'>{{item.name}}</label>"+
-                    "<small ng-if='item.amount>item.amountSpent && item.hasAvailablePeriod==false || item.amount>item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true' class='valid-color'>Disponible</small>"+
+                    "<small ng-if='(item.amount==-1 || item.amount>item.amountSpent) && item.hasAvailablePeriod==false || (item.amount==-1 || item.amount>item.amountSpent) && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true' class='valid-color'>Disponible</small>"+
                     "<small ng-if='item.amount>item.amountSpent && item.hasAvailablePeriod==false || item.amount>item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true'>{{item.amount-item.amountSpent}} u.</small>"+
                     "<small ng-if='item.amount==item.amountSpent && item.hasAvailablePeriod==false || item.amount==item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true' class='invalid-color'>Agotado</small>"+
                     "<small ng-if='(currentDate > formDate(item.endDate)) && item.hasAvailablePeriod==true' class='invalid-color'>Vencido</small>"+
@@ -5520,6 +5589,7 @@ angular.module('gifts').config(['$stateProvider',
             $scope.spent = objectClicked.amount == objectClicked.amountSpent;
             $scope.expire = ($scope.currentDate > (objectClicked.endDate).getTime()) && objectClicked.hasAvailablePeriod==true;
         });
+        
         $scope.$on('organizationChanged',function(){
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             $scope.loadingService.isLoading = true;
@@ -5688,14 +5758,14 @@ angular.module('gifts').config(['$stateProvider',
             });
         };
 
-        //Remove element at specific position
+        //Remove gift at specific position
         $scope.removeGiftAt = function(index){
             var giftToDelete = $scope.objectsSidebarService.objects[index];
-            var translatedTexts  = $translate.instant(["ELEMENT.DELETED_TEXT","GENERIC.DELETED"]);
-            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToDelete.identifier,{data:giftToDelete}).success(function(data){
+            var translatedTexts  = $translate.instant(["GIFT.DELETED_TEXT","GENERIC.DELETED"]);
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+ giftToDelete.identifier,{data:giftToDelete}).success(function(data){
                     $scope.ready = false;
                     $scope.objectsSidebarService.objects.splice(index,1);
-                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["ELEMENT.DELETED_TEXT"], "success");
+                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["GIFT.DELETED_TEXT"], "success");
                 }
             );
         };

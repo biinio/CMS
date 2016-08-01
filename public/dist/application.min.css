@@ -16649,6 +16649,19 @@ input.cmn-toggle-round:checked + label:after {
 .gift-section .activate-gift {
   margin-top: 40px;
 }
+.gift-section .unlimitedGift,
+.gift-section .limitedGift {
+  float: left;
+}
+.gift-section .limitedGift {
+  width: 70%;
+  margin-left: -4px;
+}
+.gift-section .unlimitedGift {
+  width: 25%;
+  margin-left: 5%;
+  margin-top: 33px;
+}
 /*Gift View Styles*/
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');

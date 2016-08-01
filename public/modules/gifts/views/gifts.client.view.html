@@ -168,13 +168,13 @@
                                     </div>
 
                                     <!--Amount name="amount"-->
-                                    <div class="form-group">
+                                    <div class="form-group limitedGift">
                                         <label for="giftAmount" translate="GIFT.AMOUNT" class="control-label"></label>
                                         <input id="giftAmount" ng-model="objectsSidebarService.selectedObject.amount"
-                                               name="amount" min="0" ng-pattern="/^\+?([1-9]\d*)$/"
+                                               name="amount" min="-1" ng-pattern="/^\+?([1-9]\d*)|[-1]$/"
                                                type="number" placeholder="{{ 'GIFT.AMOUNT_PLACEHOLDER' | translate }}"
                                                required class="form-control"
-                                               ng-disabled="objectsSidebarService.selectedObject.isActive"/>
+                                               ng-disabled="objectsSidebarService.selectedObject.isActive || objectsSidebarService.selectedObject.amount=='-1'"/>
                                         <!-- Input title errors -->
                                         <div ng-messages="gift.myForm.amount.$error" ng-if="gift.myForm.amount.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.AMOUNT_REQUIRED"></small>
@@ -182,6 +182,20 @@
                                         </div>
                                     </div>
 
+                                    <!--Unlimited mount name="unlimitedAmount"-->
+                                    <div class="form-group unlimitedGift">
+                                        <!--Positive checkbox-->
+                                        <label> </label>
+                                        <div class="checkbox c-checkbox pull-left mt0">
+                                            <label>
+                                                <input type="checkbox" ng-true-value="-1" ng-false-value="1" name="unlimitedAmount" ng-model="objectsSidebarService.selectedObject.amount"
+                                                       ng-disabled="objectsSidebarService.selectedObject.isActive"
+                                                       ng-checked="objectsSidebarService.selectedObject.amount==-1"/>
+                                                <span class="fa fa-check"></span>{{ 'GENERIC.UNLIMITED' | translate }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
                                     <!--Is Automatic name="isAtomatic"-->
                                     <div class="form-group isAutomatic">
                                         <label  class="form-label" translate="GIFT.IS_AUTOMATIC"></label>

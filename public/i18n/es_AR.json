@@ -95,7 +95,8 @@
     "ACTIVATED": "Activado",
     "ACTIVATE_GIFT_TITLE": "¿Desea activar este regalo?",
     "ACTIVATE_GIFT_CONFIRMATION": "Una vez activado el regalo, este no podrá ser eliminado",
-    "DESACTIVATE": "Desactivar"
+    "DESACTIVATE": "Desactivar",
+    "UNLIMITED": "Ilimitado"
   },
   "GIFT":{
     "A_DAY": "Un día",
