@@ -3,8 +3,13 @@
     "CATEGORIES_DESCRIPTION": "Categories allow your site and products to be visible on searches. Select the ones you think need to be associated with your site and products."
   },
   "CARD": {
+    "CONDITIONS": "Terms of use",
+    "CONDITIONS_STATEMENT": "Write or attach the terms and conditions of card usage",
+    "CREATING": "Your card is being created.",
+    "DELETED_TEXT" : "Your card was successfully deleted.",
     "HINT": "Please select a card in the sidebar or create one by pressing the button to create new",
-    "CREATING": "Your card is being created."
+    "INFO": "*A card can be deleted, just if it was'nt activated",
+    "INFO2": "**If a card was activated , this can not be changed"
   },
   "DASHBOARD": {
     "TITLE": "Dashboard",
@@ -63,6 +68,8 @@
     "CATEGORIES_REQUIRED_MESSAGE": "Select at least one category",
     "GALLERIES_REQUIRED_MESSAGE": "Add at least one image",
     "MAP_REQUIRED_MESSAGE":"Mark your location on the map",
+    "DELETE_CARD": "Delete card",
+    "DELETE_CARD_TITLE": "Do you wish to delete this card?",
     "DELETE_SITE": "Delete site",
     "DELETE_SITE_CONFIRMATION": "Do you wish to delete this site?",
     "DELETE_ELEMENT": "Delete element",
@@ -108,7 +115,7 @@
     "GIFT_DETAIL": "Gift Details",
     "GIFT_NAME": "Título",
     "HINT": "Please select a gift in the sidebar or create one by pressing the button to create new",
-    "INFO": "*A gift can be deleted or desactivated, just if it was'nt reclaimed",
+    "INFO": "*A gift can be deleted, just if it was'nt reclaimed or if it is expire or spent",
     "INFO2": "**If the gift was claimed , you can only updates the locals where it is",
     "IS_AUTOMATIC": "Mapping Mode",
     "LOCALS": "Available locals",

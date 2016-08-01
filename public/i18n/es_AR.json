@@ -3,8 +3,13 @@
     "CATEGORIES_DESCRIPTION": "Las categorías permiten que su local y sus productos aparezcan en las búsquedas. Seleccione las categorías que considere que deben ser asociados a su local y a sus productos."
   },
   "CARD": {
+    "CONDITIONS": "Condiciones de uso",
+    "CONDITIONS_STATEMENT": "Escriba o adjunte los términos y condiciones de uso de la tarjeta",
+    "CREATING": "Su tarjeta se esta creando",
+    "DELETED_TEXT" : "Su tarjeta fue eliminada con éxito.",
     "HINT": "Por favor seleccione una tarjeta en la barra lateral o cree uno presionando el botón de crear nuevo.",
-    "CREATING": "Su tarjeta se esta creando"
+    "INFO": "*Una tarjeta puede ser eliminada solo si no ha sido activada",
+    "INFO2": "**Si una tarjeta fue activada, esta no podrá ser modificada"
   },
   "DASHBOARD": {
     "TITLE": "Resumen",
@@ -63,6 +68,9 @@
     "CATEGORIES_REQUIRED_MESSAGE": "Seleccione al menos una categoría",
     "GALLERIES_REQUIRED_MESSAGE": "Agregue al menos una imagen",
     "MAP_REQUIRED_MESSAGE":"Indique la ubicacion de su local en el mapa",
+    "DELETE_CARD": "Eliminar tarjeta",
+    "DELETE_CARD_TITLE": "¿Desea eliminar esta tarjeta?",
+    "DELETE_CARD_CONFIRMATION": "Al eliminar esta tarjeta dejará de estar disponible para los clientes.",
     "DELETE_SITE": "Eliminar local",
     "DELETE_SITE_TITLE": "¿Desea eliminar este local?",
     "DELETE_SITE_CONFIRMATION": "Cuando se elimina un local dejará de estar disponible para los usuarios.",
@@ -115,7 +123,7 @@
     "GIFT_DETAIL": "Detalles del regalo",
     "GIFT_NAME": "Título",
     "HINT": "Por favor seleccione un regalo en la barra lateral o cree uno presionando el botón de crear nuevo.",
-    "INFO": "*Un regalo puede ser eliminado o desactivado solo si no ha sido reclamado",
+    "INFO": "*Un regalo puede ser eliminado solo si no ha sido activado o si esta agotado o vencido",
     "INFO2": "**Si el regalo fue reclamado, solo puedes actualizar los locales donde se encuentra",
     "IS_AUTOMATIC": "Modo de asignación",
     "LOCALS": "Locales disponibles",

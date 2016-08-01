@@ -44,7 +44,7 @@
             $scope.loadingService.isLoading = true;
             //Current Date
             $scope.currentDate = new Date().getTime();
-            //Default alerts
+            //Default alerts/hints
             $scope.show_alert = true;
 
             $scope.sidebarTemplate =
@@ -85,6 +85,7 @@
             $scope.spent = objectClicked.amount == objectClicked.amountSpent;
             $scope.expire = ($scope.currentDate > (objectClicked.endDate).getTime()) && objectClicked.hasAvailablePeriod==true;
         });
+        
         $scope.$on('organizationChanged',function(){
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             $scope.loadingService.isLoading = true;
@@ -253,14 +254,14 @@
             });
         };
 
-        //Remove element at specific position
+        //Remove gift at specific position
         $scope.removeGiftAt = function(index){
             var giftToDelete = $scope.objectsSidebarService.objects[index];
-            var translatedTexts  = $translate.instant(["ELEMENT.DELETED_TEXT","GENERIC.DELETED"]);
-            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToDelete.identifier,{data:giftToDelete}).success(function(data){
+            var translatedTexts  = $translate.instant(["GIFT.DELETED_TEXT","GENERIC.DELETED"]);
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+ giftToDelete.identifier,{data:giftToDelete}).success(function(data){
                     $scope.ready = false;
                     $scope.objectsSidebarService.objects.splice(index,1);
-                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["ELEMENT.DELETED_TEXT"], "success");
+                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["GIFT.DELETED_TEXT"], "success");
                 }
             );
         };

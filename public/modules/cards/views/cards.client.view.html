@@ -8,6 +8,43 @@
             <div ng-if="ready">
                 <div class="panel panel-default">
                     <!-- Gift Form-->
+                    <form name="card.myForm" role="form">
+                        <!--Card conditions and activation-->
+                        <section>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <!--conditionsText - conditionsURL - hasConditionURL-->
+                                    <div class="form-group">
+                                        <legend translate="CARD.CONDITIONS"></legend>
+                                        <label translate="CARD.CONDITIONS_STATEMENT" class="form-label"></label>
+                                    </div>
+                                    <!--isDeleted & isActive-->
+                                    <div class="form-group activate-gift">
+                                        <button type="button" class="btn btn-danger col-sm-2" ng-click="deleteCard(' {{'GENERIC.DELETE_CARD_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)"
+                                                ng-disabled="objectsSidebarService.selectedObject.isActive ">
+                                            <span class="fa fa-trash"></span>
+                                            <span translate="GENERIC.DELETE"></span>
+                                        </button>
+                                        <button type="button" ng-click="activate()" class="btn btn-success col-sm-9 col-sm-offset-1" ng-class="{ 'btn-danger': objectsSidebarService.selectedObject.isActive==true , 'btn-success' : !objectsSidebarService.selectedObject.isActive==true}"
+                                                ng-disabled="objectsSidebarService.selectedObject.isActive">
+                                            <span ng-if="objectsSidebarService.selectedObject.isActive == false" translate="GENERIC.ACTIVATE"></span>
+                                            <span ng-if="objectsSidebarService.selectedObject.isActive == true" translate="GENERIC.DESACTIVATE"></span>
+                                        </button>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <!--Alerts-->
+                                    <div class="form-group">
+                                        <div class="alert alert-warning alert-dismissible" ng-show="show_alert">
+                                            <span class="close" ng-click="show_alert=false"><span aria-hidden="true">&times;</span></span>
+                                            <small translate="CARD.INFO"></small>
+                                            <div class="clearfix"></div>
+                                            <small translate="CARD.INFO2"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </form>
                 </div>
             </div>
             <!--Display if form is not ready to fill-->
