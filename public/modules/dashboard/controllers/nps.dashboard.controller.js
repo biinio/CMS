@@ -33,7 +33,6 @@
         $scope.$on('Biin: Days Range Changed', function (scope, numberdays) {
             $timeout.cancel($scope.npsTimeout);
             resetNPS();
-            getGiftsData();
             getNPSData();
         });
 
