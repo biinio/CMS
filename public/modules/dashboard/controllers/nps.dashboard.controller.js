@@ -183,6 +183,7 @@
                 //Get gifts for manual tasks
                 $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
                     .success(function (data) {
+                        console.log(data);
                         $scope.npsGiftsManual = data;
                     });
                 //Get products to update gifts images
