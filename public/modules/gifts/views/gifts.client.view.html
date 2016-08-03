@@ -13,7 +13,7 @@
                         <section>
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <legend translate="GIFT.NAME"></legend>
+                                    <legend translate="GIFT.INFORMATION"></legend>
                                     <!--Icons that show up depending if the form is valid or invalid-->
                                     <div ng-if="gift.myForm.$invalid || objectsSidebarService.selectedObject.availableIn.length == 0 || objectsSidebarService.selectedObject.sites.length == 0">
                                         <label class="error-icon fa fa-times-circle enlarge-icon"></label>
@@ -57,7 +57,7 @@
                                                 ng-disabled="objectsSidebarService.selectedObject.isActive"
                                                 ng-options="product.elementIdentifier as product.title for product in products"
                                                 class="form-control" required>
-                                            <option value="" translate="GIFT.PRODUCT_SELECT"></option>
+                                            <option value="" translate="GENERIC.CHOOSE"></option>
                                         </select>
 
                                         <!-- Input productIdentifier errors -->

@@ -39,15 +39,18 @@
             //Ready to fill
             $scope.ready = false;
             $scope.cards = [];
+            $scope.slotsQuantities = [10,12,14];
             //State of loading screen
             $scope.loadingService.isLoading = true;
+            //Current Date
+            $scope.currentDate = new Date().getTime();
             //Default alerts/hints
             $scope.show_alert = true;
             //ObjectsSidebar card template
             $scope.sidebarTemplate =
                 "<div class='col-md-3 thumbListImage'>" +
                     "<img ng-if='!item.gift' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
-                    // "<img ng-if='item.productIdentifier.length>0' ng-src='{{setProductImage(item.productIdentifier)}}' pending-indicator='pending-indicator'/>"+
+                    "<img ng-if='item.gift' ng-src='{{setProductImage(getProductIdentifier(item.gift))}}' pending-indicator='pending-indicator'/>"+
                 "</div>" +
                 "<div class='col-md-9 leftInformationArea'>"+
                     "<label class='twoRowTitle'>{{organizationService.selectedOrganization.name}}</label>"+
@@ -90,6 +93,10 @@
                 $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
                     $scope.products = data.data.elements;
                 });
+                //Get the List of Gifts
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+                    getAvailableGifts(gifts);
+                });
             }
         });
 
@@ -104,6 +111,10 @@
                 $scope.cards = cards;
                 $scope.objectsSidebarService.setObjects($scope.cards);
                 $scope.loadingService.isLoading = false;
+            });
+            //Get the List of Gifts
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+                getAvailableGifts(gifts);
             });
         }
 
@@ -168,6 +179,17 @@
                 $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+ cardToUpdate.identifier,cardToUpdate).success(function(data,status){
                     console.log('Actualizado');
                 });
+            }
+        }
+        //Function to remove expire and spent gifts
+        function getAvailableGifts(gifts) {
+            console.log(gifts);
+            $scope.gifts = [];
+            for(var i in gifts){
+                gifts[i].endDate = new Date();
+                if((gifts[i].amount > gifts[i].amountSpent && $scope.currentDate < gifts[i].endDate.getTime()) || (gifts[i].amount ==-1 && $scope.currentDate < gifts[i].endDate.getTime())){
+                   $scope.gifts.push(gifts[i]);
+                }
             }
         }
     }

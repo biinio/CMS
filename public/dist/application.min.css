@@ -16663,6 +16663,9 @@ input.cmn-toggle-round:checked + label:after {
   margin-top: 33px;
 }
 /*Gift View Styles*/
+.cards-section form {
+  background-color: #efefef;
+}
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');
 }

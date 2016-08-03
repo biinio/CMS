@@ -35,6 +35,10 @@
                 $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
                     $scope.products = data.data.elements;
                 });
+                //Get the List of Gifts
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+                    $scope.gifts = gifts;
+                });
             }
         }
 
@@ -46,6 +50,15 @@
                 }
             }
         };
+
+        //Function to get the productIdentifier from a gift
+        $scope.getProductIdentifier = function (gift) {
+            for(var i in $scope.gifts){
+                if(gift == $scope.gifts[i].identifier){
+                    return $scope.gifts[i].productIdentifier;
+                }
+            }
+        }
 
         //Formatting dates
         $scope.formDate = function(date) {
