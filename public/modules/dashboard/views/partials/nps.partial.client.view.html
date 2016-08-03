@@ -60,9 +60,9 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <button class="btn btn-block select-gift" ng-class="{ 'btn-danger': isGiftActive , 'btn-primary' : !isGiftActive}" ng-click="displayGifts('automatic')" modal="open" target="giftsAvailableAutomatic">
+            <button class="btn btn-primary btn-block select-gift" ng-click="displayGifts('automatic')" modal="open" target="giftsAvailableAutomatic">
                 <span ng-if="!isGiftActive">Seleccionar regalo automático</span>
-                <span ng-if="isGiftActive">Desactivar regalo automático</span>
+                <span ng-if="isGiftActive">Ver regalo automático</span>
             </button>
 
             <uib-tabset active="active">
