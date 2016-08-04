@@ -16666,6 +16666,23 @@ input.cmn-toggle-round:checked + label:after {
 .cards-section form {
   background-color: #efefef;
 }
+.cards-section .period-negative {
+  margin-left: 40px;
+  margin-bottom: 15px;
+}
+.cards-section .unlimitedCard,
+.cards-section .limitedCard {
+  float: left;
+}
+.cards-section .limitedCard {
+  width: 70%;
+  margin-left: -4px;
+}
+.cards-section .unlimitedCard {
+  width: 25%;
+  margin-left: 5%;
+  margin-top: 33px;
+}
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');
 }

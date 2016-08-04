@@ -50,7 +50,7 @@
             $scope.sidebarTemplate =
                 "<div class='col-md-3 thumbListImage'>" +
                     "<img ng-if='!item.gift' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
-                    "<img ng-if='item.gift' ng-src='{{setProductImage(getProductIdentifier(item.gift))}}' pending-indicator='pending-indicator'/>"+
+                    "<img ng-if='item.gift' ng-src='{{setProductImage(item.gift.productIdentifier)}}' pending-indicator='pending-indicator'/>"+
                 "</div>" +
                 "<div class='col-md-9 leftInformationArea'>"+
                     "<label class='twoRowTitle'>{{organizationService.selectedOrganization.name}}</label>"+
@@ -181,6 +181,28 @@
                 });
             }
         }
+
+        //Function to activate a card
+        $scope.activate = function () {
+            var cardToUpdate = $scope.objectsSidebarService.selectedObject;
+            var translatedTexts  = $translate.instant(["GENERIC.ACTIVATE_GIFT_TITLE","GENERIC.ACTIVATE_GIFT_CONFIRMATION","GENERIC.ACTIVATE","GENERIC.CANCEL","GENERIC.ACTIVATED","GIFT.ACTIVATE_TEXT"]);
+            swal({
+                title: translatedTexts["GENERIC.ACTIVATE_GIFT_TITLE"],
+                text: translatedTexts["GENERIC.ACTIVATE_GIFT_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#8CD4F5",
+                confirmButtonText: translatedTexts["GENERIC.ACTIVATE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
+                $scope.objectsSidebarService.selectedObject.isActive = true;
+                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+cardToUpdate.identifier,{isActive:true}).success(function(data,status){
+                    swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["GIFT.ACTIVATE_TEXT"], "success");
+                });
+            });
+        }
         //Function to remove expire and spent gifts
         function getAvailableGifts(gifts) {
             console.log(gifts);
@@ -191,6 +213,9 @@
                    $scope.gifts.push(gifts[i]);
                 }
             }
+        }
+        $scope.checkUnlimited = function() {
+            $scope.objectsSidebarService.selectedObject.quantity = 1;
         }
     }
 })();

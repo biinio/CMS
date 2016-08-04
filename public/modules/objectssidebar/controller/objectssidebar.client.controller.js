@@ -51,15 +51,6 @@
             }
         };
 
-        //Function to get the productIdentifier from a gift
-        $scope.getProductIdentifier = function (gift) {
-            for(var i in $scope.gifts){
-                if(gift == $scope.gifts[i].identifier){
-                    return $scope.gifts[i].productIdentifier;
-                }
-            }
-        }
-
         //Formatting dates
         $scope.formDate = function(date) {
             return new Date(date).getTime();

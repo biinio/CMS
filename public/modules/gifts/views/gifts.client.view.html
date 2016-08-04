@@ -178,7 +178,7 @@
                                         <!-- Input title errors -->
                                         <div ng-messages="gift.myForm.amount.$error" ng-if="gift.myForm.amount.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.AMOUNT_REQUIRED"></small>
-                                            <small ng-message="pattern">*La cantidad de regalos debe ser positiva.</small>
+                                            <small ng-message="pattern" translate="GIFT.AMOUNT_PATTERN"></small>
                                         </div>
                                     </div>
 
@@ -264,9 +264,9 @@
                         <section>
                             <div class="panel panel-default">
                                 <div class="panel-body">
+                                    <legend translate="GIFT.LOCALS"></legend>
                                     <!--siteAssignedTo name="siteAssignedTo"-->
                                     <div class="form-group">
-                                        <legend translate="GIFT.LOCALS"></legend>
                                         <label translate="GIFT.LOCALS_AVAILABLE" class="form-label"></label>
                                         <div class="clearfix"></div>
                                         <div ng-repeat="local in locals" class="col-md-4 catModule">

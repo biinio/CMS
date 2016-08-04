@@ -72,7 +72,7 @@
                                         <select name="gift"
                                                 ng-model="objectsSidebarService.selectedObject.gift"
                                                 ng-disabled="objectsSidebarService.selectedObject.isActive"
-                                                ng-options="gift.identifier as gift.name for gift in gifts"
+                                                ng-options="gift as gift.name for gift in gifts"
                                                 class="form-control" required>
                                             <option value="" translate="GENERIC.CHOOSE"></option>
                                         </select>
@@ -98,19 +98,90 @@
                                 </div>
                             </div>
                         </section>
+                        <!--Card details-->
+                        <section>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <legend translate="CARD.CARD_DETAIL"></legend>
+                                    <!--renewalAutomatic name="renewal"-->
+                                    <div class="form-group">
+                                        <label translate="CARD.RENEWAL_QUESTION" class="form-label"></label>
+                                        <div class="clearfix"></div>
+                                        <!--Positive checkbox-->
+                                        <div class="checkbox c-checkbox pull-left mt0">
+                                            <label>
+                                                <input type="radio" ng-value="true" name="renewal" ng-model="objectsSidebarService.selectedObject.renewalAutomatic"
+                                                       ng-disabled="objectsSidebarService.selectedObject.isActive"/>
+                                                <span class="fa fa-check"></span>{{ 'GENERIC.POSITIVE' | translate }}
+                                            </label>
+                                        </div>
+                                        <!--Negative checkbox-->
+                                        <div class="checkbox c-checkbox pull-left mt0 period-negative">
+                                            <label>
+                                                <input type="radio" ng-value="false"  name="renewal" ng-model="objectsSidebarService.selectedObject.renewalAutomatic"
+                                                       ng-disabled="objectsSidebarService.selectedObject.isActive"/>
+                                                <span class="fa fa-check"></span>{{ 'GENERIC.NEGATIVE' | translate }}
+                                            </label>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <!--waitTime name="waitTime"-->
+                                    <div class="form-group" ng-if="objectsSidebarService.selectedObject.renewalAutomatic==true">
+                                        <label for="cardWaitTime" translate="CARD.WAITTIME" class="control-label"></label>
+                                        <input id="cardWaitTime" ng-model="objectsSidebarService.selectedObject.waitTime"
+                                               name="waitTime" min="0" ng-pattern="/^\+?([1-9]\d*)$/"
+                                               type="number" placeholder="{{ 'CARD.WAITTIME_PLACEHOLDER' | translate }}"
+                                               required class="form-control title-value"
+                                               ng-disabled="objectsSidebarService.selectedObject.isActive"/>
+                                        <!-- Input waitTime errors -->
+                                        <div ng-messages="card.myForm.waitTime.$error" ng-if="card.myForm.waitTime.$touched"class="help-block">
+                                            <small ng-message="required" translate="CARD.WAITTIME_REQUIRED"></small>
+                                            <small ng-message="pattern" translate="CARD.WAITTIME_PATTERN">*Los días de espera deben ser positivos.</small>
+                                        </div>
+                                    </div>
+                                    <!--Amount name="amount"-->
+                                    <div class="form-group limitedCard">
+                                        <label for="cardAmount" translate="CARD.AMOUNT" class="control-label"></label>
+                                        <input id="cardAmount" ng-model="objectsSidebarService.selectedObject.quantity"
+                                               name="quantity" min="0" ng-pattern="/^\+?([1-9]\d*)$/"
+                                               type="number" placeholder="{{ 'CARD.AMOUNT_PLACEHOLDER' | translate }}"
+                                               required class="form-control"
+                                               ng-disabled="objectsSidebarService.selectedObject.isActive || objectsSidebarService.selectedObject.isUnlimited==true"/>
+                                        <!-- Input title errors -->
+                                        <div ng-messages="card.myForm.quantity.$error" ng-if="card.myForm.quantity.$touched"class="help-block">
+                                            <small ng-message="required" translate="CARD.AMOUNT_REQUIRED"></small>
+                                            <small ng-message="pattern" translate="CARD.AMOUNT_PATTERN"></small>
+                                        </div>
+                                    </div>
+                                    <!--Unlimited mount name="unlimitedAmount"-->
+                                    <div class="form-group unlimitedCard">
+                                        <!--Positive checkbox-->
+                                        <label> </label>
+                                        <div class="checkbox c-checkbox pull-left mt0">
+                                            <label>
+                                                <input type="checkbox" name="unlimitedAmount" ng-model="objectsSidebarService.selectedObject.isUnlimited"
+                                                       ng-disabled="objectsSidebarService.selectedObject.isActive"
+                                                       ng-change="checkUnlimited()"/>
+                                                <span class="fa fa-check"></span>{{ 'GENERIC.UNLIMITED' | translate }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </section>
                         <!--Card conditions and activation-->
                         <section>
                             <div class="panel panel-default">
                                 <div class="panel-body">
+                                    <legend translate="CARD.CONDITIONS"></legend>
                                     <!--conditionsText - conditionsURL - hasConditionURL-->
                                     <div class="form-group">
-                                        <legend translate="CARD.CONDITIONS"></legend>
                                         <label translate="CARD.CONDITIONS_STATEMENT" class="form-label"></label>
                                     </div>
                                     <!--isDeleted & isActive-->
                                     <div class="form-group activate-gift">
-                                        <button type="button" class="btn btn-danger col-sm-2" ng-click="deleteCard(' {{'GENERIC.DELETE_CARD_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)"
-                                                ng-disabled="objectsSidebarService.selectedObject.isActive ">
+                                        <button type="button" class="btn btn-danger col-sm-2" ng-click="deleteCard(' {{'GENERIC.DELETE_CARD_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">
                                             <span class="fa fa-trash"></span>
                                             <span translate="GENERIC.DELETE"></span>
                                         </button>
