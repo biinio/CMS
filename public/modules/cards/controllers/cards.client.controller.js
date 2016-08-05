@@ -120,7 +120,7 @@
 
         //Create a card
         $scope.create = function(){
-            var titleText = $translate.instant("GIFT.CREATING");
+            var titleText = $translate.instant("CARD.CREATING");
             swal({   title: titleText,  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards').success(function(card,status){
                 if(status == 201){
