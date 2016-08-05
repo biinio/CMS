@@ -1343,15 +1343,18 @@ angular.module('cards').config(['$stateProvider',
             //Ready to fill
             $scope.ready = false;
             $scope.cards = [];
+            $scope.slotsQuantities = [10,12,14];
             //State of loading screen
             $scope.loadingService.isLoading = true;
+            //Current Date
+            $scope.currentDate = new Date().getTime();
             //Default alerts/hints
             $scope.show_alert = true;
             //ObjectsSidebar card template
             $scope.sidebarTemplate =
                 "<div class='col-md-3 thumbListImage'>" +
                     "<img ng-if='!item.gift' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
-                    // "<img ng-if='item.productIdentifier.length>0' ng-src='{{setProductImage(item.productIdentifier)}}' pending-indicator='pending-indicator'/>"+
+                    "<img ng-if='item.gift' ng-src='{{setProductImage(item.gift.productIdentifier)}}' pending-indicator='pending-indicator'/>"+
                 "</div>" +
                 "<div class='col-md-9 leftInformationArea'>"+
                     "<label class='twoRowTitle'>{{organizationService.selectedOrganization.name}}</label>"+
@@ -1394,6 +1397,10 @@ angular.module('cards').config(['$stateProvider',
                 $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
                     $scope.products = data.data.elements;
                 });
+                //Get the List of Gifts
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+                    getAvailableGifts(gifts);
+                });
             }
         });
 
@@ -1408,6 +1415,10 @@ angular.module('cards').config(['$stateProvider',
                 $scope.cards = cards;
                 $scope.objectsSidebarService.setObjects($scope.cards);
                 $scope.loadingService.isLoading = false;
+            });
+            //Get the List of Gifts
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+                getAvailableGifts(gifts);
             });
         }
 
@@ -1473,6 +1484,44 @@ angular.module('cards').config(['$stateProvider',
                     console.log('Actualizado');
                 });
             }
+        }
+
+        //Function to activate a card
+        $scope.activate = function () {
+            var cardToUpdate = $scope.objectsSidebarService.selectedObject;
+            var translatedTexts  = $translate.instant(["GENERIC.ACTIVATE_CARD_TITLE","GENERIC.ACTIVATE_CARD_CONFIRMATION","GENERIC.ACTIVATE","GENERIC.CANCEL","GENERIC.ACTIVATED","CARD.ACTIVATE_TEXT"]);
+            swal({
+                title: translatedTexts["GENERIC.ACTIVATE_CARD_TITLE"],
+                text: translatedTexts["GENERIC.ACTIVATE_CARD_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#8CD4F5",
+                confirmButtonText: translatedTexts["GENERIC.ACTIVATE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
+                $scope.objectsSidebarService.selectedObject.isActive = true;
+                if(card.myForm.$valid) {
+                    $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+cardToUpdate.identifier,{isActive:true}).success(function(data,status){
+                        swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["CARD.ACTIVATE_TEXT"], "success");
+                    });
+                }
+            });
+        }
+        //Function to remove expire and spent gifts
+        function getAvailableGifts(gifts) {
+            console.log(gifts);
+            $scope.gifts = [];
+            for(var i in gifts){
+                gifts[i].endDate = new Date();
+                if((gifts[i].amount > gifts[i].amountSpent && $scope.currentDate < gifts[i].endDate.getTime()) || (gifts[i].amount ==-1 && $scope.currentDate < gifts[i].endDate.getTime())){
+                   $scope.gifts.push(gifts[i]);
+                }
+            }
+        }
+        $scope.checkUnlimited = function() {
+            $scope.objectsSidebarService.selectedObject.quantity = 1;
         }
     }
 })();
@@ -3161,6 +3210,7 @@ angular.module('dashboard').config(['$stateProvider',
                 //Get gifts for manual tasks
                 $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
                     .success(function (data) {
+                        console.log(data);
                         $scope.npsGiftsManual = data;
                     });
                 //Get products to update gifts images
@@ -6916,6 +6966,10 @@ angular.module('nps').config(['$stateProvider',
                 //Get the List of Products
                 $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
                     $scope.products = data.data.elements;
+                });
+                //Get the List of Gifts
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+                    $scope.gifts = gifts;
                 });
             }
         }

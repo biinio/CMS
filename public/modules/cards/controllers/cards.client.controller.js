@@ -185,10 +185,10 @@
         //Function to activate a card
         $scope.activate = function () {
             var cardToUpdate = $scope.objectsSidebarService.selectedObject;
-            var translatedTexts  = $translate.instant(["GENERIC.ACTIVATE_GIFT_TITLE","GENERIC.ACTIVATE_GIFT_CONFIRMATION","GENERIC.ACTIVATE","GENERIC.CANCEL","GENERIC.ACTIVATED","GIFT.ACTIVATE_TEXT"]);
+            var translatedTexts  = $translate.instant(["GENERIC.ACTIVATE_CARD_TITLE","GENERIC.ACTIVATE_CARD_CONFIRMATION","GENERIC.ACTIVATE","GENERIC.CANCEL","GENERIC.ACTIVATED","CARD.ACTIVATE_TEXT"]);
             swal({
-                title: translatedTexts["GENERIC.ACTIVATE_GIFT_TITLE"],
-                text: translatedTexts["GENERIC.ACTIVATE_GIFT_CONFIRMATION"],
+                title: translatedTexts["GENERIC.ACTIVATE_CARD_TITLE"],
+                text: translatedTexts["GENERIC.ACTIVATE_CARD_CONFIRMATION"],
                 type: "warning",
                 showCancelButton: true,
                 cancelButtonText:translatedTexts["GENERIC.CANCEL"],
@@ -198,9 +198,11 @@
                 closeOnConfirm: false
             }, function () {
                 $scope.objectsSidebarService.selectedObject.isActive = true;
-                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+cardToUpdate.identifier,{isActive:true}).success(function(data,status){
-                    swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["GIFT.ACTIVATE_TEXT"], "success");
-                });
+                if(card.myForm.$valid) {
+                    $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+cardToUpdate.identifier,{isActive:true}).success(function(data,status){
+                        swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["CARD.ACTIVATE_TEXT"], "success");
+                    });
+                }
             });
         }
         //Function to remove expire and spent gifts

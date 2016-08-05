@@ -3,6 +3,7 @@
     "CATEGORIES_DESCRIPTION": "Categories allow your site and products to be visible on searches. Select the ones you think need to be associated with your site and products."
   },
   "CARD": {
+    "ACTIVATE_TEXT": "Card activated",
     "AMOUNT": "Number of available cards",
     "AMOUNT_PATTERN": "The number of cards must be positive",
     "AMOUNT_PLACEHOLDER": "Number of cards",
@@ -112,7 +113,9 @@
     "ACTIVATE":  "Activate",
     "ACTIVATED": "Activated",
     "ACTIVATE_GIFT_TITLE": "Do you want to activate this gift?",
-    "ACTIVATE_GIFT_CONFIRMATION": "Once activated the gift, this can not be deleted",
+    "ACTIVATE_GIFT_CONFIRMATION": "Once activated the gift, this can not be modified",
+    "ACTIVATE_CARD_TITLE": "Do you want to activate this card?",
+    "ACTIVATE_CARD_CONFIRMATION": "Once activated the card, this can not be modified",
     "DESACTIVATE": "Desactivate",
     "UNLIMITED": "Unlimited"
   },

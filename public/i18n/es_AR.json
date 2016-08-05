@@ -3,6 +3,7 @@
     "CATEGORIES_DESCRIPTION": "Las categorías permiten que su local y sus productos aparezcan en las búsquedas. Seleccione las categorías que considere que deben ser asociados a su local y a sus productos."
   },
   "CARD": {
+    "ACTIVATE_TEXT": "Tarjeta activada",
     "AMOUNT": "Cantidad de tarjetas disponibles",
     "AMOUNT_PATTERN": "La cantidad de tarjetas debe ser positiva",
     "AMOUNT_PLACEHOLDER": "Cantidad de tarjetas",
@@ -120,7 +121,9 @@
     "ACTIVATE":  "Activar",
     "ACTIVATED": "Activado",
     "ACTIVATE_GIFT_TITLE": "¿Desea activar este regalo?",
-    "ACTIVATE_GIFT_CONFIRMATION": "Una vez activado el regalo, este no podrá ser eliminado",
+    "ACTIVATE_GIFT_CONFIRMATION": "Una vez activado el regalo, este no podrá ser modificado",
+    "ACTIVATE_CARD_TITLE": "¿Desea activar esta tarjeta?",
+    "ACTIVATE_CARD_CONFIRMATION": "Una vez activada la tarjeta, esta no podrá ser modificada",
     "DESACTIVATE": "Desactivar",
     "UNLIMITED": "Ilimitado"
   },
