@@ -1424,7 +1424,7 @@ angular.module('cards').config(['$stateProvider',
 
         //Create a card
         $scope.create = function(){
-            var titleText = $translate.instant("GIFT.CREATING");
+            var titleText = $translate.instant("CARD.CREATING");
             swal({   title: titleText,  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards').success(function(card,status){
                 if(status == 201){
@@ -1479,7 +1479,7 @@ angular.module('cards').config(['$stateProvider',
             if ($scope.ready == false)
                 return;
 
-            if(card.myForm.$valid) {
+            if(card.myForm.$valid && ($scope.objectsSidebarService.selectedObject.conditionsText || $scope.objectsSidebarService.selectedObject.conditionsURL)) {
                 $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+ cardToUpdate.identifier,cardToUpdate).success(function(data,status){
                     console.log('Actualizado');
                 });
@@ -1502,7 +1502,7 @@ angular.module('cards').config(['$stateProvider',
                 closeOnConfirm: false
             }, function () {
                 $scope.objectsSidebarService.selectedObject.isActive = true;
-                if(card.myForm.$valid) {
+                if(card.myForm.$valid && ($scope.objectsSidebarService.selectedObject.conditionsText || $scope.objectsSidebarService.selectedObject.conditionsURL)) {
                     $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+cardToUpdate.identifier,{isActive:true}).success(function(data,status){
                         swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["CARD.ACTIVATE_TEXT"], "success");
                     });
@@ -5781,9 +5781,11 @@ angular.module('gifts').config(['$stateProvider',
                 closeOnConfirm: false
             }, function () {
                 $scope.objectsSidebarService.selectedObject.isActive = true;
-                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
-                    swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["GIFT.ACTIVATE_TEXT"], "success");
-                });
+                if(card.myForm.$valid) {
+                    $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+ giftToUpdate.identifier,{isActive:true}).success(function(data,status){
+                        swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["GIFT.ACTIVATE_TEXT"], "success");
+                    });
+                }
             });
         }
 
