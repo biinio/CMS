@@ -172,7 +172,7 @@
                                         <label for="giftAmount" translate="GIFT.AMOUNT" class="control-label"></label>
                                         <input id="giftAmount" ng-model="objectsSidebarService.selectedObject.amount"
                                                name="amount" min="-1" ng-pattern="/^\+?([1-9]\d*)|[-1]$/"
-                                               type="number" placeholder="{{ 'GIFT.AMOUNT_PLACEHOLDER' | translate }}"
+                                               type="text" placeholder="{{ 'GIFT.AMOUNT_PLACEHOLDER' | translate }}"
                                                required class="form-control"
                                                ng-disabled="objectsSidebarService.selectedObject.isActive || objectsSidebarService.selectedObject.amount=='-1'"/>
                                         <!-- Input title errors -->

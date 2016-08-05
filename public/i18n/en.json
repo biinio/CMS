@@ -5,7 +5,7 @@
   "CARD": {
     "ACTIVATE_TEXT": "Card activated",
     "AMOUNT": "Number of available cards",
-    "AMOUNT_PATTERN": "The number of cards must be positive",
+    "AMOUNT_PATTERN": "The number of cards must be a integer number",
     "AMOUNT_PLACEHOLDER": "Number of cards",
     "AMOUNT_REQUIRED": "The number of cards is required",
     "CARD_DETAIL": "Card Details",
@@ -32,7 +32,7 @@
     "TITLE_PLACEHOLDER": "Card title",
     "TITLE_REQUIRED": "You must enter a title for your card",
     "WAITTIME": "Wait time for renewal (days)",
-    "WAITTIME_PATTERN": "The waiting time must be positive",
+    "WAITTIME_PATTERN": "The waiting time must be a integer number",
     "WAITTIME_PLACEHOLDER": "10 days",
     "WAITTIME_REQUIRED": "You must enter the timeout card renewal",
     "URL": "Conditions (Url)",

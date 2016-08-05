@@ -16677,7 +16677,6 @@ input.cmn-toggle-round:checked + label:after {
 }
 .cards-section .limitedCard {
   width: 70%;
-  margin-left: 2.5px;
   margin-right: 5%;
 }
 .cards-section .unlimitedCard,

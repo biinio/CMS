@@ -1475,6 +1475,7 @@ angular.module('cards').config(['$stateProvider',
         //Save gift information
         $scope.update = function(){
             var cardToUpdate = $scope.objectsSidebarService.selectedObject;
+            cardToUpdate.conditionsText = 'Al hacer tap en OK aceptas las condiciones de uso de la tarjeta de cliente frecuente de ' + $scope.organizationService.selectedOrganization.name + '.'
             // Don't do anything if there is no selected card
             if ($scope.ready == false)
                 return;
@@ -1488,26 +1489,27 @@ angular.module('cards').config(['$stateProvider',
 
         //Function to activate a card
         $scope.activate = function () {
-            var cardToUpdate = $scope.objectsSidebarService.selectedObject;
-            var translatedTexts  = $translate.instant(["GENERIC.ACTIVATE_CARD_TITLE","GENERIC.ACTIVATE_CARD_CONFIRMATION","GENERIC.ACTIVATE","GENERIC.CANCEL","GENERIC.ACTIVATED","CARD.ACTIVATE_TEXT"]);
-            swal({
-                title: translatedTexts["GENERIC.ACTIVATE_CARD_TITLE"],
-                text: translatedTexts["GENERIC.ACTIVATE_CARD_CONFIRMATION"],
-                type: "warning",
-                showCancelButton: true,
-                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
-                confirmButtonColor: "#8CD4F5",
-                confirmButtonText: translatedTexts["GENERIC.ACTIVATE"],
-                showLoaderOnConfirm: true,
-                closeOnConfirm: false
-            }, function () {
-                $scope.objectsSidebarService.selectedObject.isActive = true;
-                if(card.myForm.$valid && ($scope.objectsSidebarService.selectedObject.conditionsText || $scope.objectsSidebarService.selectedObject.conditionsURL)) {
-                    $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+cardToUpdate.identifier,{isActive:true}).success(function(data,status){
-                        swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["CARD.ACTIVATE_TEXT"], "success");
-                    });
-                }
-            });
+            if(card.myForm.$valid) {
+                var cardToUpdate = $scope.objectsSidebarService.selectedObject;
+                var translatedTexts  = $translate.instant(["GENERIC.ACTIVATE_CARD_TITLE","GENERIC.ACTIVATE_CARD_CONFIRMATION","GENERIC.ACTIVATE","GENERIC.CANCEL","GENERIC.ACTIVATED","CARD.ACTIVATE_TEXT"]);
+                swal({
+                    title: translatedTexts["GENERIC.ACTIVATE_CARD_TITLE"],
+                    text: translatedTexts["GENERIC.ACTIVATE_CARD_CONFIRMATION"],
+                    type: "warning",
+                    showCancelButton: true,
+                    cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                    confirmButtonColor: "#8CD4F5",
+                    confirmButtonText: translatedTexts["GENERIC.ACTIVATE"],
+                    showLoaderOnConfirm: true,
+                    closeOnConfirm: false
+                }, function () {
+                    $scope.objectsSidebarService.selectedObject.isActive = true;
+
+                        $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+cardToUpdate.identifier,{isActive:true}).success(function(data,status){
+                            swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["CARD.ACTIVATE_TEXT"], "success");
+                        });
+                });
+            }
         }
         //Function to remove expire and spent gifts
         function getAvailableGifts(gifts) {
@@ -5767,26 +5769,27 @@ angular.module('gifts').config(['$stateProvider',
 
         //Function to activate a gift
         $scope.activate = function () {
-            var giftToUpdate = $scope.objectsSidebarService.selectedObject;
-            var translatedTexts  = $translate.instant(["GENERIC.ACTIVATE_GIFT_TITLE","GENERIC.ACTIVATE_GIFT_CONFIRMATION","GENERIC.ACTIVATE","GENERIC.CANCEL","GENERIC.ACTIVATED","GIFT.ACTIVATE_TEXT"]);
-            swal({
-                title: translatedTexts["GENERIC.ACTIVATE_GIFT_TITLE"],
-                text: translatedTexts["GENERIC.ACTIVATE_GIFT_CONFIRMATION"],
-                type: "warning",
-                showCancelButton: true,
-                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
-                confirmButtonColor: "#8CD4F5",
-                confirmButtonText: translatedTexts["GENERIC.ACTIVATE"],
-                showLoaderOnConfirm: true,
-                closeOnConfirm: false
-            }, function () {
-                $scope.objectsSidebarService.selectedObject.isActive = true;
-                if(card.myForm.$valid) {
-                    $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+ giftToUpdate.identifier,{isActive:true}).success(function(data,status){
+            if(card.myForm.$valid) {
+                var giftToUpdate = $scope.objectsSidebarService.selectedObject;
+                var translatedTexts = $translate.instant(["GENERIC.ACTIVATE_GIFT_TITLE", "GENERIC.ACTIVATE_GIFT_CONFIRMATION", "GENERIC.ACTIVATE", "GENERIC.CANCEL", "GENERIC.ACTIVATED", "GIFT.ACTIVATE_TEXT"]);
+                swal({
+                    title: translatedTexts["GENERIC.ACTIVATE_GIFT_TITLE"],
+                    text: translatedTexts["GENERIC.ACTIVATE_GIFT_CONFIRMATION"],
+                    type: "warning",
+                    showCancelButton: true,
+                    cancelButtonText: translatedTexts["GENERIC.CANCEL"],
+                    confirmButtonColor: "#8CD4F5",
+                    confirmButtonText: translatedTexts["GENERIC.ACTIVATE"],
+                    showLoaderOnConfirm: true,
+                    closeOnConfirm: false
+                }, function () {
+                    $scope.objectsSidebarService.selectedObject.isActive = true;
+
+                    $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/' + giftToUpdate.identifier, {isActive: true}).success(function (data, status) {
                         swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["GIFT.ACTIVATE_TEXT"], "success");
                     });
-                }
-            });
+                });
+            }
         }
 
         //Function that display the swal as a confirmation to remove gift
