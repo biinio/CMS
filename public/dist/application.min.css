@@ -16671,17 +16671,25 @@ input.cmn-toggle-round:checked + label:after {
   margin-bottom: 15px;
 }
 .cards-section .unlimitedCard,
-.cards-section .limitedCard {
+.cards-section .limitedCard,
+.cards-section .urlCheckbox {
   float: left;
 }
 .cards-section .limitedCard {
   width: 70%;
-  margin-left: -4px;
+  margin-left: 2.5px;
+  margin-right: 5%;
 }
-.cards-section .unlimitedCard {
-  width: 25%;
-  margin-left: 5%;
+.cards-section .unlimitedCard,
+.cards-section .urlCheckbox {
+  width: 24%;
   margin-top: 33px;
+}
+.cards-section .urlCheckbox {
+  margin-top: 0;
+}
+.cards-section .hasConditionsURL {
+  margin-top: 10px;
 }
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');

@@ -34,8 +34,11 @@
     "WAITTIME": "Tiempo de espera de la renovación (días)",
     "WAITTIME_PATTERN": "El tiempo de espera debe ser positivo",
     "WAITTIME_PLACEHOLDER": "10 días",
-    "WAITTIME_REQUIRED": "Debe escribir el tiempo de espera de renovación de la tarjeta"
-
+    "WAITTIME_REQUIRED": "Debe escribir el tiempo de espera de renovación de la tarjeta",
+    "URL": "Condiciones (URL)",
+    "URL_PATTERN": "La URL ingresada no es válida",
+    "URL_PLACEHOLDER": "URL de las condiciones de uso",
+    "URL_REQUIRED": "La URL de las condiciones es requerida, si la casilla fue activa"
   },
   "DASHBOARD": {
     "TITLE": "Resumen",

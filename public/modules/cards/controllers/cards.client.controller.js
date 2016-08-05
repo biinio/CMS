@@ -175,7 +175,7 @@
             if ($scope.ready == false)
                 return;
 
-            if(card.myForm.$valid) {
+            if(card.myForm.$valid && ($scope.objectsSidebarService.selectedObject.conditionsText || $scope.objectsSidebarService.selectedObject.conditionsURL)) {
                 $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+ cardToUpdate.identifier,cardToUpdate).success(function(data,status){
                     console.log('Actualizado');
                 });
@@ -198,7 +198,7 @@
                 closeOnConfirm: false
             }, function () {
                 $scope.objectsSidebarService.selectedObject.isActive = true;
-                if(card.myForm.$valid) {
+                if(card.myForm.$valid && ($scope.objectsSidebarService.selectedObject.conditionsText || $scope.objectsSidebarService.selectedObject.conditionsURL)) {
                     $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+cardToUpdate.identifier,{isActive:true}).success(function(data,status){
                         swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["CARD.ACTIVATE_TEXT"], "success");
                     });

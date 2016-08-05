@@ -34,8 +34,11 @@
     "WAITTIME": "Wait time for renewal (days)",
     "WAITTIME_PATTERN": "The waiting time must be positive",
     "WAITTIME_PLACEHOLDER": "10 days",
-    "WAITTIME_REQUIRED": "You must enter the timeout card renewal"
-
+    "WAITTIME_REQUIRED": "You must enter the timeout card renewal",
+    "URL": "Conditions (Url)",
+    "URL_PATTERN": "The URL entered is invalid",
+    "URL_PLACEHOLDER": "URL conditions of use",
+    "URL_REQUIRED": "The URL of the conditions is required , if the checkbox was active"
   },
   "DASHBOARD": {
     "TITLE": "Dashboard",

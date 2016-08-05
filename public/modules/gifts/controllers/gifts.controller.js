@@ -227,9 +227,11 @@
                 closeOnConfirm: false
             }, function () {
                 $scope.objectsSidebarService.selectedObject.isActive = true;
-                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
-                    swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["GIFT.ACTIVATE_TEXT"], "success");
-                });
+                if(card.myForm.$valid) {
+                    $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+ giftToUpdate.identifier,{isActive:true}).success(function(data,status){
+                        swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["GIFT.ACTIVATE_TEXT"], "success");
+                    });
+                }
             });
         }
 

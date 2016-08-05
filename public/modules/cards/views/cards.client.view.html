@@ -15,10 +15,10 @@
                                 <div class="panel-body">
                                     <legend translate="CARD.INFORMATION"></legend>
                                     <!--Icons that show up depending if the form is valid or invalid-->
-                                    <div ng-if="card.myForm.$invalid">
+                                    <div ng-if="card.myForm.$invalid || (objectsSidebarService.selectedObject.conditionsText=='' && objectsSidebarService.selectedObject.conditionsURL=='')">
                                         <label class="error-icon fa fa-times-circle enlarge-icon"></label>
                                     </div>
-                                    <div ng-if="card.myForm.$valid">
+                                    <div ng-if="card.myForm.$valid && (objectsSidebarService.selectedObject.conditionsText || objectsSidebarService.selectedObject.conditionsURL)">
                                         <label class="ready-icon fa fa-check-circle enlarge-icon"></label>
                                     </div>
 
@@ -173,12 +173,43 @@
                         <!--Card conditions and activation-->
                         <section>
                             <div class="panel panel-default">
+                                <!-- conditionsText-->
                                 <div class="panel-body">
                                     <legend translate="CARD.CONDITIONS"></legend>
                                     <!--conditionsText - conditionsURL - hasConditionURL-->
                                     <div class="form-group">
                                         <label translate="CARD.CONDITIONS_STATEMENT" class="form-label"></label>
+                                        <text-angular name="conditions" serial="1"
+                                                      ng-model="objectsSidebarService.selectedObject.conditionsText"
+                                                      ta-disabled="objectsSidebarService.selectedObject.hasConditionsURL">
+                                        </text-angular>
                                     </div>
+                                    <!--conditionsURL name="conditionsURL"-->
+                                    <div class="form-group limitedCard" ng-if="objectsSidebarService.selectedObject.hasConditionsURL==true">
+                                        <input ng-model="objectsSidebarService.selectedObject.conditionsURL"
+                                               name="conditionsURL"
+                                               type="url" placeholder="{{ 'CARD.URL_PLACEHOLDER' | translate }}"
+                                               required class="form-control"
+                                               ng-disabled="objectsSidebarService.selectedObject.isActive"/>
+                                        <!-- Input conditionsURL errors -->
+                                        <div ng-messages="card.myForm.conditionsURL.$error" ng-if="card.myForm.conditionsURL.$touched"class="help-block">
+                                            <small ng-message="required" translate="CARD.URL_REQUIRED"></small>
+                                            <small ng-message="url" translate="CARD.URL_PATTERN"></small>
+                                        </div>
+                                    </div>
+                                    <!--hasConditionsURL name="hasConditionsURL"-->
+                                    <div class="form-group urlCheckbox">
+                                        <!--Positive checkbox-->
+                                        <label> </label>
+                                        <div class="checkbox c-checkbox pull-left">
+                                            <label>
+                                                <input type="checkbox" name="hasConditionsURL" ng-model="objectsSidebarService.selectedObject.hasConditionsURL"
+                                                       ng-disabled="objectsSidebarService.selectedObject.isActive"/>
+                                                <span class="fa fa-check"></span>{{ 'CARD.URL' | translate }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
                                     <!--isDeleted & isActive-->
                                     <div class="form-group activate-gift">
                                         <button type="button" class="btn btn-danger col-sm-2" ng-click="deleteCard(' {{'GENERIC.DELETE_CARD_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">
