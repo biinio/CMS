@@ -1,7 +1,7 @@
 <div ng-include="'/modules/core/views/partials/objectssidebar.html'" ng-controller="ObjectsSideBar" class=""></div>
 <div ng-controller="SitesController as sites" class="">
     <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
-        <div class="right-section-content nopadding">
+        <div class="right-section-content nopadding sites-section">
             <div ng-if="objectsSidebarService.selectedObject!=null && objectsSidebarService.selectedObject != {}">
                 <!-- NutShell Section -->
                 <section>
@@ -196,10 +196,14 @@
                 <!-- QR Code -->
                 <section>
                     <div class="panel panel-default">
-                        <div class="panel-body">
+                        <div class="panel-body qr-code">
                             <legend>Código QR del local</legend>
                             <p>Código QR de tu local, actualízalo únicamente cuando sea necesario</p>
-                            <qrcode data="biin/{{objectsSidebarService.selectedObject.identifier}}" size="200" download="true"></qrcode>
+                            <qrcode id="qr-section" version="4" error-correction-level="M" data="biin/{{objectsSidebarService.selectedObject.identifier}}" size="200" download="true"></qrcode>
+                            <button class="btn btn-primary print-code" ng-print print-element-id="qr-section"><span class="fa fa-print"></span></button>
+                            <button class="btn btn-danger refresh-code"><span class="fa fa-refresh"></span></button>
+                            <br>
+                            <small>*Click al código para descargar</small>
                         </div>
                     </div>
                 </section>

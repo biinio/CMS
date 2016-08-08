@@ -15362,6 +15362,23 @@ body .sk-spinner-wordpress .sk-inner-circle {
   .content-wrapper {
     overflow: hidden !important;
   }
+  body * {
+    visibility: hidden;
+  }
+  #printSection,
+  #printSection * {
+    visibility: visible;
+  }
+  #printSection {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+@media screen {
+  #printSection {
+    display: none;
+  }
 }
 /* ========================================================================
    Component: row-extra.less
@@ -16557,6 +16574,17 @@ input.cmn-toggle-round:checked + label:before {
 }
 input.cmn-toggle-round:checked + label:after {
   margin-left: 30px;
+}
+/*Sites View Styles*/
+.sites-section .qr-code .btn {
+  position: absolute;
+}
+.sites-section .qr-code .refresh-code,
+.sites-section .qr-code .print-code {
+  margin-left: 5px;
+}
+.sites-section .qr-code .refresh-code {
+  margin-top: 40px;
 }
 /*Gift View Styles*/
 .gift-section form {

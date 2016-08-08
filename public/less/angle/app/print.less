@@ -25,8 +25,25 @@
     width: 100% !important;
   }
 
-  
   .content-wrapper {
     overflow: hidden !important;
+  }
+
+  body * {
+    visibility:hidden;
+  }
+  #printSection, #printSection * {
+    visibility:visible;
+  }
+  #printSection {
+    position:absolute;
+    left:0;
+    top:0;
+  }
+}
+
+@media screen {
+  #printSection {
+    display: none;
   }
 }
