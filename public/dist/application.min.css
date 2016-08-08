@@ -15370,9 +15370,17 @@ body .sk-spinner-wordpress .sk-inner-circle {
     visibility: visible;
   }
   #printSection {
+    width: 100%;
     position: absolute;
     left: 0;
     top: 0;
+  }
+  #printSection img {
+    display: block;
+    margin: 0 auto;
+  }
+  a[href]:after {
+    content: none;
   }
 }
 @media screen {
@@ -16585,6 +16593,17 @@ input.cmn-toggle-round:checked + label:after {
 }
 .sites-section .qr-code .refresh-code {
   margin-top: 40px;
+}
+.sites-section .qr-code #qr-section {
+  display: inline-block;
+}
+.sites-section .qr-code .qr-title {
+  display: none;
+}
+@media print {
+  .sites-section .qr-title {
+    display: block;
+  }
 }
 /*Gift View Styles*/
 .gift-section form {

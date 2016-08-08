@@ -8,7 +8,6 @@
         .directive('ngPrint', ngPrint);
 
     function ngPrint() {
-        console.log('Hola');
         var printSection = document.getElementById('printSection');
 
         // if there is no printing section, create one
@@ -19,8 +18,10 @@
         }
 
         function link(scope, element, attrs) {
+
             element.on('click', function () {
                 var elemToPrint = document.getElementById(attrs.printElementId);
+
                 if (elemToPrint) {
                     printElement(elemToPrint);
                     window.print();
@@ -28,14 +29,22 @@
             });
 
             window.onafterprint = function () {
-                // clean the print section before adding new content
                 printSection.innerHTML = '';
             }
         }
 
         function printElement(elem) {
-            // clones the element you want to print
             var domClone = elem.cloneNode(true);
+
+            if(elem.id=='qr-section'){
+                var codeLink = document.getElementsByClassName('qrcode-link')[0].getAttribute('href');
+                var codeImage = document.createElement('img');
+                codeImage.setAttribute('src', codeLink);
+                domClone.appendChild(codeImage);
+            } else {
+                printSection.innerHTML = '';
+            }
+
             printSection.appendChild(domClone);
         }
 
