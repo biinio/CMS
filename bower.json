@@ -65,7 +65,8 @@
     "jquery-ui": "^1.11.4",
     "jqueryui-touch-punch": "*",
     "angular-bootstrap-slider": "^0.1.28",
-    "angular-messages": "^1.5.7"
+    "angular-messages": "^1.5.7",
+    "angular-qrcode": "monospaced/angular-qrcode#^6.2.1"
   },
   "resolutions": {
     "angular": "1.4.2",

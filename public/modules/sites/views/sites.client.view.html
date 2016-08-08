@@ -193,6 +193,16 @@
                         </div>
                     </div>
                 </section>
+                <!-- QR Code -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <legend>Código QR del local</legend>
+                            <p>Código QR de tu local, actualízalo únicamente cuando sea necesario</p>
+                            <qrcode data="biin/{{objectsSidebarService.selectedObject.identifier}}" size="200" download="true"></qrcode>
+                        </div>
+                    </div>
+                </section>
                 <button  type="button" ng-if="deletePermit" class="btn btn-oval btn-danger align-right" ng-click="deleteSite(' {{'GENERIC.DELETE_SITE_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">{{ 'GENERIC.DELETE_SITE' | translate }}</button>
                 <!--code ng-hide="true">{{'GENERIC.IDENTIFIER' | translate}} :
                     {{objectsSidebarService.selectedObject.identifier }}</code-->

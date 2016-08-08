@@ -171,7 +171,7 @@
                                     <div class="form-group limitedGift">
                                         <label for="giftAmount" translate="GIFT.AMOUNT" class="control-label"></label>
                                         <input id="giftAmount" ng-model="objectsSidebarService.selectedObject.amount"
-                                               name="amount" min="-1" ng-pattern="/^\+?([1-9]\d*)|[-1]$/"
+                                               name="amount" ng-pattern="/^\+?([1-9]\d*)|[-1]$/"
                                                type="text" placeholder="{{ 'GIFT.AMOUNT_PLACEHOLDER' | translate }}"
                                                required class="form-control"
                                                ng-disabled="objectsSidebarService.selectedObject.isActive || objectsSidebarService.selectedObject.amount=='-1'"/>
@@ -182,7 +182,7 @@
                                         </div>
                                     </div>
 
-                                    <!--Unlimited mount name="unlimitedAmount"-->
+                                    <!--Unlimited amount name="unlimitedAmount"-->
                                     <div class="form-group unlimitedGift">
                                         <!--Positive checkbox-->
                                         <label> </label>

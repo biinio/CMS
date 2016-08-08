@@ -90,8 +90,10 @@ module.exports = {
                 'public/lib/Flot/jquery.flot.categories.js',
                 'public/lib/flot-spline/js/jquery.flot.spline.min.js',
                 'public/lib/jqueryui-touch-punch/jquery.ui.touch-punch.min.js',
-                'public/lib/slimScroll/jquery.slimscroll.min.js'
-
+                'public/lib/slimScroll/jquery.slimscroll.min.js',
+                'public/lib/qrcode-generator/js/qrcode.js',
+                'public/lib/qrcode-generator/js/qrcode_UTF8.js',
+                'public/lib/angular-qrcode/angular-qrcode.js',
                 // 'public/lib/jquery/dist/jquery.js',
                 // 'public/lib/angular/angular.js',
                 // 'public/lib/angular-resource/angular-resource.js',
