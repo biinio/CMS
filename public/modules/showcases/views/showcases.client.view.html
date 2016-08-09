@@ -9,10 +9,10 @@
                         <div class="panel-body">
                             <legend>{{ 'SHOWCASE.DETAILS' | translate }}</legend>
                             <div ng-if="myForm.$invalid || objectsSidebarService.selectedObject.elements.length == 0 || !hasValidElements(objectsSidebarService.selectedObject.elements)">
-                                <label class="error-icon fa fa-minus-square enlarge-icon"></label>
+                                <label class="error-icon fa fa-times-circle enlarge-icon"></label>
                             </div>
                             <div ng-if="myForm.$valid && objectsSidebarService.selectedObject.elements.length > 0 && hasValidElements(objectsSidebarService.selectedObject.elements)">
-                                <label class="ready-icon fa fa-check-square-o enlarge-icon"></label>
+                                <label class="ready-icon fa fa-check-circle enlarge-icon"></label>
                             </div>
                             <p>{{ 'SHOWCASE.DETAILS_INFO' | translate }}</p>
                             <form name="myForm" class="form-validate">

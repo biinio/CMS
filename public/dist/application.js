@@ -1142,7 +1142,7 @@ angular.module('biins').config(['$stateProvider',
             var titleText = $translate.instant("NOTICES.CREATING");
             swal({   title: titleText,  type: "info",   showConfirmButton: false });
             $http.put(ApplicationConfiguration.applicationBackendURL + 'api/notices/organizations/' + $scope.organizationId).success(function (data) {
-                $scope.notices.push(data);
+                $scope.notices.unshift(data);
                 $scope.objectsSidebarService.setObjects($scope.notices);
                 $scope.objectsSidebarService.setSelectedObject(data);
                 setTimeout(function(){
@@ -1429,7 +1429,7 @@ angular.module('cards').config(['$stateProvider',
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards').success(function(card,status){
                 if(status == 201){
                     var cards = $scope.objectsSidebarService.getObjects();
-                    cards.push(card);
+                    cards.unshift(card);
                     $scope.objectsSidebarService.setObjects(cards);
                     $scope.objectsSidebarService.setSelectedObject(card);
                     $scope.ready = true;
@@ -1522,6 +1522,7 @@ angular.module('cards').config(['$stateProvider',
                 }
             }
         }
+        //Define a display number for quantity
         $scope.checkUnlimited = function() {
             $scope.objectsSidebarService.selectedObject.quantity = 1;
         }
@@ -2264,7 +2265,6 @@ angular.module('app.core').controller('LoadingController', ['$scope','Loading',
         }
 
         function link(scope, element, attrs) {
-
             element.on('click', function () {
                 var elemToPrint = document.getElementById(attrs.printElementId);
 
@@ -2283,6 +2283,7 @@ angular.module('app.core').controller('LoadingController', ['$scope','Loading',
             var domClone = elem.cloneNode(true);
 
             if(elem.id=='qr-section'){
+                printSection.innerHTML = '';
                 var codeLink = document.getElementsByClassName('qrcode-link')[0].getAttribute('href');
                 var codeImage = document.createElement('img');
                 codeImage.setAttribute('src', codeLink);
@@ -5667,8 +5668,8 @@ angular.module('gifts').config(['$stateProvider',
                 "</div>" +
                 "<div class='col-md-9 leftInformationArea'>"+
                     "<label class='twoRowTitle'>{{item.name}}</label>"+
-                    "<small ng-if='(item.amount==-1 || item.amount>item.amountSpent) && item.hasAvailablePeriod==false || (item.amount==-1 || item.amount>item.amountSpent) && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true' class='valid-color'>Disponible</small>"+
-                    "<small ng-if='item.amount>item.amountSpent && item.hasAvailablePeriod==false || item.amount>item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true'>{{item.amount-item.amountSpent}} u.</small>"+
+                    "<small ng-if='(item.isUnlimited || item.amount>item.amountSpent) && item.hasAvailablePeriod==false || (item.isUnlimited || item.amount>item.amountSpent) && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true' class='valid-color'>Disponible</small>"+
+                    "<small ng-if='!item.isUnlimited && (item.amount>item.amountSpent && item.hasAvailablePeriod==false || item.amount>item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true)'>{{item.amount-item.amountSpent}} u.</small>"+
                     "<small ng-if='item.amount==item.amountSpent && item.hasAvailablePeriod==false || item.amount==item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true' class='invalid-color'>Agotado</small>"+
                     "<small ng-if='(currentDate > formDate(item.endDate)) && item.hasAvailablePeriod==true' class='invalid-color'>Vencido</small>"+
                 "</div>";
@@ -5694,9 +5695,6 @@ angular.module('gifts').config(['$stateProvider',
             objectClicked.endDate = moment(new Date(objectClicked.endDate)).endOf("day").toDate();
             //All ready to show the gift info
             $scope.ready = true;
-            //Validation variables
-            $scope.spent = objectClicked.amount == objectClicked.amountSpent;
-            $scope.expire = ($scope.currentDate > (objectClicked.endDate).getTime()) && objectClicked.hasAvailablePeriod==true;
         });
         
         $scope.$on('organizationChanged',function(){
@@ -5752,9 +5750,10 @@ angular.module('gifts').config(['$stateProvider',
                     var gifts = $scope.objectsSidebarService.getObjects();
                     gift.startDate = new Date(gift.startDate);
                     gift.endDate = new Date(gift.endDate);
-                    gifts.push(gift);
+                    gifts.unshift(gift);
                     $scope.objectsSidebarService.setObjects(gifts);
                     $scope.objectsSidebarService.setSelectedObject(gift);
+                    $scope.ready = true;
 
                     setTimeout(function(){
                         swal.close();
@@ -5826,7 +5825,7 @@ angular.module('gifts').config(['$stateProvider',
 
         //Function to activate a gift
         $scope.activate = function () {
-            if(card.myForm.$valid) {
+            if(gift.myForm.$valid) {
                 var giftToUpdate = $scope.objectsSidebarService.selectedObject;
                 var translatedTexts = $translate.instant(["GENERIC.ACTIVATE_GIFT_TITLE", "GENERIC.ACTIVATE_GIFT_CONFIRMATION", "GENERIC.ACTIVATE", "GENERIC.CANCEL", "GENERIC.ACTIVATED", "GIFT.ACTIVATE_TEXT"]);
                 swal({
@@ -5864,9 +5863,7 @@ angular.module('gifts').config(['$stateProvider',
                 showLoaderOnConfirm: true,
                 closeOnConfirm: false
             }, function () {
-                if($scope.objectsSidebarService.selectedObject.amountSpent == 0 || $scope.spent || $scope.expire) {
-                    $scope.removeGiftAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
-                }
+                $scope.removeGiftAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
             });
         };
 
@@ -5892,11 +5889,6 @@ angular.module('gifts').config(['$stateProvider',
             if(gift.myForm.$valid  && $scope.objectsSidebarService.selectedObject.sites.length > 0 && $scope.objectsSidebarService.selectedObject.availableIn.length > 0) {
                 $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
                     console.log('Actualizado');
-                    //Validation variables
-                    $scope.spent = $scope.objectsSidebarService.selectedObject.amount == $scope.objectsSidebarService.selectedObject.amountSpent;
-                    if($scope.objectsSidebarService.selectedObject.endDate){
-                        $scope.expire = ($scope.currentDate > ($scope.objectsSidebarService.selectedObject.endDate).getTime()) && $scope.objectsSidebarService.selectedObject.hasAvailablePeriod==true;
-                    }
                 });
             }
         }
@@ -5910,6 +5902,10 @@ angular.module('gifts').config(['$stateProvider',
                     }
                 }
             }
+        }
+        //Define a display number for amount
+        $scope.checkUnlimited = function() {
+            $scope.objectsSidebarService.selectedObject.amount = 1;
         }
     }
 })();
@@ -7298,7 +7294,7 @@ angular.module('organization').config(['$stateProvider',
             swal({   title: "Su organización se esta creando",  type: "info",   showConfirmButton: false });
             $http.put(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + Authentication.user.accountIdentifier).success(function (org, status) {
                 if (status == 201 || status == 200) {
-                    $scope.organizationService.organizationsList.push(org);
+                    $scope.organizationService.organizationsList.unshift(org);
                     $scope.objectsSidebarService.setObjects($scope.organizationService.organizationsList);
                     $scope.objectsSidebarService.selectedObject = $scope.organizationService.organizationsList[$scope.organizationService.organizationsList.indexOf(org)];
                     setTimeout(function(){
@@ -8527,7 +8523,7 @@ angular.module('showcases').config(['$stateProvider',
             swal({   title: "Su vitrina se esta creando",  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + "/showcases").success(function (showcase, status) {
                 if (status == 201) {
-                    $scope.objectsSidebarService.objects.push(showcase);
+                    $scope.objectsSidebarService.objects.unshift(showcase);
                     setTimeout(function(){
                         swal.close();
                     },2000);
@@ -9292,7 +9288,7 @@ angular.module('sites').config(['$stateProvider',
             "</div>"+
             "<div class='col-md-9 leftInformationArea'>"+
             "<label class='twoRowTitle'>{{item.title1}}</label>"+
-            "<label class='twoRowSubtitle'>{{item.title2}}</label>"+
+            "<small>{{item.title2}}</small>"+
             "</div>";
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
@@ -9423,7 +9419,7 @@ angular.module('sites').config(['$stateProvider',
                     siteSearchTag.tagsinput("removeAll");
 
                     var sites = $scope.objectsSidebarService.getObjects();
-                    sites.push(site);
+                    sites.unshift(site);
                     $scope.objectsSidebarService.setObjects(sites);
                     $scope.objectsSidebarService.setSelectedObject(site);
                     setTimeout(function(){

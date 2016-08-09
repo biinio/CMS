@@ -55,7 +55,7 @@
                 "<div class='col-md-9 leftInformationArea'>"+
                     "<label class='twoRowTitle'>{{item.name}}</label>"+
                     "<small ng-if='(item.isUnlimited || item.amount>item.amountSpent) && item.hasAvailablePeriod==false || (item.isUnlimited || item.amount>item.amountSpent) && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true' class='valid-color'>Disponible</small>"+
-                    "<small ng-if='item.amount>item.amountSpent && item.hasAvailablePeriod==false || item.amount>item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true'>{{item.amount-item.amountSpent}} u.</small>"+
+                    "<small ng-if='!item.isUnlimited && (item.amount>item.amountSpent && item.hasAvailablePeriod==false || item.amount>item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true)'>{{item.amount-item.amountSpent}} u.</small>"+
                     "<small ng-if='item.amount==item.amountSpent && item.hasAvailablePeriod==false || item.amount==item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true' class='invalid-color'>Agotado</small>"+
                     "<small ng-if='(currentDate > formDate(item.endDate)) && item.hasAvailablePeriod==true' class='invalid-color'>Vencido</small>"+
                 "</div>";
@@ -81,9 +81,6 @@
             objectClicked.endDate = moment(new Date(objectClicked.endDate)).endOf("day").toDate();
             //All ready to show the gift info
             $scope.ready = true;
-            //Validation variables
-            $scope.spent = objectClicked.amount == objectClicked.amountSpent;
-            $scope.expire = ($scope.currentDate > (objectClicked.endDate).getTime()) && objectClicked.hasAvailablePeriod==true;
         });
         
         $scope.$on('organizationChanged',function(){
@@ -139,9 +136,10 @@
                     var gifts = $scope.objectsSidebarService.getObjects();
                     gift.startDate = new Date(gift.startDate);
                     gift.endDate = new Date(gift.endDate);
-                    gifts.push(gift);
+                    gifts.unshift(gift);
                     $scope.objectsSidebarService.setObjects(gifts);
                     $scope.objectsSidebarService.setSelectedObject(gift);
+                    $scope.ready = true;
 
                     setTimeout(function(){
                         swal.close();
@@ -213,7 +211,7 @@
 
         //Function to activate a gift
         $scope.activate = function () {
-            if(card.myForm.$valid) {
+            if(gift.myForm.$valid) {
                 var giftToUpdate = $scope.objectsSidebarService.selectedObject;
                 var translatedTexts = $translate.instant(["GENERIC.ACTIVATE_GIFT_TITLE", "GENERIC.ACTIVATE_GIFT_CONFIRMATION", "GENERIC.ACTIVATE", "GENERIC.CANCEL", "GENERIC.ACTIVATED", "GIFT.ACTIVATE_TEXT"]);
                 swal({
@@ -251,9 +249,7 @@
                 showLoaderOnConfirm: true,
                 closeOnConfirm: false
             }, function () {
-                if($scope.objectsSidebarService.selectedObject.amountSpent == 0 || $scope.spent || $scope.expire) {
-                    $scope.removeGiftAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
-                }
+                $scope.removeGiftAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
             });
         };
 
@@ -279,11 +275,6 @@
             if(gift.myForm.$valid  && $scope.objectsSidebarService.selectedObject.sites.length > 0 && $scope.objectsSidebarService.selectedObject.availableIn.length > 0) {
                 $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
                     console.log('Actualizado');
-                    //Validation variables
-                    $scope.spent = $scope.objectsSidebarService.selectedObject.amount == $scope.objectsSidebarService.selectedObject.amountSpent;
-                    if($scope.objectsSidebarService.selectedObject.endDate){
-                        $scope.expire = ($scope.currentDate > ($scope.objectsSidebarService.selectedObject.endDate).getTime()) && $scope.objectsSidebarService.selectedObject.hasAvailablePeriod==true;
-                    }
                 });
             }
         }

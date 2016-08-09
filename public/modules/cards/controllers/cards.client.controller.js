@@ -125,7 +125,7 @@
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards').success(function(card,status){
                 if(status == 201){
                     var cards = $scope.objectsSidebarService.getObjects();
-                    cards.push(card);
+                    cards.unshift(card);
                     $scope.objectsSidebarService.setObjects(cards);
                     $scope.objectsSidebarService.setSelectedObject(card);
                     $scope.ready = true;

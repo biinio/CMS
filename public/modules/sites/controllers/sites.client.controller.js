@@ -45,7 +45,7 @@
             "</div>"+
             "<div class='col-md-9 leftInformationArea'>"+
             "<label class='twoRowTitle'>{{item.title1}}</label>"+
-            "<label class='twoRowSubtitle'>{{item.title2}}</label>"+
+            "<small>{{item.title2}}</small>"+
             "</div>";
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
@@ -176,7 +176,7 @@
                     siteSearchTag.tagsinput("removeAll");
 
                     var sites = $scope.objectsSidebarService.getObjects();
-                    sites.push(site);
+                    sites.unshift(site);
                     $scope.objectsSidebarService.setObjects(sites);
                     $scope.objectsSidebarService.setSelectedObject(site);
                     setTimeout(function(){

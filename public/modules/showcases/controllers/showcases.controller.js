@@ -146,7 +146,7 @@
             swal({   title: "Su vitrina se esta creando",  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + "/showcases").success(function (showcase, status) {
                 if (status == 201) {
-                    $scope.objectsSidebarService.objects.push(showcase);
+                    $scope.objectsSidebarService.objects.unshift(showcase);
                     setTimeout(function(){
                         swal.close();
                     },2000);

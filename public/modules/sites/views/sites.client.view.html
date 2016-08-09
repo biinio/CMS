@@ -9,10 +9,10 @@
                         <div class="panel-body">
                             <legend translate="SITES.TITLE"></legend>
                             <div ng-if="myForm.$invalid || locationForm.$invalid || objectsSidebarService.selectedObject.media.length == 0 || objectsSidebarService.selectedObject.lat == 0 || objectsSidebarService.selectedObject.lng == 0">
-                                <label class="error-icon fa fa-minus-square enlarge-icon"></label>
+                                <label class="error-icon fa fa-times-circle enlarge-icon"></label>
                             </div>
                             <div ng-if="myForm.$valid && locationForm.$valid && objectsSidebarService.selectedObject.media.length > 0 && objectsSidebarService.selectedObject.lat != 0 && objectsSidebarService.selectedObject.lng != 0">
-                                <label class="ready-icon fa fa-check-square-o enlarge-icon"></label>
+                                <label class="ready-icon fa fa-check-circle enlarge-icon"></label>
                             </div>
                             <form name="myForm" role="form" class="form-validate">
 

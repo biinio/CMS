@@ -15634,74 +15634,24 @@ Component: sidemenu.less
   padding-bottom: 15px;
   padding-top: 15px;
 }
-.list-items-side-menu div .twoRowTitle {
+.list-items-side-menu div .twoRowTitle,
+.list-items-side-menu div .oneRowTitle {
+  font-size: 15px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   color: #000011;
-  font-size: 15px;
-  line-height: 24px;
-  font-weight: 200;
-  padding-top: 13px;
   margin-bottom: 0;
+  font-weight: 200;
   display: block;
 }
-.list-items-side-menu div .twoRowSubtitle {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: #000011;
-  font-size: 18px;
-  font-weight: normal;
-  line-height: 18px;
-  margin-bottom: 0;
-  display: block;
+.list-items-side-menu div .twoRowTitle {
+  line-height: 24px;
+  padding-top: 13px;
 }
 .list-items-side-menu div .oneRowTitle {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: #000011;
-  font-size: 15px;
   line-height: 15px;
-  font-weight: normal;
-  padding-top: 24px;
-  margin-bottom: 0;
-  display: block;
-}
-.list-items-side-menu div .threeRowTitle {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: #000011;
-  font-size: 18px;
-  line-height: 20px;
-  font-weight: bold;
-  padding-top: 6px;
-  margin-bottom: 0;
-  display: block;
-}
-.list-items-side-menu div .threeRowSubTitle {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: #000011;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 18px;
-  margin-bottom: 0;
-  display: block;
-}
-.list-items-side-menu div .threeRowThirdLine {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: #000011;
-  font-size: 15px;
-  font-weight: 200;
-  line-height: 18px;
-  margin-bottom: 0;
-  display: block;
+  padding-top: 27px;
 }
 .list-items-side-menu .valid-color {
   color: #27c24c;
