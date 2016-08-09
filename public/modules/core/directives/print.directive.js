@@ -18,7 +18,6 @@
         }
 
         function link(scope, element, attrs) {
-
             element.on('click', function () {
                 var elemToPrint = document.getElementById(attrs.printElementId);
 
@@ -37,6 +36,7 @@
             var domClone = elem.cloneNode(true);
 
             if(elem.id=='qr-section'){
+                printSection.innerHTML = '';
                 var codeLink = document.getElementsByClassName('qrcode-link')[0].getAttribute('href');
                 var codeImage = document.createElement('img');
                 codeImage.setAttribute('src', codeLink);
