@@ -218,6 +218,7 @@
                 }
             }
         }
+        //Define a display number for quantity
         $scope.checkUnlimited = function() {
             $scope.objectsSidebarService.selectedObject.quantity = 1;
         }

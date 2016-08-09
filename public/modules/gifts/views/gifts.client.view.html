@@ -171,10 +171,10 @@
                                     <div class="form-group limitedGift">
                                         <label for="giftAmount" translate="GIFT.AMOUNT" class="control-label"></label>
                                         <input id="giftAmount" ng-model="objectsSidebarService.selectedObject.amount"
-                                               name="amount" ng-pattern="/^\+?([1-9]\d*)|[-1]$/"
+                                               name="amount" ng-pattern="/^\+?([1-9]\d*)$/"
                                                type="text" placeholder="{{ 'GIFT.AMOUNT_PLACEHOLDER' | translate }}"
                                                required class="form-control"
-                                               ng-disabled="objectsSidebarService.selectedObject.isActive || objectsSidebarService.selectedObject.amount=='-1'"/>
+                                               ng-disabled="objectsSidebarService.selectedObject.isActive || objectsSidebarService.selectedObject.isUnlimited==true"/>
                                         <!-- Input title errors -->
                                         <div ng-messages="gift.myForm.amount.$error" ng-if="gift.myForm.amount.$touched"class="help-block">
                                             <small ng-message="required" translate="GIFT.AMOUNT_REQUIRED"></small>
@@ -188,9 +188,9 @@
                                         <label> </label>
                                         <div class="checkbox c-checkbox pull-left mt0">
                                             <label>
-                                                <input type="checkbox" ng-true-value="-1" ng-false-value="1" name="unlimitedAmount" ng-model="objectsSidebarService.selectedObject.amount"
+                                                <input type="checkbox" name="unlimitedAmount" ng-model="objectsSidebarService.selectedObject.isUnlimited"
                                                        ng-disabled="objectsSidebarService.selectedObject.isActive"
-                                                       ng-checked="objectsSidebarService.selectedObject.amount==-1"/>
+                                                       ng-change="checkUnlimited()"/>
                                                 <span class="fa fa-check"></span>{{ 'GENERIC.UNLIMITED' | translate }}
                                             </label>
                                         </div>
