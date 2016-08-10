@@ -1358,7 +1358,7 @@ angular.module('cards').config(['$stateProvider',
                 "</div>" +
                 "<div class='col-md-9 leftInformationArea'>"+
                     "<label class='twoRowTitle'>{{organizationService.selectedOrganization.name}}</label>"+
-                    "<small>Cliente frecuente</small>"+
+                    "<small>Cliente frecuente </small><label ng-if='item.isActive' class='fa fa-check-circle enlarge-icon'></label>"+
                 "</div>";
             $scope.objectsSidebarService.template =$scope.sidebarTemplate;
         }
