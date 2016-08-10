@@ -10,9 +10,9 @@
         .module('cards')
         .controller('CardsController', CardsController);
 
-    CardsController.$inject = ['$http', '$state', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate'];
+    CardsController.$inject = ['$http', '$state', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate', 'toaster'];
 
-    function CardsController($http, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate) {
+    function CardsController($http, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate, toaster) {
         var card = this;
 
         //Running init function
@@ -185,26 +185,62 @@
 
         //Function to activate a card
         $scope.activate = function () {
-            if(card.myForm.$valid) {
+            var isOneActive = false;
+            var isActive = $scope.objectsSidebarService.selectedObject.isActive;
+
+            //Check if there is a card active
+            for(var i in $scope.cards){
+                if($scope.cards[i].isActive==true){
+                    isOneActive = true;
+                }
+            }
+
+            if(isOneActive && !isActive){
+                toaster.pop('warning', 'Solo puede haber una tarjeta activa');
+            } else {
                 var cardToUpdate = $scope.objectsSidebarService.selectedObject;
-                var translatedTexts  = $translate.instant(["GENERIC.ACTIVATE_CARD_TITLE","GENERIC.ACTIVATE_CARD_CONFIRMATION","GENERIC.ACTIVATE","GENERIC.CANCEL","GENERIC.ACTIVATED","CARD.ACTIVATE_TEXT"]);
-                swal({
-                    title: translatedTexts["GENERIC.ACTIVATE_CARD_TITLE"],
-                    text: translatedTexts["GENERIC.ACTIVATE_CARD_CONFIRMATION"],
-                    type: "warning",
-                    showCancelButton: true,
-                    cancelButtonText:translatedTexts["GENERIC.CANCEL"],
-                    confirmButtonColor: "#8CD4F5",
-                    confirmButtonText: translatedTexts["GENERIC.ACTIVATE"],
-                    showLoaderOnConfirm: true,
-                    closeOnConfirm: false
-                }, function () {
-                    $scope.objectsSidebarService.selectedObject.isActive = true;
+                //Activate card
+                if(card.myForm.$valid && !isActive) {
+                    var translatedTexts  = $translate.instant(["GENERIC.ACTIVATE_CARD_TITLE","GENERIC.ACTIVATE_CARD_CONFIRMATION","GENERIC.ACTIVATE","GENERIC.CANCEL","GENERIC.ACTIVATED","CARD.ACTIVATE_TEXT"]);
+                    swal({
+                        title: translatedTexts["GENERIC.ACTIVATE_CARD_TITLE"],
+                        text: translatedTexts["GENERIC.ACTIVATE_CARD_CONFIRMATION"],
+                        type: "warning",
+                        showCancelButton: true,
+                        cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                        confirmButtonColor: "#8CD4F5",
+                        confirmButtonText: translatedTexts["GENERIC.ACTIVATE"],
+                        showLoaderOnConfirm: true,
+                        closeOnConfirm: false
+                    }, function () {
+                        $scope.objectsSidebarService.selectedObject.isActive = true;
 
                         $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+cardToUpdate.identifier,{isActive:true}).success(function(data,status){
                             swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["CARD.ACTIVATE_TEXT"], "success");
                         });
-                });
+                    });
+                }
+                //Deactivate card
+                if(isActive){
+                    var translatedTexts  = $translate.instant(["GENERIC.DEACTIVATE_CARD_TITLE","GENERIC.DEACTIVATE_CARD_CONFIRMATION","GENERIC.DEACTIVATE","GENERIC.CANCEL","GENERIC.DEACTIVATED","CARD.DEACTIVATE_TEXT"]);
+                    swal({
+                        title: translatedTexts["GENERIC.DEACTIVATE_CARD_TITLE"],
+                        text: translatedTexts["GENERIC.DEACTIVATE_CARD_CONFIRMATION"],
+                        type: "warning",
+                        showCancelButton: true,
+                        cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                        confirmButtonColor: "#8CD4F5",
+                        confirmButtonText: translatedTexts["GENERIC.DEACTIVATE"],
+                        showLoaderOnConfirm: true,
+                        closeOnConfirm: false
+                    }, function () {
+                        $scope.objectsSidebarService.selectedObject.isActive = false;
+
+                        $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+cardToUpdate.identifier,{isActive:false}).success(function(data,status){
+                            swal(translatedTexts["GENERIC.DEACTIVATED"], translatedTexts["CARD.DEACTIVATE_TEXT"], "success");
+                        });
+                    });
+                }
             }
         }
         //Function to remove expire and spent gifts

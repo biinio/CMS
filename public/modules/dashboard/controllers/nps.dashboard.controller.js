@@ -335,7 +335,7 @@
                     toaster.pop('success', '', 'Su regalo automático fue activado con éxito');
                 })
                 .error(function (data) {
-                    toaster.pop('warning', 'Acción no se puede llevar a cabo', 'Este usuario mantiene un regalo pendiente');
+                    toaster.pop('warning', 'Acción no se puede llevar a cabo', 'Este usuario ya tiene asignado ese regalo, puede intentar con uno diferente');
                 });
             }
             refreshingData();
