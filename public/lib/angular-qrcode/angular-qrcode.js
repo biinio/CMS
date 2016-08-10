@@ -37,6 +37,7 @@ angular.module('monospaced.qrcode', [])
             context = canvas2D ? canvas.getContext('2d') : null,
             download = 'download' in attrs,
             href = attrs.href,
+            downloadFileName = attrs.downloadFileName,
             link = download || href ? document.createElement('a') : '',
             trim = /^\s+|\s+$/g,
             error,
@@ -99,7 +100,10 @@ angular.module('monospaced.qrcode', [])
               }
 
               if (download) {
-                domElement.download = 'qrcode.png';
+                if(!downloadFileName){
+                  downloadFileName = 'qrcode';
+                }
+                domElement.download = downloadFileName + '.png';
                 domElement.title = 'Download QR code';
               }
 
@@ -183,6 +187,15 @@ angular.module('monospaced.qrcode', [])
           }
 
           href = value;
+          render();
+        });
+
+        attrs.$observe('downloadFileName', function(value) {
+          if (!value) {
+            return;
+          }
+
+          downloadFileName = value;
           render();
         });
       }
