@@ -16536,13 +16536,16 @@ input.cmn-toggle-round:checked + label:after {
 /*Sites View Styles*/
 .sites-section .qr-code .btn {
   position: absolute;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
 }
 .sites-section .qr-code .refresh-code,
 .sites-section .qr-code .print-code {
   margin-left: 5px;
 }
 .sites-section .qr-code .refresh-code {
-  margin-top: 40px;
+  margin-top: 55px;
 }
 .sites-section .qr-code #qr-section {
   display: inline-block;

@@ -204,7 +204,6 @@
                                 <qrcode version="4" error-correction-level="M" data="biin/{{objectsSidebarService.selectedObject.identifier}}" size="200"
                                         download="true" download-file-name="Código QR {{objectsSidebarService.selectedObject.title1}}-{{objectsSidebarService.selectedObject.title2}}">
                                 </qrcode>
-                                {{objectsSidebarService.selectedObject | json}}
                             </div>
                             <button class="btn btn-primary print-code" ng-print print-element-id="qr-section"><span class="fa fa-print"></span></button>
                             <button class="btn btn-danger refresh-code"><span class="fa fa-refresh"></span></button>
