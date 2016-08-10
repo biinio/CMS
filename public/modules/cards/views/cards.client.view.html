@@ -129,7 +129,7 @@
                                     <div class="form-group" ng-if="objectsSidebarService.selectedObject.renewalAutomatic==true">
                                         <label for="cardWaitTime" translate="CARD.WAITTIME" class="control-label"></label>
                                         <input id="cardWaitTime" ng-model="objectsSidebarService.selectedObject.waitTime"
-                                               name="waitTime" ng-pattern="/^\+?([1-9]\d*)$/"
+                                               name="waitTime" ng-pattern="/^\+?([0-9]\d*)$/"
                                                type="text" placeholder="{{ 'CARD.WAITTIME_PLACEHOLDER' | translate }}"
                                                required class="form-control title-value"
                                                ng-disabled="objectsSidebarService.selectedObject.isActive"/>
