@@ -94,7 +94,5 @@
             $scope.globalFilters.selectedSite = site;
             $scope.globalFilters.changeSelectedSite($scope.globalFilters.selectedSite);
         }
-
-
     }
 })();

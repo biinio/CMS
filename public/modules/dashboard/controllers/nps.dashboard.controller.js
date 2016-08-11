@@ -314,6 +314,9 @@
         }
         //Assign a gift to an user
         $scope.assignGift = function () {
+            console.log($scope.npsCommentIdentifier);
+            console.log($scope.npsCommentIdentifier);
+
             if ($scope.giftDisplay=='manual') {
                 $http.post(ApplicationConfiguration.applicationBackendURL + 'api/gift/assign/nps', {
                     npsCommentIdentifier: $scope.npsCommentIdentifier,
