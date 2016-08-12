@@ -384,7 +384,7 @@
         function refreshingData() {
             $scope.npsTimeout = $timeout(function(){
                 getRatingsData();
-            },1000)
+            },5000)
         }
 
         function resetNPS() {

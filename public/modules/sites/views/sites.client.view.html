@@ -2,7 +2,7 @@
 <div ng-controller="SitesController as sites" class="">
     <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
         <div class="right-section-content nopadding sites-section">
-            <div ng-if="objectsSidebarService.selectedObject!=null && objectsSidebarService.selectedObject != {}">
+            <div ng-if="ready">
                 <!-- NutShell Section -->
                 <section>
                     <div class="panel panel-default">
@@ -198,17 +198,19 @@
                     <div class="panel panel-default">
                         <div class="panel-body qr-code">
                             <legend>Código QR del local</legend>
-                            <p>Código QR de tu local, actualízalo únicamente cuando sea necesario</p>
-                            <div id="qr-section">
+                            <p ng-if="!currentQR">Crea el código QR de tu local</p>
+                            <p ng-if="currentQR">Código QR de tu local, actualízalo únicamente cuando sea necesario</p>
+                            <button class="btn btn-danger" ng-if="!currentQR" ng-click="refreshQR()"><span class="fa fa-plus"></span> Crear código</button>
+                            <div id="qr-section" ng-if="currentQR">
                                 <h1 class="qr-title text-center">Código QR de {{objectsSidebarService.selectedObject.title1}}-{{objectsSidebarService.selectedObject.title2}}</h1>
-                                <qrcode version="4" error-correction-level="M" data="biin/{{objectsSidebarService.selectedObject.identifier}}" size="200"
+                                <qrcode version="6" error-correction-level="M" data="biin/{{objectsSidebarService.selectedObject.identifier}}/{{currentQR.identifier}}" size="200"
                                         download="true" download-file-name="Código QR {{objectsSidebarService.selectedObject.title1}}-{{objectsSidebarService.selectedObject.title2}}">
                                 </qrcode>
+                                <button class="btn btn-primary print-code" ng-print print-element-id="qr-section"><span class="fa fa-print"></span></button>
+                                <button class="btn btn-danger refresh-code" ng-click="refreshQR()"><span class="fa fa-refresh"></span></button>
+                                <div class="clearfix"></div>
+                                <small>*Click al código para descargar</small>
                             </div>
-                            <button class="btn btn-primary print-code" ng-print print-element-id="qr-section"><span class="fa fa-print"></span></button>
-                            <button class="btn btn-danger refresh-code"><span class="fa fa-refresh"></span></button>
-                            <div class="clearfix"></div>
-                            <small>*Click al código para descargar</small>
                         </div>
                     </div>
                 </section>

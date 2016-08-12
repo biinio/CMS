@@ -15584,9 +15584,6 @@ Component: sidemenu.less
   margin-left: 6px;
   margin-right: 6px;
 }
-.object-item .twoRowTitle {
-  cursor: pointer;
-}
 .object-item:hover {
   background: #fbfbfb;
 }
@@ -15648,6 +15645,13 @@ Component: sidemenu.less
 .list-items-side-menu div .oneRowTitle {
   line-height: 15px;
   padding-top: 27px;
+}
+.list-items-side-menu div .twoRowSubTitle {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  width: 100%;
+  overflow: hidden;
 }
 .list-items-side-menu .valid-color {
   color: #27c24c;
@@ -16291,21 +16295,16 @@ input.cmn-toggle-round:checked + label:after {
   margin-left: 30px;
 }
 /*Sites View Styles*/
-.sites-section .qr-code .btn {
+.sites-section .qr-code .refresh-code,
+.sites-section .qr-code .print-code {
+  margin-left: 5px;
   position: absolute;
   width: 50px;
   height: 50px;
   font-size: 18px;
 }
-.sites-section .qr-code .refresh-code,
-.sites-section .qr-code .print-code {
-  margin-left: 5px;
-}
 .sites-section .qr-code .refresh-code {
   margin-top: 55px;
-}
-.sites-section .qr-code #qr-section {
-  display: inline-block;
 }
 .sites-section .qr-code .qr-title {
   display: none;

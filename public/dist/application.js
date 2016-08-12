@@ -1377,7 +1377,7 @@ angular.module('cards').config(['$stateProvider',
         });
 
         $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
-            //All ready to show the gift info
+            //Already to show the gift info
             $scope.ready = true;
         });
 
@@ -3529,7 +3529,7 @@ angular.module('dashboard').config(['$stateProvider',
         function refreshingData() {
             $scope.npsTimeout = $timeout(function(){
                 getRatingsData();
-            },1000)
+            },5000)
         }
 
         function resetNPS() {
@@ -9326,6 +9326,8 @@ angular.module('sites').config(['$stateProvider',
             $scope.deletePermit = false;
             $scope.loadingService = Loading;
             $scope.loadingService.isLoading = true;
+            //Ready to fill
+            $scope.ready = false;
 
             for (var permit = 0; permit < Authentication.user.permissions.length; permit++) {
                 if (Authentication.user.permissions[permit].permission == "delete") {
@@ -9347,7 +9349,7 @@ angular.module('sites').config(['$stateProvider',
             "</div>"+
             "<div class='col-md-9 leftInformationArea'>"+
             "<label class='twoRowTitle'>{{item.title1}}</label>"+
-            "<small>{{item.title2}}</small>"+
+            "<small class='twoRowSubTitle'>{{item.title2}}</small>"+
             "</div>";
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
@@ -9365,13 +9367,12 @@ angular.module('sites').config(['$stateProvider',
         $scope.$on('organizationChanged',function(){
             $scope.loadingService.isLoading = true;
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.ready = false;
             //Get the List of Objects
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites').success(function(data){
                 var sites = data.data.sites;
                 $scope.objectsSidebarService.setObjects(sites);
                 $scope.loadingService.isLoading = false;
-                if(sites.length > 0)
-                    selectFirstSite(sites);
             });
 
             Gallery.getList($scope.organizationId).then(function(promise){
@@ -9382,15 +9383,24 @@ angular.module('sites').config(['$stateProvider',
         $scope.$on("Biin: On Object Clicked", function(event,objectClicked){
             //I know it's ugly and I don't like this approach, it should be other way to  validate if the tag field is
             // rendered to call this code
-            //TODO: Change this implementation for another safer way!!!
-            $timeout(function(){
-                var siteSearchTag = $('#siteSearchTag');
-                siteSearchTag.tagsinput("removeAll");
-                for(var i=0;i< $scope.objectsSidebarService.selectedObject.searchTags.length;i++){
-                    siteSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
-                }
-            },100);
-
+            // TODO: Change this implementation for another safer way!!!
+            // $timeout(function(){
+            //     var siteSearchTag = $('#siteSearchTag');
+            //     siteSearchTag.tagsinput("removeAll");
+            //     for(var i=0;i< $scope.objectsSidebarService.selectedObject.searchTags.length;i++){
+            //         siteSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
+            //     }
+            // },100);
+            //Current QR code
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/' + objectClicked.identifier + '/getqrcode')
+                .success(function(data){
+                    $scope.currentQR = data;
+                })
+                .error(function(error){
+                    $scope.currentQR = null;
+                });
+            //Already to show the site info
+            $scope.ready = true;
         });
 
         $scope.$on("Biin: On Object Created", function(){
@@ -9407,7 +9417,6 @@ angular.module('sites').config(['$stateProvider',
 
         //Init the the sites
         $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-
         $scope.newTagField=[];
 
         //Loading images service property
@@ -9423,13 +9432,13 @@ angular.module('sites').config(['$stateProvider',
          =============================================================================================================*/
 
         //Get the List of Sites
-        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationService.selectedOrganization.identifier +'/sites').success(function(data){
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
             if(data.data) {
                 $scope.objectsSidebarService.setObjects(data.data.sites);
                 $scope.loadingService.isLoading = false;
-                if(data.data.sites.length>0){
-                    selectFirstSite(data.data.sites);
-                }
+                // if(data.data.sites.length>0){
+                //     selectFirstSite(data.data.sites);
+                // }
             }
         });
 
@@ -9439,7 +9448,7 @@ angular.module('sites').config(['$stateProvider',
         });
 
         //Get the list of the gallery
-        Gallery.getList($scope.organizationService.selectedOrganization.identifier).then(function(promise){
+        Gallery.getList($scope.organizationId).then(function(promise){
             $scope.galleries= promise.data.data;
         });
 
@@ -9447,20 +9456,20 @@ angular.module('sites').config(['$stateProvider',
          *  Functions
          =============================================================================================================*/
 
-        var selectFirstSite = function( sites ) {
-
-            $scope.objectsSidebarService.selectedObject = sites[0];
-            //I know it's ugly and I don't like this approach, it should be other way to  validate if the tag field is
-            // rendered to call this code
-            //TODO: Change this implementation for another safer way!!!
-            $timeout(function(){
-                var siteSearchTag = $('#siteSearchTag');
-                for(var i=0;i< $scope.objectsSidebarService.selectedObject.searchTags.length;i++){
-                    siteSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
-                }
-            },100);
-
-        };
+        // var selectFirstSite = function( sites ) {
+        //
+        //     $scope.objectsSidebarService.selectedObject = sites[0];
+        //     //I know it's ugly and I don't like this approach, it should be other way to  validate if the tag field is
+        //     // rendered to call this code
+        //     //TODO: Change this implementation for another safer way!!!
+        //     $timeout(function(){
+        //         var siteSearchTag = $('#siteSearchTag');
+        //         for(var i=0;i< $scope.objectsSidebarService.selectedObject.searchTags.length;i++){
+        //             siteSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
+        //         }
+        //     },100);
+        //
+        // };
 
         //Return the categories of the sites
         $scope.ownCategories=function(){
@@ -9690,15 +9699,17 @@ angular.module('sites').config(['$stateProvider',
 
         //Category return if contains a specific category
         $scope.containsCategory=function(category){
-            if(typeof(_.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier}))!='undefined')
-                return true;
-            else
-                return false;
+            if($scope.objectsSidebarService.selectedObject){
+                if(typeof(_.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier}))!='undefined')
+                    return true;
+                else
+                    return false;
+            }
         };
 
 
         //Change the state of the category relation with the Site
-        $scope.updateSelectedCategories =function(category){
+        $scope.updateSelectedCategories = function(category){
             var index =-1;
             var cat = _.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier});
             if(typeof(cat)!='undefined'){
@@ -9713,10 +9724,27 @@ angular.module('sites').config(['$stateProvider',
         };
 
         //Remove the media object at specific index
-        $scope.removeMediaAt=function(index){
+        $scope.removeMediaAt = function(index){
             if($scope.objectsSidebarService.selectedObject.media.length>=index)
                 $scope.objectsSidebarService.selectedObject.media.splice(index,1);
         };
+        //Refresh QR Code
+        $scope.refreshQR = function(){
+            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/' + $scope.objectsSidebarService.selectedObject.identifier + '/refreshqrcode')
+                .success(function(data){
+                    //Current QR code
+                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/' + $scope.objectsSidebarService.selectedObject.identifier + '/getqrcode')
+                        .success(function(data){
+                            $scope.currentQR = data;
+                        })
+                        .error(function(error){
+                            $scope.currentQR = null;
+                        });
+                })
+                .error(function(error){
+                    console.log(error);
+                });
+        }
     }
 })();
 

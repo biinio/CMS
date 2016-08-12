@@ -73,7 +73,7 @@
         });
 
         $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
-            //All ready to show the gift info
+            //Already to show the gift info
             $scope.ready = true;
         });
 
