@@ -2894,6 +2894,31 @@ angular.module('dashboard').config(['$stateProvider',
     }
 })();
 
+/**=========================================================
+ * Module: giftboard.client.controller.js
+ * giftboard for Biin in dashboard
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('dashboard')
+        .controller('giftboardController', giftboardController);
+
+    giftboardController.$inject = ['$scope'];
+
+    function giftboardController($scope) {
+        var giftboard = this;
+        init();
+
+        function init() {
+            console.log('What?');
+            $scope.statuses = [{name: 'Asignar'}, {name: 'Enviados'}, {name: 'Reclamados'}, {name: 'Entregados'}];
+        }
+    }
+})();
+
 /**
  * Created by Ivan on 10/26/15.
  */
