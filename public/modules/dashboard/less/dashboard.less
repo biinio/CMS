@@ -1,0 +1,117 @@
+.dashboard{
+  //Modals in dashboard
+  .selectGiftModal{
+    ul{
+      overflow: hidden;
+      min-height: 198px;
+      max-height: 396px;
+      padding-left: 0;
+      overflow-y:auto;
+    }
+    li{
+      list-style: none;
+      margin-top: 20px;
+
+      div{
+        cursor: pointer;
+
+        &:focus{
+          .gift-image, .nameDisplay{
+            opacity: 1;
+            border-color: #4a484b;
+          }
+        }
+      }
+
+      &:hover{
+        .gift-image{
+          opacity: 1;
+        }
+      }
+    }
+    .activeGift{
+      .gift-image, .nameDisplay{
+        opacity: 1;
+        border-color: #4a484b;
+      }
+    }
+    .gift-image, .nameDisplay{
+      opacity: 0.7;
+      width: 100%;
+      border: solid 1px #e4eaec;
+    }
+    .nameDisplay{
+      color: white;
+      background-color: #4a484b;
+      margin-left: 5px;
+      margin: 0;
+      border-top: none;
+      padding: 5px;
+      text-align: center;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+  //Used in sites.visits.graph.partial
+  .color-biin-brand{
+    color : #FE5621;
+  }
+  //Used in mobile.biin.counter.partial
+  .widget{
+    height:252.5px;
+  }
+  //Filer button for days
+  .filter-button-large{
+    padding: 10px 50px;
+    font-size: 14px;
+    line-height: 1.1;
+
+    &:focus, &:hover{
+      color: #fff;
+    }
+  }
+  .filter-button-active{
+    color: #FFF;
+    background-color: #1da1f2;
+  }
+
+  .filter-button-inactive{
+    color: #FFF;
+    background-color: #4a484b;
+  }
+
+  //Select site label
+  .select-site-label{
+    margin-top: 5px;
+    margin-right: 10px;
+    font-weight: normal;
+  }
+
+  //Loader animation
+  .loaderRelative{
+    position: relative;
+  }
+
+  .loaderAnim.ng-leave {
+    transition:0.5s linear all;
+    opacity:1;
+  }
+
+  .loaderAnim.ng-leave.ng-leave-active {
+    opacity:0;
+  }
+
+  .loaderAnim.ng-enter {
+    transition:0.5s linear all;
+    opacity:0;
+  }
+
+  /* The finishing CSS styles for the enter animation */
+  .loaderAnim.ng-enter.ng-enter-active {
+    opacity:1;
+  }
+
+}

@@ -4,13 +4,13 @@
 'use strict';
 
 // Setting up route
-angular.module('elements').config(['$stateProvider',
+angular.module('products').config(['$stateProvider',
     function($stateProvider) {
         // Users state routing
         $stateProvider.
-        state('app.elements', {
-            url: '/elements',
-            templateUrl: 'modules/elements/views/elements.client.view.html',
+        state('app.products', {
+            url: '/products',
+            templateUrl: 'modules/products/views/products.client.view.html',
             resolve:{
                 permissions: function(Permission) {
                     return Permission.getPermissions();

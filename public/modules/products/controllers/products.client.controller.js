@@ -1,18 +1,18 @@
 /**=========================================================
- * Module: elements.controller.js
- * Controller of elements
+ * Module: products.client.controller.js
+ * Controller of products
  =========================================================*/
 
 (function() {
     'use strict';
 
     angular
-        .module('elements')
-        .controller('ElementsController', ElementsController);
+        .module('products')
+        .controller('ProductsController', ProductsController);
 
-    ElementsController.$inject = ['$http', '$state','$timeout','$scope','$translate', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading','textAngularManager'];
+    ProductsController.$inject = ['$http', '$state','$timeout','$scope','$translate', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading','textAngularManager'];
 
-    function ElementsController($http, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading,textAngularManager) {
+    function ProductsController($http, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading,textAngularManager) {
         activate();
 
         $scope.objectsSidebarService = ObjectsSidebar;
