@@ -1,6 +1,5 @@
 @charset "UTF-8";
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
-@import url(https://fonts.googleapis.com/css?family=Raleway);
 /*!
  * 
  * Angle - Bootstrap Admin App + MeanJS
@@ -6856,6 +6855,9 @@ now {
 .page-header {
   border-bottom-color: #e4eaec;
 }
+.panel {
+  border-radius: 0;
+}
 .panel .panel-heading {
   border-bottom: 0;
   font-size: 14px;
@@ -7088,13 +7090,6 @@ fieldset .form-group {
 body {
   font-family: "Open Sans", sans-serif;
   color: #656565;
-}
-h1,
-h2,
-h3,
-h4 {
-  font-family: "Raleway";
-  font-weight: lighter;
 }
 /*!
  *  Font Awesome 4.6.3 by @davegandy - http://fontawesome.io - @fontawesome
@@ -15644,6 +15639,7 @@ Component: sidemenu.less
   margin-bottom: 0;
   font-weight: 200;
   display: block;
+  cursor: pointer;
 }
 .list-items-side-menu div .twoRowTitle {
   line-height: 24px;
@@ -16009,250 +16005,6 @@ Component: elements.less
 .modal-size {
   height: 600px;
 }
-.dashboard .tab-content {
-  padding-bottom: 0;
-}
-.dashboard .tab-content .actions-box {
-  height: 100%;
-}
-.dashboard .tab-content .actions-box small {
-  font-size: 10px;
-}
-.dashboard .tab-content small {
-  display: block;
-}
-.dashboard .tab-content button {
-  margin-top: 5px;
-  width: 110px;
-  left: 40px;
-}
-.dashboard .tab-content a.list-group-item:hover,
-.dashboard .tab-content button.list-group-item:hover,
-.dashboard .tab-content a.list-group-item:focus,
-.dashboard .tab-content button.list-group-item:focus {
-  background-color: white;
-}
-.dashboard .tab-content .list-group {
-  max-height: 340px;
-  min-height: 340px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding-top: 0px;
-}
-.dashboard .tab-content .list-group .list-group-item {
-  min-height: 117px;
-}
-.dashboard .nps-badge {
-  position: absolute;
-  top: -5px;
-  right: 5px;
-}
-.dashboard .panel {
-  border-radius: 0;
-}
-.dashboard .widget {
-  height: 204.5px;
-}
-.selectGiftModal .activeGift .gift-image,
-.selectGiftModal .activeGift .nameDisplay {
-  opacity: 1;
-  border-color: #4a484b;
-}
-.selectGiftModal ul {
-  overflow: hidden;
-  min-height: 198px;
-  max-height: 396px;
-  padding-left: 0;
-  overflow-y: auto;
-}
-.selectGiftModal li {
-  list-style: none;
-  margin-top: 20px;
-}
-.selectGiftModal li div {
-  cursor: pointer;
-}
-.selectGiftModal li div:focus .gift-image,
-.selectGiftModal li div:focus .nameDisplay {
-  opacity: 1;
-  border-color: #4a484b;
-}
-.selectGiftModal li:hover .gift-image {
-  opacity: 1;
-}
-.selectGiftModal .gift-image,
-.selectGiftModal .nameDisplay {
-  opacity: 0.7;
-  width: 100%;
-  border: solid 1px #e4eaec;
-}
-.selectGiftModal .nameDisplay {
-  color: white;
-  background-color: #4a484b;
-  margin-left: 5px;
-  margin: 0;
-  border-top: none;
-  padding: 5px;
-  text-align: center;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-.visitsvsretorning-graph {
-  min-height: 95px;
-}
-.color-biin-brand {
-  color: #FE5621;
-}
-.filter-button-large:focus {
-  color: #fff;
-}
-.filter-button-active {
-  color: #FFF;
-  background-color: #1da1f2;
-}
-.filter-button-inactive {
-  color: #FFF;
-  background-color: #4a484b;
-}
-.filter-button-large {
-  padding: 10px 50px;
-  font-size: 14px;
-  line-height: 1.1;
-}
-.filter-button-large:hover {
-  color: #FFF;
-}
-.select-site-label {
-  margin-top: 5px;
-  margin-right: 10px;
-  font-weight: normal;
-}
-.text-22px {
-  font-size: 22px;
-}
-.text-21px {
-  font-size: 21px;
-}
-.text-20px {
-  font-size: 20px;
-}
-.text-19px {
-  font-size: 19px;
-}
-.text-18px {
-  font-size: 18px;
-}
-.text-17px {
-  font-size: 17px;
-}
-.text-16px {
-  font-size: 16px;
-}
-.text-15px {
-  font-size: 15px;
-}
-.text-14px {
-  font-size: 14px;
-}
-.text-13px {
-  font-size: 13px;
-}
-.text-12px {
-  font-size: 12px;
-}
-.loaderRelative {
-  position: relative;
-}
-.loaderAnim.ng-leave {
-  transition: 0.5s linear all;
-  opacity: 1;
-}
-.loaderAnim.ng-leave.ng-leave-active {
-  opacity: 0;
-}
-.loaderAnim.ng-enter {
-  transition: 0.5s linear all;
-  opacity: 0;
-}
-/* The finishing CSS styles for the enter animation */
-.loaderAnim.ng-enter.ng-enter-active {
-  opacity: 1;
-}
-.NPSScore {
-  font-size: 80px;
-  font-weight: bold;
-  margin-bottom: 0px;
-  margin-top: 0px;
-  line-height: 1;
-}
-.NPSIndexText {
-  font-size: 35px;
-  font-weight: normal;
-  margin-bottom: 0px;
-  margin-top: 0px;
-  line-height: 1;
-}
-.nps-green-border {
-  border-color: #00A000;
-}
-.nps-orange-border {
-  border-color: #FE5621;
-}
-.nps-red-border {
-  border-color: #f05050;
-}
-.comments-section-padding {
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-bottom: 15px;
-}
-.loadercont.ng-leave {
-  transition: 0.5s linear all;
-  opacity: 1;
-}
-.loadercont.ng-leave.ng-leave-active {
-  opacity: 0;
-}
-.loadercont.ng-enter {
-  transition: 0.5s linear all;
-  opacity: 0;
-}
-/* The finishing CSS styles for the enter animation */
-.loadercont.ng-enter.ng-enter-active {
-  opacity: 1;
-}
-.loadercontainer {
-  height: 503px;
-  position: absolute;
-  z-index: 1000;
-  min-width: 100%;
-  background-color: white;
-  display: table;
-}
-.select-gift {
-  margin-bottom: 10px;
-}
-.centerloader {
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-}
-.npsContainer {
-  position: relative;
-}
-.npsContainer .nav-tabs > li {
-  width: 20%;
-}
-.npsContainer .nav-tabs > li a {
-  padding: 10px 0;
-  text-align: center;
-}
-.loadernps {
-  display: inline-block;
-}
 .panel {
   margin-bottom: 6px;
   border: 0;
@@ -16379,6 +16131,11 @@ body {
   min-width: 100%;
   background-color: white;
   display: table;
+}
+.centerloader {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
 }
 .template-cell {
   position: relative;
@@ -16689,6 +16446,221 @@ input.cmn-toggle-round:checked + label:after {
 }
 .cards-section .hasConditionsURL {
   margin-top: 10px;
+}
+.dashboard {
+  /* The finishing CSS styles for the enter animation */
+}
+.dashboard .selectGiftModal ul {
+  overflow: hidden;
+  min-height: 198px;
+  max-height: 396px;
+  padding-left: 0;
+  overflow-y: auto;
+}
+.dashboard .selectGiftModal li {
+  list-style: none;
+  margin-top: 20px;
+}
+.dashboard .selectGiftModal li div {
+  cursor: pointer;
+}
+.dashboard .selectGiftModal li div:focus .gift-image,
+.dashboard .selectGiftModal li div:focus .nameDisplay {
+  opacity: 1;
+  border-color: #4a484b;
+}
+.dashboard .selectGiftModal li:hover .gift-image {
+  opacity: 1;
+}
+.dashboard .selectGiftModal .activeGift .gift-image,
+.dashboard .selectGiftModal .activeGift .nameDisplay {
+  opacity: 1;
+  border-color: #4a484b;
+}
+.dashboard .selectGiftModal .gift-image,
+.dashboard .selectGiftModal .nameDisplay {
+  opacity: 0.7;
+  width: 100%;
+  border: solid 1px #e4eaec;
+}
+.dashboard .selectGiftModal .nameDisplay {
+  color: white;
+  background-color: #4a484b;
+  margin-left: 5px;
+  margin: 0;
+  border-top: none;
+  padding: 5px;
+  text-align: center;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.dashboard .color-biin-brand {
+  color: #FE5621;
+}
+.dashboard .widget {
+  height: 252.5px;
+}
+.dashboard .filter-button-large {
+  padding: 10px 50px;
+  font-size: 14px;
+  line-height: 1.1;
+}
+.dashboard .filter-button-large:focus,
+.dashboard .filter-button-large:hover {
+  color: #fff;
+}
+.dashboard .filter-button-active {
+  color: #FFF;
+  background-color: #1da1f2;
+}
+.dashboard .filter-button-inactive {
+  color: #FFF;
+  background-color: #4a484b;
+}
+.dashboard .select-site-label {
+  margin-top: 5px;
+  margin-right: 10px;
+  font-weight: normal;
+}
+.dashboard .loaderRelative {
+  position: relative;
+}
+.dashboard .loaderAnim.ng-leave {
+  transition: 0.5s linear all;
+  opacity: 1;
+}
+.dashboard .loaderAnim.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+.dashboard .loaderAnim.ng-enter {
+  transition: 0.5s linear all;
+  opacity: 0;
+}
+.dashboard .loaderAnim.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+.nps {
+  /* The finishing CSS styles for the enter animation */
+}
+.nps .tab-content {
+  padding-bottom: 0;
+}
+.nps .tab-content .actions-box {
+  height: 100%;
+}
+.nps .tab-content .actions-box small {
+  font-size: 10px;
+}
+.nps .tab-content small {
+  display: block;
+}
+.nps .tab-content button {
+  margin-top: 5px;
+  width: 110px;
+  left: 40px;
+}
+.nps .tab-content a.list-group-item:hover,
+.nps .tab-content button.list-group-item:hover,
+.nps .tab-content a.list-group-item:focus,
+.nps .tab-content button.list-group-item:focus {
+  background-color: white;
+}
+.nps .tab-content .list-group {
+  max-height: 340px;
+  min-height: 340px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-top: 0px;
+}
+.nps .tab-content .list-group .list-group-item {
+  min-height: 117px;
+}
+.nps .nps-badge {
+  position: absolute;
+  top: -5px;
+  right: 5px;
+}
+.nps .panel {
+  border-radius: 0;
+}
+.nps .NPSScore {
+  font-size: 80px;
+  font-weight: bold;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  line-height: 1;
+}
+.nps .NPSIndexText {
+  font-size: 35px;
+  font-weight: normal;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  line-height: 1;
+}
+.nps .nps-green-border {
+  border-color: #00A000;
+}
+.nps .nps-orange-border {
+  border-color: #FE5621;
+}
+.nps .nps-red-border {
+  border-color: #f05050;
+}
+.nps .comments-section-padding {
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+}
+.nps .loadercont.ng-leave {
+  transition: 0.5s linear all;
+  opacity: 1;
+}
+.nps .loadercont.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+.nps .loadercont.ng-enter {
+  transition: 0.5s linear all;
+  opacity: 0;
+}
+.nps .loadercont.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+.nps .loadercontainer {
+  height: 505px;
+  position: absolute;
+  z-index: 1000;
+  min-width: 100%;
+  background-color: white;
+  display: table;
+}
+.nps .select-gift {
+  margin-bottom: 10px;
+}
+.nps .npsContainer {
+  position: relative;
+}
+.nps .npsContainer .nav-tabs > li {
+  width: 20%;
+}
+.nps .npsContainer .nav-tabs > li a {
+  padding: 10px 0;
+  text-align: center;
+}
+.nps .loadernps {
+  display: inline-block;
+}
+.giftboard .list {
+  list-style-type: none;
+  float: left;
+  padding: 4px 3px 3px 3px;
+  position: relative;
+}
+.giftboard .list-display {
+  height: 300px;
+  background-color: #f5f5f5;
 }
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');
