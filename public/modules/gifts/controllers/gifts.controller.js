@@ -54,9 +54,9 @@
                 "</div>" +
                 "<div class='col-md-9 leftInformationArea'>"+
                     "<label class='twoRowTitle'>{{item.name}}</label>"+
-                    "<small ng-if='(item.isUnlimited || item.amount>item.amountSpent) && item.hasAvailablePeriod==false || (item.isUnlimited || item.amount>item.amountSpent) && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true' class='valid-color'>Disponible</small>"+
-                    "<small ng-if='!item.isUnlimited && (item.amount>item.amountSpent && item.hasAvailablePeriod==false || item.amount>item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true)'>{{item.amount-item.amountSpent}} u.</small>"+
-                    "<small ng-if='item.amount==item.amountSpent && item.hasAvailablePeriod==false || item.amount==item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true' class='invalid-color'>Agotado</small>"+
+                    "<small ng-if='((item.isUnlimited || item.amount>item.amountSpent) && item.hasAvailablePeriod==false) || ((item.isUnlimited || item.amount>item.amountSpent) && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true)' class='valid-color'>Disponible</small>"+
+                    "<small ng-if='(!item.isUnlimited && item.amount>item.amountSpent && item.hasAvailablePeriod==false) || (!item.isUnlimited && item.amount>item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true)'>{{item.amount-item.amountSpent}} u.</small>"+
+                    "<small ng-if='(!item.isUnlimited && item.amount==item.amountSpent && item.hasAvailablePeriod==false) || (!item.isUnlimited && item.amount==item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true)' class='invalid-color'>Agotado</small>"+
                     "<small ng-if='(currentDate > formDate(item.endDate)) && item.hasAvailablePeriod==true' class='invalid-color'>Vencido</small>"+
                 "</div>";
             $scope.objectsSidebarService.template =$scope.sidebarTemplate;

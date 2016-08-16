@@ -19,7 +19,7 @@
                 </div>
                 <ul ng-if="giftDisplay=='automatic' && isGiftActive.gift==null">
                     <p ng-if="npsGiftsAutomatic.length==0" class="text-center">(No hay regalos automáticos para asignar)</p>
-                    <li ng-repeat="gift in npsGiftsAutomatic" class="col-sm-4 col-xs-2" ng-if="((gift.amount==-1 || gift.amount>gift.amountSpent) && gift.hasAvailablePeriod==false && gift.isDeleted==false) || ((gift.amount==-1 || gift.amount>gift.amountSpent) && ((currentDate | date) <= (gift.endDate | date)) && gift.hasAvailablePeriod==true && gift.isDeleted==false)">
+                    <li ng-repeat="gift in npsGiftsAutomatic" class="col-sm-4 col-xs-2" ng-if="((gift.isUnlimited || gift.amount>gift.amountSpent) && gift.hasAvailablePeriod==false && gift.isDeleted==false) || ((gift.isUnlimited || gift.amount>gift.amountSpent) && ((currentDate | date) <= (gift.endDate | date)) && gift.hasAvailablePeriod==true && gift.isDeleted==false)">
                         <div ng-click="setSelectedGift(gift.identifier)" tabindex="0">
                             <img ng-src="{{getGiftImage(gift.productIdentifier)}}" alt="{{gift.name}}" class="gift-image"/>
                             <p class="nameDisplay">{{gift.name}}</p>
