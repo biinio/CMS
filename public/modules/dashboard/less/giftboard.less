@@ -7,7 +7,55 @@
     position: relative;
   }
   .list-display{
-    height: 300px;
+    height: 320px;
     background-color: #f5f5f5;
+    overflow: hidden;
+    overflow-y:auto;
+
+    //Disable text selection if item is not draggable
+    li {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      position: relative;
+      display: block;
+      cursor: move;
+      padding: 10px;
+    }
+    .dndDraggingSource {
+      display: none;
+    }
+    .dndPlaceholder{
+      background-color: #e7e7e7;
+      display: block;
+      position: relative;
+      height: 100px;
+    }
+  }
+  .list-item{
+    background-color: white;
+    height: 100px;
+    border: 1px solid #DDD;
+    border-bottom: none;
+
+    &:last-child{
+      border-bottom: 1px solid #DDD;
+    }
+
+    .imageDisplay{
+      height: 100%;
+
+      img{
+        display: block;
+        margin: 0 auto;
+        border-radius: 50%;
+      }
+    }
+    .infoDisplay{
+      height: 100%;
+    }
   }
 }

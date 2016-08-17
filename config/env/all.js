@@ -74,6 +74,7 @@ module.exports = {
                 'public/lib/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js',
                 'public/lib/angular-bootstrap-slider/slider.js',
                 'public/lib/angular-dragdrop/src/angular-dragdrop.min.js',
+                'public/lib/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js',
                 'public/lib/jquery-ui/jquery-ui.js',
                 'public/lib/d3/d3.js',
                 'public/lib/nvd3/build/nv.d3.js',
