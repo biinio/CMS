@@ -16577,11 +16577,6 @@ input.cmn-toggle-round:checked + label:after {
 .nps .tab-content .list-group .list-group-item {
   min-height: 117px;
 }
-.nps .nps-badge {
-  position: absolute;
-  top: -5px;
-  right: 5px;
-}
 .nps .panel {
   border-radius: 0;
 }
@@ -16647,6 +16642,11 @@ input.cmn-toggle-round:checked + label:after {
 .nps .npsContainer .nav-tabs > li a {
   padding: 10px 0;
   text-align: center;
+}
+.nps .npsContainer .commentsContainer {
+  height: 415px;
+  overflow: hidden;
+  overflow-y: auto;
 }
 .nps .loadernps {
   display: inline-block;
