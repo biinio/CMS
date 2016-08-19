@@ -13,18 +13,23 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="list wrapper">
-                <ul class="list col-xs-3" ng-repeat="list in items">
-                    <h5 class="status">{{list.status}}</h5>
+                <ul class="list col-xs-4" ng-repeat="list in items">
+                    <h5 class="status">{{list.name}}</h5>
                     <hr/>
-                    <div class="list-display" dnd-list="list.gifts">
+                    <div class="list-display" dnd-list="list.gifts" dnd-allowed-types="list.allowedTypes" data-status="{{list.status}}"
+                         dnd-inserted="itemInserted(event, type)">
                         <li class="list-item" ng-repeat="gift in list.gifts"
                             dnd-draggable="gift" dnd-effect-allowed="move"
-                            dnd-moved="list.gifts.splice($index, 1)">
+                            dnd-moved="list.gifts.splice($index, 1)"
+                            dnd-type="gift.status"
+                            dnd-dragstart="dragStart(gift)">
                             <!--<div class="col-xs-4 imageDisplay">-->
                                 <!--<img src="{{image}}" alt="Avatar" />-->
                             <!--</div>-->
                             <!--<div class="col-xs-8 infoDisplay"></div>-->
-                            <small>{{gift.name}}</small>
+                            <small>Email: {{gift.user.email}}</small>
+                            <br>
+                            <small>{{gift.status}}</small>
                         </li>
                         <!--<li class="list-item"></li>-->
                     </div>
