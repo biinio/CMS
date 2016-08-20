@@ -22,7 +22,8 @@
                             dnd-draggable="gift" dnd-effect-allowed="move"
                             dnd-moved="list.gifts.splice($index, 1)"
                             dnd-type="gift.status"
-                            dnd-dragstart="dragStart(gift)">
+                            dnd-dragstart="dragStart(gift)"
+                            dnd-canceled="dragCanceled()">
                             <!--<div class="col-xs-4 imageDisplay">-->
                                 <!--<img src="{{image}}" alt="Avatar" />-->
                             <!--</div>-->

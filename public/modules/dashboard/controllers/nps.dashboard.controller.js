@@ -48,11 +48,6 @@
 
         //Current Date
         $scope.currentDate = new Date();
-        //Tabs in the UI (nps comments)
-        $scope.tabs = [{id:1, name:'Encuestados', active:true, status:undefined},
-                       {id:2, name:'Enviados', active:false, status:'SENT'},
-                       {id:3, name:'Reclamados', active:false, status:'CLAIMED'},
-                       {id:5, name:'Entregados', active:false, status:'DELIVERED'}];
         //Status as filter
         // $scope.status = undefined;
         $scope.indexBGColor = "";

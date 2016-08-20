@@ -7084,6 +7084,19 @@ fieldset .form-group {
 .badge-dark {
   background-color: #4a484b;
 }
+v-pane {
+  background-color: white;
+  padding: 5px 30px;
+  margin-bottom: 6px;
+}
+v-pane-header {
+  margin-bottom: 0;
+}
+v-pane-header:after,
+v-pane-header:before {
+  width: 13px;
+  height: 1.3px;
+}
 /* ========================================================================
    Component: typo.less
  ========================================================================== */
@@ -16541,9 +16554,6 @@ input.cmn-toggle-round:checked + label:after {
 .dashboard .loaderAnim.ng-enter.ng-enter-active {
   opacity: 1;
 }
-.nps {
-  /* The finishing CSS styles for the enter animation */
-}
 .nps .tab-content {
   padding-bottom: 0;
 }
@@ -16703,6 +16713,17 @@ input.cmn-toggle-round:checked + label:after {
 }
 .giftboard .list-item .infoDisplay {
   height: 100%;
+}
+.giftboard .loadercont.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+.giftboard .loadercontainer {
+  height: 400px;
+  position: absolute;
+  z-index: 1000;
+  min-width: 100%;
+  background-color: white;
+  display: table;
 }
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');

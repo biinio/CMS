@@ -48,92 +48,95 @@
                 </div>
             </div>
         </div>
-        <!--Gift dynamic-->
-        <div class="giftboard panel panel-default">
-            <div class="panel-wrapper">
-                <div class="panel-heading">
-                    <h4>Dinámica de regalos en {{globalFilters.selectedSite.title2}}</h4>
-                </div>
-                <div class="panel-body">
+        <v-accordion class="vAccordion--default" multiple>
+            <!--Gift dynamic-->
+            <v-pane expanded class="giftboard">
+                <v-pane-header>
+                        <h4>Dinámica de regalos en {{globalFilters.selectedSite.title2}}</h4>
+                </v-pane-header>
+                <v-pane-content>
                     <ng-include src="'modules/dashboard/views/partials/giftboard.partial.client.view.html'" />
-                </div>
-            </div>
-        </div>
-        <!--NPS panel-->
-        <div class="nps panel panel-default">
-            <div class="panel-wrapper">
-                <div class="panel-heading">
-                    <h4>Índice de promotor neto en {{globalFilters.selectedSite.title2}}</h4>
-                </div>
-                <div class="panel-body">
-                    <ng-include src="'modules/dashboard/views/partials/nps.partial.client.view.html'"/>
-                </div>
-            </div>
-        </div>
-        <!--Presential Section panel-->
-        <div class="presentialSection panel panel-default">
-            <div class="panel-wrapper">
-                <div class="panel-heading">
-                    <legend>Interacciones presenciales en {{globalFilters.selectedSite.title2}}</legend>
-                </div>
-                <div class="panel-body">
-                    <div class="loaderRelative">
-                        <div class="loadercontainer loaderAnim" data-ng-if="presentialLoaderEnabled" style="min-height: 225px; max-height: 225px">
-                        <div class="centerloader">
-                            <div class="line-scale loadernps">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <ng-include src="'modules/dashboard/views/partials/site.visits.graph.partial.client.view.html'"></ng-include>
-                        </div>
-                        <div class="col-lg-8">
-                            <ng-include src="'modules/dashboard/views/partials/visits.graph.partial.client.view.html'"></ng-include>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Virtual Section panel-->
-        <div class="virtualSection panel panel-default">
-            <div class="panel-wrapper">
-                <div class="panel-heading">
-                    <legend>Interacciones virtuales en {{globalFilters.selectedSite.title2}}</legend>
-                </div>
-                <div class="panel-body">
-                    <div class="loaderRelative">
-                        <div class="loadercontainer loaderAnim" data-ng-if="virtualLoaderEnabled" style="min-height: 225px; max-height: 225px">
-                            <div class="centerloader">
-                                <div class="line-scale loadernps">
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <ng-include src="'modules/dashboard/views/partials/mobile.visits.graph.partial.client.view.html'"></ng-include>
-                        </div>
-                        <div class="col-lg-4">
-                            <ng-include src="'modules/dashboard/views/partials/mobile.biined.counter.partial.client.view.html'"></ng-include>
-                        </div>
-                        <div class="col-lg-4">
-                            <ng-include src="'modules/dashboard/views/partials/mobile.elementsvisited.average.partial.client.view.html'"></ng-include>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                </v-pane-content>
+            </v-pane>
+
+            <!--NPS panel-->
+            <v-pane class="nps">
+                    <v-pane-header>
+                        <h4>Índice de promotor neto en {{globalFilters.selectedSite.title2}}</h4>
+                    </v-pane-header>
+                    <v-pane-content>
+                        <ng-include src="'modules/dashboard/views/partials/nps.partial.client.view.html'"/>
+                    </v-pane-content>
+            </v-pane>
+            <!--&lt;!&ndash;Presential Section panel&ndash;&gt;-->
+            <!--<v-pane>-->
+                <!--<div class="presentialSection panel panel-default">-->
+                <!--<div class="panel-wrapper">-->
+                    <!--<div class="panel-heading">-->
+                        <!--<legend>Interacciones presenciales en {{globalFilters.selectedSite.title2}}</legend>-->
+                    <!--</div>-->
+                    <!--<div class="panel-body">-->
+                        <!--<div class="loaderRelative">-->
+                            <!--<div class="loadercontainer loaderAnim" data-ng-if="presentialLoaderEnabled" style="min-height: 225px; max-height: 225px">-->
+                            <!--<div class="centerloader">-->
+                                <!--<div class="line-scale loadernps">-->
+                                    <!--<div></div>-->
+                                    <!--<div></div>-->
+                                    <!--<div></div>-->
+                                    <!--<div></div>-->
+                                    <!--<div></div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-lg-4">-->
+                                <!--<ng-include src="'modules/dashboard/views/partials/site.visits.graph.partial.client.view.html'"></ng-include>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-8">-->
+                                <!--<ng-include src="'modules/dashboard/views/partials/visits.graph.partial.client.view.html'"></ng-include>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--</v-pane>-->
+            <!--&lt;!&ndash;Virtual Section panel&ndash;&gt;-->
+            <!--<v-pane>-->
+                <!--<div class="virtualSection panel panel-default">-->
+                <!--<div class="panel-wrapper">-->
+                    <!--<div class="panel-heading">-->
+                        <!--<legend>Interacciones virtuales en {{globalFilters.selectedSite.title2}}</legend>-->
+                    <!--</div>-->
+                    <!--<div class="panel-body">-->
+                        <!--<div class="loaderRelative">-->
+                            <!--<div class="loadercontainer loaderAnim" data-ng-if="virtualLoaderEnabled" style="min-height: 225px; max-height: 225px">-->
+                                <!--<div class="centerloader">-->
+                                    <!--<div class="line-scale loadernps">-->
+                                        <!--<div></div>-->
+                                        <!--<div></div>-->
+                                        <!--<div></div>-->
+                                        <!--<div></div>-->
+                                        <!--<div></div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-lg-4">-->
+                                <!--<ng-include src="'modules/dashboard/views/partials/mobile.visits.graph.partial.client.view.html'"></ng-include>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-4">-->
+                                <!--<ng-include src="'modules/dashboard/views/partials/mobile.biined.counter.partial.client.view.html'"></ng-include>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-4">-->
+                                <!--<ng-include src="'modules/dashboard/views/partials/mobile.elementsvisited.average.partial.client.view.html'"></ng-include>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--</v-pane>-->
+        </v-accordion>
     </div>
 </div>

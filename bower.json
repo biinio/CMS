@@ -67,7 +67,8 @@
     "angular-bootstrap-slider": "^0.1.28",
     "angular-messages": "^1.5.7",
     "angular-qrcode": "monospaced/angular-qrcode#^6.2.1",
-    "angular-drag-and-drop-lists": "^1.4.0"
+    "angular-drag-and-drop-lists": "^1.4.0",
+    "v-accordion": "^1.6.0"
   },
   "resolutions": {
     "angular": "1.4.2",

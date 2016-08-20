@@ -95,6 +95,7 @@ module.exports = {
                 'public/lib/qrcode-generator/js/qrcode.js',
                 'public/lib/qrcode-generator/js/qrcode_UTF8.js',
                 'public/lib/angular-qrcode/angular-qrcode.js',
+                'public/lib/v-accordion/dist/v-accordion.min.js',
                 // 'public/lib/jquery/dist/jquery.js',
                 // 'public/lib/angular/angular.js',
                 // 'public/lib/angular-resource/angular-resource.js',
@@ -109,6 +110,7 @@ module.exports = {
         },
         css: [
             // 'public/modules/**/css/*.css'
+            'public/lib/v-accordion/dist/v-accordion.min.css',
             'public/dist/application.min.css',
             'public/lib/angularjs-toaster/toaster.css',
             'public/lib/animo.js/animate+animo.css',
