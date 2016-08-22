@@ -7089,14 +7089,6 @@ v-pane {
   padding: 5px 30px;
   margin-bottom: 6px;
 }
-v-pane-header {
-  margin-bottom: 0;
-}
-v-pane-header:after,
-v-pane-header:before {
-  width: 13px;
-  height: 1.3px;
-}
 /* ========================================================================
    Component: typo.less
  ========================================================================== */
@@ -16462,6 +16454,12 @@ input.cmn-toggle-round:checked + label:after {
 .dashboard {
   /* The finishing CSS styles for the enter animation */
 }
+.dashboard .configuration button {
+  height: 37px;
+}
+.dashboard .configuration .btn-accordion {
+  width: 37px;
+}
 .dashboard .selectGiftModal ul {
   overflow: hidden;
   min-height: 198px;
@@ -16513,7 +16511,7 @@ input.cmn-toggle-round:checked + label:after {
   color: #FE5621;
 }
 .dashboard .widget {
-  height: 252.5px;
+  height: 204px;
 }
 .dashboard .filter-button-large {
   padding: 10px 50px;
@@ -16667,9 +16665,26 @@ input.cmn-toggle-round:checked + label:after {
   padding: 4px 3px 3px 3px;
   position: relative;
 }
+.giftboard div[data-status='SENT'] {
+  background-color: #ecfdff;
+}
+.giftboard div[data-status='SENT'] li {
+  background-color: #2196F3;
+}
+.giftboard div[data-status='CLAIMED'] {
+  background-color: #fff0f0;
+}
+.giftboard div[data-status='CLAIMED'] li {
+  background-color: #f05050;
+}
+.giftboard div[data-status='DELIVERED'] {
+  background-color: #f9fff2;
+}
+.giftboard div[data-status='DELIVERED'] li {
+  background-color: #27c24c;
+}
 .giftboard .list-display {
   height: 320px;
-  background-color: #f5f5f5;
   overflow: hidden;
   overflow-y: auto;
 }
@@ -16684,6 +16699,7 @@ input.cmn-toggle-round:checked + label:after {
   display: block;
   cursor: move;
   padding: 10px;
+  color: white;
 }
 .giftboard .list-display .dndDraggingSource {
   display: none;
@@ -16704,15 +16720,45 @@ input.cmn-toggle-round:checked + label:after {
   border-bottom: 1px solid #DDD;
 }
 .giftboard .list-item .imageDisplay {
-  height: 100%;
+  padding: 0;
+  height: 100px;
+  width: 25%;
+  float: left;
 }
 .giftboard .list-item .imageDisplay img {
   display: block;
   margin: 0 auto;
   border-radius: 50%;
+  width: 93%;
+  border: solid 1.5px white;
+  -webkit-user-drag: none;
+  user-drag: none;
 }
 .giftboard .list-item .infoDisplay {
-  height: 100%;
+  padding-left: 10px;
+  float: left;
+  width: 45%;
+  height: 100px;
+}
+.giftboard .list-item .infoDisplay hr {
+  margin: 0;
+}
+.giftboard .list-item .infoDisplay .userName {
+  font-size: 12px;
+  display: block;
+  margin-bottom: 10px;
+}
+.giftboard .list-item .infoDates {
+  float: left;
+  width: 30%;
+}
+.giftboard .list-item .infoDates small {
+  font-size: 9px;
+}
+.giftboard .list-item .infoDates span {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 .giftboard .loadercont.ng-enter.ng-enter-active {
   opacity: 1;

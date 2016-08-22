@@ -6,9 +6,26 @@
     padding: 4px 3px 3px 3px;
     position: relative;
   }
+  div[data-status='SENT']{
+    background-color: #ecfdff;
+    li{
+      background-color: #2196F3;
+    }
+  }
+  div[data-status='CLAIMED']{
+    background-color: #fff0f0;
+    li{
+      background-color: #f05050;
+    }
+  }
+  div[data-status='DELIVERED']{
+    background-color: #f9fff2;
+    li{
+      background-color: #27c24c;
+    }
+  }
   .list-display{
     height: 320px;
-    background-color: #f5f5f5;
     overflow: hidden;
     overflow-y:auto;
 
@@ -24,6 +41,7 @@
       display: block;
       cursor: move;
       padding: 10px;
+      color: white;
     }
     .dndDraggingSource {
       display: none;
@@ -46,16 +64,47 @@
     }
 
     .imageDisplay{
-      height: 100%;
+      padding: 0;
+      height: 100px;
+      width: 25%;
+      float: left;
 
       img{
         display: block;
         margin: 0 auto;
         border-radius: 50%;
+        width: 93%;
+        border: solid 1.5px white;
+        -webkit-user-drag: none;
+        user-drag: none;
       }
     }
     .infoDisplay{
-      height: 100%;
+      padding-left: 10px;
+      float: left;
+      width: 45%;
+      height: 100px;
+
+      hr{
+        margin: 0;
+      }
+      .userName{
+        font-size: 12px;
+        display: block;
+        margin-bottom: 10px;
+      }
+    }
+    .infoDates{
+      float: left;
+      width: 30%;
+      small{
+        font-size: 9px;
+      }
+      span{
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+      }
     }
   }
 

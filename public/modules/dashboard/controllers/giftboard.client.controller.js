@@ -53,6 +53,13 @@
         function getGiftBoardData(){
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             $scope.isLoading = true;
+
+            //Get products to update gifts images
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/')
+                .success(function (data) {
+                    $scope.products = data.data.elements;
+                });
+
             getGiftsData();
         }
         //Get the gifts information
@@ -104,11 +111,12 @@
             $scope.giftBoardTimeout = $timeout(function(){
                 getGiftsData();
                 $scope.isLoading = false;
-            },2000)
+            },1500)
         }
         //Function triggered when a gift was dropped
         $scope.itemInserted = function(event, type) {
             var target = event.path[1].getAttribute('data-status');
+            $scope.itemDragged = false;
 
             if(type === 'SENT' && target == 'CLAIMED') {
                 $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/dashboard/gift/' + $scope.dragGift + '/claim')
@@ -135,5 +143,13 @@
             refreshingData();
             $scope.itemDragged = false;
         }
+        //Function to set the image of the current product into the thumbnail in the Objects Sidebar
+        $scope.setProductName = function (product) {
+            for(var i in $scope.products){
+                if(product == $scope.products[i].elementIdentifier){
+                    return $scope.products[i].title;
+                }
+            }
+        };
     }
 })();

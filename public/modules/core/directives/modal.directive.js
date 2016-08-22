@@ -14,7 +14,7 @@
             link:function($scope, element, attributes){
 
                 $scope.open = function() {
-                    // console.log($scope.npsTimeout.$$timeoutId);
+                    $('#' + attributes.target).insertBefore($('.nps'));
                     $('#' + attributes.target).modal({backdrop:'static',keyboard:false});
                     $('#' + attributes.target).modal('show');
                 }

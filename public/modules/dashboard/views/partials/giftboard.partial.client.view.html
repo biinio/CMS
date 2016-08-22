@@ -24,15 +24,22 @@
                             dnd-type="gift.status"
                             dnd-dragstart="dragStart(gift)"
                             dnd-canceled="dragCanceled()">
-                            <!--<div class="col-xs-4 imageDisplay">-->
-                                <!--<img src="{{image}}" alt="Avatar" />-->
-                            <!--</div>-->
-                            <!--<div class="col-xs-8 infoDisplay"></div>-->
-                            <small>Email: {{gift.user.email}}</small>
-                            <br>
-                            <small>{{gift.status}}</small>
+                            <div class="imageDisplay">
+                                <img ng-src="{{gift.image}}" alt="Avatar"/>
+                            </div>
+                            <div class="infoDisplay">
+                                <small class="userName">{{gift.user.firstName}} {{gift.user.lastName}}</small>
+                                <small>{{gift.user.email}}</small>
+                                <hr>
+                                <small>Regalo: {{setProductName(gift.gift.productIdentifier)}}</small>
+                            </div>
+                            <div class="infoDates">
+                                <small ng-if="gift.recievedDate" class="pull-right">Enviado: {{gift.recievedDate | date:'dd-MM-yyyy'}}</small>
+                                <small ng-if="gift.claimedDate" class="pull-right">Reclamado: {{gift.claimedDate | date:'dd-MM-yyyy'}}</small>
+                                <small ng-if="gift.deliveredDate" class="pull-right">Entregado: {{gift.deliveredDate | date:'dd-MM-yyyy'}}</small>
+                                <span class="fa fa-clone"></span>
+                            </div>
                         </li>
-                        <!--<li class="list-item"></li>-->
                     </div>
                 </ul>
             </div>
