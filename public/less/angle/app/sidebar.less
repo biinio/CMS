@@ -115,8 +115,8 @@ Component: sidebar.less
           background-color: @sidebar-item-bg-active;
           color: @sidebar-item-color-active;
         }
-        > a > em {
-          color: @sidebar-icon-color-active;
+        > a > em, span {
+          color: #1da1f2;
         }  
       }
 
@@ -241,13 +241,14 @@ Component: sidebar.less
       .nav, 
       > .nav-heading,
       > li > a > span {
-        display: none !important;
+        display: block;
+        font-size: 8px;
       }
 
       > li {
         width: @aside-wd-collapsed - 2;
         > a, > .nav-item {
-          padding: 20px 0;
+          padding: 14px 0;
           text-align: center;
           > em {
             font-size: 1.6em; // increase icons size
@@ -256,7 +257,7 @@ Component: sidebar.less
           &:focus { // accessibility
             background-color: transparent;
             > em { 
-              color: inherit; 
+              color: #1da1f2;
             }
           }
         }

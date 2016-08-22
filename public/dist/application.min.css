@@ -10245,8 +10245,10 @@ Component: sidebar.less
   color: #23b7e5;
 }
 .sidebar > .nav > li.active > a > em,
-.sidebar > .nav > li.open > a > em {
-  color: #23b7e5;
+.sidebar > .nav > li.open > a > em,
+.sidebar > .nav > li.active span,
+.sidebar > .nav > li.open span {
+  color: #1da1f2;
 }
 .sidebar > .nav > li.active {
   border-left-color: #23b7e5;
@@ -10336,14 +10338,15 @@ Component: sidebar.less
 .aside-collapsed .sidebar > .nav .nav,
 .aside-collapsed .sidebar > .nav > .nav-heading,
 .aside-collapsed .sidebar > .nav > li > a > span {
-  display: none !important;
+  display: block;
+  font-size: 8px;
 }
 .aside-collapsed .sidebar > .nav > li {
   width: 68px;
 }
 .aside-collapsed .sidebar > .nav > li > a,
 .aside-collapsed .sidebar > .nav > li > .nav-item {
-  padding: 20px 0;
+  padding: 14px 0;
   text-align: center;
 }
 .aside-collapsed .sidebar > .nav > li > a > em,
@@ -10357,7 +10360,7 @@ Component: sidebar.less
 }
 .aside-collapsed .sidebar > .nav > li > a:focus > em,
 .aside-collapsed .sidebar > .nav > li > .nav-item:focus > em {
-  color: inherit;
+  color: #1da1f2;
 }
 .aside-collapsed .sidebar .nav .label {
   position: absolute;
@@ -16133,6 +16136,17 @@ body {
   margin-top: 55px;
   margin-left: 220px;
 }
+.loaderCollapse {
+  /* Firefox */
+  width: -moz-calc(100% - 68px);
+  /* WebKit */
+  width: -webkit-calc(100% - 68px);
+  /* Opera */
+  width: -o-calc(100% - 68px);
+  /* Standard */
+  width: calc(100% - 68px);
+  margin-left: 68px;
+}
 .loadercont2 {
   height: 100%;
   position: absolute;
@@ -16732,6 +16746,7 @@ input.cmn-toggle-round:checked + label:after {
   margin: 0 auto;
   border-radius: 50%;
   width: 93%;
+  max-width: 80px;
   -webkit-user-drag: none;
   user-drag: none;
 }

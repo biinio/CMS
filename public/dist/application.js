@@ -2248,9 +2248,14 @@ angular.module('app.core').controller('HeaderController', ['$scope', 'Authentica
  */
 'use strict';
 
-angular.module('app.core').controller('LoadingController', ['$scope','Loading',
-    function($scope, LoadingService) {
+angular.module('app.core').controller('LoadingController', ['$rootScope','$scope','Loading', 'Utils',
+    function($rootScope, $scope, LoadingService, Utils) {
         $scope.loading = LoadingService;
+        $scope.isCollapse = Utils.isSidebarCollapsed();
+
+        $rootScope.$watch('app.layout.isCollapsed', function(newValue) {
+            $scope.isCollapse = newValue;
+        });
     }
 ]);
 
