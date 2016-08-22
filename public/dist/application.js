@@ -2995,7 +2995,12 @@ angular.module('dashboard').config(['$stateProvider',
                         } else if(data[i].user &&  data[i].user.url && data[i].user.url != "" ){
                             imageURL = data[i].user.url;
                         } else {
-                            imageURL = NO_IMAGE_PROFILE;
+                            // if(data[i].user.gender==='male'){
+                                imageURL = 'modules/core/img/icons/maleAvatar.png';
+                            // } else{
+                                // imageURL = NO_IMAGE_PROFILE;
+                            // }
+
                         }
                         data[i].image = imageURL;
                         //Pushing the object
@@ -3007,10 +3012,10 @@ angular.module('dashboard').config(['$stateProvider',
         }
         //Function to refresh data every 2 second
         function refreshingData() {
-            $scope.giftBoardTimeout = $timeout(function(){
-                getGiftsData();
+            // $scope.giftBoardTimeout = $timeout(function(){
+            //     getGiftsData();
                 $scope.isLoading = false;
-            },1500)
+            // },1500)
         }
         //Function triggered when a gift was dropped
         $scope.itemInserted = function(event, type) {

@@ -16668,20 +16668,23 @@ input.cmn-toggle-round:checked + label:after {
 .giftboard div[data-status='SENT'] {
   background-color: #ecfdff;
 }
-.giftboard div[data-status='SENT'] li {
-  background-color: #2196F3;
+.giftboard div[data-status='SENT'] .fa-clone,
+.giftboard div[data-status='SENT'] .userName {
+  color: #2196F3;
 }
 .giftboard div[data-status='CLAIMED'] {
   background-color: #fff0f0;
 }
-.giftboard div[data-status='CLAIMED'] li {
-  background-color: #f05050;
+.giftboard div[data-status='CLAIMED'] .fa-clone,
+.giftboard div[data-status='CLAIMED'] .userName {
+  color: #f05050;
 }
 .giftboard div[data-status='DELIVERED'] {
   background-color: #f9fff2;
 }
-.giftboard div[data-status='DELIVERED'] li {
-  background-color: #27c24c;
+.giftboard div[data-status='DELIVERED'] .fa-clone,
+.giftboard div[data-status='DELIVERED'] .userName {
+  color: #27c24c;
 }
 .giftboard .list-display {
   height: 320px;
@@ -16699,7 +16702,6 @@ input.cmn-toggle-round:checked + label:after {
   display: block;
   cursor: move;
   padding: 10px;
-  color: white;
 }
 .giftboard .list-display .dndDraggingSource {
   display: none;
@@ -16730,7 +16732,6 @@ input.cmn-toggle-round:checked + label:after {
   margin: 0 auto;
   border-radius: 50%;
   width: 93%;
-  border: solid 1.5px white;
   -webkit-user-drag: none;
   user-drag: none;
 }
