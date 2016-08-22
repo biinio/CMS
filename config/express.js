@@ -83,12 +83,12 @@ module.exports = function(db) {
 	app.use(methodOverride());
 
 	// CookieParser should be above session
-	app.use(cookieParser());
+	//app.use(cookieParser());
 
 	// Express MongoDB session storage
 	app.use(session({
-		saveUninitialized: true,
-		resave: true,
+	//	saveUninitialized: true,
+	//	resave: true,
 		secret: config.sessionSecret,
 		store: new mongoStore({
 			db: db.connection.db,
