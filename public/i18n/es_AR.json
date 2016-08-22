@@ -361,7 +361,9 @@
     "HIGHLIGHT_BUTTON": "Texto grande"
   },
   "TOPBAR": {
-    "EDIT_PROFILE": "lEditar perfil",
+    "HELLO": "¡Hola!",
+    "ORGANIZATIONS": "Mis Organizaciones",
+    "PROFILE": "Perfil",
     "EDIT_SOCIALMEDIA": "Manejar redes sociales",
     "EDIT_PASSWORD": "Cambiar contraseña",
     "SIGN_OUT": "Cerrar sesión",

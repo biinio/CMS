@@ -67,19 +67,20 @@
         </li>
         <!-- END Offsidebar menu-->
         </ul>
-        <ul class="nav navbar-nav" data-ng-show="authentication.user">
+        <ul class="nav navbar-nav navbar-right" data-ng-show="authentication.user">
+            <li><small class="profile-selectName">{{'TOPBAR.HELLO' | translate}} </small></li>
             <li class="dropdown" uib-dropdown>
                 <a href class="dropdown-toggle" uib-dropdown-toggle>
                     <span data-ng-bind="authentication.user.displayName"></span>
                     <b class="caret"></b>
                 </a>
-                <ul class="dropdown-menu"">
-                    <!--<li>
-                        <a href="/#!/settings/profile">{{'TOPBAR.EDIT_PROFILE' | translate}}</a>
-                    </li>
+                <ul class="navbar-right dropdown-menu">
                     <li>
-                        <a href="/#!/settings/accounts">{{'TOPBAR.EDIT_SOCIALMEDIA' | translate}}</a>
-                    </li>-->
+                        <a ui-sref="app.profile">{{'TOPBAR.PROFILE' | translate}}</a>
+                    </li>
+                    <!--<li>-->
+                        <!--<a href="/#!/settings/accounts">{{'TOPBAR.EDIT_SOCIALMEDIA' | translate}}</a>-->
+                    <!--</li>-->
                     <li data-ng-show="authentication.user.provider === 'local'">
                         <a href="/#!/settings/password">{{'TOPBAR.EDIT_PASSWORD' | translate}}</a>
                     </li>
@@ -93,7 +94,7 @@
         <ul class="nav navbar-nav" data-ng-show="authentication.user">
             <li class="dropdown" uib-dropdown>
                 <a href class="dropdown-toggle" uib-dropdown-toggle>
-                    <span ng-bind="organizationService.selectedOrganization.name"></span>
+                    <span>{{'TOPBAR.ORGANIZATIONS' | translate}}</span>
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu organization-dropdown-scroll">

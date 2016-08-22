@@ -343,7 +343,9 @@
     "HIGHLIGHT_BUTTON": "Highlight"
   },
   "TOPBAR": {
-    "EDIT_PROFILE": "Edit profile",
+    "HELLO": "Hello!",
+    "ORGANIZATIONS": "My Organizations",
+    "PROFILE": "Profile",
     "EDIT_SOCIALMEDIA": "Manage social networks",
     "EDIT_PASSWORD": "Change password",
     "SIGN_OUT": "Sign out",

@@ -138,6 +138,11 @@
   padding: 0 15px;
   background-color: transparent;
 
+  .profile-selectName{
+    cursor: default;
+    line-height: 55px;
+  }
+
   // restore floating props for navbar items
   .nav.navbar-nav {
     float: left;
@@ -271,15 +276,17 @@
     .nav > li {
       position: relative;
     }
-
+    .nav.navbar-nav.navbar-right .dropdown{
+      margin-right: 50px;
+    }
     // restore opened dropdown 
     .navbar-nav .open .dropdown-menu {
-      left: auto;
-      right: auto;
+        left: auto;
+        right: auto;
     }
     .navbar-nav.navbar-right .open .dropdown-menu {
       left: auto;
-      // right: 0;
+      right: 0;
     }
   }
 }

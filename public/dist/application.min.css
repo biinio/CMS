@@ -10002,6 +10002,10 @@ _:-ms-lang(x),
   padding: 0 15px;
   background-color: transparent;
 }
+.nav-wrapper .profile-selectName {
+  cursor: default;
+  line-height: 55px;
+}
 .nav-wrapper .nav.navbar-nav {
   float: left;
 }
@@ -10130,12 +10134,16 @@ _:-ms-lang(x),
   .nav-wrapper .nav > li {
     position: relative;
   }
+  .nav-wrapper .nav.navbar-nav.navbar-right .dropdown {
+    margin-right: 50px;
+  }
   .nav-wrapper .navbar-nav .open .dropdown-menu {
     left: auto;
     right: auto;
   }
   .nav-wrapper .navbar-nav.navbar-right .open .dropdown-menu {
     left: auto;
+    right: 0;
   }
 }
 @media only screen and (min-width: 768px) {
