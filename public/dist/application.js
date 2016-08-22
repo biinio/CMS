@@ -2960,7 +2960,9 @@ angular.module('dashboard').config(['$stateProvider',
                 //Getting the information
                 $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/dashboard')
                     .success(function (data) {
-                        generateDisplayInfo(data);
+                        if($scope.itemDragged==false){
+                            generateDisplayInfo(data);
+                        }
                     });
             }
         }
@@ -2999,11 +3001,9 @@ angular.module('dashboard').config(['$stateProvider',
         //Function to refresh data every 2 second
         function refreshingData() {
             $scope.giftBoardTimeout = $timeout(function(){
-                if(!$scope.itemDragged){
-                    getGiftsData();
-                }
+                getGiftsData();
                 $scope.isLoading = false;
-            },1500)
+            },2000)
         }
         //Function triggered when a gift was dropped
         $scope.itemInserted = function(event, type) {
