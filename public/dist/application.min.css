@@ -16729,7 +16729,8 @@ input.cmn-toggle-round:checked + label:after {
   display: none;
 }
 .giftboard .list-display .dndPlaceholder {
-  background-color: #e7e7e7;
+  background-color: white;
+  border: dashed 2px #4a484b;
   display: block;
   position: relative;
   height: 100px;
