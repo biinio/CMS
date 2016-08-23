@@ -30,34 +30,34 @@
 
                     //scope.loadingImagesChange(true);
                     // now post a new XHR request
-                    var xhr = new XMLHttpRequest();
+                    if(formData.get('file')){
+                        var xhr = new XMLHttpRequest();
 
-                    var organization= ObjectsSidebar.selectedObject.identifier;
+                        var organization= ObjectsSidebar.selectedObject.identifier;
 
-                    xhr.open('POST', ApplicationConfiguration.applicationBackendURL +'api/organizations/'+organization+"/image");
-                    xhr.setRequestHeader('accountidentifier',Authentication.user.accountIdentifier);
-                    xhr.onload = function (data) {
-                        if (xhr.status === 200) {
-                            var obj= $.parseJSON(xhr.response);
+                        xhr.open('POST', ApplicationConfiguration.applicationBackendURL +'api/organizations/'+organization+"/image");
+                        xhr.setRequestHeader('accountidentifier',Authentication.user.accountIdentifier);
+                        xhr.onload = function (data) {
+                            if (xhr.status === 200) {
+                                var obj= $.parseJSON(xhr.response);
 
-                            $rootScope.$broadcast("changeOrganizationImage",obj.data);
+                                $rootScope.$broadcast("changeOrganizationImage",obj.data);
 
-                            console.log('all done: ' + xhr.status);
-                            //scope.loadingImagesChange(false);
-                        } else {
-                            console.log('Something went terribly wrong...');
-                        }
-                    };
+                                console.log('all done: ' + xhr.status);
+                                //scope.loadingImagesChange(false);
+                            } else {
+                                console.log('Something went terribly wrong...');
+                            }
+                        };
 
-                    xhr.upload.onprogress = function (event) {
-                        if (event.lengthComputable) {
-                            var complete = (event.loaded / event.total * 100 | 0);
-                            //progress.value = progress.innerHTML = complete;
-                        }
-                    };
-
-                    xhr.send(formData);
-
+                        xhr.upload.onprogress = function (event) {
+                            if (event.lengthComputable) {
+                                var complete = (event.loaded / event.total * 100 | 0);
+                                //progress.value = progress.innerHTML = complete;
+                            }
+                        };
+                        xhr.send(formData);
+                    }
                 })
                 //Click event of the style button
                 $(element[0]).on('click touch',function(e){

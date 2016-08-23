@@ -112,10 +112,57 @@
 
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Get the Sites Information
+            if($scope.organizationId) {
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/').success(function (data) {
+                    $scope.sites = data.data.sites;
+                    //Get the elements
+                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElementser/').success(function (data) {
+                        $scope.elements = data.data.elements;
+                        //Get the showcases
+                        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/showcases/').success(function (data) {
+                            $scope.showcases = data.data;
+                            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
+                                $scope.biins = data.data;
+                                $scope.objectsSidebarService.setObjects(data.data);
+                                $scope.loadingService.isLoading = false;
+                            }).error(function (err) {
+                                console.log(err);
+                            });
+                        }).error(function (err) {
+                            console.log(err);
+                        });
+                    }).error(function (err) {
+                        console.log(err);
+                    });
+                }).error(function (err) {
+                    console.log(err);
+                });
+            }
+        });
+
+        $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
+
+        });
+
+        /**=============================================================================================================
+         * Variables
+         *
+         =============================================================================================================*/
+
+            //Init the the sites
+        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+
+        /**=============================================================================================================
+         * Self called functions
+         *
+         =============================================================================================================*/
+
+        if($scope.organizationId) {
+            //Get the Sites Information
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/').success(function (data) {
                 $scope.sites = data.data.sites;
                 //Get the elements
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElementser/').success(function (data) {
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function (data) {
                     $scope.elements = data.data.elements;
                     //Get the showcases
                     $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/showcases/').success(function (data) {
@@ -136,52 +183,8 @@
             }).error(function (err) {
                 console.log(err);
             });
-        });
-
-        $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
-
-        });
-
-        /**=============================================================================================================
-         * Variables
-         *
-         =============================================================================================================*/
-
-            //Init the the sites
-        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-
-        /**=============================================================================================================
-         * Self called functions
-         *
-         =============================================================================================================*/
-
-            //Get the Sites Information
-        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/').success(function (data) {
-            $scope.sites = data.data.sites;
-            //Get the elements
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function (data) {
-                $scope.elements = data.data.elements;
-                //Get the showcases
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/showcases/').success(function (data) {
-                    $scope.showcases = data.data;
-                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
-                        $scope.biins = data.data;
-                        $scope.objectsSidebarService.setObjects(data.data);
-                        $scope.loadingService.isLoading = false;
-                    }).error(function (err) {
-                        console.log(err);
-                    });
-                }).error(function (err) {
-                    console.log(err);
-                });
-            }).error(function (err) {
-                console.log(err);
-            });
-        }).error(function (err) {
-            console.log(err);
-        });
-
-
+        }
+        
         //Add an object to the objects collection
         $scope.saveObject = function (obj) {
             if (obj)

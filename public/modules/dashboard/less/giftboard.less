@@ -1,0 +1,125 @@
+//giftboard styles
+.giftboard{
+  .list{
+    list-style-type: none;
+    float: left;
+    padding: 4px 3px 3px 3px;
+    position: relative;
+  }
+  div[data-status='SENT']{
+    background-color: #ecfdff;
+    .fa-clone, .userName{
+      color: #2196F3;
+    }
+  }
+  div[data-status='CLAIMED']{
+    background-color: #fff0f0;
+    .fa-clone, .userName{
+      color: #f05050;
+    }
+  }
+  div[data-status='DELIVERED']{
+    background-color: #f9fff2;
+    .fa-clone, .userName{
+      color: #27c24c;
+    }
+  }
+  .list-display{
+    height: 320px;
+    overflow: hidden;
+    overflow-y:auto;
+
+    //Disable text selection if item is not draggable
+    li {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      position: relative;
+      display: block;
+      cursor: move;
+      padding: 10px;
+      //color: white;
+    }
+    .dndDraggingSource {
+      display: none;
+    }
+    .dndPlaceholder{
+      background-color: white;
+      border: dashed 2px #4a484b;
+      display: block;
+      position: relative;
+      height: 100px;
+    }
+  }
+  .list-item{
+    background-color: white;
+    height: 100px;
+    border: 1px solid #DDD;
+    border-bottom: none;
+
+    &:last-child{
+      border-bottom: 1px solid #DDD;
+    }
+
+    .imageDisplay{
+      padding: 0;
+      height: 100px;
+      width: 25%;
+      float: left;
+
+      img{
+        display: block;
+        margin: 0 auto;
+        border-radius: 50%;
+        width: 93%;
+        max-width: 80px;
+        -webkit-user-drag: none;
+        user-drag: none;
+      }
+    }
+    .infoDisplay{
+      padding-left: 10px;
+      float: left;
+      width: 45%;
+      height: 100px;
+
+      hr{
+        margin: 0;
+      }
+      .userName{
+        font-size: 12px;
+        display: block;
+        margin-bottom: 10px;
+      }
+    }
+    .infoDates{
+      float: left;
+      width: 30%;
+      small{
+        font-size: 9px;
+      }
+      span{
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+      }
+    }
+  }
+
+  //Loader in giftboard
+  .loadercont.ng-enter.ng-enter-active {
+    opacity:1;
+  }
+
+  .loadercontainer{
+    height: 400px;
+    position: absolute;
+    z-index: 1000;
+    min-width: 100%;
+    background-color: white;
+    display: table;
+  }
+}

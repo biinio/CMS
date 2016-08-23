@@ -13,6 +13,7 @@
       $rootScope.$state = $state;
       $rootScope.$stateParams = $stateParams;
       $rootScope.$storage = $window.localStorage;
+      $rootScope._ = window._;
 
       // Uncomment this to disable template cache
       /*$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {

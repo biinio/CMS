@@ -232,40 +232,20 @@ Component: sidemenu.less
 }
 .object-item{
   background-color: @content-object-bg;
+  border-radius: 5px;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 2px 0px #e4e4e4;
   margin-bottom: 6px;
   margin-left: 6px;
   margin-right: 6px;
-  border-radius: 5px;
 }
 
 .object-item:hover{
-  //background: @sidebar-object-icon-color-active;
+  background: #fbfbfb;
 }
 
 .object-item.active{
-  //border: 5px solid @sidebar-object-icon-color-active;
-  .list-items-side-menu{
-    div{
-      .twoRowTitle{
-        color: #1da1f2;
-      }
-      .twoRowSubtitle{
-        color: #1da1f2;
-      }
-      .oneRowTitle{
-        color: #1da1f2;
-      }
-      .threeRowTitle{
-        color: #1da1f2;
-      }
-      .threeRowSubTitle{
-        color: #1da1f2;
-      }
-      .threeRowThirdLine{
-        color: #1da1f2;
-      }
-    }
-  }
+  box-shadow: inset -5px 0px #1da1f2;
 }
 
 .btn-add{
@@ -311,78 +291,31 @@ Component: sidemenu.less
 
 .list-items-side-menu{
   div{
+    .twoRowTitle, .oneRowTitle{
+      font-size: 15px;
+      overflow:hidden;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+      color: #000011;
+      margin-bottom: 0;
+      font-weight: 200;
+      display: block;
+      cursor: pointer;
+    }
     .twoRowTitle{
-      overflow:hidden;
-      white-space:nowrap;
-      text-overflow:ellipsis;
-      color: #000011;
-      font-size: 15px;
       line-height: 24px;
-      font-weight: 200;
       padding-top: 13px;
-      margin-bottom: 0;
-      display: block;
     }
-
-    .twoRowSubtitle{
-      overflow:hidden;
-      white-space:nowrap;
-      text-overflow:ellipsis;
-      color: #000011;
-      font-size: 18px;
-      font-weight: normal;
-      line-height: 18px;
-      margin-bottom: 0;
-      display: block;
-    }
-
     .oneRowTitle{
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      color: #000011;
-      font-size: 15px;
       line-height: 15px;
-      font-weight: normal;
-      padding-top: 24px;
-      margin-bottom: 0;
-      display: block;
+      padding-top: 27px;
     }
-
-    .threeRowTitle{
-      overflow:hidden;
+    .twoRowSubTitle{
       white-space:nowrap;
       text-overflow:ellipsis;
-      color: #000011;
-      font-size: 18px;
-      line-height: 20px;
-      font-weight: bold;
-      padding-top: 6px;
-      margin-bottom: 0;
       display: block;
-    }
-
-    .threeRowSubTitle{
-      overflow:hidden;
-      white-space:nowrap;
-      text-overflow:ellipsis;
-      color: #000011;
-      font-size: 15px;
-      font-weight: 400;
-      line-height: 18px;
-      margin-bottom: 0;
-      display: block;
-    }
-    .threeRowThirdLine{
-      overflow:hidden;
-      white-space:nowrap;
-      text-overflow:ellipsis;
-      color: #000011;
-      font-size: 15px;
-      font-weight: 200;
-      line-height: 18px;
-      margin-bottom: 0;
-      display: block;
+      width: 100%;
+      overflow: hidden;
     }
   }
   .valid-color{

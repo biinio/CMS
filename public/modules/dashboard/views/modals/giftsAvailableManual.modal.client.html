@@ -1,0 +1,30 @@
+<!--**Created by Carlos on 15/07/2016-->
+<!--Gifts available-->
+<div class="modal fade selectGiftModal" id="giftsAvailableManual" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" modal="close" ng-click="refresh()" target="giftsAvailableManual"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title text-center">Regalos disponibles {{organizationService.selectedOrganization.name}}</h3>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <ul>
+                    <p ng-if="npsGiftsManual.length==0" class="text-center">(No hay regalos para asignar)</p>
+                    <li ng-repeat="gift in npsGiftsManual" class="col-sm-4 col-xs-2" ng-if="((gift.isUnlimited || gift.amount>gift.amountSpent) && gift.hasAvailablePeriod==false && gift.isDeleted==false) || ((gift.isUnlimited || gift.amount>gift.amountSpent) && ((currentDate | date) <= (gift.endDate | date)) && gift.hasAvailablePeriod==true && gift.isDeleted==false)">
+                        <div ng-click="setSelectedGift(gift.identifier)" tabindex="0">
+                            <img ng-src="{{getGiftImage(gift.productIdentifier)}}" alt="{{gift.name}}" class="gift-image"/>
+                            <p class="nameDisplay">{{gift.name}}</p>
+                        </div>
+                    </li>
+                </ul>
+                <hr>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-default" modal="close" ng-click="refresh()" target="giftsAvailableManual">Cerrar</button>
+                    <button ng-disabled="selectedGift==null" class="btn btn-primary" type="submit" modal="close" target="giftsAvailableManual" ng-click="assignGift()">Asignar</button>
+                </div>
+            </div>
+        </div>
+    </div> <!-- / Modal Form -->
+</div>

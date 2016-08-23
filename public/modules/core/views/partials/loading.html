@@ -1,4 +1,17 @@
-<div class="loading-container loaderAnim" data-ng-if="loading.isLoading">
+<div class="loading-container loaderAnim" data-ng-if="loading.isLoading && !isCollapse">
+    <div class="loadercont2">
+        <div class="centerloader">
+            <div class="line-scale loadernps">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="loading-container loaderAnim loaderCollapse" data-ng-if="loading.isLoading && isCollapse">
     <div class="loadercont2">
         <div class="centerloader">
             <div class="line-scale loadernps">

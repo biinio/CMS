@@ -13,16 +13,17 @@
     {{ 'DASHBOARD.TITLE' | translate }}
     <small>{{ 'DASHBOARD.WELCOME' | translate:{ appName: app.name } }} !</small>
 </h3>-->
-<div ng-controller="DashboardController" class="block-center">
+<div ng-controller="DashboardController" class="block-center dashboard">
     <div>
-        <div class="panel panel-default">
+        <!--Actions Change site and days-->
+        <div class="configuration panel panel-default">
             <div class="panel-wrapper">
                 <div class="panel-body">
                     <div class="col-md-6">
-                        <label class="text-19px select-site-label">{{ 'DASHBOARD.SITE_FILTER' | translate }}   </label>
+                        <label class="select-site-label">{{ 'DASHBOARD.SITE_FILTER' | translate }}   </label>
                         <!-- Single button -->
                         <div class="btn-group" uib-dropdown is-open="status.isopen">
-                            <button id="single-button" type="button" class="btn btn-default text-14px" uib-dropdown-toggle ng-disabled="disabled">
+                            <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
                                 {{globalFilters.selectedSite.title1 + ' ' + globalFilters.selectedSite.title2}} <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
@@ -32,14 +33,16 @@
                         </div>
                     </div>
                     <div class="col-md-6">
+                        <button ng-click="accordion.expandAll()" class="btn-accordion"><span class="fa fa-expand"></span></button>
+                        <button ng-click="accordion.collapseAll()" class="btn-accordion"><span class="fa fa-compress"></span></button>
                         <div class="pull-right">
-                            <button ng-click="changeChartRange(7)" class="mb-sm btn filter-button-large" data-ng-class="globalFilters.dateRange == 7? 'filter-button-active' :'filter-button-inactive'">{{ 'DASHBOARD.FILTER_7DAYS' |
+                            <button ng-click="changeChartRange(7)" class="btn filter-button-large" data-ng-class="globalFilters.dateRange == 7? 'filter-button-active' :'filter-button-inactive'">{{ 'DASHBOARD.FILTER_7DAYS' |
                                 translate }}
                             </button>
-                            <button ng-click="changeChartRange(30)" class="mb-sm btn filter-button-large" data-ng-class="globalFilters.dateRange == 30? 'filter-button-active' :'filter-button-inactive'">{{ 'DASHBOARD.FILTER_30DAYS' |
+                            <button ng-click="changeChartRange(30)" class="btn filter-button-large" data-ng-class="globalFilters.dateRange == 30? 'filter-button-active' :'filter-button-inactive'">{{ 'DASHBOARD.FILTER_30DAYS' |
                                 translate }}
                             </button>
-                            <button ng-click="changeChartRange(180)" class="mb-sm btn filter-button-large" data-ng-class="globalFilters.dateRange == 180? 'filter-button-active' :'filter-button-inactive'">{{ 'DASHBOARD.FILTER_6MONTHS' |
+                            <button ng-click="changeChartRange(180)" class="btn filter-button-large" data-ng-class="globalFilters.dateRange == 180? 'filter-button-active' :'filter-button-inactive'">{{ 'DASHBOARD.FILTER_6MONTHS' |
                                 translate }}
                             </button>
                         </div>
@@ -47,53 +50,69 @@
                 </div>
             </div>
         </div>
-
-        <div class="nps panel panel-default">
-            <div class="panel-wrapper">
-                <div class="panel-heading">
-                    <legend>Índice de promotor neto en {{globalFilters.selectedSite.title2}}</legend>
-                </div>
-                <div class="panel-body">
-                    <ng-include src="'modules/dashboard/views/partials/nps.partial.client.view.html'"/>
-                </div>
-            </div>
-        </div>
-        <div class="presentialSection panel panel-default">
-            <div class="panel-wrapper">
-                <div class="panel-heading">
-                    <legend>Interacciones presenciales en {{globalFilters.selectedSite.title2}}</legend>
-                </div>
-                <div class="panel-body">
-                    <div class="loaderRelative">
-                        <div class="loadercontainer loaderAnim" data-ng-if="presentialLoaderEnabled" style="min-height: 225px; max-height: 225px">
-                        <div class="centerloader">
-                            <div class="line-scale loadernps">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
+        <v-accordion class="vAccordion--default" multiple control="accordion">
+            <!--Gift dynamic-->
+            <v-pane expanded class="giftboard">
+                <v-pane-header>
+                        <h4>Dinámica de regalos en {{globalFilters.selectedSite.title2}}</h4>
+                </v-pane-header>
+                <v-pane-content>
+                    <ng-include src="'modules/dashboard/views/partials/giftboard.partial.client.view.html'" />
+                </v-pane-content>
+            </v-pane>
+            <!--Current card-->
+            <v-pane class="currentCard">
+                <v-pane-header>
+                    <h4>Programa de lealtad</h4>
+                </v-pane-header>
+                <v-pane-content>
+                    <ng-include src="'modules/dashboard/views/partials/current.card.partial.client.view.html'" />
+                </v-pane-content>
+            </v-pane>
+            <!--NPS panel-->
+            <v-pane class="nps">
+                    <v-pane-header>
+                        <h4>Índice de promotor neto en {{globalFilters.selectedSite.title2}}</h4>
+                    </v-pane-header>
+                    <v-pane-content>
+                        <ng-include src="'modules/dashboard/views/partials/nps.partial.client.view.html'"/>
+                    </v-pane-content>
+            </v-pane>
+            <!--Presential Section panel-->
+            <v-pane class="presentialSection">
+                <v-pane-header>
+                    <h4>Interacciones presenciales en {{globalFilters.selectedSite.title2}}</h4>
+                </v-pane-header>
+                <v-pane-content>
+                        <div class="loaderRelative">
+                            <div class="loadercontainer loaderAnim" data-ng-if="presentialLoaderEnabled" style="min-height: 225px; max-height: 225px">
+                            <div class="centerloader">
+                                <div class="line-scale loadernps">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <ng-include src="'modules/dashboard/views/partials/site.visits.graph.partial.client.view.html'"></ng-include>
                         </div>
-                        <div class="col-lg-8">
-                            <ng-include src="'modules/dashboard/views/partials/visits.graph.partial.client.view.html'"></ng-include>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <ng-include src="'modules/dashboard/views/partials/site.visits.graph.partial.client.view.html'"></ng-include>
+                            </div>
+                            <div class="col-lg-8">
+                                <ng-include src="'modules/dashboard/views/partials/visits.graph.partial.client.view.html'"></ng-include>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="virtualSection panel panel-default">
-            <div class="panel-wrapper">
-                <div class="panel-heading">
-                    <legend>Interacciones virtuales en {{globalFilters.selectedSite.title2}}</legend>
-                </div>
-                <div class="panel-body">
+                </v-pane-content>
+            </v-pane>
+            <!--Virtual Section panel-->
+            <v-pane class="virtualSection">
+                <v-pane-header>
+                    <h4>Interacciones virtuales en {{globalFilters.selectedSite.title2}}</h4>
+                </v-pane-header>
+                <v-pane-content>
                     <div class="loaderRelative">
                         <div class="loadercontainer loaderAnim" data-ng-if="virtualLoaderEnabled" style="min-height: 225px; max-height: 225px">
                             <div class="centerloader">
@@ -118,9 +137,8 @@
                             <ng-include src="'modules/dashboard/views/partials/mobile.elementsvisited.average.partial.client.view.html'"></ng-include>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
+                </v-pane-content>
+            </v-pane>
+        </v-accordion>
     </div>
 </div>

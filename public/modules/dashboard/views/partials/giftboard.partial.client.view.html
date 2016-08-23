@@ -1,0 +1,48 @@
+<div data-ng-controller="giftboardController">
+    <div class="loadercont loadercontainer" data-ng-if="isLoading">
+        <div class="centerloader">
+            <div class="line-scale loadernps">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="list wrapper">
+                <ul class="list col-xs-4" ng-repeat="list in items">
+                    <h5 class="status">{{list.name}}</h5>
+                    <hr/>
+                    <div class="list-display" dnd-list="list.gifts" dnd-allowed-types="list.allowedTypes" data-status="{{list.status}}"
+                         dnd-inserted="itemInserted(event, type)">
+                        <li class="list-item" ng-repeat="gift in list.gifts"
+                            dnd-draggable="gift" dnd-effect-allowed="move"
+                            dnd-moved="list.gifts.splice($index, 1)"
+                            dnd-type="gift.status"
+                            dnd-dragstart="dragStart(gift)"
+                            dnd-canceled="dragCanceled()">
+                            <div class="imageDisplay">
+                                <img ng-src="{{gift.image}}" alt="Avatar"/>
+                            </div>
+                            <div class="infoDisplay">
+                                <small class="userName"><strong>{{gift.user.firstName}} {{gift.user.lastName}}</strong></small>
+                                <small>{{gift.user.email}}</small>
+                                <hr>
+                                <small>Regalo: {{setProductName(gift.gift.productIdentifier)}}</small>
+                            </div>
+                            <div class="infoDates">
+                                <small ng-if="gift.recievedDate" class="pull-right">Enviado: {{gift.recievedDate | date:'dd-MM-yyyy'}}</small>
+                                <small ng-if="gift.claimedDate" class="pull-right">Reclamado: {{gift.claimedDate | date:'dd-MM-yyyy'}}</small>
+                                <small ng-if="gift.deliveredDate" class="pull-right">Entregado: {{gift.deliveredDate | date:'dd-MM-yyyy'}}</small>
+                                <span class="fa fa-clone"></span>
+                            </div>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

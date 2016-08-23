@@ -348,7 +348,7 @@
             var titleText = $translate.instant("NOTICES.CREATING");
             swal({   title: titleText,  type: "info",   showConfirmButton: false });
             $http.put(ApplicationConfiguration.applicationBackendURL + 'api/notices/organizations/' + $scope.organizationId).success(function (data) {
-                $scope.notices.push(data);
+                $scope.notices.unshift(data);
                 $scope.objectsSidebarService.setObjects($scope.notices);
                 $scope.objectsSidebarService.setSelectedObject(data);
                 setTimeout(function(){

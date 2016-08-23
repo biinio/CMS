@@ -17,7 +17,7 @@ var ApplicationConfiguration = (function() {
 	var applicationModuleVendorDependencies = ['ngRoute', 'ngAnimate', 'ngStorage', 'ngTouch', 'ngCookies',
         'pascalprecht.translate', 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'cfp.loadingBar', 'ngSanitize',
         'ngResource', 'ngMessages', 'ui.utils','ngAnimate', 'toaster','textAngular','bootstrap-tagsinput','angular-bind-html-compile',
-		'datePicker','ui.bootstrap-slider','ngDragDrop','nvd3','ngImgCrop','color.picker'];
+		'datePicker','ui.bootstrap-slider','ngDragDrop','nvd3','ngImgCrop','color.picker','monospaced.qrcode', 'vAccordion', 'dndLists'];
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
 		// Create angular module
@@ -76,6 +76,14 @@ ApplicationConfiguration.registerModule('biinUsers');
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('biins');
 
+/**
+ * Created by Carlos on 7/28/16.
+ */
+'use strict';
+
+// Use Application configuration module to register a new module
+ApplicationConfiguration.registerModule('cards');
+
 'use strict';
 
 ApplicationConfiguration.registerModule('app.charts');
@@ -113,14 +121,6 @@ ApplicationConfiguration.registerModule('app.charts');
 
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('dashboard');
-
-/**
- * Created by Ivan on 8/17/15.
- */
-'use strict';
-
-// Use Applicaion configuration module to register a new module
-ApplicationConfiguration.registerModule('elements');
 
 'use strict';
 
@@ -205,6 +205,14 @@ ApplicationConfiguration.registerModule('page');
 
 })();
 
+
+/**
+ * Created by Ivan on 8/17/15.
+ */
+'use strict';
+
+// Use Applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('products');
 
 /**
  * Created by Ivan on 8/19/15.
@@ -410,10 +418,57 @@ angular.module('basiccms').config(['$stateProvider',
 
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Get the Sites Information
+            if($scope.organizationId) {
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/').success(function (data) {
+                    $scope.sites = data.data.sites;
+                    //Get the elements
+                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElementser/').success(function (data) {
+                        $scope.elements = data.data.elements;
+                        //Get the showcases
+                        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/showcases/').success(function (data) {
+                            $scope.showcases = data.data;
+                            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
+                                $scope.biins = data.data;
+                                $scope.objectsSidebarService.setObjects(data.data);
+                                $scope.loadingService.isLoading = false;
+                            }).error(function (err) {
+                                console.log(err);
+                            });
+                        }).error(function (err) {
+                            console.log(err);
+                        });
+                    }).error(function (err) {
+                        console.log(err);
+                    });
+                }).error(function (err) {
+                    console.log(err);
+                });
+            }
+        });
+
+        $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
+
+        });
+
+        /**=============================================================================================================
+         * Variables
+         *
+         =============================================================================================================*/
+
+            //Init the the sites
+        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+
+        /**=============================================================================================================
+         * Self called functions
+         *
+         =============================================================================================================*/
+
+        if($scope.organizationId) {
+            //Get the Sites Information
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/').success(function (data) {
                 $scope.sites = data.data.sites;
                 //Get the elements
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElementser/').success(function (data) {
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function (data) {
                     $scope.elements = data.data.elements;
                     //Get the showcases
                     $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/showcases/').success(function (data) {
@@ -434,52 +489,8 @@ angular.module('basiccms').config(['$stateProvider',
             }).error(function (err) {
                 console.log(err);
             });
-        });
-
-        $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
-
-        });
-
-        /**=============================================================================================================
-         * Variables
-         *
-         =============================================================================================================*/
-
-            //Init the the sites
-        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-
-        /**=============================================================================================================
-         * Self called functions
-         *
-         =============================================================================================================*/
-
-            //Get the Sites Information
-        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/').success(function (data) {
-            $scope.sites = data.data.sites;
-            //Get the elements
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function (data) {
-                $scope.elements = data.data.elements;
-                //Get the showcases
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/showcases/').success(function (data) {
-                    $scope.showcases = data.data;
-                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/biins/').success(function (data) {
-                        $scope.biins = data.data;
-                        $scope.objectsSidebarService.setObjects(data.data);
-                        $scope.loadingService.isLoading = false;
-                    }).error(function (err) {
-                        console.log(err);
-                    });
-                }).error(function (err) {
-                    console.log(err);
-                });
-            }).error(function (err) {
-                console.log(err);
-            });
-        }).error(function (err) {
-            console.log(err);
-        });
-
-
+        }
+        
         //Add an object to the objects collection
         $scope.saveObject = function (obj) {
             if (obj)
@@ -1131,7 +1142,7 @@ angular.module('biins').config(['$stateProvider',
             var titleText = $translate.instant("NOTICES.CREATING");
             swal({   title: titleText,  type: "info",   showConfirmButton: false });
             $http.put(ApplicationConfiguration.applicationBackendURL + 'api/notices/organizations/' + $scope.organizationId).success(function (data) {
-                $scope.notices.push(data);
+                $scope.notices.unshift(data);
                 $scope.objectsSidebarService.setObjects($scope.notices);
                 $scope.objectsSidebarService.setSelectedObject(data);
                 setTimeout(function(){
@@ -1262,6 +1273,297 @@ angular.module('biins').config(['$stateProvider',
 
 })();
 
+
+/**
+ * Created by Carlos on 7/28/15.
+ */
+'use strict';
+
+// Setting up route
+angular.module('cards').config(['$stateProvider',
+    function($stateProvider) {
+        // Users state routing
+        $stateProvider.
+        state('app.cards', {
+            url: '/cards',
+            templateUrl: 'modules/cards/views/cards.client.view.html',
+            resolve:{
+                permissions: function(Permission) {
+                    return Permission.getPermissions();
+                },
+                selectedOrganization: function (Organization) {
+                    return Organization.getSelectedOrganization();
+                },
+                organization: function (Organization) {
+                    return Organization.getOrganizations();
+                }
+            }
+        });
+    }
+]);
+
+/**=========================================================
+ * Module: cards.client.controller.js
+ * Controller of cards
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('cards')
+        .controller('CardsController', CardsController);
+
+    CardsController.$inject = ['$http', '$state', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate', 'toaster'];
+
+    function CardsController($http, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate, toaster) {
+        var card = this;
+
+        //Running init function
+        init();
+
+        /**=============================================================================================================
+         * Init Function
+         =============================================================================================================*/
+
+        function init() {
+            //----Services needed----//
+            //Loading Service
+            $scope.loadingService = Loading;
+            //Organization Service
+            $scope.organizationService = Organization;
+            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            //Objects Sidebar Service
+            $scope.objectsSidebarService = ObjectsSidebar;
+            //Authentication Service
+            $scope.authentication = Authentication;
+            //Card Object
+            $scope.objectsSidebarService.selectedObject = {};
+            //----Variables----//
+            //Ready to fill
+            $scope.ready = false;
+            $scope.cards = [];
+            $scope.slotsQuantities = [10,12,14];
+            //State of loading screen
+            $scope.loadingService.isLoading = true;
+            //Current Date
+            $scope.currentDate = new Date().getTime();
+            //Default alerts/hints
+            $scope.show_alert = true;
+            //ObjectsSidebar card template
+            $scope.sidebarTemplate =
+                "<div class='col-md-3 thumbListImage'>" +
+                    "<img ng-if='!item.gift' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
+                    "<img ng-if='item.gift' ng-src='{{setProductImage(item.gift.productIdentifier)}}' pending-indicator='pending-indicator'/>"+
+                "</div>" +
+                "<div class='col-md-9 leftInformationArea'>"+
+                    "<label class='twoRowTitle'>{{organizationService.selectedOrganization.name}}</label>"+
+                    "<small>Cliente frecuente </small><label ng-if='item.isActive' class='fa fa-check-circle enlarge-icon'></label>"+
+                "</div>";
+            $scope.objectsSidebarService.template =$scope.sidebarTemplate;
+        }
+
+        /**=============================================================================================================
+         * Event Listeners
+         =============================================================================================================*/
+
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
+            $scope.objectsSidebarService.reset();
+        });
+
+        $scope.$on("Biin: On Object Created", function(){
+            $scope.create();
+        });
+
+        $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
+            //Already to show the gift info
+            $scope.ready = true;
+        });
+
+        $scope.$on('organizationChanged',function(){
+            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.loadingService.isLoading = true;
+            //Get the List of Gifts
+            $scope.ready = false;
+            if($scope.organizationId){
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards').success(function(cards) {
+                    $scope.cards = cards;
+                    $scope.objectsSidebarService.setObjects($scope.cards);
+                    $state.reload();
+                    $scope.loadingService.isLoading = false;
+                });
+                //Get the List of Products
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+                    $scope.products = data.data.elements;
+                });
+                //Get the List of Gifts
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+                    getAvailableGifts(gifts);
+                });
+            }
+        });
+
+        /**=============================================================================================================
+         * Functions
+         =============================================================================================================*/
+
+        if($scope.organizationId){
+            //Get the List of Cards
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards').success(function(cards) {
+                console.log(cards);
+                $scope.cards = cards;
+                $scope.objectsSidebarService.setObjects($scope.cards);
+                $scope.loadingService.isLoading = false;
+            });
+            //Get the List of Gifts
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+                getAvailableGifts(gifts);
+            });
+        }
+
+        //Create a card
+        $scope.create = function(){
+            var titleText = $translate.instant("CARD.CREATING");
+            swal({   title: titleText,  type: "info",   showConfirmButton: false });
+            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards').success(function(card,status){
+                if(status == 201){
+                    var cards = $scope.objectsSidebarService.getObjects();
+                    cards.unshift(card);
+                    $scope.objectsSidebarService.setObjects(cards);
+                    $scope.objectsSidebarService.setSelectedObject(card);
+                    $scope.ready = true;
+
+                    setTimeout(function(){
+                        swal.close();
+                    },2000);
+                }
+            });
+        }
+
+        //Function that display the swal as a confirmation to remove card
+        $scope.deleteCard = function(message, selectedObject) {
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_CARD_TITLE","GENERIC.DELETE_CARD_CONFIRMATION","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.DELETE_CARD_TITLE"],
+                text: translatedTexts["GENERIC.DELETE_CARD_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
+                    $scope.removeCardAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
+            });
+        };
+
+        //Remove card at specific position
+        $scope.removeCardAt = function(index){
+            var cardToDelete = $scope.objectsSidebarService.objects[index];
+            var translatedTexts  = $translate.instant(["CARD.DELETED_TEXT","GENERIC.DELETED"]);
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+ cardToDelete.identifier,{data:cardToDelete}).success(function(data){
+                    $scope.ready = false;
+                    $scope.objectsSidebarService.objects.splice(index,1);
+                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["CARD.DELETED_TEXT"], "success");
+                }
+            );
+        };
+        
+        //Save gift information
+        $scope.update = function(){
+            var cardToUpdate = $scope.objectsSidebarService.selectedObject;
+            cardToUpdate.conditionsText = 'Al hacer tap en OK aceptas las condiciones de uso de la tarjeta de cliente frecuente de ' + $scope.organizationService.selectedOrganization.name + '.'
+            // Don't do anything if there is no selected card
+            if ($scope.ready == false)
+                return;
+
+            if(card.myForm.$valid && ($scope.objectsSidebarService.selectedObject.conditionsText || $scope.objectsSidebarService.selectedObject.conditionsURL)) {
+                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+ cardToUpdate.identifier,cardToUpdate).success(function(data,status){
+                    console.log('Actualizado');
+                });
+            }
+        }
+
+        //Function to activate a card
+        $scope.activate = function () {
+            var isOneActive = false;
+            var isActive = $scope.objectsSidebarService.selectedObject.isActive;
+
+            //Check if there is a card active
+            for(var i in $scope.cards){
+                if($scope.cards[i].isActive==true){
+                    isOneActive = true;
+                }
+            }
+
+            if(isOneActive && !isActive){
+                toaster.pop('warning', 'Solo puede haber una tarjeta activa');
+            } else {
+                var cardToUpdate = $scope.objectsSidebarService.selectedObject;
+                //Activate card
+                if(card.myForm.$valid && !isActive) {
+                    var translatedTexts  = $translate.instant(["GENERIC.ACTIVATE_CARD_TITLE","GENERIC.ACTIVATE_CARD_CONFIRMATION","GENERIC.ACTIVATE","GENERIC.CANCEL","GENERIC.ACTIVATED","CARD.ACTIVATE_TEXT"]);
+                    swal({
+                        title: translatedTexts["GENERIC.ACTIVATE_CARD_TITLE"],
+                        text: translatedTexts["GENERIC.ACTIVATE_CARD_CONFIRMATION"],
+                        type: "warning",
+                        showCancelButton: true,
+                        cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                        confirmButtonColor: "#8CD4F5",
+                        confirmButtonText: translatedTexts["GENERIC.ACTIVATE"],
+                        showLoaderOnConfirm: true,
+                        closeOnConfirm: false
+                    }, function () {
+                        $scope.objectsSidebarService.selectedObject.isActive = true;
+
+                        $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+cardToUpdate.identifier,{isActive:true}).success(function(data,status){
+                            swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["CARD.ACTIVATE_TEXT"], "success");
+                        });
+                    });
+                }
+                //Deactivate card
+                if(isActive){
+                    var translatedTexts  = $translate.instant(["GENERIC.DEACTIVATE_CARD_TITLE","GENERIC.DEACTIVATE_CARD_CONFIRMATION","GENERIC.DEACTIVATE","GENERIC.CANCEL","GENERIC.DEACTIVATED","CARD.DEACTIVATE_TEXT"]);
+                    swal({
+                        title: translatedTexts["GENERIC.DEACTIVATE_CARD_TITLE"],
+                        text: translatedTexts["GENERIC.DEACTIVATE_CARD_CONFIRMATION"],
+                        type: "warning",
+                        showCancelButton: true,
+                        cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                        confirmButtonColor: "#8CD4F5",
+                        confirmButtonText: translatedTexts["GENERIC.DEACTIVATE"],
+                        showLoaderOnConfirm: true,
+                        closeOnConfirm: false
+                    }, function () {
+                        $scope.objectsSidebarService.selectedObject.isActive = false;
+
+                        $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+cardToUpdate.identifier,{isActive:false}).success(function(data,status){
+                            swal(translatedTexts["GENERIC.DEACTIVATED"], translatedTexts["CARD.DEACTIVATE_TEXT"], "success");
+                        });
+                    });
+                }
+            }
+        }
+        //Function to remove expire and spent gifts
+        function getAvailableGifts(gifts) {
+            console.log(gifts);
+            $scope.gifts = [];
+            for(var i in gifts){
+                gifts[i].endDate = new Date();
+                if((gifts[i].amount > gifts[i].amountSpent && $scope.currentDate < gifts[i].endDate.getTime()) || (gifts[i].amount ==-1 && $scope.currentDate < gifts[i].endDate.getTime())){
+                   $scope.gifts.push(gifts[i]);
+                }
+            }
+        }
+        //Define a display number for quantity
+        $scope.checkUnlimited = function() {
+            $scope.objectsSidebarService.selectedObject.quantity = 1;
+        }
+    }
+})();
 
 /**=========================================================
  * Module: chart.js
@@ -1748,9 +2050,13 @@ angular.module('biins').config(['$stateProvider',
           'tablet':                 768,
           'mobile':                 480
         })
+        // Using lodash in AngularJS
+        // In controllers
+        .constant('_', window._)
       ;
 
 })();
+
 (function () {
     'use strict';
 
@@ -1764,11 +2070,12 @@ angular.module('biins').config(['$stateProvider',
         //Menus.addMenuItem('sidebar', 'Home', 'home', null, '/home', true, null, null, 'icon-home');
 
         Menus.addMenuItem('sidebar', 'Resumen'    , 'dashboard'       , null, 'app.dashboard'    , false, null, null, 'icon-speedometer', "SIDEBAR.MENU_DASHBOARD");
-        Menus.addMenuItem('sidebar', 'Productos'     , 'elements'        , null, 'app.elements'     , false, null, null, 'icon-book-open', "SIDEBAR.MENU_ELEMENTS");
+        Menus.addMenuItem('sidebar', 'Productos'     , 'products'        , null, 'app.products'     , false, null, null, 'icon-book-open', "SIDEBAR.MENU_PRODUCTS");
         Menus.addMenuItem('sidebar', 'Vitrinas'     , 'showcases'       , null, 'app.showcases'     , false, null, null, 'icon-docs', "SIDEBAR.MENU_SHOWCASES");
         Menus.addMenuItem('sidebar', 'Avisos'        , 'biins'           , null, 'app.biins'        , false, null, null, 'icon-feed', "SIDEBAR.MENU_BIINS");
         Menus.addMenuItem('sidebar', 'Locales'        , 'sites'           , null, 'app.sites'        , false, null, null, 'icon-pointer', "SIDEBAR.MENU_SITES");
         Menus.addMenuItem('sidebar', 'Regalos'        , 'gifts'           , null, 'app.gifts'        , false, null, null, 'icon-present', "SIDEBAR.MENU_GIFTS");
+        Menus.addMenuItem('sidebar', 'Tarjetas'        , 'cards'           , null, 'app.cards'        , false, null, null, 'icon-note', "SIDEBAR.MENU_CARDS");
         Menus.addMenuItem('sidebar', 'Organizaciones', 'organization'   , null, 'app.organization'  , false, null, null, 'icon-globe', "SIDEBAR.MENU_ORGANIZATIONS");
         Menus.addMenuItem('sidebar', 'Perfil'      , 'profile'         , null, 'app.profile'      , false, null, null, 'icon-user', "SIDEBAR.MENU_PROFILE");
         //Maintenance has role field: maintenance
@@ -1860,6 +2167,7 @@ angular.module('biins').config(['$stateProvider',
       $rootScope.$state = $state;
       $rootScope.$stateParams = $stateParams;
       $rootScope.$storage = $window.localStorage;
+      $rootScope._ = window._;
 
       // Uncomment this to disable template cache
       /*$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
@@ -1940,11 +2248,105 @@ angular.module('app.core').controller('HeaderController', ['$scope', 'Authentica
  */
 'use strict';
 
-angular.module('app.core').controller('LoadingController', ['$scope','Loading',
-    function($scope, LoadingService) {
+angular.module('app.core').controller('LoadingController', ['$rootScope','$scope','Loading', 'Utils',
+    function($rootScope, $scope, LoadingService, Utils) {
         $scope.loading = LoadingService;
+        $scope.isCollapse = Utils.isSidebarCollapsed();
+
+        $rootScope.$watch('app.layout.isCollapsed', function(newValue) {
+            $scope.isCollapse = newValue;
+        });
     }
 ]);
+
+// **Created by Carlos on 15/07/2016
+/*  Modal directive  */
+(function() {
+    'use strict';
+
+    angular /*  Module getter */
+        .module('app.core')
+        .directive('modal', modal);
+
+    function modal() {
+        return {
+            restrict: 'A',
+
+            link:function($scope, element, attributes){
+
+                $scope.open = function() {
+                    $('#' + attributes.target).insertBefore($('.nps'));
+                    $('#' + attributes.target).modal({backdrop:'static',keyboard:false});
+                    $('#' + attributes.target).modal('show');
+                }
+                $scope.close = function() {
+                    $('#' + attributes.target).modal('hide');
+                }
+
+                var action = attributes['modal'];
+                element.on('click', $scope[action]);
+            }
+        };
+    }
+
+})();
+
+// **Created by Carlos on 08/0/2016
+/*  Print directive  */
+(function() {
+    'use strict';
+
+    angular /*  Module getter */
+        .module('app.core')
+        .directive('ngPrint', ngPrint);
+
+    function ngPrint() {
+        var printSection = document.getElementById('printSection');
+
+        // if there is no printing section, create one
+        if (!printSection) {
+            printSection = document.createElement('div');
+            printSection.id = 'printSection';
+            document.body.appendChild(printSection);
+        }
+
+        function link(scope, element, attrs) {
+            element.on('click', function () {
+                var elemToPrint = document.getElementById(attrs.printElementId);
+
+                if (elemToPrint) {
+                    printElement(elemToPrint);
+                    window.print();
+                }
+            });
+
+            window.onafterprint = function () {
+                printSection.innerHTML = '';
+            }
+        }
+
+        function printElement(elem) {
+            var domClone = elem.cloneNode(true);
+
+            if(elem.id=='qr-section'){
+                printSection.innerHTML = '';
+                var codeLink = document.getElementsByClassName('qrcode-link')[0].getAttribute('href');
+                var codeImage = document.createElement('img');
+                codeImage.setAttribute('src', codeLink);
+                domClone.appendChild(codeImage);
+            } else {
+                printSection.innerHTML = '';
+            }
+
+            printSection.appendChild(domClone);
+        }
+
+        return {
+            link: link,
+            restrict: 'A'
+        };
+    }
+}());
 
 /**=========================================================
  * Module: scroll.js
@@ -2402,6 +2804,50 @@ angular.module('dashboard').config(['$stateProvider',
 ]);
 
 /**=========================================================
+ * Module: currentCard.dashboard.client.controller.js
+ * currentCard for Biin in dashboard
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('dashboard')
+        .controller('currentCardController', currentCardController);
+
+    currentCardController.$inject = ['$scope', 'Organization'];
+
+    function currentCardController($scope, Organization){
+        var currentCard = this;
+        var NO_IMAGE_PROFILE = "data:image/png;base64,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";
+        // $scope.isLoading = true;
+
+        init();
+
+        function init(){
+            $scope.organizationService = Organization;
+        }
+
+        /**=============================================================================================================
+         * Events Listeners
+         *
+         =============================================================================================================*/
+
+        // $scope.$on('organizationChanged', function () {
+        //
+        // });
+        //
+        // $scope.$on('Biin: Site Changed', function (scope, site) {
+        //
+        // });
+        //
+        // $scope.$on('Biin: Days Range Changed', function (scope, numberdays) {
+        //
+        // });
+    }
+})();
+
+/**=========================================================
  * Module: dashboard.js
  * Dashboard for biin
  =========================================================*/
@@ -2497,8 +2943,167 @@ angular.module('dashboard').config(['$stateProvider',
             $scope.globalFilters.selectedSite = site;
             $scope.globalFilters.changeSelectedSite($scope.globalFilters.selectedSite);
         }
+    }
+})();
 
+/**=========================================================
+ * Module: giftboard.client.controller.js
+ * giftboard for Biin in dashboard
+ =========================================================*/
 
+(function() {
+    'use strict';
+
+    angular
+        .module('dashboard')
+        .controller('giftboardController', giftboardController);
+
+    giftboardController.$inject = ['$scope', 'Organization', '$http', 'toaster', '$timeout'];
+
+    function giftboardController($scope, Organization, $http, toaster, $timeout){
+        var giftboard = this;
+        var NO_IMAGE_PROFILE = "data:image/png;base64,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";
+        $scope.isLoading = true;
+        $scope.itemDragged = false;
+
+        init();
+
+        function init(){
+            $scope.organizationService = Organization;
+            getGiftBoardData();
+        }
+
+        /**=============================================================================================================
+         * Events Listeners
+         *
+         =============================================================================================================*/
+
+        $scope.$on('organizationChanged', function () {
+            $timeout.cancel($scope.giftBoardTimeout);
+            getGiftBoardData();
+        });
+
+        $scope.$on('Biin: Site Changed', function (scope, site) {
+            $timeout.cancel($scope.giftBoardTimeout);
+            getGiftBoardData();
+        });
+
+        $scope.$on('Biin: Days Range Changed', function (scope, numberdays) {
+            $timeout.cancel($scope.giftBoardTimeout);
+            getGiftBoardData();
+        });
+
+        $scope.$on('$locationChangeStart', function(){
+            $timeout.cancel($scope.giftBoardTimeout);
+        });
+
+        //Get the information need it for the giftboard
+        function getGiftBoardData(){
+            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.isLoading = true;
+
+            //Get products to update gifts images
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/')
+                .success(function (data) {
+                    $scope.products = data.data.elements;
+                });
+
+            getGiftsData();
+        }
+        //Get the gifts information
+        function getGiftsData() {
+            if($scope.organizationId){
+                //Getting the information
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/dashboard')
+                    .success(function (data) {
+                        if($scope.itemDragged==false){
+                            generateDisplayInfo(data);
+                        }
+                    });
+            }
+        }
+        //Function to parse the information to what we need to display
+        function generateDisplayInfo(data) {
+            $scope.items = [
+                {'name': 'Enviados','status':'SENT','gifts':[],'allowedTypes':[]},
+                {'name': 'Reclamados','status':'CLAIMED','gifts':[],'allowedTypes':['SENT']},
+                {'name': 'Entregados','status':'DELIVERED','gifts':[],'allowedTypes':['CLAIMED']}
+            ];
+
+            if (Array.isArray(data)) {
+                for(var i in data){
+                    var currentStatus = data[i].status;
+                    var list = _.find($scope.items, function(o) {return o.status === currentStatus;});
+                    //If status is REFUSED nothing happens
+                    if(list){
+                        //Setting the image URL
+                        var imageURL = "";
+
+                        if( data[i].user && data[i].user.facebookAvatarUrl && data[i].user.facebookAvatarUrl != ""){
+                            imageURL = data[i].user.facebookAvatarUrl;
+                        } else if(data[i].user &&  data[i].user.url && data[i].user.url != "" ){
+                            imageURL = data[i].user.url;
+                        } else {
+                            // if(data[i].user.gender==='male'){
+                                imageURL = 'modules/core/img/icons/maleAvatar.png';
+                            // } else{
+                                // imageURL = NO_IMAGE_PROFILE;
+                            // }
+
+                        }
+                        data[i].image = imageURL;
+                        //Pushing the object
+                        list.gifts.push(data[i]);
+                    }
+                }
+            }
+            refreshingData();
+        }
+        //Function to refresh data every 2 second
+        function refreshingData() {
+            $scope.giftBoardTimeout = $timeout(function(){
+                getGiftsData();
+                $scope.isLoading = false;
+            },1500)
+        }
+        //Function triggered when a gift was dropped
+        $scope.itemInserted = function(event, type) {
+            var target = event.path[1].getAttribute('data-status');
+            $scope.itemDragged = false;
+
+            if(type === 'SENT' && target == 'CLAIMED') {
+                $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/dashboard/gift/' + $scope.dragGift + '/claim')
+                    .success(function (data) {
+                        getGiftsData();
+                        toaster.pop('success', '', 'El regalo se ha enviado exitosamente');
+                    });
+            } else if(type === 'CLAIMED' && target === 'DELIVERED') {
+                $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/dashboard/gift/' + $scope.dragGift + '/deliver')
+                    .success(function (data) {
+                        getGiftsData();
+                        toaster.pop('success', '', 'El regalo ha sido entregado exitosamente');
+                    });
+            }
+        };
+        //Function triggered when a gift start dragging
+        $scope.dragStart = function(gift) {
+            $scope.itemDragged = true;
+            $timeout.cancel($scope.giftBoardTimeout);
+            $scope.dragGift = gift.identifier;
+        }
+        //Function triggered when a gift stop dragging
+        $scope.dragCanceled = function() {
+            refreshingData();
+            $scope.itemDragged = false;
+        }
+        //Function to set the image of the current product into the thumbnail in the Objects Sidebar
+        $scope.setProductName = function (product) {
+            for(var i in $scope.products){
+                if(product == $scope.products[i].elementIdentifier){
+                    return $scope.products[i].title;
+                }
+            }
+        };
     }
 })();
 
@@ -2744,10 +3349,9 @@ angular.module('dashboard').config(['$stateProvider',
         .module('dashboard')
         .controller('npsController', NPSController);
 
-    NPSController.$inject = ['$http', '$state', '$scope', 'Authentication', 'Organization', 'GlobalFilters'];
-    function NPSController($http, $state, $scope, Authentication, Organization, GlobalFilters) {
-
-
+    NPSController.$inject = ['$http', '$state', '$scope', 'Authentication', 'Organization', 'GlobalFilters', 'toaster', '$timeout'];
+    function NPSController($http, $state, $scope, Authentication, Organization, GlobalFilters, toaster, $timeout) {
+        
         var NO_IMAGE_PROFILE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAZJElEQVR4Xu1dB3hVRdp+Z27JTaVIR4qCCAI2RGRBRGmikAQEVyABXRABBUkBBPwhioCQhpRlF2HBJOBiUJKAgAWkLL0I0gSkqvSWQpKbe8/M/8y5CX8IKfeeW8652X98kJKZr817pnzzzTcElazExMTQg2fvPMQZfwzAQ4DUGNA1BGc1QXgNMFQHpX5gzMgAo1CfAgWgtACM5QL0Bgi/AUKvAdIFQuhZAn6WWvmx1s2qnIuJiWGVyWTE25UJeSuyAST8BZx0AEFbcNYaoP7u0IsBOZTgCDjfQzjdTjnd8c3y2X+4g5enaHodADq/GWOqyrJf5Bw9AflXU08ZqzQ+hLBTnJP1nPP1Wfoqmzcvi8lXUx5HeXsFAPr3jzGafbJeJoS8DsaCQWmgo4p6qH4WGEunOvKVPi/o+9TUmAIP8VXMRtMA6DM4shkDfZszDCGE11SspQoNGdhVArqMSXTx2hWxp1QQwS6WWgQACQ6L6gqOKELRwy4tNF+JbCCMxaUtT9gEgGtJXM0AQF69/5bVh4NPAaGPa8lIrpKFcxykwEdpKfHpWgGCFgBAgsOiXwH4J4TgSVcZW8t0OLAfnH2YkZK4QW05VQVA7yERLXWMJnKgm9qGUIc/2UBhjVydPOe4OvwBVQDQPTza3xfSNAY6hgI6tZTXBl9mBdHNYaaAqWsWxeR6WiaPAyB0yLjukpX9k1I09rSyWubHgTOU8eFpyxM2elJOjwGg9/AYP5KXE0fAR3pSQe/jxedm6oImeMqh5BEA9AmLfIIR8m8Azb2vQ9SQmB+hoANWJ8cdcTd3twMgNDwqnDO2CJSa3K1MpaLPeC6ndGhGcpz4cNxW3AaAzp1j9FUaZCcAGO026f8LCBNOEgzm8+NTU1Mld6jrFgAE/218IAosKwmh4rDm/4uTFmDAGjPIgO+T4+44Seq+5i4HQN+wsXWt0K3TklOHEIJHHm6Als2boHGDOmhQvw6qBgXCz88EH6MBuXn5yMnJxa3MbJz/4xLOnr+II8dP449LV11tb8X0CPgBZpVeyfjysyuKiZTS0KUA6D14QkPKrWIbo+oRbZGeTR9qgB4vPod2bVoiKDDAYbtdvHwdO/f9gu827cLV6zcdbu/qBlzCST3RdXFlDILLABA6ZFwTbpU2gZKGrlbcUXpPtmqGga+9jGZNXCMK5xx7DhzFim++w/nfLzkqjkvrM4ZzRs66fL0i8YwrCLsEAPKXL1m2qd359evWxDuD++Lxlo+4wjb30RBA2LhtL5JWrkNWdo5beNhDVIDAAN3zrhgJnAaAmPMlotuq5rAv5vjePZ5HWL+eMBoN9tjQqTq3M7Mxf0kq9h085hQdZxqL6QDc2snZNYFTALCt9qWtai74TCYfRIwYiHZPt3TGnorarl63GUkrv4UYGdQo4lQxH+QFZ3YHigEg9vlBD2ZmqLnVq14tCFOi30bjBnXVsL/Mc/f+I0hYuBzmAosqMogtoin/Qh+lfgLFAAgJj5qrppOnWtUgTJ80EvXqqB8pdujoKUxPWIICi1UVEAhnUVpKXJQS5ooAILt3gSQlDF3RJsDfD59OeQ8P1q3lCnIuobH/0HHMmLMMkuQWh12FMnKQAUrcxg4DQD7Y4XyXWr59nY4iZvxwtG6hCVfDPR2z7sftWJS0usLOcksFxnMppe0cPUByCADiSJfmZe9X81RvWFgoenXv6BYbuoLo/MVf4cete1xBSgENfiRTF9TWkaNkhwAQEha1AASjFEjmkibCwSO+fi0XsRh8f1IcLl+9oYqYhOCztKT4sfYytxsAIpKHM/advYRdXU/47efNHIcHqlVxNWmX0zt64gw+nLFQte0hYbyrvZFFdgGgf/9RAflG38NqhnG9NaA3Qnq+4PLOchfBuZ+vxKZte91Fvly6jEunTWbSOjU1Ma8iAewCQEh4RAJAIyoi5q6f16n1AOZ/Oh56vffEj964mYmR42aqtjXkwOyM5PgJFfVJhQAQodtg9JCa0btjhr+Blzo+U5Eumvv50i/XIH39FpXkYlbODa0yUmafKE+AigBAQsOjvlMzbl94+z5PmAydznu+/iKDX795G+9EzYAkqZRSgLBv05MSeykGQHBY9KuE8LUqQVhmKw54+gV3UVMEp3jHLUjBf3YfdIqGM40JpT3Svoj9viwaZY4A4q7egd+y96t50CNO+RYnfogHqmt/5V+WgYWbeOqsfzrTh861lci+9BVxz5Z1F7FMAISGRb7GCVnlHHfnWrdq0QSfTPTuawSMMbw5+iNkZbs8nM9u43LOQzJSEjJKa1AWAEhIWMRBtW/pvh3eB69262C3olqt+Pelq/D9T7tUE0/EE6YlJ4hV9H3n1qUCIDgsqhshKHPe8JQm82eN19SBj1K9d+z9BbPnqXZ2JotNOHkxLSVuc0kdSgfAoKgNaidnEMe9S+dOUWpzTbXLzMrBkPdi1JWpjB3BfQCQ07JwUu7e0ROatGvTChPff9MTrDzCY9T4Wbh4+ZpHeJXFhHP2SEZK4m/Ff34fAEIGR8eC82hVJQXwekg3DHytkmSIAfDpZ8uwa7/br/qV322Ez0pPSvigTADYsnHl/KGFhEzR74ahY7vKkzAkJXUdVq0RKYJULVdq+2Y3WLRo0d34tXtGgOCwyGBCiMhfo3oRET/Nm1aeFAIiRkDECqhf+KvpyQnriuS4BwAh4VEpAAapLySwMPYD1K1dQwuiuEQGcbFkxpylLqHlDBHC8UVaSvzdxdVdAIgMnIFS9jUKOH6HyhmJSmkrTv2SF3wEX9/Kc6P82IkzmDT97y62lOPkGGGZ1irW2uvnzTOL1ncBEDo4qifnuDs0OE7aNS3E9u9/oobi4Ub1XUNQI1Ru3c7C+5MTVL1RVGQKztE9IyX+h3sAoHaYtxBGBHzOnvo+mjSuXJ1fZPjjp85h0icLVIsU+r9vgSWmJydGlgSASGeqaqhtp/ZPIXKkJpYgbhs3NLEdBH5NT45vcRcAcsp1K7ngNq3tJDz2nQHo3KGNnbW9s9oPm3djwb9SVRdex6V636TMuSSvAUIGR/4VXE7ipGr5+IMRePwxVQcht+v/8+ET+Cj2c7fzqZABQf/0pPhVNgCofM2rSNgp0cPw9OOVO5HY7gNHMVMD20EOPicjOSGicASI2gmO5ypEjZsrDBsUjF49OrmZi7rk09b9hGX//lZdIQBIwI61yfEdiIj8+fl0Zpa7nllxRNN2T7XAxIihjjTxurrTYv+B/YfvOY9RS4es9OT4qkRO7cKYJiTSEStWLJoNHx/5LadKV/Ly8jHw7Qng1P1JLOwxnk5CYxISHt0b4KWGC9lDxJV1CvLuYPTwAejZrXJOA2vWb8LCf30Fo6/qzla52wjBKwIAYwD+mSs7UiktizkPtaoH4vP506H3wjDw8vS2WKwY+u5E3MjMhcHHV6mJXNuO4F2i9q2f4hpJ1gJY8u9g+Ft/Rd/e3V2rrMrUVn6zDktTvobBNwA6nTamABASJ0aAVQB/TWX7yOxFrh3znUz4moxYmPgx6lSS08CLl65iRMRUmC1WmPyCIMLdtVAISCoJCYvcAkI0M+lazLmQLGY81rwpYqdNkM8HvLlYJQmRE2fi5G9noTOYtDP824z6k5gCjgJUPLOqicIZgzk3S45gDn7lJYwa5t1nA5u27sLsOcLzR+DjL75+7QCaERwmIYMiLoHSOpro/UIhxGJQstge4Bz9Tjhe7dFZS+I5JEvMzLnYtfcQ9EYT9EaNLP4KNZCASyQkPCoTQJBDWrm5srwWEKMAZ6hVozq++OdszcybjqiemZWNgUMjwRiB0S9QczowhttiBMhTK+FTecbkkhXmPJGOlWP6lEi0edLziSAd6ezS6q5K24DFSavkfT/V6Z0l5/L2DMgjvQdFSJRS7UxMxdS0WgpgNd/Bc22fQMzEMS43gDsJilHsb6Mm4uqNLBhMfu5kpZg2Y4xpGgBCM7ErYNYCLJ43HfXr1VasrKcb7th9AB/PWqCtfX8JI8gA0OoUUCQr50z2DXR/qSMi33vL0/2omN+YcdNw8vQFmAK0e7VdngK0uAgsaXVxRkBgxedzp6OehrKDloWOXXsPImbmPOgNJui14vYtRdiiRaDmtoElZZUkCyx5OejUoS0mRY1Q/FV6oqHIBzAyYirO/34RPn5VQLS5vJJNYdsGDoo6AgrNL7HNd7LAuYT4GRPRsrl2w8bWbvgJ8xelgOqNMJr8PYE5xTxsjiCNuYLL0ka4h8WCsHGjB7EgbqomXcRi3z/0vUnyA1RG30BNbv1K2Fe4grVzGFQRlItGgSED+mBA/3KTX1VEyi0/nx67ENt27gPVGTRz5l+eorbDIJWTQDrSE0XHxSJWYM6syWj6cCNHmru17qYtOzH7s8U2n7/w+lEvSGvHEUtCB0eN5hzi8QevKMI7yCUL6tetjXmx/wM/P/X9639evIL3xn0MEfKlwRO/svtVBIT0GRzZi3Gyxit6HwBjEgpys2UXcftnn8KUCe+q6mMXnT72g+nyqh+ghSd+2jjvr6hP5ZCw1wZGPGzV0dMVVdbSz60FebAW2E4L+4X0wLAhr6sinsgAKvb7ew/8IvM3mAKg02sk2scOizCibySHhe8/nZ2phWvhdsh8t4o5Nxuc2d7oGRreD/37ePaZYuHrj527BGLuF4XqfWDUqM+/NLuKa+JrkhKraepiiCMAEIEj+XnZINyWh3fY4P7oF/qyIyQU1xXOnoT5S/Hj5h0yDUJ0mjzuLVdBzrenpyR0LLwaFvkZQLzruE14sgo9hEWKjhkxGK90d++bAvn5ZnyauAjC3SsKJxQm3wDvWPXfgwjbFXEZAKFh0a9zwlcq/iRUbGi1mGE158oSRIx6Ez26Pu9WaTb8uBVz/v5FIQ8Cg6+/dqJ8HdCccN4vLSXhaxkAfQeNf1Ci0u8OtNdUVas5D1ZLPv61YKbbD4su/HEJw8d8KOtv8PGHzuCdt5gsOlp33bLYy8VSxESc5Jy659VlD8Clfq1qWBA32QOcgKHvTcbVG9le2/mMkeNrlsfJgcB3ARAS7p3rgKIeHzooRH5A2hPlm7UbkfTVek+wcguP4i+N3gVAcFjEy4RQr9QqKNAfi+InQTwk7YmSm5uP4VHTkXOnwjeZPCGO4zwI6ZaeFPfjPSOASBNXRcq+orUIYXu0GzGkL17u8hd7qrqszprvtmHJck3k1HRIJxEEYioIrJ2aGlNwDwDEX0IGRSSB0nCHKKpcWTwqMe2DER53BwtfwOQZC3H85FmVLeAge4Kl6UnxfytqdY/T2tvOBWpUr4q4j95H1SqBDlrBNdVv3spCdMwciN+9pXDOemakJG4oFQAiWXS+KfN3CqqdZ7nLsGy1KoGYNmmk6g9KXPjzsvxKqJpPwtgNPsYu1/a/07DMZNGCUHB41CwCjLebqAoV69WpKWcT1Uou4T8vXcO0+MWqvRdsbxcQ8JlpyQmTite/79yy18Bxj+h07KS9RD1dr0O7JzDqrX7w10AcQHHdxY5g3uKV2K32mwDldAihtGnaF7H3nPyWenAdEh69HuCeOVmxE0Hi6TjxdHz7Z1rb2UKdatt2HcTSLzM0ty7gwNqM5PjeJa1SKgBCB0V24ZTI+0S1i0geHdrzBfTs2gFGg/bu15VmH/GE/Lof/oP0DVtxO1MEr6hfKFjn1cmJ971jW+azccFhUQfUejRSZNAQGUO7dHoW7du2hkHvHR1fspstVit27DmEjVv34vDx0+oliS7n8chyHo6MCuUEqz2FXfFGQKvmTfBcm1Zo90xriFV+ZSoiXfzOfYflNcKRX89AkiSPqcc56ZWREldqdsrygtdIcHjUXgK4LXtzYIAf2jzRAm2fegxPtX4UfpXogYjyele4kkXO4D0/H8P+Q8eRc8d2nO2ewnanJye2d/jpWCGMO84H6tWpgXZtWqPd0y3xaNNGHvfgucfIyqkKj+KJ385D5BDete+wy7eShPGuacsTNpYlYYXhq67YEVQJCsBLHZ/BC395Go0b1lNurf+ClmfO/4kt2w/gp+37nHcuEWSkJ8WHlGe2CgHQJ3xsCyt0hymg6KaDcNYkfhIJUyVN/+ouTOblmzF2cjyuXLupiIXEYAGnLdeuiBUPgZRZKgSAaOnsY5LCeRM1chA0mohEkYHd2UiEm8ctSJYXjYoLwYz0pPgKI2TsAkDv4TF+JC/7MAEeViqQeApWgMBo9J64eaW6OtNO+BBi5ydj38FjiskQwk7dplUe37wsxnZ5wtkRQLR3zjnEIfL9NHvoQUz9YBSqBFWuLV5FRrb357duZ2LqzAU4c+ES9HqjnM1ZSSnrpfDSaDnEQWnYWF7ObZDCp+trPFANk6NHosWjTZToVmnbHDl2EjPi/4Gbt0TWvsJwczm1nGP5u4qHe9ljLIcAYIsaytoLkFb2EC+qY7vVK/a6XP4ncbt3yMA+8kUOreTNdUQfV9YV20CRSDplZTrE3G8rBAaTv8PXzDhwyFK1oF3Ro5D2yOkQAATBPuHRrRhju0GJQ7nPJKtFzgReBAJBS4wC0aOHelX2L3uMam+d3/+8hLi5S3DiVPGoImV3DRiQo4f07OrkOcft5W+DmoISGhY1gBOscLSpLfmjAEER0gGDQY9+IS/jjdderbQvhZS0k7hd9OXXa/F1+vewWm33G20fvk6+X6goqWThK2CO9okiAAgmShNLiEuVBfnijn8xxQE5JWz4gD7o2rl9pZ0WxHAv7hMmfZmG6zdu3dNXRGQVMfkr0p0DszOS4yc42vmKRwDRsH///rp8U8PVFLjvjNkeQYpu85Ss26hBPYT9NQQd27dRZAx7eHu6juj4/+zcL8/z4mbRvYVAb/RRnkia89VG8+/9U1NTFZ0uKR4BbCAYFWAxmbZwkKeVGFWMAgX5uXL2r5JFZAARi8QuLzwHo9E7r1+ZzQXYuGUnVqVvgHg0omQRaWQMPgqHfNtEuge+gS+uWRSj+DTJKQAIhYIHvF8bRL+V6NBMCQhEG5HswZbwwbZLKF4CAvzQ/cWO6Nm9ExrUr6uUhUfbicXduu+24Ieftpd60sfFKl9OH29SLJe43mUyml9IXTrvmmIiSheBJRmKy6UWSNsoRWOlwoiUsJaCfDCL/Kx9qaVZk8bo0rm9PD08UL2aUlZuaXfj5i1s27FfThhx8vS5MngQUIMRBqOvk9MbOysRPL82KfFPZ5VxegQoEkCkmikgdKMzIBC0OJPk0UD4DsoqwnfQrGljPNf2STmN/CNNGjtpUMfNKBazp86cx/6fj2DnnoM4dfpcORE/RN7Tiy/e+exh7CzR8ZfSls0pC2UOKeMyAAiu4hVybiY/OjMdFEkvMoCIK9+SRQDh/qmh5DTR+rFHZb9Ci2YPy+njfF0cXCK2br+dOY9fT57BsROn8cvRX+WEkOUXIt8gFjmDXZQy9leJsK6u+PKL5HYpAARReU2g13/rqkgi8aWJ0UBkChWjgz1FjBC1aj6Axg3ro26dmqhTq6b8d3GDSJxD+Pv7wscohmIDKCEoKLBAxO/l5NxBZlaOHMh55dp1XLl6HRcvXcH5Cxdx+ep1u2P6xFeuM/hApze6bGQSCz6TvqCXs3N+Sfu5HACCgdgd5Jt8VyjdIpbVyUyyymlhJIsFKGXnYA843FaHiE43yNlCFDlyyhOM89XMLyjMmdV+mdOpuwwi/AQWn0azOeGR7uAhwMAEGKzWu9nC3MGnPJqE6qHT6+XUsC7v9ELGwsnjk39hktJ9fkU2ccsIUJxpcHj0G0RiS6Bz7OygIsGL/1xME4xZwa1WSEySk0kWZQ9zhE65HyGI3Mk6qgPRiU7Xu2x4L42vJHz7nL8p8vi4SofS6LgdAIKpfIAE9qWjp4jOKC62lQIIYjEp/lz0OxiX53JOAMJti0vxf7FuEP+B2n4X87hYuIlflNj+7KkiTvW4Dm+sWRb/q7t5egQAtnVBhG+BiXzqjeno3N0J94xmQLylasFkR450nZHPYwAoElJEFjFKFjkTXuaMwlptK8K4wHTD01LiNntSRo8DQChXGGM4lYBFiiSrnlRYa7xE9K5Oh1hjHvskNTXR40mHVAFAUScEh41/lIMlUMJf0VrHeEQeggzJSqMrCt12pyyqAuDutDBkXHdu4dOh48+4U1nt0Ga7CSOTy7ux4ylZNQGAQmVJcFhkb0owVenxsqeMppiPRPZxipiMlLh1Ffq3FTNxrKGWAFAkOQkeHNmZMxpdWaYGkZxBBxa3Ojlxq1Y6/q6xHcOLZ2sHh0U0JZQMAydvAvCed2OFmRi7TChZCqpbUjIti2etWD43LY4A90k8fPhww5W8gG6Ek9clykIpp5p8j1UkYaQ6rOaMfVXH787G4tm4tNTpxWXxCgAUF7jn6NE+hlvGToSwngAVz4Q0V9O4IjJHR7CeU6w35gVsLcrAqaZMjvD2OgCUVK5v2Ni6EtV14Jx3YCDP6hhrDUrddfdMPF96GITvIZxsL9DrtouU644YXGt1vR4ApRiU9B0Y1ZDp8RgHHgLIQ4SjEQevwQhqcI4ahMFXPPAFxmzZpSk1g8HMKfIIwXXKcZ2AXOecnwPFOQKclaA/uiZplnhTofzoFK31cAXy/C9/dhxeaBFNkgAAAABJRU5ErkJggg==";
 
         /**=============================================================================================================
@@ -2755,21 +3359,33 @@ angular.module('dashboard').config(['$stateProvider',
          *
          =============================================================================================================*/
         $scope.$on('organizationChanged', function () {
+            $timeout.cancel($scope.npsTimeout);
             resetNPS();
+            getGiftsData();
             getNPSData();
         });
 
         $scope.$on('Biin: Days Range Changed', function (scope, numberdays) {
+            $timeout.cancel($scope.npsTimeout);
             resetNPS();
             getNPSData();
         });
 
         $scope.$on('Biin: Site Changed', function (scope, site) {
+            $timeout.cancel($scope.npsTimeout);
             resetNPS();
+            getGiftsData();
             getNPSData();
         });
 
+        $scope.$on('$locationChangeStart', function(){
+            $timeout.cancel($scope.npsTimeout);
+        });
 
+        //Current Date
+        $scope.currentDate = new Date();
+        //Status as filter
+        // $scope.status = undefined;
         $scope.indexBGColor = "";
         $scope.lineOptions = {
             series: {
@@ -2819,6 +3435,8 @@ angular.module('dashboard').config(['$stateProvider',
             $scope.authentication = Authentication;
             $scope.organizationService = Organization;
             $scope.globalFilters = GlobalFilters;
+
+            getGiftsData();
             getNPSData();
             resetNPS();
         }
@@ -2849,26 +3467,60 @@ angular.module('dashboard').config(['$stateProvider',
 
         function getNPSData() {
             $scope.isLoading = true;
+            getRatingsData();
+        }
+
+        function getRatingsData() {
             var filters = {};
             filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
             filters.dateRange = $scope.globalFilters.dateRange;
 
+            //Get nps ratings
             if($scope.globalFilters.selectedSite){
                 filters.siteId = $scope.globalFilters.selectedSite.identifier;
+
                 $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/nps', {
-                        headers: {
-                            organizationid: $scope.organizationService.selectedOrganization.identifier,
-                            filters : JSON.stringify(filters),
-                            offset : new Date().getTimezoneOffset()
-                        }
-                    }).success(function (data) {
+                    headers: {
+                        organizationid: $scope.organizationService.selectedOrganization.identifier,
+                        filters : JSON.stringify(filters),
+                        offset : new Date().getTimezoneOffset()
+                    }
+                }).success(function (data) {
                     $scope.isLoading = false;
                     if (data.result == "1") {
-                        updateNPSValues(data.data);
+                        $scope.isGiftActive = data.data.gift;
+                        updateNPSValues(data.data.ratings);
                     }
                 });
+
+                // Refresh data every s
+                refreshingData();
             } else {
                 $scope.isLoading = false;
+            }
+        }
+
+        function getGiftsData() {
+            var organizationId = $scope.organizationService.selectedOrganization.identifier;
+            var siteId = $scope.globalFilters.selectedSite.identifier;
+
+            if (organizationId) {
+                //Get gifts fir automatic tasks
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/true')
+                    .success(function (data) {
+                        $scope.npsGiftsAutomatic = data;
+                    });
+                //Get gifts for manual tasks
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
+                    .success(function (data) {
+                        $scope.npsGiftsManual = data;
+                    });
+                //Get products to update gifts images
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/readyElements/')
+                    .success(function (data) {
+                        $scope.products = data.data.elements;
+                    });
+
             }
         }
 
@@ -2877,7 +3529,6 @@ angular.module('dashboard').config(['$stateProvider',
             resetNPS();
 
             if (Array.isArray(data) && data.length > 0) {
-
 
                 var dateArray = getDates((new Date()).addDays(-($scope.globalFilters.dateRange-1)), new Date());
                 var totalCases = 0;
@@ -2918,11 +3569,13 @@ angular.module('dashboard').config(['$stateProvider',
         }
 
         function generateLastComments(data){
-
             $scope.lastComments = [];
             if (Array.isArray(data)) {
                 for(var i = 0; i < data.length; i++){
                     var newComment = {};
+                    newComment.gift = data[i].gift? data[i].gift : 0;
+                    newComment.userIdentifier = data[i].userIdentifier;
+                    newComment.identifier = data[i].identifier;
                     newComment.date = generateElapsedTimeString(data[i].date);
                     newComment.user = data[i].user? data[i].user.name : "Usuario Eliminado de Biin";
                     newComment.comment = data[i].comment == "Optional" || data[i].comment.trim() == ""  ? "No hay comentario" : data[i].comment;
@@ -2962,6 +3615,106 @@ angular.module('dashboard').config(['$stateProvider',
             } else {
                 return parseInt(diffDate/60/60/24) + "d";
             }
+        }
+
+        $scope.getGiftImage = function (productIdentifier){
+            for(var i in $scope.products){
+                if(productIdentifier == $scope.products[i].elementIdentifier){
+                    return $scope.products[i].media[0].url;
+                }
+            }
+        }
+
+        //Display de gift when the modal is open, depending if is automatic or manual
+        $scope.displayGifts = function (type, commentData) {
+            //ClearTimeOut to stop receiving data
+            clearTimeout($scope.npsTimeout.$$timeoutId);
+            if (type=='manual') {
+                $scope.currentComment = commentData;
+                $scope.npsCommentIdentifier = commentData.identifier;
+                $scope.userCommentIdentifier = commentData.userIdentifier;
+            }
+            $scope.giftDisplay = type;
+            $scope.selectedGift = null;
+        }
+        //Set the value of the current selected gift in the modal
+        $scope.setSelectedGift = function (giftIdentifier) {
+            $scope.selectedGift = giftIdentifier;
+        }
+        //Assign a gift to an user
+        $scope.assignGift = function () {
+
+            if ($scope.giftDisplay=='manual') {
+                $http.post(ApplicationConfiguration.applicationBackendURL + 'api/gift/assign/nps', {
+                    npsCommentIdentifier: $scope.npsCommentIdentifier,
+                    biinieIdentifier: $scope.userCommentIdentifier,
+                    giftIdentifier: $scope.selectedGift
+                })
+                .success(function (data) {
+                    toaster.pop('success', '', 'Su regalo fue enviado con éxito');
+                })
+                .error(function (data) {
+                toaster.pop('warning', 'Acción no se puede llevar a cabo', 'Este usuario ya tiene asignado ese regalo, puede intentar con uno diferente');
+                });
+            } else if ($scope.giftDisplay=='automatic'){
+                $http.post(ApplicationConfiguration.applicationBackendURL + 'api/gift/assign/auto/nps', {
+                    siteIdentifier: $scope.globalFilters.selectedSite.identifier,
+                    giftIdentifier: $scope.selectedGift
+                })
+                .success(function (data) {
+                    toaster.pop('success', '', 'Su regalo automático fue activado con éxito');
+                })
+                .error(function (data) {
+                    toaster.pop('warning', 'Acción no se puede llevar a cabo', 'Este usuario ya tiene asignado ese regalo, puede intentar con uno diferente');
+                });
+            }
+            refreshingData();
+        }
+        //Deliver a gift to an user
+        $scope.deliverGift = function (commentData) {
+            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/gift/deliver/nps', {
+                npsCommentIdentifier: commentData.identifier,
+                biinieIdentifier: commentData.userIdentifier
+            })
+            .success(function (data) {
+                toaster.pop('success', '', 'El regalo ha sido entregado exitósamente');
+            });
+        }
+        //Desactivate an active automatic gift
+        $scope.desactivateGift = function () {
+            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/gift/cancel/auto/nps', {
+                relationIdentifier: $scope.isGiftActive.identifier
+            })
+            .success(function (data) {
+                toaster.pop('success', '', 'El regalo automático ha sido desactivado');
+                refreshingData();
+            });
+        }
+
+        //Change tab status
+        // $scope.changeStatus = function (status) {
+        //     $scope.status = status;
+        // }
+        //Function to execute refreshing data from the view
+        $scope.refresh = function () {
+            refreshingData();
+        }
+        //Count comments depending of its state
+        // $scope.commentCount = function (tab) {
+        //     var count = 0;
+        //     for(var i in $scope.lastComments){
+        //         if(tab == $scope.lastComments[i].gift.status){
+        //             count++;
+        //         }
+        //     }
+        //     return count;
+        // }
+
+        //Function to refresh data every 5 second
+        function refreshingData() {
+            $scope.npsTimeout = $timeout(function(){
+                getRatingsData();
+            },1500)
         }
 
         function resetNPS() {
@@ -3327,428 +4080,6 @@ angular.module('dashboard').service('GlobalFilters', ['$http','$rootScope',
         return service;
 	}
 ]);
-
-/**
- * Created by Ivan on 8/27/15.
- */
-'use strict';
-
-// Setting up route
-angular.module('elements').config(['$stateProvider',
-    function($stateProvider) {
-        // Users state routing
-        $stateProvider.
-        state('app.elements', {
-            url: '/elements',
-            templateUrl: 'modules/elements/views/elements.client.view.html',
-            resolve:{
-                permissions: function(Permission) {
-                    return Permission.getPermissions();
-                },
-                selectedOrganization: function (Organization) {
-                    return Organization.getSelectedOrganization();
-                },
-                organization: function (Organization) {
-                    return Organization.getOrganizations();
-                }
-            }
-        });
-    }
-]);
-
-/**=========================================================
- * Module: elements.controller.js
- * Controller of elements
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('elements')
-        .controller('ElementsController', ElementsController);
-
-    ElementsController.$inject = ['$http', '$state','$timeout','$scope','$translate', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading','textAngularManager'];
-
-    function ElementsController($http, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading,textAngularManager) {
-        activate();
-
-        $scope.objectsSidebarService = ObjectsSidebar;
-        $scope.sidebarTemplate =
-            "<div class='col-sm-3 thumbListImage'>" +
-                "<img ng-if='item.media.length == 0' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
-                "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}' pending-indicator='pending-indicator'/>"+
-            "</div>"+
-            "<div class='col-sm-9 leftInformationArea'>"+
-                "<label class='oneRowTitle'>{{item.title}}</label>"+
-            "</div>";
-
-
-        $scope.objectsSidebarService.template =$scope.sidebarTemplate;
-        $scope.loadingService = Loading;
-        $scope.loadingService.isLoading = true;
-        ////////////////
-
-        function activate() {
-            $scope.authentication = Authentication;
-            $scope.organizationService = Organization;
-        }
-        //Constants
-        $scope.maxMedia=0;
-
-        //Draggable Properties
-
-        $scope.dragGalleryIndex=-1;
-        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-        $scope.newTagField=[];
-
-        //Loading images service properties
-        $scope.loadingImages =false;
-
-        //Boolean values
-        $scope.hasListPriceBool=false;
-        $scope.hasDiscountBool=false;
-        $scope.hasTimmingBool =false;
-        $scope.hasQuantityBool=false;
-        $scope.hasSavingBool=false;
-        $scope.hasPriceBool=false;
-        $scope.hasFromPriceBool=false;
-        $scope.isHighlightBool=false;
-        $scope.galleries = [];
-
-
-
-        $scope.$on("Biin: galleryUpdate", function(a, modalInfo){
-            $scope.galleries=modalInfo.galleries;
-        });
-
-        $scope.$on('$stateChangeStart', function(){
-                $scope.objectsSidebarService.reset();
-                $scope.objectsSidebarService.loadedInformation = true;
-            });
-
-        $scope.$on('organizationChanged',function(){
-            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-            $scope.loadingService.isLoading = true;
-            //Get the List of Objects
-            $scope.objectsSidebarService.selectedObject = null;
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
-                $scope.elements = data.data.elements;
-                $scope.objectsSidebarService.setObjects($scope.elements);
-                $scope.loadingService.isLoading = false;
-            });
-
-            $scope.galleries = [];
-            Gallery.getList($scope.organizationId).then(function(promise){
-                $scope.galleries = promise.data.data;
-            });
-        });
-
-        $scope.$on("Biin: On Object Clicked", function(f,objectClicked){
-
-            //I know it's ugly and I don't like this approach, it should be other way to  validate if the tag field is
-            // rendered to call this code
-            //TODO: Change this implementation for another safer way!!!
-            $timeout(function(){
-                var elemSearchTag =$('#elemSearchTag');
-                elemSearchTag.tagsinput("removeAll");
-                for(var i=0;i< $scope.objectsSidebarService.selectedObject.searchTags.length;i++){
-                    elemSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
-                }
-            },100);
-
-
-            var textangulareditor = textAngularManager.retrieveEditor('detailselementeditor');
-            if(textangulareditor) {
-                textangulareditor.scope.$undoManagertaHtmlElement1._stack = [];
-                textangulareditor.scope.$undoManagertaHtmlElement1._index = 0;
-                textangulareditor.scope.$undoManagertaTextElement1._stack = [];
-                textangulareditor.scope.$undoManagertaTextElement1._index = 0;
-            }
-            var a = 1;
-        });
-
-        $scope.$on("Biin: On Object Created", function(){
-            $scope.create();
-        });
-
-        //Get the List of Objects
-        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
-            $scope.elements = data.data.elements;
-            $scope.objectsSidebarService.setObjects($scope.elements);
-            $scope.loadingService.isLoading = false;
-        });
-
-        //Push a new showcase in the list
-        $scope.create = function(){
-            var titleText = $translate.instant("ELEMENT.CREATING");
-            swal({   title: titleText,  type: "info",   showConfirmButton: false });
-            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/elements").success(function(element,status){
-                if(status==201){
-                    var elemSearchTag =$('#elemSearchTag');
-                    elemSearchTag.tagsinput("removeAll");
-                    $scope.elements.push(element);
-                    $scope.objectsSidebarService.setObjects($scope.elements);
-                    $scope.objectsSidebarService.setSelectedObject(element);
-                    setTimeout(function(){
-                        swal.close();
-                    },2000);
-                }
-            });
-        };
-
-        //Select Element Type function
-        $scope.selectType=function(index){
-            if($scope.objectsSidebarService.selectedObject.elementType!==''+index)
-                $scope.objectsSidebarService.selectedObject.elementType=""+index;
-            else
-                $scope.objectsSidebarService.selectedObject.elementType="";
-
-            $scope.validate(true);
-        };
-
-        $scope.deleteElement = function(message, selectedObject) {
-            var translatedTexts  = $translate.instant(["GENERIC.DELETE_ELEMENT_TITLE","GENERIC.DELETE_ELEMENT_CONFIRMATION","ELEMENT.DELETED","GENERIC.DELETE","GENERIC.CANCEL"]);
-
-            swal({
-                title: translatedTexts["GENERIC.DELETE_ELEMENT_TITLE"],
-                text: translatedTexts["GENERIC.DELETE_ELEMENT_CONFIRMATION"],
-                type: "warning",
-                showCancelButton: true,
-                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: translatedTexts["GENERIC.DELETE"],
-                showLoaderOnConfirm: true,
-                closeOnConfirm: false
-            }, function () {
-                $scope.removeElementAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
-            });
-        };
-
-        //Remove element at specific position
-        $scope.removeElementAt = function(index){
-            var translatedTexts  = $translate.instant(["ELEMENT.DELETED_TEXT","GENERIC.DELETED"]);
-            var elementId = $scope.objectsSidebarService.objects[index].elementIdentifier;
-            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationId+'/elements/'+elementId).success(function(data){
-                    if($scope.objectsSidebarService.selectedObject==$scope.objectsSidebarService.objects[index]){
-                        $scope.objectsSidebarService.selectedObject = null;
-                    }
-                    $scope.objectsSidebarService.objects.splice(index,1);
-                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["ELEMENT.DELETED_TEXT"], "success");
-                }
-            );
-        };
-        
-        //Check min data has been filled
-        $scope.hasMissingData = function() {
-
-            // Don't do anything if there is no selected element
-            if ($scope.objectsSidebarService.selectedObject == null)
-                return;
-
-            var missingMinData = false;
-
-            //Check if required data is ready for app
-            if ($scope.objectsSidebarService.selectedObject.title == null) {
-                missingMinData = true;
-                $scope.objectsSidebarService.selectedObject.title = "";
-            }
-
-            else if ($scope.objectsSidebarService.selectedObject.title.trim() === ''){
-                missingMinData = true;
-                $scope.objectsSidebarService.selectedObject.title = "";
-            }
-
-            if ($scope.objectsSidebarService.selectedObject.media.length === 0){
-                missingMinData = true;
-            }
-
-            if ($scope.objectsSidebarService.selectedObject.categories.length === 0) {
-                missingMinData = true;
-            }
-
-            if ($scope.objectsSidebarService.selectedObject.media == null) {
-                missingMinData = true;
-            }
-
-            else if ($scope.objectsSidebarService.selectedObject.media.length === 0) {
-                missingMinData = true;
-            }
-
-            return missingMinData;
-
-        };
-
-        //Save detail model object
-        $scope.save= function(){
-
-            // Don't do anything if there is no selected element
-            if ($scope.objectsSidebarService.selectedObject == null)
-                return;
-
-            if ($scope.hasMissingData()) {
-                $scope.objectsSidebarService.selectedObject.isReady = 0;
-            }
-
-            else {
-                $scope.objectsSidebarService.selectedObject.isReady = 1;
-            }
-
-            if ($scope.objectsSidebarService.selectedObject.callToActionTitle && $scope.objectsSidebarService.selectedObject.callToActionURL) {
-                $scope.objectsSidebarService.selectedObject.hasCallToAction = true;
-                var httpRegex = /^http[s]?:\/\//;
-                if(!httpRegex.test($scope.objectsSidebarService.selectedObject.callToActionURL)){
-                    $scope.objectsSidebarService.selectedObject.callToActionURL = "http://" + $scope.objectsSidebarService.selectedObject.callToActionURL;
-                }
-
-            }
-            else {
-                $scope.objectsSidebarService.selectedObject.hasCallToAction = false;
-            }
-
-            $scope.objectsSidebarService.selectedObject.isDeleted = 0;
-
-
-            $scope.objectsSidebarService.selectedObject.hasPrice = $scope.objectsSidebarService.selectedObject.price > 0?'1':'0';
-
-            var tags = $("#elemSearchTag").tagsinput('items');
-            $scope.objectsSidebarService.selectedObject.searchTags = [];
-            for(var i = 0; i < tags.length; i++){
-                $scope.objectsSidebarService.selectedObject.searchTags.push(tags[i]);
-            }
-
-            $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationId+'/elements/'+$scope.objectsSidebarService.selectedObject.elementIdentifier,{model:$scope.objectsSidebarService.selectedObject}).success(function(data,status){
-                if("replaceModel" in data){
-                    $scope.objectsSidebarService.selectedObject = data.replaceModel;
-                    $scope.elementPrototype =  $.extend(true, {}, $scope.elementPrototypeBkp);
-                }
-                if(data.state=="success")
-                    $scope.succesSaveShow=true;
-            });
-        };
-
-
-
-        //Get the List of Categories
-        Categories.getList().then(function(promise){
-            $scope.categories = promise.data.data;
-        });
-
-        //Return the categories of the selected element
-        $scope.ownCategories=function(){
-            var categories=[];
-            //if($scope.objectsSidebarService.selectedObject && $scope.objectsSidebarService.selectedObject.categories)
-              //  categories = $scope.objectsSidebarService.selectedObject.categories;
-            return categories;
-        };
-
-
-
-        //Set the gallery index when start draggin
-        $scope.setDragGallery=function(scopeIndex){
-            $scope.dragGalleryIndex= scopeIndex;
-        };
-
-
-
-        //Select an sticker
-        $scope.selectSticker=function(index){
-            if($scope.objectsSidebarService.selectedObject.sticker.identifier !==$scope.stickers[index].identifier){
-                $scope.objectsSidebarService.selectedObject.sticker.identifier= $scope.stickers[index].identifier;
-                $scope.objectsSidebarService.selectedObject.sticker.color= $scope.stickers[index].color;
-            }else{
-                $scope.objectsSidebarService.selectedObject.sticker.identifier="";
-                $scope.objectsSidebarService.selectedObject.sticker.color="";
-            }
-        };
-
-        //Gallery Media Images
-
-        //Insert a gallery item to site
-        $scope.insertGalleryItem = function(index){
-            if(($scope.objectsSidebarService.selectedObject.media.length < $scope.maxMedia &&  index < $scope.galleries.length && $scope.galleries[index])||$scope.maxMedia===0){
-                var newObj = {};
-                newObj.identifier = $scope.galleries[index].identifier;
-                newObj.url = $scope.galleries[index].url;
-                newObj.mainColor = $scope.galleries[index].mainColor;
-
-                $scope.objectsSidebarService.selectedObject.media.push(newObj);
-
-                $scope.wizard2IsValid= typeof($scope.objectsSidebarService.selectedObject.media)!='undefined'&& $scope.objectsSidebarService.selectedObject.media.length>0;
-                //Apply the changes
-                $scope.$digest();
-                $scope.$apply();
-            }
-
-
-        };
-
-        //Remove the media object at specific index
-        $scope.removeMediaAt=function(index){
-            if($scope.objectsSidebarService.selectedObject.media.length>=index) {
-                $scope.objectsSidebarService.selectedObject.media.splice(index, 1);
-            }
-        };
-
-        //Get the list of the gallery
-        Gallery.getList($scope.organizationId).then(function(promise){
-            $scope.galleries = promise.data.data;
-        });
-
-        //On gallery change method
-        $scope.onGalleryChange= function(obj,autoInsert){
-            //Do a callback logic by caller
-            $scope.galleries = $scope.galleries.concat(obj);
-            $scope.$digest();
-
-            if(autoInsert)
-            {
-                //Insert the images to the preview
-                var cantToInsert=$scope.maxMedia- $scope.objectsSidebarService.selectedObject.media.length;
-                for(var i=0; i< cantToInsert; i++){
-                    $scope.insertGalleryItem($scope.galleries.indexOf(obj[i]));
-                }
-            }
-        };
-
-        $scope.loadingImagesChange=function(state){
-            $scope.loadingImages = state;
-            $scope.$digest();
-        };
-
-        //Category return if contains a specific category
-        $scope.containsCategory=function(category){
-            if(typeof(_.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier}))!='undefined')
-                return true;
-            else
-                return false;
-        };
-
-        //Change the state of the category relation with the Site
-        $scope.updateSelectedCategories =function(category){
-            var index =-1;
-            var cat = _.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier});
-            if(typeof(cat)!='undefined'){
-                index=$scope.objectsSidebarService.selectedObject.categories.indexOf(cat);
-            }
-
-            if(index>=0)
-                $scope.objectsSidebarService.selectedObject.categories.splice(index,1);
-            else
-                $scope.objectsSidebarService.selectedObject.categories.push(category);
-
-            //$scope.validate();
-
-            /**if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
-                $scope.$apply();
-                $scope.$digest();
-            }**/
-        };
-        $scope.toggleIsHighlight = function(){
-            $scope.objectsSidebarService.selectedObject.isHighlight = $scope.objectsSidebarService.selectedObject.isHighlight == "1"? "0":"1";
-        };
-    }
-})();
 
 /**=========================================================
  * Module: form-imgcrop.js
@@ -4941,7 +5272,7 @@ function GalleryController($scope, $modalInstance,$http, galleries,Organization)
         .module('gallery')
         .directive('imageCheckbox', ImageCheckbox);
 
-    ImageCheckbox.$inject = ['$modal'];
+    ImageCheckbox.$inject = [];
     function ImageCheckbox() {
         return {
             restrict: 'A',
@@ -5117,8 +5448,9 @@ angular.module('gifts').config(['$stateProvider',
     GiftsController.$inject = ['$http', '$state', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate'];
 
     function GiftsController($http, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate) {
-        var giftCtrl = this;
+        var gift = this;
 
+        //Running init function
         init();
         /**=============================================================================================================
          * Init Function
@@ -5130,11 +5462,13 @@ angular.module('gifts').config(['$stateProvider',
             $scope.loadingService = Loading;
             //Organization Service
             $scope.organizationService = Organization;
+            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             //Objects Sidebar Service
             $scope.objectsSidebarService = ObjectsSidebar;
             //Authentication Service
             $scope.authentication = Authentication;
-
+            //Gift Object
+            $scope.objectsSidebarService.selectedObject = {};
             //----Variables----//
             //Ready to fill
             $scope.ready = false;
@@ -5143,14 +5477,11 @@ angular.module('gifts').config(['$stateProvider',
             $scope.sites = [];
             //State of loading screen
             $scope.loadingService.isLoading = true;
-            //Gift Object
-            $scope.objectsSidebarService.selectedObject = {};
             //Current Date
-            $scope.currentDate = new Date();
-            //Default alerts
+            $scope.currentDate = new Date().getTime();
+            //Default alerts/hints
             $scope.show_alert = true;
-            //Draggable Properties
-            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+
             $scope.sidebarTemplate =
                 "<div class='col-md-3 thumbListImage'>" +
                     "<img ng-if='item.productIdentifier.length==0' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
@@ -5158,20 +5489,12 @@ angular.module('gifts').config(['$stateProvider',
                 "</div>" +
                 "<div class='col-md-9 leftInformationArea'>"+
                     "<label class='twoRowTitle'>{{item.name}}</label>"+
-                    "<small ng-if='item.amount>item.amountSpent && item.hasAvailablePeriod==false || item.amount>item.amountSpent && ((currentDate | date) <= (item.endDate | date)) && item.hasAvailablePeriod==true' class='valid-color'>Disponible</small>"+
-                    "<small ng-if='item.amount==item.amountSpent && item.hasAvailablePeriod==false || item.amount==item.amountSpent && ((currentDate |date) <= (item.endDate | date)) && item.hasAvailablePeriod==true' class='invalid-color'>Agotado</small>"+
-                    "<small ng-if='((currentDate | date) > (item.endDate | date)) && item.hasAvailablePeriod==true' class='invalid-color'>Vencido</small>"+
+                    "<small ng-if='((item.isUnlimited || item.amount>item.amountSpent) && item.hasAvailablePeriod==false) || ((item.isUnlimited || item.amount>item.amountSpent) && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true)' class='valid-color'>Disponible</small>"+
+                    "<small ng-if='(!item.isUnlimited && item.amount>item.amountSpent && item.hasAvailablePeriod==false) || (!item.isUnlimited && item.amount>item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true)'>{{item.amount-item.amountSpent}} u.</small>"+
+                    "<small ng-if='(!item.isUnlimited && item.amount==item.amountSpent && item.hasAvailablePeriod==false) || (!item.isUnlimited && item.amount==item.amountSpent && (currentDate <= formDate(item.endDate)) && item.hasAvailablePeriod==true)' class='invalid-color'>Agotado</small>"+
+                    "<small ng-if='(currentDate > formDate(item.endDate)) && item.hasAvailablePeriod==true' class='invalid-color'>Vencido</small>"+
                 "</div>";
             $scope.objectsSidebarService.template =$scope.sidebarTemplate;
-            //----Functions----//
-            //Get the List of Products
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
-                $scope.products = data.data.elements;
-            });
-            //Get the List of Sites
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
-                $scope.locals = data.data.sites;
-            });
         }
 
         /**=============================================================================================================
@@ -5189,22 +5512,40 @@ angular.module('gifts').config(['$stateProvider',
 
         $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
             //Parsing dates to work on AngularJS
-            objectClicked.startDate = new Date(objectClicked.startDate);
-            objectClicked.endDate = new Date(objectClicked.endDate);
+            objectClicked.startDate = moment(new Date(objectClicked.startDate)).endOf("day").toDate();
+            objectClicked.endDate = moment(new Date(objectClicked.endDate)).endOf("day").toDate();
             //All ready to show the gift info
             $scope.ready = true;
         });
+        
         $scope.$on('organizationChanged',function(){
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             $scope.loadingService.isLoading = true;
             //Get the List of Gifts
             $scope.ready = false;
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
-                $scope.gifts = gifts;
-                $scope.objectsSidebarService.setObjects($scope.gifts);
-                $state.reload();
-                $scope.loadingService.isLoading = false;
-            });
+            if($scope.organizationId){
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+                    $scope.gifts = gifts;
+                    $scope.objectsSidebarService.setObjects($scope.gifts);
+                    $state.reload();
+                    $scope.loadingService.isLoading = false;
+                });
+                //Get the List of Products
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+                    $scope.products = data.data.elements;
+                });
+                //Get the List of Sites
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
+                    $scope.locals = data.data.sites;
+                });
+            }
+        });
+
+        /**=============================================================================================================
+         * Functions
+         =============================================================================================================*/
+
+        if($scope.organizationId){
             //Get the List of Products
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
                 $scope.products = data.data.elements;
@@ -5213,19 +5554,14 @@ angular.module('gifts').config(['$stateProvider',
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
                 $scope.locals = data.data.sites;
             });
-        });
-
-        /**=============================================================================================================
-         * Functions
-         =============================================================================================================*/
-
-        //Get the List of Gifts
-        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
-            $scope.gifts = gifts;
-            $scope.objectsSidebarService.setObjects($scope.gifts);
-            $scope.loadingService.isLoading = false;
-        });
-
+            //Get the List of Gifts
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+                $scope.gifts = gifts;
+                $scope.objectsSidebarService.setObjects($scope.gifts);
+                $scope.loadingService.isLoading = false;
+            });
+        }
+        
         //Create a gift
         $scope.create = function(){
             var titleText = $translate.instant("GIFT.CREATING");
@@ -5233,10 +5569,12 @@ angular.module('gifts').config(['$stateProvider',
             $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gift,status){
                 if(status == 201){
                     var gifts = $scope.objectsSidebarService.getObjects();
-
-                    gifts.push(gift);
+                    gift.startDate = new Date(gift.startDate);
+                    gift.endDate = new Date(gift.endDate);
+                    gifts.unshift(gift);
                     $scope.objectsSidebarService.setObjects(gifts);
                     $scope.objectsSidebarService.setSelectedObject(gift);
+                    $scope.ready = true;
 
                     setTimeout(function(){
                         swal.close();
@@ -5251,30 +5589,33 @@ angular.module('gifts').config(['$stateProvider',
             $scope.types = $scope.objectsSidebarService.selectedObject.availableIn;
 
             if($scope.types.length == 0){
-                $scope.types.push(type);
-            }else{
-                //Validate if the option was already selected
-                for(var i in $scope.types){
-                    if(type == $scope.types[i]){
-                        $scope.types.splice(i, 1);
-                        exist = true;
-                    }
+                //If any button is clicked
+                if (type=='all'){
+                    $scope.types = $scope.types = ['nps','mec','vip'];
+                } else {
+                    $scope.types.push(type);
                 }
-                if(!exist){
-                    if(type == 'all'){
-                        $scope.types = ['all'];
-                    }else{
-                        //Validate if you have all and select another option
-                        for(var i in $scope.types){
-                            if($scope.types[i] == 'all'){
-                                $scope.types.splice(i, 1);
-                            }
+            }else if ($scope.types.length == 3){
+                if (type=='all'){
+                    $scope.types = [];
+                } else {
+                    $scope.types = [];
+                    $scope.types.push(type);
+                }
+            } else if($scope.types.length == 2){
+                $scope.types = $scope.types = ['nps','mec','vip'];
+            } else {
+                if (type=='all'){
+                    $scope.types = $scope.types = ['nps','mec','vip'];
+                } else {
+                    for(var i in $scope.types){
+                        if(type == $scope.types[i]){
+                            $scope.types.splice(i, 1);
+                            exist = true;
                         }
+                    }
+                    if(!exist){
                         $scope.types.push(type);
-                        //Validate if all option are selected
-                        if($scope.types.length == 3){
-                            $scope.types = ['all'];
-                        }
                     }
                 }
             }
@@ -5305,13 +5646,26 @@ angular.module('gifts').config(['$stateProvider',
 
         //Function to activate a gift
         $scope.activate = function () {
-            if($scope.objectsSidebarService.selectedObject.amountSpent == 0 && $scope.objectsSidebarService.selectedObject.isActive == false){
-                $scope.objectsSidebarService.selectedObject.isActive = true;
-            }else if($scope.objectsSidebarService.selectedObject.amountSpent == 0 && $scope.objectsSidebarService.selectedObject.isActive == true){
-                $scope.objectsSidebarService.selectedObject.isActive = false;
-            }
-            if($scope.objectsSidebarService.selectedObject.amountSpent > 0){
-                console.log('No puede realizar esta acción, porque el regalo ya fue reclamado');
+            if(gift.myForm.$valid) {
+                var giftToUpdate = $scope.objectsSidebarService.selectedObject;
+                var translatedTexts = $translate.instant(["GENERIC.ACTIVATE_GIFT_TITLE", "GENERIC.ACTIVATE_GIFT_CONFIRMATION", "GENERIC.ACTIVATE", "GENERIC.CANCEL", "GENERIC.ACTIVATED", "GIFT.ACTIVATE_TEXT"]);
+                swal({
+                    title: translatedTexts["GENERIC.ACTIVATE_GIFT_TITLE"],
+                    text: translatedTexts["GENERIC.ACTIVATE_GIFT_CONFIRMATION"],
+                    type: "warning",
+                    showCancelButton: true,
+                    cancelButtonText: translatedTexts["GENERIC.CANCEL"],
+                    confirmButtonColor: "#8CD4F5",
+                    confirmButtonText: translatedTexts["GENERIC.ACTIVATE"],
+                    showLoaderOnConfirm: true,
+                    closeOnConfirm: false
+                }, function () {
+                    $scope.objectsSidebarService.selectedObject.isActive = true;
+
+                    $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/' + giftToUpdate.identifier, {isActive: true}).success(function (data, status) {
+                        swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["GIFT.ACTIVATE_TEXT"], "success");
+                    });
+                });
             }
         }
 
@@ -5330,20 +5684,18 @@ angular.module('gifts').config(['$stateProvider',
                 showLoaderOnConfirm: true,
                 closeOnConfirm: false
             }, function () {
-                if($scope.objectsSidebarService.selectedObject.amountSpent == 0) {
-                    $scope.removeGiftAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
-                }
+                $scope.removeGiftAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
             });
         };
 
-        //Remove element at specific position
+        //Remove gift at specific position
         $scope.removeGiftAt = function(index){
             var giftToDelete = $scope.objectsSidebarService.objects[index];
-            var translatedTexts  = $translate.instant(["ELEMENT.DELETED_TEXT","GENERIC.DELETED"]);
-            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToDelete.identifier,{data:giftToDelete}).success(function(data){
+            var translatedTexts  = $translate.instant(["GIFT.DELETED_TEXT","GENERIC.DELETED"]);
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+ giftToDelete.identifier,{data:giftToDelete}).success(function(data){
                     $scope.ready = false;
                     $scope.objectsSidebarService.objects.splice(index,1);
-                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["ELEMENT.DELETED_TEXT"], "success");
+                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["GIFT.DELETED_TEXT"], "success");
                 }
             );
         };
@@ -5355,7 +5707,7 @@ angular.module('gifts').config(['$stateProvider',
             if ($scope.ready == false)
                 return;
 
-            if(giftCtrl.myForm.$valid  && $scope.objectsSidebarService.selectedObject.sites.length > 0 && $scope.objectsSidebarService.selectedObject.availableIn.length > 0) {
+            if(gift.myForm.$valid  && $scope.objectsSidebarService.selectedObject.sites.length > 0 && $scope.objectsSidebarService.selectedObject.availableIn.length > 0) {
                 $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
                     console.log('Actualizado');
                 });
@@ -5363,12 +5715,18 @@ angular.module('gifts').config(['$stateProvider',
         }
         //Check locals in initial data
         $scope.checkLocal = function(local){
-            $scope.localsAvailable = $scope.objectsSidebarService.selectedObject.sites;
-            for(var i in $scope.localsAvailable){
-                if(local == $scope.localsAvailable[i]){
-                    return true;
+            if($scope.objectsSidebarService.selectedObject){
+                $scope.localsAvailable = $scope.objectsSidebarService.selectedObject.sites;
+                for(var i in $scope.localsAvailable){
+                    if(local == $scope.localsAvailable[i]){
+                        return true;
+                    }
                 }
             }
+        }
+        //Define a display number for amount
+        $scope.checkUnlimited = function() {
+            $scope.objectsSidebarService.selectedObject.amount = 1;
         }
     }
 })();
@@ -5548,10 +5906,12 @@ function GmapController($scope, $modalInstance) {
                     }
 
                     var imageElement = document.createElement("img");
-                    imageElement.setAttribute("src", "https://maps.googleapis.com/maps/api/staticmap?center=" + position.coords.latitude + "," + position.coords.longitude +
-                        "&zoom=" + zoom + "&size=1024x512&markers=" + ObjectsSidebar.selectedObject.lat + "," + ObjectsSidebar.selectedObject.lng);
-                    imageElement.className += "img-responsive";
-                    element[0].appendChild(imageElement);
+                    if(ObjectsSidebar.selectedObject){
+                        imageElement.setAttribute("src", "https://maps.googleapis.com/maps/api/staticmap?center=" + position.coords.latitude + "," + position.coords.longitude +
+                            "&zoom=" + zoom + "&size=1024x512&markers=" + ObjectsSidebar.selectedObject.lat + "," + ObjectsSidebar.selectedObject.lng);
+                        imageElement.className += "img-responsive";
+                        element[0].appendChild(imageElement);
+                    }
                 }
 
                 function errorCallback(err) {
@@ -6478,13 +6838,19 @@ angular.module('nps').config(['$stateProvider',
             $scope.organizationService = Organization;
             //Draggable Properties
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-            $scope.currentDate = new Date();
-            
-            //----Functions----//
-            //Get the List of Products
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
-                $scope.products = data.data.elements;
-            });
+            $scope.currentDate = new Date().getTime();
+
+            if($scope.organizationId) {
+                //----Functions----//
+                //Get the List of Products
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+                    $scope.products = data.data.elements;
+                });
+                //Get the List of Gifts
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+                    $scope.gifts = gifts;
+                });
+            }
         }
 
         //Function to set the image of the current product into the thumbnail in the Objects Sidebar
@@ -6495,6 +6861,11 @@ angular.module('nps').config(['$stateProvider',
                 }
             }
         };
+
+        //Formatting dates
+        $scope.formDate = function(date) {
+            return new Date(date).getTime();
+        }
 
         $scope.onObjectClick = function( index ){
             var objectClicked = $scope.objectsSidebarService.getObjects()[index];
@@ -6744,7 +7115,7 @@ angular.module('organization').config(['$stateProvider',
             swal({   title: "Su organización se esta creando",  type: "info",   showConfirmButton: false });
             $http.put(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + Authentication.user.accountIdentifier).success(function (org, status) {
                 if (status == 201 || status == 200) {
-                    $scope.organizationService.organizationsList.push(org);
+                    $scope.organizationService.organizationsList.unshift(org);
                     $scope.objectsSidebarService.setObjects($scope.organizationService.organizationsList);
                     $scope.objectsSidebarService.selectedObject = $scope.organizationService.organizationsList[$scope.organizationService.organizationsList.indexOf(org)];
                     setTimeout(function(){
@@ -6857,34 +7228,34 @@ angular.module('organization').config(['$stateProvider',
 
                     //scope.loadingImagesChange(true);
                     // now post a new XHR request
-                    var xhr = new XMLHttpRequest();
+                    if(formData.get('file')){
+                        var xhr = new XMLHttpRequest();
 
-                    var organization= ObjectsSidebar.selectedObject.identifier;
+                        var organization= ObjectsSidebar.selectedObject.identifier;
 
-                    xhr.open('POST', ApplicationConfiguration.applicationBackendURL +'api/organizations/'+organization+"/image");
-                    xhr.setRequestHeader('accountidentifier',Authentication.user.accountIdentifier);
-                    xhr.onload = function (data) {
-                        if (xhr.status === 200) {
-                            var obj= $.parseJSON(xhr.response);
+                        xhr.open('POST', ApplicationConfiguration.applicationBackendURL +'api/organizations/'+organization+"/image");
+                        xhr.setRequestHeader('accountidentifier',Authentication.user.accountIdentifier);
+                        xhr.onload = function (data) {
+                            if (xhr.status === 200) {
+                                var obj= $.parseJSON(xhr.response);
 
-                            $rootScope.$broadcast("changeOrganizationImage",obj.data);
+                                $rootScope.$broadcast("changeOrganizationImage",obj.data);
 
-                            console.log('all done: ' + xhr.status);
-                            //scope.loadingImagesChange(false);
-                        } else {
-                            console.log('Something went terribly wrong...');
-                        }
-                    };
+                                console.log('all done: ' + xhr.status);
+                                //scope.loadingImagesChange(false);
+                            } else {
+                                console.log('Something went terribly wrong...');
+                            }
+                        };
 
-                    xhr.upload.onprogress = function (event) {
-                        if (event.lengthComputable) {
-                            var complete = (event.loaded / event.total * 100 | 0);
-                            //progress.value = progress.innerHTML = complete;
-                        }
-                    };
-
-                    xhr.send(formData);
-
+                        xhr.upload.onprogress = function (event) {
+                            if (event.lengthComputable) {
+                                var complete = (event.loaded / event.total * 100 | 0);
+                                //progress.value = progress.innerHTML = complete;
+                            }
+                        };
+                        xhr.send(formData);
+                    }
                 })
                 //Click event of the style button
                 $(element[0]).on('click touch',function(e){
@@ -7451,6 +7822,429 @@ angular.module('page').config(['$stateProvider',
 
 })();
 /**
+ * Created by Ivan on 8/27/15.
+ */
+'use strict';
+
+// Setting up route
+angular.module('products').config(['$stateProvider',
+    function($stateProvider) {
+        // Users state routing
+        $stateProvider.
+        state('app.products', {
+            url: '/products',
+            templateUrl: 'modules/products/views/products.client.view.html',
+            resolve:{
+                permissions: function(Permission) {
+                    return Permission.getPermissions();
+                },
+                selectedOrganization: function (Organization) {
+                    return Organization.getSelectedOrganization();
+                },
+                organization: function (Organization) {
+                    return Organization.getOrganizations();
+                }
+            }
+        });
+    }
+]);
+
+/**=========================================================
+ * Module: products.client.controller.js
+ * Controller of products
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('products')
+        .controller('ProductsController', ProductsController);
+
+    ProductsController.$inject = ['$http', '$state','$timeout','$scope','$translate', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading','textAngularManager'];
+
+    function ProductsController($http, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading,textAngularManager) {
+        activate();
+
+        $scope.objectsSidebarService = ObjectsSidebar;
+        $scope.sidebarTemplate =
+            "<div class='col-sm-3 thumbListImage'>" +
+                "<img ng-if='item.media.length == 0' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
+                "<img ng-if='item.media.length>0' ng-src='{{item.media[0].url}}' pending-indicator='pending-indicator'/>"+
+            "</div>"+
+            "<div class='col-sm-9 leftInformationArea'>"+
+                "<label class='oneRowTitle'>{{item.title}}</label>"+
+            "</div>";
+
+
+        $scope.objectsSidebarService.template =$scope.sidebarTemplate;
+        $scope.loadingService = Loading;
+        $scope.loadingService.isLoading = true;
+        ////////////////
+
+        function activate() {
+            $scope.authentication = Authentication;
+            $scope.organizationService = Organization;
+        }
+        //Constants
+        $scope.maxMedia=0;
+
+        //Draggable Properties
+
+        $scope.dragGalleryIndex=-1;
+        $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+        $scope.newTagField=[];
+
+        //Loading images service properties
+        $scope.loadingImages =false;
+
+        //Boolean values
+        $scope.hasListPriceBool=false;
+        $scope.hasDiscountBool=false;
+        $scope.hasTimmingBool =false;
+        $scope.hasQuantityBool=false;
+        $scope.hasSavingBool=false;
+        $scope.hasPriceBool=false;
+        $scope.hasFromPriceBool=false;
+        $scope.isHighlightBool=false;
+        $scope.galleries = [];
+
+
+
+        $scope.$on("Biin: galleryUpdate", function(a, modalInfo){
+            $scope.galleries=modalInfo.galleries;
+        });
+
+        $scope.$on('$stateChangeStart', function(){
+                $scope.objectsSidebarService.reset();
+                $scope.objectsSidebarService.loadedInformation = true;
+            });
+
+        $scope.$on('organizationChanged',function(){
+            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.loadingService.isLoading = true;
+            //Get the List of Objects
+            $scope.objectsSidebarService.selectedObject = null;
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
+                $scope.elements = data.data.elements;
+                $scope.objectsSidebarService.setObjects($scope.elements);
+                $scope.loadingService.isLoading = false;
+            });
+
+            $scope.galleries = [];
+            Gallery.getList($scope.organizationId).then(function(promise){
+                $scope.galleries = promise.data.data;
+            });
+        });
+
+        $scope.$on("Biin: On Object Clicked", function(f,objectClicked){
+
+            //I know it's ugly and I don't like this approach, it should be other way to  validate if the tag field is
+            // rendered to call this code
+            //TODO: Change this implementation for another safer way!!!
+            $timeout(function(){
+                var elemSearchTag =$('#elemSearchTag');
+                elemSearchTag.tagsinput("removeAll");
+                for(var i=0;i< $scope.objectsSidebarService.selectedObject.searchTags.length;i++){
+                    elemSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
+                }
+            },100);
+
+
+            var textangulareditor = textAngularManager.retrieveEditor('detailselementeditor');
+            if(textangulareditor) {
+                textangulareditor.scope.$undoManagertaHtmlElement1._stack = [];
+                textangulareditor.scope.$undoManagertaHtmlElement1._index = 0;
+                textangulareditor.scope.$undoManagertaTextElement1._stack = [];
+                textangulareditor.scope.$undoManagertaTextElement1._index = 0;
+            }
+            var a = 1;
+        });
+
+        $scope.$on("Biin: On Object Created", function(){
+            $scope.create();
+        });
+
+        //Get the List of Objects
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/elements').success(function(data){
+            $scope.elements = data.data.elements;
+            $scope.objectsSidebarService.setObjects($scope.elements);
+            $scope.loadingService.isLoading = false;
+        });
+
+        //Push a new showcase in the list
+        $scope.create = function(){
+            var titleText = $translate.instant("ELEMENT.CREATING");
+            swal({   title: titleText,  type: "info",   showConfirmButton: false });
+            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+"/elements").success(function(element,status){
+                if(status==201){
+                    var elemSearchTag =$('#elemSearchTag');
+                    elemSearchTag.tagsinput("removeAll");
+                    $scope.elements.push(element);
+                    $scope.objectsSidebarService.setObjects($scope.elements);
+                    $scope.objectsSidebarService.setSelectedObject(element);
+                    setTimeout(function(){
+                        swal.close();
+                    },2000);
+                }
+            });
+        };
+
+        //Select Element Type function
+        $scope.selectType=function(index){
+            if($scope.objectsSidebarService.selectedObject.elementType!==''+index)
+                $scope.objectsSidebarService.selectedObject.elementType=""+index;
+            else
+                $scope.objectsSidebarService.selectedObject.elementType="";
+
+            $scope.validate(true);
+        };
+
+        $scope.deleteElement = function(message, selectedObject) {
+            var translatedTexts  = $translate.instant(["GENERIC.DELETE_ELEMENT_TITLE","GENERIC.DELETE_ELEMENT_CONFIRMATION","ELEMENT.DELETED","GENERIC.DELETE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.DELETE_ELEMENT_TITLE"],
+                text: translatedTexts["GENERIC.DELETE_ELEMENT_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.DELETE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
+                $scope.removeElementAt($scope.objectsSidebarService.objects.indexOf(selectedObject));
+            });
+        };
+
+        //Remove element at specific position
+        $scope.removeElementAt = function(index){
+            var translatedTexts  = $translate.instant(["ELEMENT.DELETED_TEXT","GENERIC.DELETED"]);
+            var elementId = $scope.objectsSidebarService.objects[index].elementIdentifier;
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationId+'/elements/'+elementId).success(function(data){
+                    if($scope.objectsSidebarService.selectedObject==$scope.objectsSidebarService.objects[index]){
+                        $scope.objectsSidebarService.selectedObject = null;
+                    }
+                    $scope.objectsSidebarService.objects.splice(index,1);
+                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["ELEMENT.DELETED_TEXT"], "success");
+                }
+            );
+        };
+        
+        //Check min data has been filled
+        $scope.hasMissingData = function() {
+
+            // Don't do anything if there is no selected element
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
+
+            var missingMinData = false;
+
+            //Check if required data is ready for app
+            if ($scope.objectsSidebarService.selectedObject.title == null) {
+                missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.title = "";
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.title.trim() === ''){
+                missingMinData = true;
+                $scope.objectsSidebarService.selectedObject.title = "";
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.media.length === 0){
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.categories.length === 0) {
+                missingMinData = true;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.media == null) {
+                missingMinData = true;
+            }
+
+            else if ($scope.objectsSidebarService.selectedObject.media.length === 0) {
+                missingMinData = true;
+            }
+
+            return missingMinData;
+
+        };
+
+        //Save detail model object
+        $scope.save= function(){
+
+            // Don't do anything if there is no selected element
+            if ($scope.objectsSidebarService.selectedObject == null)
+                return;
+
+            if ($scope.hasMissingData()) {
+                $scope.objectsSidebarService.selectedObject.isReady = 0;
+            }
+
+            else {
+                $scope.objectsSidebarService.selectedObject.isReady = 1;
+            }
+
+            if ($scope.objectsSidebarService.selectedObject.callToActionTitle && $scope.objectsSidebarService.selectedObject.callToActionURL) {
+                $scope.objectsSidebarService.selectedObject.hasCallToAction = true;
+                var httpRegex = /^http[s]?:\/\//;
+                if(!httpRegex.test($scope.objectsSidebarService.selectedObject.callToActionURL)){
+                    $scope.objectsSidebarService.selectedObject.callToActionURL = "http://" + $scope.objectsSidebarService.selectedObject.callToActionURL;
+                }
+
+            }
+            else {
+                $scope.objectsSidebarService.selectedObject.hasCallToAction = false;
+            }
+
+            $scope.objectsSidebarService.selectedObject.isDeleted = 0;
+
+
+            $scope.objectsSidebarService.selectedObject.hasPrice = $scope.objectsSidebarService.selectedObject.price > 0?'1':'0';
+
+            var tags = $("#elemSearchTag").tagsinput('items');
+            $scope.objectsSidebarService.selectedObject.searchTags = [];
+            for(var i = 0; i < tags.length; i++){
+                $scope.objectsSidebarService.selectedObject.searchTags.push(tags[i]);
+            }
+
+            $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationId+'/elements/'+$scope.objectsSidebarService.selectedObject.elementIdentifier,{model:$scope.objectsSidebarService.selectedObject}).success(function(data,status){
+                if("replaceModel" in data){
+                    $scope.objectsSidebarService.selectedObject = data.replaceModel;
+                    $scope.elementPrototype =  $.extend(true, {}, $scope.elementPrototypeBkp);
+                }
+                if(data.state=="success")
+                    $scope.succesSaveShow=true;
+            });
+        };
+
+
+
+        //Get the List of Categories
+        Categories.getList().then(function(promise){
+            $scope.categories = promise.data.data;
+        });
+
+        //Return the categories of the selected element
+        $scope.ownCategories=function(){
+            var categories=[];
+            //if($scope.objectsSidebarService.selectedObject && $scope.objectsSidebarService.selectedObject.categories)
+              //  categories = $scope.objectsSidebarService.selectedObject.categories;
+            return categories;
+        };
+
+
+
+        //Set the gallery index when start draggin
+        $scope.setDragGallery=function(scopeIndex){
+            $scope.dragGalleryIndex= scopeIndex;
+        };
+
+
+
+        //Select an sticker
+        $scope.selectSticker=function(index){
+            if($scope.objectsSidebarService.selectedObject.sticker.identifier !==$scope.stickers[index].identifier){
+                $scope.objectsSidebarService.selectedObject.sticker.identifier= $scope.stickers[index].identifier;
+                $scope.objectsSidebarService.selectedObject.sticker.color= $scope.stickers[index].color;
+            }else{
+                $scope.objectsSidebarService.selectedObject.sticker.identifier="";
+                $scope.objectsSidebarService.selectedObject.sticker.color="";
+            }
+        };
+
+        //Gallery Media Images
+
+        //Insert a gallery item to site
+        $scope.insertGalleryItem = function(index){
+            if(($scope.objectsSidebarService.selectedObject.media.length < $scope.maxMedia &&  index < $scope.galleries.length && $scope.galleries[index])||$scope.maxMedia===0){
+                var newObj = {};
+                newObj.identifier = $scope.galleries[index].identifier;
+                newObj.url = $scope.galleries[index].url;
+                newObj.mainColor = $scope.galleries[index].mainColor;
+
+                $scope.objectsSidebarService.selectedObject.media.push(newObj);
+
+                $scope.wizard2IsValid= typeof($scope.objectsSidebarService.selectedObject.media)!='undefined'&& $scope.objectsSidebarService.selectedObject.media.length>0;
+                //Apply the changes
+                $scope.$digest();
+                $scope.$apply();
+            }
+
+
+        };
+
+        //Remove the media object at specific index
+        $scope.removeMediaAt=function(index){
+            if($scope.objectsSidebarService.selectedObject.media.length>=index) {
+                $scope.objectsSidebarService.selectedObject.media.splice(index, 1);
+            }
+        };
+
+        //Get the list of the gallery
+        Gallery.getList($scope.organizationId).then(function(promise){
+            $scope.galleries = promise.data.data;
+        });
+
+        //On gallery change method
+        $scope.onGalleryChange= function(obj,autoInsert){
+            //Do a callback logic by caller
+            $scope.galleries = $scope.galleries.concat(obj);
+            $scope.$digest();
+
+            if(autoInsert)
+            {
+                //Insert the images to the preview
+                var cantToInsert=$scope.maxMedia- $scope.objectsSidebarService.selectedObject.media.length;
+                for(var i=0; i< cantToInsert; i++){
+                    $scope.insertGalleryItem($scope.galleries.indexOf(obj[i]));
+                }
+            }
+        };
+
+        $scope.loadingImagesChange=function(state){
+            $scope.loadingImages = state;
+            $scope.$digest();
+        };
+
+        //Category return if contains a specific category
+        $scope.containsCategory=function(category){
+            if(typeof(_.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier}))!='undefined')
+                return true;
+            else
+                return false;
+        };
+
+        //Change the state of the category relation with the Site
+        $scope.updateSelectedCategories =function(category){
+            var index =-1;
+            var cat = _.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier});
+            if(typeof(cat)!='undefined'){
+                index=$scope.objectsSidebarService.selectedObject.categories.indexOf(cat);
+            }
+
+            if(index>=0)
+                $scope.objectsSidebarService.selectedObject.categories.splice(index,1);
+            else
+                $scope.objectsSidebarService.selectedObject.categories.push(category);
+
+            //$scope.validate();
+
+            /**if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+                $scope.$apply();
+                $scope.$digest();
+            }**/
+        };
+        $scope.toggleIsHighlight = function(){
+            $scope.objectsSidebarService.selectedObject.isHighlight = $scope.objectsSidebarService.selectedObject.isHighlight == "1"? "0":"1";
+        };
+    }
+})();
+
+
+/**
  * Created by Ivan on 8/19/15.
  */
 'use strict';
@@ -7973,7 +8767,7 @@ angular.module('showcases').config(['$stateProvider',
             swal({   title: "Su vitrina se esta creando",  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + "/showcases").success(function (showcase, status) {
                 if (status == 201) {
-                    $scope.objectsSidebarService.objects.push(showcase);
+                    $scope.objectsSidebarService.objects.unshift(showcase);
                     setTimeout(function(){
                         swal.close();
                     },2000);
@@ -8072,9 +8866,7 @@ angular.module('showcases').config(['$stateProvider',
         //Save detail model object
         $scope.save = function () {
 
-
             //Save showcases
-
             for(var i = 0; i< $scope.sites.length; i++){
                 for(var j = 0; j<$scope.sites[i].showcases.length;j++){
 
@@ -8099,9 +8891,7 @@ angular.module('showcases').config(['$stateProvider',
 
             if ($scope.hasMissingData()) {
                 $scope.objectsSidebarService.selectedObject.isReady = 0;
-            }
-
-            else {
+            }else {
                 $scope.objectsSidebarService.selectedObject.isReady = 1;
             }
 
@@ -8126,7 +8916,7 @@ angular.module('showcases').config(['$stateProvider',
 
         $scope.filteredElements = function ( element ) {
             var index = -1;
-            if($scope.objectsSidebarService.selectedObject.elements.length > 0){
+            if($scope.objectsSidebarService.selectedObject.elements){
                 for(var i = 0; i < $scope.objectsSidebarService.selectedObject.elements.length; i++){
                     if($scope.objectsSidebarService.selectedObject.elements[i].elementIdentifier == element.elementIdentifier){
                         index = i;
@@ -8721,6 +9511,8 @@ angular.module('sites').config(['$stateProvider',
             $scope.deletePermit = false;
             $scope.loadingService = Loading;
             $scope.loadingService.isLoading = true;
+            //Ready to fill
+            $scope.ready = false;
 
             for (var permit = 0; permit < Authentication.user.permissions.length; permit++) {
                 if (Authentication.user.permissions[permit].permission == "delete") {
@@ -8742,7 +9534,7 @@ angular.module('sites').config(['$stateProvider',
             "</div>"+
             "<div class='col-md-9 leftInformationArea'>"+
             "<label class='twoRowTitle'>{{item.title1}}</label>"+
-            "<label class='twoRowSubtitle'>{{item.title2}}</label>"+
+            "<small class='twoRowSubTitle'>{{item.title2}}</small>"+
             "</div>";
 
         $scope.objectsSidebarService.template =$scope.sidebarTemplate;
@@ -8760,13 +9552,12 @@ angular.module('sites').config(['$stateProvider',
         $scope.$on('organizationChanged',function(){
             $scope.loadingService.isLoading = true;
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.ready = false;
             //Get the List of Objects
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+$scope.organizationService.selectedOrganization.identifier+'/sites').success(function(data){
                 var sites = data.data.sites;
                 $scope.objectsSidebarService.setObjects(sites);
                 $scope.loadingService.isLoading = false;
-                if(sites.length > 0)
-                    selectFirstSite(sites);
             });
 
             Gallery.getList($scope.organizationId).then(function(promise){
@@ -8777,15 +9568,24 @@ angular.module('sites').config(['$stateProvider',
         $scope.$on("Biin: On Object Clicked", function(event,objectClicked){
             //I know it's ugly and I don't like this approach, it should be other way to  validate if the tag field is
             // rendered to call this code
-            //TODO: Change this implementation for another safer way!!!
-            $timeout(function(){
-                var siteSearchTag = $('#siteSearchTag');
-                siteSearchTag.tagsinput("removeAll");
-                for(var i=0;i< $scope.objectsSidebarService.selectedObject.searchTags.length;i++){
-                    siteSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
-                }
-            },100);
-
+            // TODO: Change this implementation for another safer way!!!
+            // $timeout(function(){
+            //     var siteSearchTag = $('#siteSearchTag');
+            //     siteSearchTag.tagsinput("removeAll");
+            //     for(var i=0;i< $scope.objectsSidebarService.selectedObject.searchTags.length;i++){
+            //         siteSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
+            //     }
+            // },100);
+            //Current QR code
+            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/' + objectClicked.identifier + '/getqrcode')
+                .success(function(data){
+                    $scope.currentQR = data;
+                })
+                .error(function(error){
+                    $scope.currentQR = null;
+                });
+            //Already to show the site info
+            $scope.ready = true;
         });
 
         $scope.$on("Biin: On Object Created", function(){
@@ -8802,7 +9602,6 @@ angular.module('sites').config(['$stateProvider',
 
         //Init the the sites
         $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-
         $scope.newTagField=[];
 
         //Loading images service property
@@ -8818,13 +9617,13 @@ angular.module('sites').config(['$stateProvider',
          =============================================================================================================*/
 
         //Get the List of Sites
-        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationService.selectedOrganization.identifier +'/sites').success(function(data){
+        $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
             if(data.data) {
                 $scope.objectsSidebarService.setObjects(data.data.sites);
                 $scope.loadingService.isLoading = false;
-                if(data.data.sites.length>0){
-                    selectFirstSite(data.data.sites);
-                }
+                // if(data.data.sites.length>0){
+                //     selectFirstSite(data.data.sites);
+                // }
             }
         });
 
@@ -8834,7 +9633,7 @@ angular.module('sites').config(['$stateProvider',
         });
 
         //Get the list of the gallery
-        Gallery.getList($scope.organizationService.selectedOrganization.identifier).then(function(promise){
+        Gallery.getList($scope.organizationId).then(function(promise){
             $scope.galleries= promise.data.data;
         });
 
@@ -8842,20 +9641,20 @@ angular.module('sites').config(['$stateProvider',
          *  Functions
          =============================================================================================================*/
 
-        var selectFirstSite = function( sites ) {
-
-            $scope.objectsSidebarService.selectedObject = sites[0];
-            //I know it's ugly and I don't like this approach, it should be other way to  validate if the tag field is
-            // rendered to call this code
-            //TODO: Change this implementation for another safer way!!!
-            $timeout(function(){
-                var siteSearchTag = $('#siteSearchTag');
-                for(var i=0;i< $scope.objectsSidebarService.selectedObject.searchTags.length;i++){
-                    siteSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
-                }
-            },100);
-
-        };
+        // var selectFirstSite = function( sites ) {
+        //
+        //     $scope.objectsSidebarService.selectedObject = sites[0];
+        //     //I know it's ugly and I don't like this approach, it should be other way to  validate if the tag field is
+        //     // rendered to call this code
+        //     //TODO: Change this implementation for another safer way!!!
+        //     $timeout(function(){
+        //         var siteSearchTag = $('#siteSearchTag');
+        //         for(var i=0;i< $scope.objectsSidebarService.selectedObject.searchTags.length;i++){
+        //             siteSearchTag.tagsinput("add",$scope.objectsSidebarService.selectedObject.searchTags[i]);
+        //         }
+        //     },100);
+        //
+        // };
 
         //Return the categories of the sites
         $scope.ownCategories=function(){
@@ -8873,7 +9672,7 @@ angular.module('sites').config(['$stateProvider',
                     siteSearchTag.tagsinput("removeAll");
 
                     var sites = $scope.objectsSidebarService.getObjects();
-                    sites.push(site);
+                    sites.unshift(site);
                     $scope.objectsSidebarService.setObjects(sites);
                     $scope.objectsSidebarService.setSelectedObject(site);
                     setTimeout(function(){
@@ -9085,15 +9884,17 @@ angular.module('sites').config(['$stateProvider',
 
         //Category return if contains a specific category
         $scope.containsCategory=function(category){
-            if(typeof(_.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier}))!='undefined')
-                return true;
-            else
-                return false;
+            if($scope.objectsSidebarService.selectedObject){
+                if(typeof(_.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier}))!='undefined')
+                    return true;
+                else
+                    return false;
+            }
         };
 
 
         //Change the state of the category relation with the Site
-        $scope.updateSelectedCategories =function(category){
+        $scope.updateSelectedCategories = function(category){
             var index =-1;
             var cat = _.findWhere($scope.objectsSidebarService.selectedObject.categories,{identifier:category.identifier});
             if(typeof(cat)!='undefined'){
@@ -9108,10 +9909,27 @@ angular.module('sites').config(['$stateProvider',
         };
 
         //Remove the media object at specific index
-        $scope.removeMediaAt=function(index){
+        $scope.removeMediaAt = function(index){
             if($scope.objectsSidebarService.selectedObject.media.length>=index)
                 $scope.objectsSidebarService.selectedObject.media.splice(index,1);
         };
+        //Refresh QR Code
+        $scope.refreshQR = function(){
+            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/' + $scope.objectsSidebarService.selectedObject.identifier + '/refreshqrcode')
+                .success(function(data){
+                    //Current QR code
+                    $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/' + $scope.objectsSidebarService.selectedObject.identifier + '/getqrcode')
+                        .success(function(data){
+                            $scope.currentQR = data;
+                        })
+                        .error(function(error){
+                            $scope.currentQR = null;
+                        });
+                })
+                .error(function(error){
+                    console.log(error);
+                });
+        }
     }
 })();
 

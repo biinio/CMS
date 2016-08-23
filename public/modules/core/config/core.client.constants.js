@@ -14,6 +14,9 @@
           'tablet':                 768,
           'mobile':                 480
         })
+        // Using lodash in AngularJS
+        // In controllers
+        .constant('_', window._)
       ;
 
 })();

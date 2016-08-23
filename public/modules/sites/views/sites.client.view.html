@@ -1,18 +1,18 @@
 <div ng-include="'/modules/core/views/partials/objectssidebar.html'" ng-controller="ObjectsSideBar" class=""></div>
 <div ng-controller="SitesController as sites" class="">
     <div id="wrapperContent" class="container-fluid" ng-mouseleave="save()">
-        <div class="right-section-content nopadding">
-            <div ng-if="objectsSidebarService.selectedObject!=null && objectsSidebarService.selectedObject != {}">
+        <div class="right-section-content nopadding sites-section">
+            <div ng-if="ready">
                 <!-- NutShell Section -->
                 <section>
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <legend translate="SITES.TITLE"></legend>
                             <div ng-if="myForm.$invalid || locationForm.$invalid || objectsSidebarService.selectedObject.media.length == 0 || objectsSidebarService.selectedObject.lat == 0 || objectsSidebarService.selectedObject.lng == 0">
-                                <label class="error-icon fa fa-minus-square enlarge-icon"></label>
+                                <label class="error-icon fa fa-times-circle enlarge-icon"></label>
                             </div>
                             <div ng-if="myForm.$valid && locationForm.$valid && objectsSidebarService.selectedObject.media.length > 0 && objectsSidebarService.selectedObject.lat != 0 && objectsSidebarService.selectedObject.lng != 0">
-                                <label class="ready-icon fa fa-check-square-o enlarge-icon"></label>
+                                <label class="ready-icon fa fa-check-circle enlarge-icon"></label>
                             </div>
                             <form name="myForm" role="form" class="form-validate">
 
@@ -193,10 +193,35 @@
                         </div>
                     </div>
                 </section>
+                <!-- QR Code -->
+                <section>
+                    <div class="panel panel-default">
+                        <div class="panel-body qr-code">
+                            <legend>Código QR del local</legend>
+                            <p ng-if="!currentQR">Crea el código QR de tu local</p>
+                            <p ng-if="currentQR">Código QR de tu local, actualízalo únicamente cuando sea necesario</p>
+                            <button class="btn btn-danger" ng-if="!currentQR" ng-click="refreshQR()"><span class="fa fa-plus"></span> Crear código</button>
+                            <div id="qr-section" ng-if="currentQR">
+                                <h1 class="qr-title text-center">Código QR de {{objectsSidebarService.selectedObject.title1}}-{{objectsSidebarService.selectedObject.title2}}</h1>
+                                <qrcode version="6" error-correction-level="M" data="biin/{{objectsSidebarService.selectedObject.identifier}}/{{currentQR.identifier}}" size="200"
+                                        download="true" download-file-name="Código QR {{objectsSidebarService.selectedObject.title1}}-{{objectsSidebarService.selectedObject.title2}}">
+                                </qrcode>
+                                <button class="btn btn-primary print-code" ng-print print-element-id="qr-section"><span class="fa fa-print"></span></button>
+                                <button class="btn btn-danger refresh-code" ng-click="refreshQR()"><span class="fa fa-refresh"></span></button>
+                                <div class="clearfix"></div>
+                                <small>*Click al código para descargar</small>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 <button  type="button" ng-if="deletePermit" class="btn btn-oval btn-danger align-right" ng-click="deleteSite(' {{'GENERIC.DELETE_SITE_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">{{ 'GENERIC.DELETE_SITE' | translate }}</button>
                 <!--code ng-hide="true">{{'GENERIC.IDENTIFIER' | translate}} :
                     {{objectsSidebarService.selectedObject.identifier }}</code-->
                 <code>IDENTIFIER: {{objectsSidebarService.selectedObject.identifier}}</code>
+                <br>
+                <code>MINOR: {{objectsSidebarService.selectedObject.minorCounter}}</code>
+                <br>
+                <code>MAJOR: {{objectsSidebarService.selectedObject.major}}</code>
             </div>
             <div ng-if="objectsSidebarService.selectedObject==null || objectsSidebarService.selectedObject == {}" class="no-object-container">
                 <section class="text-center on-no-object-selected">

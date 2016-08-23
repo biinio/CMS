@@ -60,41 +60,69 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <div class="">
-                <div class="custom-border comments-section-padding">
-                    <div class="nps-last-comments-title">Ultimos 20 comentarios</div>
-                    <!-- START list group-->
-                    <div class="list-group custom-border" style="overflow-x: hidden; overflow-y: auto; max-height: 392px; min-height: 392px; padding-top: 0px" data-ng-if="lastComments.length > 0">
-                        <!-- START list group item-->
-                        <a class="list-group-item" data-ng-repeat="commentData in lastComments">
-                            <div class="media-box">
-                                <div class="pull-left border-round" data-ng-class="{ 'nps-green-border': commentData.rating>=9, 'nps-orange-border': commentData.rating<9 && commentData.rating>=7, 'nps-red-border':commentData.rating<7}">
-                                    <img ng-src="{{commentData.image}}" alt="Image"
-                                         class="media-box-object img-circle thumb64"/>
-                                </div>
-                                <div class="media-box-body clearfix">
-                                    <small class="pull-right">{{commentData.date}}</small>
-                                    <strong class="media-box-heading">
-                                        <span class="circle circle-success circle-lg text-left"></span>
-                                        {{commentData.user}}
-                                    </strong>
-                                    <p class="mb-sm" data-ng-class="{ 'text-success': commentData.rating>=9, 'text-warning': commentData.rating<9 && commentData.rating>=7, 'text-danger':commentData.rating<7}">
-                                        <strong>Calificación: </strong><strong>{{commentData.rating}}</strong>
-                                    </p>
-                                    <p class="mb-sm">
-                                        <small>{{commentData.comment}}</small>
-                                    </p>
-                                </div>
+            <button class="btn btn-primary btn-block select-gift" ng-click="displayGifts('automatic')" modal="open" target="giftsAvailableAutomatic">
+                <span ng-if="!isGiftActive">Seleccionar regalo automático</span>
+                <span ng-if="isGiftActive">Ver regalo automático</span>
+            </button>
+            <div class="nps-last-comments-title">Últimos 20 comentarios</div>
+            <div class="commentsContainer">
+            <!--<uib-tabset active="active">-->
+            <!--<uib-tab ng-repeat="tab in tabs" ng-click="changeStatus(tab.status)">-->
+                <!--<uib-tab-heading>-->
+                    <!--{{tab.name}} <span ng-hide="tab.name=='Encuestados'" class="badge badge-dark nps-badge">{{commentCount(tab.status)}}</span>-->
+                <!--</uib-tab-heading>-->
+                <!--<div class="nps-last-comments-title" ng-if="status==undefined">Últimos 20 comentarios</div>-->
+                <!--<div class="nps-last-comments-title" ng-if="status=='SENT'">Usuarios que se les envió regalo</div>-->
+                <!--<div class="nps-last-comments-title" ng-if="status=='CLAIMED'">Usuarios que reclamaron su regalo</div>-->
+                <!--<div class="nps-last-comments-title" ng-if="status=='DELIVERED'">Usuarios que han sido premiados</div>-->
+                <!-- START list group-->
+                <div class="list-group" data-ng-if="lastComments.length > 0">
+                    <!-- START list group item-->
+                    <!--<a class="list-group-item clearfix" data-ng-repeat="commentData in lastComments" ng-if="commentData.gift.status==tab.status || status==undefined">-->
+                    <a class="list-group-item clearfix" data-ng-repeat="commentData in lastComments">
+                        <div class="media-box col-sm-8">
+                            <div class="pull-left border-round" data-ng-class="{ 'nps-green-border': commentData.rating>=9, 'nps-orange-border': commentData.rating<9 && commentData.rating>=7, 'nps-red-border':commentData.rating<7}">
+                                <img ng-src="{{commentData.image}}" alt="Image"
+                                     class="media-box-object img-circle thumb64"/>
                             </div>
-                        </a>
-                        <!-- END list group item-->
-                    </div>
-                    <div class="list-group custom-border center-text" style="overflow-x: hidden; overflow-y: auto; max-height: 392px; min-height: 392px; padding-top: 0px" data-ng-if="lastComments.length <= 0">
-                        No hay comentarios
-                    </div>
-                    <!-- END list group-->
+                            <div class="media-box-body clearfix">
+                                <strong class="media-box-heading">
+                                    <span class="circle circle-success circle-lg text-left"></span>
+                                    {{commentData.user}}
+                                </strong>
+                                <p class="mb-sm" data-ng-class="{ 'text-success': commentData.rating>=9, 'text-warning': commentData.rating<9 && commentData.rating>=7, 'text-danger':commentData.rating<7}">
+                                    <small><strong>Calificación: </strong><strong>{{commentData.rating}}</strong></small>
+                                </p>
+                                <p class="mb-sm">
+                                    <small>{{commentData.comment}}</small>
+                                </p>
+                                <p>
+                                    <small>Hace {{commentData.date}}</small>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="actions-box col-sm-4">
+                            <button ng-if="commentData.user!='Usuario Eliminado de Biin' && commentData.gift==0" class="mb-sm btn btn-primary pull-right" ng-click="displayGifts('manual', commentData);selectedGift=null" modal="open" target="giftsAvailableManual"><span class="fa fa-trophy"></span> Premiar</button>
+                            <button ng-disabled="commentData.gift.status=='SENT'" ng-if="commentData.gift.status=='SENT'" class="mb-sm btn btn-default pull-right"><span class="fa fa-clock-o"></span> Enviado</button>
+                            <button ng-disabled="commentData.gift.status=='REFUSED'" ng-if="commentData.gift.status=='REFUSED'" class="mb-sm btn btn-default pull-right"><span class="fa fa-clock-o"></span> Rechazado</button>
+                            <button ng-if="commentData.gift.status=='CLAIMED'"  class="mb-sm btn btn-primary pull-right" ng-click="deliverGift(commentData)"><span class="fa fa-envelope"></span> Entregar</button>
+                            <button ng-disabled="commentData.gift.status=='DELIVERED'" ng-if="commentData.gift.status=='DELIVERED'" class="mb-sm btn btn-default pull-right"><span class="fa fa-check"></span> Entregado</button>
+                            <!--Gift state dates-->
+                            <small ng-if="commentData.gift.recievedDate" class="pull-right">Enviado: {{commentData.gift.recievedDate | date:'dd-MM-yyyy'}}</small>
+                            <small ng-if="commentData.gift.claimedDate" class="pull-right">Reclamado: {{commentData.gift.claimedDate | date:'dd-MM-yyyy'}}</small>
+                            <small ng-if="commentData.gift.deliveredDate" class="pull-right">Entregado: {{commentData.gift.deliveredDate | date:'dd-MM-yyyy'}}</small>
+                        </div>
+                    </a>
+                    <!-- END list group item-->
+                </div>
+                <div class="list-group center-text" data-ng-if="lastComments.length <= 0">
+                    No hay comentarios
                 </div>
             </div>
+                <!--</uib-tab>-->
+            <!--</uib-tabset>-->
         </div>
+        <ng-include src="'/modules/dashboard/views/modals/giftsAvailableAutomatic.modal.client.html'"></ng-include>
+        <ng-include src="'/modules/dashboard/views/modals/giftsAvailableManual.modal.client.html'"></ng-include>
     </div>
 </div>

@@ -54,6 +54,7 @@ module.exports = {
                 'public/lib/textAngular/dist/textAngularSetup.js',
                 'public/lib/textAngular/dist/textAngular-sanitize.js',
                 'public/lib/underscore/underscore.js',
+                'public/lib/bootstrap/dist/js/bootstrap.js',
                 'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.js',
                 'public/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput-angular.js',
                 'public/lib/angular-bind-html-compile/angular-bind-html-compile.js',
@@ -77,6 +78,7 @@ module.exports = {
                 'public/lib/d3/d3.js',
                 'public/lib/nvd3/build/nv.d3.js',
                 'public/lib/angular-nvd3/dist/angular-nvd3.js',
+                'public/lib/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js',
                 'public/lib/ng-img-crop/compile/minified/ng-img-crop.js',
                 'public/lib/tinycolor/dist/tinycolor-min.js',
                 'public/lib/angular-color-picker/dist/angularjs-color-picker.min.js',
@@ -89,8 +91,11 @@ module.exports = {
                 'public/lib/Flot/jquery.flot.categories.js',
                 'public/lib/flot-spline/js/jquery.flot.spline.min.js',
                 'public/lib/jqueryui-touch-punch/jquery.ui.touch-punch.min.js',
-                'public/lib/slimScroll/jquery.slimscroll.min.js'
-
+                'public/lib/slimScroll/jquery.slimscroll.min.js',
+                'public/lib/qrcode-generator/js/qrcode.js',
+                'public/lib/qrcode-generator/js/qrcode_UTF8.js',
+                'public/lib/angular-qrcode/angular-qrcode.js',
+                'public/lib/v-accordion/dist/v-accordion.min.js'
                 // 'public/lib/jquery/dist/jquery.js',
                 // 'public/lib/angular/angular.js',
                 // 'public/lib/angular-resource/angular-resource.js',
@@ -116,7 +121,8 @@ module.exports = {
             'public/lib/nvd3/build/nv.d3.css',
             'public/lib/ng-img-crop/compile/minified/ng-img-crop.css',
             'public/lib/angular-color-picker/dist/angularjs-color-picker.min.css',
-            'public/lib/sweetalert/dist/sweetalert.css'
+            'public/lib/sweetalert/dist/sweetalert.css',
+            'public/lib/v-accordion/dist/v-accordion.min.css'
         ],
         js: [
             'public/config.js',

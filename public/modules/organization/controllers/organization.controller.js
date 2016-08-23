@@ -115,7 +115,7 @@
             swal({   title: "Su organización se esta creando",  type: "info",   showConfirmButton: false });
             $http.put(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + Authentication.user.accountIdentifier).success(function (org, status) {
                 if (status == 201 || status == 200) {
-                    $scope.organizationService.organizationsList.push(org);
+                    $scope.organizationService.organizationsList.unshift(org);
                     $scope.objectsSidebarService.setObjects($scope.organizationService.organizationsList);
                     $scope.objectsSidebarService.selectedObject = $scope.organizationService.organizationsList[$scope.organizationService.organizationsList.indexOf(org)];
                     setTimeout(function(){

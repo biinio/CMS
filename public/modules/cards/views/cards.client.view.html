@@ -1,0 +1,241 @@
+<!-- Objects Sidebar Include -->
+<div ng-include="'/modules/core/views/partials/objectssidebar.html'" ng-controller="ObjectsSideBar" class=""></div>
+<!-- Gifts Section View -->
+<div ng-controller="CardsController as card" class="block-center">
+    <div id="wrapperContent" class="container-fluid cards-section" ng-mouseleave="update()">
+        <div class="right-section-content">
+            <!--Display if form is ready to fill (ready means someone click an item in the Sidebar)-->
+            <div ng-if="ready">
+                <div class="panel panel-default">
+                    <!-- Card Form-->
+                    <form name="card.myForm" role="form">
+                        <!--Card info-->
+                        <section>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <legend translate="CARD.INFORMATION"></legend>
+                                    <!--Icons that show up depending if the form is valid or invalid-->
+                                    <div ng-if="card.myForm.$invalid">
+                                        <label class="error-icon fa fa-times-circle enlarge-icon"></label>
+                                    </div>
+                                    <div ng-if="card.myForm.$valid">
+                                        <label class="ready-icon fa fa-check-circle enlarge-icon"></label>
+                                    </div>
+
+                                    <!--title name="title"-->
+                                    <div class="form-group">
+                                        <label for="cardTitle" translate="CARD.TITLE" class="control-label"></label>
+                                        <input id="cardTitle" ng-model="objectsSidebarService.selectedObject.title"
+                                               name="title"
+                                               type="text" placeholder="{{ 'CARD.TITLE_PLACEHOLDER' | translate }}"
+                                               required class="form-control title-value"
+                                               ng-disabled="objectsSidebarService.selectedObject.isActive"/>
+                                        <!-- Input title errors -->
+                                        <div ng-messages="card.myForm.title.$error" ng-if="card.myForm.title.$touched"class="help-block">
+                                            <small ng-message="required" translate="CARD.TITLE_REQUIRED"></small>
+                                        </div>
+                                    </div>
+
+                                    <!--rule name="rule"-->
+                                    <div class="form-group">
+                                        <label for="cardRule" translate="CARD.RULE" class="control-label"></label>
+                                        <input id="cardRule" ng-model="objectsSidebarService.selectedObject.rule"
+                                               name="rule"
+                                               type="text" placeholder="{{ 'CARD.RULE_PLACEHOLDER' | translate }}"
+                                               required class="form-control title-value"
+                                               ng-disabled="objectsSidebarService.selectedObject.isActive"/>
+                                        <!-- Input rule errors -->
+                                        <div ng-messages="card.myForm.rule.$error" ng-if="card.myForm.rule.$touched"class="help-block">
+                                            <small ng-message="required" translate="CARD.RULE_REQUIRED"></small>
+                                        </div>
+                                    </div>
+
+                                    <!--slots name="slots"-->
+                                    <div class="form-group">
+                                        <label translate="CARD.SLOTS" class="form-label"></label>
+                                        <select name="slots"
+                                                ng-model="objectsSidebarService.selectedObject.slots"
+                                                ng-disabled="objectsSidebarService.selectedObject.isActive"
+                                                ng-options="slotQuantity for slotQuantity in slotsQuantities"
+                                                class="form-control" required>
+                                            <option value="" translate="GENERIC.CHOOSE"></option>
+                                        </select>
+                                        <!-- Input slots errors -->
+                                        <div ng-messages="card.myForm.slots.$error" ng-if="card.myForm.slots.$touched" class="help-block">
+                                            <small ng-message="required" translate="CARD.SLOTS_REQUIRED"></small>
+                                        </div>
+                                    </div>
+
+                                    <!--gift name="gift"-->
+                                    <div class="form-group">
+                                        <label translate="CARD.GIFT" class="form-label"></label>
+                                        <select name="gift"
+                                                ng-model="objectsSidebarService.selectedObject.gift"
+                                                ng-disabled="objectsSidebarService.selectedObject.isActive"
+                                                ng-options="gift as gift.name for gift in gifts track by gift.identifier"
+                                                class="form-control" required>
+                                            <option value="" translate="GENERIC.CHOOSE"></option>
+                                        </select>
+                                        <!-- Input slots errors -->
+                                        <div ng-messages="card.myForm.gift.$error" ng-if="card.myForm.gift.$touched" class="help-block">
+                                            <small ng-message="required" translate="CARD.GIFT_REQUIRED"></small>
+                                        </div>
+                                    </div>
+
+                                    <!--goal name="goal"-->
+                                    <div class="form-group">
+                                        <label for="cardGoal" translate="CARD.GOAL" class="control-label"></label>
+                                        <input id="cardGoal" ng-model="objectsSidebarService.selectedObject.goal"
+                                               name="goal"
+                                               type="text" placeholder="{{ 'CARD.GOAL_PLACEHOLDER' | translate }}"
+                                               required class="form-control title-value"
+                                               ng-disabled="objectsSidebarService.selectedObject.isActive"/>
+                                        <!-- Input goal errors -->
+                                        <div ng-messages="card.myForm.goal.$error" ng-if="card.myForm.goal.$touched"class="help-block">
+                                            <small ng-message="required" translate="CARD.GOAL_REQUIRED"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <!--Card details-->
+                        <section>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <legend translate="CARD.CARD_DETAIL"></legend>
+                                    <!--renewalAutomatic name="renewal"-->
+                                    <div class="form-group">
+                                        <label translate="CARD.RENEWAL_QUESTION" class="form-label"></label>
+                                        <div class="clearfix"></div>
+                                        <!--Positive checkbox-->
+                                        <div class="checkbox c-checkbox pull-left mt0">
+                                            <label>
+                                                <input type="radio" ng-value="true" name="renewal" ng-model="objectsSidebarService.selectedObject.renewalAutomatic"
+                                                       ng-disabled="objectsSidebarService.selectedObject.isActive"/>
+                                                <span class="fa fa-check"></span>{{ 'GENERIC.POSITIVE' | translate }}
+                                            </label>
+                                        </div>
+                                        <!--Negative checkbox-->
+                                        <div class="checkbox c-checkbox pull-left mt0 period-negative">
+                                            <label>
+                                                <input type="radio" ng-value="false"  name="renewal" ng-model="objectsSidebarService.selectedObject.renewalAutomatic"
+                                                       ng-disabled="objectsSidebarService.selectedObject.isActive"/>
+                                                <span class="fa fa-check"></span>{{ 'GENERIC.NEGATIVE' | translate }}
+                                            </label>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <!--waitTime name="waitTime"-->
+                                    <div class="form-group" ng-if="objectsSidebarService.selectedObject.renewalAutomatic==true">
+                                        <label for="cardWaitTime" translate="CARD.WAITTIME" class="control-label"></label>
+                                        <input id="cardWaitTime" ng-model="objectsSidebarService.selectedObject.waitTime"
+                                               name="waitTime" ng-pattern="/^\+?([0-9]\d*)$/"
+                                               type="text" placeholder="{{ 'CARD.WAITTIME_PLACEHOLDER' | translate }}"
+                                               required class="form-control title-value"
+                                               ng-disabled="objectsSidebarService.selectedObject.isActive"/>
+                                        <!-- Input waitTime errors -->
+                                        <div ng-messages="card.myForm.waitTime.$error" ng-if="card.myForm.waitTime.$touched"class="help-block">
+                                            <small ng-message="required" translate="CARD.WAITTIME_REQUIRED"></small>
+                                            <small ng-message="pattern" translate="CARD.WAITTIME_PATTERN">*Los días de espera deben ser positivos.</small>
+                                        </div>
+                                    </div>
+                                    <!--Amount name="amount"-->
+                                    <div class="form-group limitedCard">
+                                        <label for="cardAmount" translate="CARD.AMOUNT" class="control-label"></label>
+                                        <input id="cardAmount" ng-model="objectsSidebarService.selectedObject.quantity"
+                                               name="quantity" ng-pattern="/^\+?([1-9]\d*)$/"
+                                               type="text" placeholder="{{ 'CARD.AMOUNT_PLACEHOLDER' | translate }}"
+                                               required class="form-control"
+                                               ng-disabled="objectsSidebarService.selectedObject.isActive || objectsSidebarService.selectedObject.isUnlimited==true"/>
+                                        <!-- Input title errors -->
+                                        <div ng-messages="card.myForm.quantity.$error" ng-if="card.myForm.quantity.$touched"class="help-block">
+                                            <small ng-message="required" translate="CARD.AMOUNT_REQUIRED"></small>
+                                            <small ng-message="pattern" translate="CARD.AMOUNT_PATTERN"></small>
+                                        </div>
+                                    </div>
+                                    <!--Unlimited amount name="unlimitedAmount"-->
+                                    <div class="form-group unlimitedCard">
+                                        <!--Positive checkbox-->
+                                        <label> </label>
+                                        <div class="checkbox c-checkbox pull-left mt0">
+                                            <label>
+                                                <input type="checkbox" name="unlimitedAmount" ng-model="objectsSidebarService.selectedObject.isUnlimited"
+                                                       ng-disabled="objectsSidebarService.selectedObject.isActive"
+                                                       ng-change="checkUnlimited()"/>
+                                                <span class="fa fa-check"></span>{{ 'GENERIC.UNLIMITED' | translate }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <!--isDeleted & isActive-->
+                                    <div class="form-group activate-gift">
+                                        <button type="button" class="btn btn-danger col-sm-2" ng-click="deleteCard(' {{'GENERIC.DELETE_CARD_CONFIRMATION' | translate}} ', objectsSidebarService.selectedObject)">
+                                            <span class="fa fa-trash"></span>
+                                            <span translate="GENERIC.DELETE"></span>
+                                        </button>
+                                        <button type="button" ng-click="activate()" class="btn btn-success col-sm-9 col-sm-offset-1" ng-class="{ 'btn-danger': objectsSidebarService.selectedObject.isActive==true , 'btn-success' : !objectsSidebarService.selectedObject.isActive==true}">
+                                            <span ng-if="objectsSidebarService.selectedObject.isActive == false" translate="GENERIC.ACTIVATE"></span>
+                                            <span ng-if="objectsSidebarService.selectedObject.isActive == true" translate="GENERIC.DESACTIVATE"></span>
+                                        </button>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <!--Alerts-->
+                                    <div class="form-group">
+                                        <div class="alert alert-warning alert-dismissible" ng-show="show_alert">
+                                            <span class="close" ng-click="show_alert=false"><span aria-hidden="true">&times;</span></span>
+                                            <small translate="CARD.INFO"></small>
+                                            <div class="clearfix"></div>
+                                            <small translate="CARD.INFO2"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <!--<legend translate="CARD.CONDITIONS"></legend>-->
+                        <!--&lt;!&ndash;conditionsText - conditionsURL - hasConditionURL&ndash;&gt;-->
+                        <!--<div class="form-group">-->
+                            <!--<label translate="CARD.CONDITIONS_STATEMENT" class="form-label"></label>-->
+                            <!--<text-angular name="conditions" serial="1"-->
+                                          <!--ng-model="objectsSidebarService.selectedObject.conditionsText"-->
+                                          <!--ta-disabled="objectsSidebarService.selectedObject.hasConditionsURL">-->
+                            <!--</text-angular>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;conditionsURL name="conditionsURL"&ndash;&gt;-->
+                        <!--<div class="form-group limitedCard" ng-if="objectsSidebarService.selectedObject.hasConditionsURL==true">-->
+                            <!--<input ng-model="objectsSidebarService.selectedObject.conditionsURL"-->
+                                   <!--name="conditionsURL"-->
+                                   <!--type="url" placeholder="{{ 'CARD.URL_PLACEHOLDER' | translate }}"-->
+                                   <!--required class="form-control"-->
+                                   <!--ng-disabled="objectsSidebarService.selectedObject.isActive"/>-->
+                            <!--&lt;!&ndash; Input conditionsURL errors &ndash;&gt;-->
+                            <!--<div ng-messages="card.myForm.conditionsURL.$error" ng-if="card.myForm.conditionsURL.$touched"class="help-block">-->
+                                <!--<small ng-message="required" translate="CARD.URL_REQUIRED"></small>-->
+                                <!--<small ng-message="url" translate="CARD.URL_PATTERN"></small>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;hasConditionsURL name="hasConditionsURL"&ndash;&gt;-->
+                        <!--<div class="form-group urlCheckbox">-->
+                            <!--&lt;!&ndash;Positive checkbox&ndash;&gt;-->
+                            <!--<label> </label>-->
+                            <!--<div class="checkbox c-checkbox pull-left">-->
+                                <!--<label>-->
+                                    <!--<input type="checkbox" name="hasConditionsURL" ng-model="objectsSidebarService.selectedObject.hasConditionsURL"-->
+                                           <!--ng-disabled="objectsSidebarService.selectedObject.isActive"/>-->
+                                    <!--<span class="fa fa-check"></span>{{ 'CARD.URL' | translate }}-->
+                                <!--</label>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="clearfix"></div>-->
+                    </form>
+                </div>
+            </div>
+            <!--Display if form is not ready to fill-->
+            <div ng-if="ready == false"
+                 class="no-object-container">
+                <section class="text-center on-no-object-selected">
+                    <span translate="CARD.HINT"></span>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

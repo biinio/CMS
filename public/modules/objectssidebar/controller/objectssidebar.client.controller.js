@@ -27,13 +27,19 @@
             $scope.organizationService = Organization;
             //Draggable Properties
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-            $scope.currentDate = new Date();
-            
-            //----Functions----//
-            //Get the List of Products
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
-                $scope.products = data.data.elements;
-            });
+            $scope.currentDate = new Date().getTime();
+
+            if($scope.organizationId) {
+                //----Functions----//
+                //Get the List of Products
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
+                    $scope.products = data.data.elements;
+                });
+                //Get the List of Gifts
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
+                    $scope.gifts = gifts;
+                });
+            }
         }
 
         //Function to set the image of the current product into the thumbnail in the Objects Sidebar
@@ -44,6 +50,11 @@
                 }
             }
         };
+
+        //Formatting dates
+        $scope.formDate = function(date) {
+            return new Date(date).getTime();
+        }
 
         $scope.onObjectClick = function( index ){
             var objectClicked = $scope.objectsSidebarService.getObjects()[index];

@@ -146,7 +146,7 @@
             swal({   title: "Su vitrina se esta creando",  type: "info",   showConfirmButton: false });
             $http.post(ApplicationConfiguration.applicationBackendURL +'api/organizations/' + $scope.organizationService.selectedOrganization.identifier + "/showcases").success(function (showcase, status) {
                 if (status == 201) {
-                    $scope.objectsSidebarService.objects.push(showcase);
+                    $scope.objectsSidebarService.objects.unshift(showcase);
                     setTimeout(function(){
                         swal.close();
                     },2000);
@@ -245,9 +245,7 @@
         //Save detail model object
         $scope.save = function () {
 
-
             //Save showcases
-
             for(var i = 0; i< $scope.sites.length; i++){
                 for(var j = 0; j<$scope.sites[i].showcases.length;j++){
 
@@ -272,9 +270,7 @@
 
             if ($scope.hasMissingData()) {
                 $scope.objectsSidebarService.selectedObject.isReady = 0;
-            }
-
-            else {
+            }else {
                 $scope.objectsSidebarService.selectedObject.isReady = 1;
             }
 
@@ -299,7 +295,7 @@
 
         $scope.filteredElements = function ( element ) {
             var index = -1;
-            if($scope.objectsSidebarService.selectedObject.elements.length > 0){
+            if($scope.objectsSidebarService.selectedObject.elements){
                 for(var i = 0; i < $scope.objectsSidebarService.selectedObject.elements.length; i++){
                     if($scope.objectsSidebarService.selectedObject.elements[i].elementIdentifier == element.elementIdentifier){
                         index = i;
