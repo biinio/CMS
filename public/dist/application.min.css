@@ -10006,6 +10006,9 @@ _:-ms-lang(x),
   cursor: default;
   line-height: 55px;
 }
+.nav-wrapper .collapseButton {
+  font-size: 20px;
+}
 .nav-wrapper .nav.navbar-nav {
   float: left;
 }
