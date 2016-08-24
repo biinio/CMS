@@ -7,10 +7,7 @@
 //Passport Login
 var passport = require('passport');
 
-var _ = require('lodash'),
-    mongoose = require('mongoose'),
-    client  = mongoose.model('clients'),
-    roles  = mongoose.model('roles');
+var _ = require('lodash');
 
 
 /**
