@@ -8,8 +8,8 @@ module.exports = {
     },
     port: process.env.PORT || 3000,
     templateEngine: 'swig',
-    sessionSecret: 'MEAN',
-    sessionCollection: 'sessions',
+    sessionSecret: 'ludusy secret',
+    sessionCollection: 'cmsSessions',
     MAGIC_PASSWORD: 'isaias123',
     assets: {
         lib: {
