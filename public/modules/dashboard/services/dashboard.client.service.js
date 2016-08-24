@@ -18,6 +18,8 @@
                 }
             }).then(function (response) {
                 return response.data;
+            },function (error) {
+                console.log(error);
             });
         }
 

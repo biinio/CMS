@@ -16577,6 +16577,13 @@ input.cmn-toggle-round:checked + label:after {
 .dashboard .loaderAnim.ng-enter.ng-enter-active {
   opacity: 1;
 }
+.dashboard .loadercontainer {
+  position: absolute;
+  z-index: 1000;
+  min-width: 100%;
+  background-color: white;
+  display: table;
+}
 .nps .tab-content {
   padding-bottom: 0;
 }
@@ -16790,11 +16797,9 @@ input.cmn-toggle-round:checked + label:after {
 }
 .giftboard .loadercontainer {
   height: 400px;
-  position: absolute;
-  z-index: 1000;
-  min-width: 100%;
-  background-color: white;
-  display: table;
+}
+.currentCard .loadercontainer {
+  height: 300px;
 }
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');
