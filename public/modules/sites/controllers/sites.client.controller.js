@@ -93,9 +93,6 @@
             $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/' + objectClicked.identifier + '/getqrcode')
                 .success(function(data){
                     $scope.currentQR = data;
-                })
-                .error(function(error){
-                    $scope.currentQR = null;
                 });
             //Already to show the site info
             $scope.ready = true;
@@ -434,9 +431,6 @@
                     $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/sites/' + $scope.objectsSidebarService.selectedObject.identifier + '/getqrcode')
                         .success(function(data){
                             $scope.currentQR = data;
-                        })
-                        .error(function(error){
-                            $scope.currentQR = null;
                         });
                 })
                 .error(function(error){

@@ -13,13 +13,38 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="col-sm-4 activeCard">
-
+                <h5>Tarjeta de cliente frecuente activa</h5>
+                <small data-ng-if="!activeCard">(No se encuentra ninguna tarjeta activa)</small>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img src="" alt="Regalo de la tarjeta" />
+                    </div>
+                    <div class="col-sm-8">
+                        <p>{{activeCard.title}}</p>
+                        <small>{{activeCard.rule}}</small>
+                        <small>{{activeCard.goal}}</small>
+                    </div>
+                </div>
+                <hr>
+                <div class="row"></div>
             </div>
             <div class="col-sm-4 usersCard">
+                <h5>Usuarios ligados a la tarjeta</h5>
+                <small data-ng-if="usersCard.length==0">(No se encuentra ninguna tarjeta activa o no hay usuarios ligados)</small>
+                <ul class="usersList">
 
+                </ul>
             </div>
             <div class="col-sm-4 qrCodeDisplay">
-
+                <h5>Código QR de {{currentSite.title1}} - {{currentSite.title2}}</h5>
+                <small data-ng-if="!currentQR">(Este sitio no ha generado su código QR)</small>
+                <div data-ng-if="currentQR">
+                    <qrcode version="6" error-correction-level="M" data="biin/{{currentSite.identifier}}/{{currentQR.identifier}}" size="200"
+                            download="true" download-file-name="Código QR {{currentSite.title1}}-{{currentSite.title2}}">
+                    </qrcode>
+                    <div class="clearfix"></div>
+                    <small>*Click al código para descargar</small>
+                </div>
             </div>
         </div>
     </div>

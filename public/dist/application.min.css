@@ -16788,9 +16788,6 @@ input.cmn-toggle-round:checked + label:after {
   bottom: 10px;
   right: 10px;
 }
-.giftboard .loadercont.ng-enter.ng-enter-active {
-  opacity: 1;
-}
 .giftboard .loadercontainer {
   height: 400px;
   position: absolute;
