@@ -35,7 +35,7 @@
 
                 if(vm.loginForm.$valid) {
                     $http
-                    .post('api/account/login', {email: vm.account.email, password: vm.account.password})
+                    .post(ApplicationConfiguration.applicationBackendURL + 'api/loginCMS', {username: vm.account.email, password: vm.account.password})
                     .then(function(response) {
                     // Assumes if ok, response is an object with some data, if not, a string with error
                     // Customize according to your api
