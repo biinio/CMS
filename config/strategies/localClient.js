@@ -7,15 +7,15 @@
  * Module dependencies.
  */
 var passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy,
-    clientSchema = require('mongoose').model('clients'),
+    //LocalStrategy = require('passport-local').Strategy,
+    //clientSchema = require('mongoose').model('clients'),
     config = require('../config');
 
 
 
 module.exports = function() {
     // Use local strategy
-    passport.use('clientLocal',new LocalStrategy({
+    /*passport.use('clientLocal',new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password'
         },
@@ -44,5 +44,5 @@ module.exports = function() {
 
             });
         })
-    );
+    );*/
 };
