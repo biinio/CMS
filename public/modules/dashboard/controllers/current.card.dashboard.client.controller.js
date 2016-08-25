@@ -30,7 +30,7 @@
             getInitialData();
 
             //Functions from services
-            $scope.getImage = Products.getImage();
+            $scope.getImage = Products.getImage;
         }
 
         /**=============================================================================================================
@@ -39,10 +39,12 @@
          =============================================================================================================*/
 
         $scope.$on('organizationChanged', function () {
+            reset();
             getInitialData();
         });
 
         $scope.$on('Biin: Site Changed', function (scope, site) {
+            reset();
             getInitialData();
         });
 
@@ -58,15 +60,18 @@
                 $scope.products = products.data.elements;
                 return $scope.dashboardService.getActiveCardInfo();
             }).then(function(cardData){
-                $scope.activeCard = cardData.activeCard;
-                if($scope.activeCard){
-                    $scope.activeCard.image = Products.getImage($scope.activeCard.gift.productIdentifier, $scope.products);
+                if(cardData.activeCard){
+                    cardData.activeCard.image = $scope.getImage(cardData.activeCard.gift.productIdentifier, $scope.products);
                 }
+                $scope.activeCard = cardData.activeCard;
                 $scope.usersCard = cardData.usersCard;
-                console.log($scope.activeCard);
-                console.log($scope.usersCard );
                 $scope.isLoading = false;
             });
+        }
+        function reset() {
+            $scope.activeCard = null;
+            $scope.usersCard = [];
+            $scope.products = [];
         }
     }
 })();

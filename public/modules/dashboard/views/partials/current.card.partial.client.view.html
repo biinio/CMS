@@ -39,8 +39,23 @@
             <div class="col-sm-4 usersCard">
                 <h5>Usuarios ligados a la tarjeta</h5>
                 <small data-ng-if="usersCard.length==0">(No se encuentra ninguna tarjeta activa o no hay usuarios ligados)</small>
-                <ul class="usersList">
+                <ul data-ng-if="usersCard.length>0" class="usersList">
+                    <li class="list-item" ng-repeat="user in usersCard">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <img ng-src="{{user.image}}" alt="Avatar"/>
+                            </div>
+                            <div class="col-sm-8">
+                                <p>{{user.firstName}} {{user.secondName}}</p>
+                                <small>{{user.email}}</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
 
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
             <div class="col-sm-4 qrCodeDisplay">

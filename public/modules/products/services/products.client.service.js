@@ -7,8 +7,6 @@
         .factory('Products', ['$http','Organization', ProductsService]);
 
     function ProductsService($http, Organization) {
-        var currentOrganization = Organization.selectedOrganization.identifier;
-
        /* Function to obtain the image of a product
         * @param type: [], productIdentifier
         * @param type: string, productIdentifier
@@ -22,6 +20,8 @@
         }
         /* Function to obtain the ready products */
         function getReadyProducts() {
+            var currentOrganization = Organization.selectedOrganization.identifier;
+
             return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization + '/readyElements/')
             .then(function (response) {
                 return response.data;
