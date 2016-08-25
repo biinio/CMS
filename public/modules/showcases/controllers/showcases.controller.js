@@ -10,8 +10,12 @@
         .module('showcases')
         .controller('ShowcasesController', ShowcasesController);
 
-    ShowcasesController.$inject = ['$http', '$scope', '$translate', 'Authentication', 'Organization', 'ObjectsSidebar','ElementsService','BiinsService','Loading'];
-    function ShowcasesController($http, $scope, $translate, Authentication, Organization, ObjectsSidebar,ElementsService,BiinsService,Loading) {
+    ShowcasesController.$inject = ['$http', '$scope', '$window', '$translate', 'Authentication', 'Organization', 'ObjectsSidebar','ElementsService','BiinsService','Loading'];
+    function ShowcasesController($http, $scope, $window, $translate, Authentication, Organization, ObjectsSidebar,ElementsService,BiinsService,Loading) {
+        if (!Authentication.user) {
+            $window.location = '/';
+        }
+
         activate();
 
         ////////////////

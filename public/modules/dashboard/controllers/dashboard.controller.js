@@ -10,11 +10,11 @@
         .module('dashboard')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization', 'ObjectsSidebar', 'GlobalFilters', 'Loading'];
-    function DashboardController($http, $state, $scope, Authentication, Organization, ObjectsSidebar, GlobalFilters, Loading) {
+    DashboardController.$inject = ['$http', '$window','$scope', 'Authentication', 'Organization', 'ObjectsSidebar', 'GlobalFilters', 'Loading'];
+    function DashboardController($http, $window, $scope, Authentication, Organization, ObjectsSidebar, GlobalFilters, Loading) {
 
         if (!Authentication.user) {
-            $location.path('/');
+            $window.location = '/';
         }
 
         $scope.authentication = Authentication;

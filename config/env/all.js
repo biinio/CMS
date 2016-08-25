@@ -9,7 +9,7 @@ module.exports = {
     port: process.env.PORT || 3000,
     templateEngine: 'swig',
     sessionSecret: 'ludusy secret',
-    sessionCollection: 'cmsSessions',
+    sessionCollection: 'sessions',
     MAGIC_PASSWORD: 'isaias123',
     assets: {
         lib: {

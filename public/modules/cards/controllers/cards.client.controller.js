@@ -10,10 +10,14 @@
         .module('cards')
         .controller('CardsController', CardsController);
 
-    CardsController.$inject = ['$http', '$state', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate', 'toaster'];
+    CardsController.$inject = ['$http', '$window', '$state',  '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate', 'toaster'];
 
-    function CardsController($http, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate, toaster) {
+    function CardsController($http, $window, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate, toaster) {
         var card = this;
+
+        if (!Authentication.user) {
+            $window.location = '/';
+        }
 
         //Running init function
         init();

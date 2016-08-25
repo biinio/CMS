@@ -13,8 +13,12 @@
         .module('sites')
         .controller('SitesController', SitesController);
 
-    SitesController.$inject = ['$http', '$state','$timeout' ,'$scope','$translate', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery','Loading'];
-    function SitesController($http, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
+    SitesController.$inject = ['$http', '$window', '$state', '$timeout' ,'$scope','$translate', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery','Loading'];
+    function SitesController($http, $window, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
+        if (!Authentication.user) {
+            $window.location = '/';
+        }
+
         activate();
 
         function activate() {

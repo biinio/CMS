@@ -10,9 +10,14 @@
         .module('products')
         .controller('ProductsController', ProductsController);
 
-    ProductsController.$inject = ['$http', '$state','$timeout','$scope','$translate', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading','textAngularManager'];
+    ProductsController.$inject = ['$http', '$window','$timeout','$scope','$translate', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading','textAngularManager'];
 
-    function ProductsController($http, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading,textAngularManager) {
+    function ProductsController($http, $window, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading,textAngularManager) {
+
+        if (!Authentication.user) {
+            $window.location = '/';
+        }
+
         activate();
 
         $scope.objectsSidebarService = ObjectsSidebar;

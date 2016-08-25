@@ -1,8 +1,12 @@
 'use strict';
 
-angular.module('app.core').controller('HeaderController', ['$scope', 'Authentication', 'Menus','Organization',
-	function($scope, Authentication, Menus,Organization) {
-		$scope.authentication = Authentication;
+angular.module('app.core').controller('HeaderController', ['$scope', 'Authentication', 'Menus','Organization', '$window',
+	function($scope, Authentication, Menus,Organization, $window) {
+		init();
+
+		function init() {
+			$scope.authentication = Authentication;
+		}
 		$scope.isCollapsed = false;
 		$scope.menu = Menus.getMenu('topbar');
 		$scope.organizationService = Organization;
@@ -16,5 +20,16 @@ angular.module('app.core').controller('HeaderController', ['$scope', 'Authentica
 			$scope.isCollapsed = false;
 		});
 
+		$scope.logout = function() {
+			var match = document.cookie.match(new RegExp('user=([^;]+)'));
+			var now = new Date();
+
+			now.setMonth( now.getMonth() - 1 );
+
+			if (match) {
+				$window.location = '/';
+				document.cookie = 'user=; expires=' + now.toUTCString() + ';';
+			}
+		}
 	}
 ]);

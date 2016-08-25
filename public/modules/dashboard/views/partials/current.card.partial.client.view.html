@@ -15,18 +15,26 @@
             <div class="col-sm-4 activeCard">
                 <h5>Tarjeta de cliente frecuente activa</h5>
                 <small data-ng-if="!activeCard">(No se encuentra ninguna tarjeta activa)</small>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <!--<img data-ng-src="{{getImage(activeCard.gift.productIdentifier, products)}}" alt="Regalo de la tarjeta" />-->
+                <div data-ng-if="activeCard" class="col-sm-12 activeCardInfo">
+                    <div class="row cardPrimaryInfo">
+                        <div class="col-sm-4">
+                            <img data-ng-src="{{activeCard.image}}" alt="Regalo de la tarjeta" />
+                        </div>
+                        <div class="col-sm-8">
+                            <p><strong>{{activeCard.title}}</strong></p>
+                            <small><strong>Regalo: </strong>{{activeCard.gift.name}}</small>
+                            <small ng-if="!activeCard.isUnlimited"><strong>Total: </strong>{{activeCard.quantity}}</small>
+                            <small ng-if="activeCard.isUnlimited"><strong>Total: </strong>Ilimitadas</small>
+                            <small><strong>Entregadas: </strong>{{activeCard.amountAssigned}}</small>
+                        </div>
                     </div>
-                    <div class="col-sm-8">
-                        <p>{{activeCard.title}}</p>
-                        <small>{{activeCard.rule}}</small>
-                        <small>{{activeCard.goal}}</small>
+                    <div class="row cardSecondaryInfo">
+                        <div class="col-sm-12">
+                            <small><strong>Regla: </strong>{{activeCard.rule}}</small>
+                            <small><strong>Objetivo:  </strong>{{activeCard.goal}}</small>
+                        </div>
                     </div>
                 </div>
-                <hr>
-                <div class="row"></div>
             </div>
             <div class="col-sm-4 usersCard">
                 <h5>Usuarios ligados a la tarjeta</h5>

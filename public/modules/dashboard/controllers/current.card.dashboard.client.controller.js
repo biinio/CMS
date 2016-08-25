@@ -59,6 +59,9 @@
                 return $scope.dashboardService.getActiveCardInfo();
             }).then(function(cardData){
                 $scope.activeCard = cardData.activeCard;
+                if($scope.activeCard){
+                    $scope.activeCard.image = Products.getImage($scope.activeCard.gift.productIdentifier, $scope.products);
+                }
                 $scope.usersCard = cardData.usersCard;
                 console.log($scope.activeCard);
                 console.log($scope.usersCard );

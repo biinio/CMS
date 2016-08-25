@@ -33,9 +33,11 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <button ng-click="accordion.expandAll()" class="btn-accordion"><span class="fa fa-expand"></span></button>
-                        <button ng-click="accordion.collapseAll()" class="btn-accordion"><span class="fa fa-compress"></span></button>
                         <div class="pull-right">
+                            <div class="accordion-buttons">
+                                <button ng-click="accordion.expandAll()" class="btn-accordion"><span class="fa fa-expand"></span></button>
+                                <button ng-click="accordion.collapseAll()" class="btn-accordion"><span class="fa fa-compress"></span></button>
+                            </div>
                             <button ng-click="changeChartRange(7)" class="btn filter-button-large" data-ng-class="globalFilters.dateRange == 7? 'filter-button-active' :'filter-button-inactive'">{{ 'DASHBOARD.FILTER_7DAYS' |
                                 translate }}
                             </button>

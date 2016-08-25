@@ -14,13 +14,11 @@
         * @param type: string, productIdentifier
         */
         function getImage(product, products) {
-            console.log(product);
-            console.log(products);
-            // for(var i in products){
-            //     if(products[i].elementIdentifier === product){
-            //         return products[i].media[0].url;
-            //     }
-            // }
+            for(var i in products){
+                if(products[i].elementIdentifier === product){
+                    return products[i].media[0].url;
+                }
+            }
         }
         /* Function to obtain the ready products */
         function getReadyProducts() {

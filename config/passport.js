@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 var passport = require('passport'),
-	clientSchema = require('mongoose').model('clients'),
+	//clientSchema = require('mongoose').model('clients'),
 	path = require('path'),
 	config = require('./config');
 	
@@ -14,11 +14,11 @@ var passport = require('passport'),
 module.exports = function() {
 	// Serialize sessions
 	passport.serializeUser(function(user, done) {
-		done(null, user);
+		//done(null, user);
 	});
 
 	passport.deserializeUser(function(user, done) {
-		done(null, new clientSchema(user));
+		//done(null, new clientSchema(user));
 	});
 
 	/*passport.serializeUser(function(user, done) {
