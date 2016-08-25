@@ -16484,6 +16484,12 @@ input.cmn-toggle-round:checked + label:after {
 }
 .dashboard .configuration .btn-accordion {
   width: 37px;
+  position: relative;
+  top: 1px;
+}
+.dashboard .configuration .accordion-buttons {
+  margin-right: 15px;
+  display: inline-block;
 }
 .dashboard .selectGiftModal ul {
   overflow: hidden;
@@ -16539,9 +16545,9 @@ input.cmn-toggle-round:checked + label:after {
   height: 204px;
 }
 .dashboard .filter-button-large {
-  padding: 10px 50px;
   font-size: 14px;
   line-height: 1.1;
+  width: 100px;
 }
 .dashboard .filter-button-large:focus,
 .dashboard .filter-button-large:hover {
