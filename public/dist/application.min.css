@@ -16807,9 +16807,14 @@ input.cmn-toggle-round:checked + label:after {
 .currentCard .loadercontainer {
   height: 300px;
 }
+.currentCard p {
+  margin: 0;
+  color: #f05050;
+}
 .currentCard .activeCardInfo {
   border: solid 1px #DDDDDD;
   padding-top: 15px;
+  height: 220px;
 }
 .currentCard .activeCardInfo img {
   width: 100%;
@@ -16820,13 +16825,41 @@ input.cmn-toggle-round:checked + label:after {
 .currentCard .activeCardInfo small strong {
   margin-right: 5px;
 }
+.currentCard .activeCardInfo hr {
+  margin: 0;
+}
 .currentCard .activeCardInfo .cardPrimaryInfo {
   padding-bottom: 15px;
 }
 .currentCard .activeCardInfo .cardSecondaryInfo {
-  background-color: #f05050;
-  color: white;
   padding: 10px;
+}
+.currentCard .usersCard ul {
+  height: 220px;
+  list-style: none;
+  padding: 0;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.currentCard .usersCard .list-item {
+  border: solid 1px #DDDDDD;
+  border-bottom: none;
+  height: 90px;
+  padding: 10px;
+}
+.currentCard .usersCard .list-item:last-child {
+  border-bottom: solid 1px #DDDDDD;
+}
+.currentCard .usersCard .list-item .userInfo {
+  height: 60px;
+}
+.currentCard .usersCard .list-item .userInfo img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.currentCard .usersCard .list-item .userStars {
+  height: 30px;
 }
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');

@@ -64,7 +64,22 @@
                     cardData.activeCard.image = $scope.getImage(cardData.activeCard.gift.productIdentifier, $scope.products);
                 }
                 $scope.activeCard = cardData.activeCard;
+                if(cardData.usersCard){
+                    //Setting the image URL
+                    var imageURL = "";
+                    for(var i in cardData.usersCard){
+                        if(cardData.usersCard[i].biinie.facebookAvatarUrl && cardData.usersCard[i].biinie.facebookAvatarUrl != ""){
+                            imageURL = cardData.usersCard[i].biinie.facebookAvatarUrl;
+                        } else if(cardData.usersCard[i].biinie.url && cardData.usersCard[i].biinie.url != "" ){
+                            imageURL = cardData.usersCard[i].biinie.url;
+                        } else {
+                            imageURL = 'modules/core/img/icons/maleAvatar.png';
+                        }
+                        cardData.usersCard[i].image = imageURL;
+                    }
+                }
                 $scope.usersCard = cardData.usersCard;
+                console.log( $scope.usersCard);
                 $scope.isLoading = false;
             });
         }
