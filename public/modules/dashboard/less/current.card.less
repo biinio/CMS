@@ -4,9 +4,14 @@
   .loadercontainer{
     height: 300px;
   }
+  p{
+    margin: 0;
+    color: #f05050;
+  }
   .activeCardInfo{
     border: solid 1px #DDDDDD;
     padding-top: 15px;
+    height: 220px;
 
     img{
       width: 100%;
@@ -18,13 +23,45 @@
         margin-right: 5px;
       }
     }
+    hr{
+      margin: 0;
+    }
     .cardPrimaryInfo{
       padding-bottom: 15px;
     }
     .cardSecondaryInfo{
-      background-color: #f05050;
-      color: white;
       padding: 10px;
+    }
+  }
+  .usersCard{
+    ul{
+      height: 220px;
+      list-style: none;
+      padding: 0;
+      overflow: hidden;
+      overflow-y:auto;
+    }
+    .list-item{
+      border: solid 1px #DDDDDD;
+      border-bottom: none;
+      height: 90px;
+      padding: 10px;
+
+      &:last-child{
+        border-bottom: solid 1px #DDDDDD;
+      }
+      .userInfo{
+        height: 60px;
+
+        img{
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+        }
+      }
+      .userStars{
+        height: 30px;
+      }
     }
   }
 }

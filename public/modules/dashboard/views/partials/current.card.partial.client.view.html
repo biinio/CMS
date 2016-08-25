@@ -28,6 +28,7 @@
                             <small><strong>Entregadas: </strong>{{activeCard.amountAssigned}}</small>
                         </div>
                     </div>
+                    <hr>
                     <div class="row cardSecondaryInfo">
                         <div class="col-sm-12">
                             <small><strong>Regla: </strong>{{activeCard.rule}}</small>
@@ -39,8 +40,23 @@
             <div class="col-sm-4 usersCard">
                 <h5>Usuarios ligados a la tarjeta</h5>
                 <small data-ng-if="usersCard.length==0">(No se encuentra ninguna tarjeta activa o no hay usuarios ligados)</small>
-                <ul class="usersList">
+                <ul data-ng-if="usersCard.length>0" class="usersList">
+                    <li class="list-item" ng-repeat="user in usersCard">
+                        <div class="row userInfo">
+                            <div class="col-sm-3">
+                                <img data-ng-src="{{user.image}}" alt="Avatar"/>
+                            </div>
+                            <div class="col-sm-9">
+                                <p>{{user.biinie.firstName}} {{user.biinie.lastName}}</p>
+                                <small>{{user.biinie.email}}</small>
+                            </div>
+                        </div>
+                        <div class="row userStars">
+                            <div class="col-sm-12">
 
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
             <div class="col-sm-4 qrCodeDisplay">

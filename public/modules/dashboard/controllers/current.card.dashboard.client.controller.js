@@ -30,7 +30,7 @@
             getInitialData();
 
             //Functions from services
-            $scope.getImage = Products.getImage();
+            $scope.getImage = Products.getImage;
         }
 
         /**=============================================================================================================
@@ -39,10 +39,12 @@
          =============================================================================================================*/
 
         $scope.$on('organizationChanged', function () {
+            reset();
             getInitialData();
         });
 
         $scope.$on('Biin: Site Changed', function (scope, site) {
+            reset();
             getInitialData();
         });
 
@@ -58,15 +60,33 @@
                 $scope.products = products.data.elements;
                 return $scope.dashboardService.getActiveCardInfo();
             }).then(function(cardData){
+                if(cardData.activeCard){
+                    cardData.activeCard.image = $scope.getImage(cardData.activeCard.gift.productIdentifier, $scope.products);
+                }
                 $scope.activeCard = cardData.activeCard;
-                if($scope.activeCard){
-                    $scope.activeCard.image = Products.getImage($scope.activeCard.gift.productIdentifier, $scope.products);
+                if(cardData.usersCard){
+                    //Setting the image URL
+                    var imageURL = "";
+                    for(var i in cardData.usersCard){
+                        if(cardData.usersCard[i].biinie.facebookAvatarUrl && cardData.usersCard[i].biinie.facebookAvatarUrl != ""){
+                            imageURL = cardData.usersCard[i].biinie.facebookAvatarUrl;
+                        } else if(cardData.usersCard[i].biinie.url && cardData.usersCard[i].biinie.url != "" ){
+                            imageURL = cardData.usersCard[i].biinie.url;
+                        } else {
+                            imageURL = 'modules/core/img/icons/maleAvatar.png';
+                        }
+                        cardData.usersCard[i].image = imageURL;
+                    }
                 }
                 $scope.usersCard = cardData.usersCard;
-                console.log($scope.activeCard);
-                console.log($scope.usersCard );
+                console.log( $scope.usersCard);
                 $scope.isLoading = false;
             });
+        }
+        function reset() {
+            $scope.activeCard = null;
+            $scope.usersCard = [];
+            $scope.products = [];
         }
     }
 })();
