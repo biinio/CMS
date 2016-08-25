@@ -16850,16 +16850,17 @@ input.cmn-toggle-round:checked + label:after {
 .currentCard .usersCard .list-item:last-child {
   border-bottom: solid 1px #DDDDDD;
 }
-.currentCard .usersCard .list-item .userInfo {
-  height: 60px;
-}
 .currentCard .usersCard .list-item .userInfo img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  margin-top: 8px;
 }
-.currentCard .usersCard .list-item .userStars {
-  height: 30px;
+.currentCard .usersCard .list-item .userInfo .star {
+  margin-right: 2px;
+}
+.currentCard .usersCard .list-item .userInfo .starYellow {
+  color: #ffdd16;
 }
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');

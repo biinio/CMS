@@ -2885,7 +2885,7 @@ angular.module('dashboard').config(['$stateProvider',
             getInitialData();
 
             //Functions from services
-            $scope.getImage = Products.getImage();
+            $scope.getImage = Products.getImage;
         }
 
         /**=============================================================================================================
@@ -2894,10 +2894,12 @@ angular.module('dashboard').config(['$stateProvider',
          =============================================================================================================*/
 
         $scope.$on('organizationChanged', function () {
+            reset();
             getInitialData();
         });
 
         $scope.$on('Biin: Site Changed', function (scope, site) {
+            reset();
             getInitialData();
         });
 
@@ -2913,15 +2915,33 @@ angular.module('dashboard').config(['$stateProvider',
                 $scope.products = products.data.elements;
                 return $scope.dashboardService.getActiveCardInfo();
             }).then(function(cardData){
+                if(cardData.activeCard){
+                    cardData.activeCard.image = $scope.getImage(cardData.activeCard.gift.productIdentifier, $scope.products);
+                }
                 $scope.activeCard = cardData.activeCard;
-                if($scope.activeCard){
-                    $scope.activeCard.image = Products.getImage($scope.activeCard.gift.productIdentifier, $scope.products);
+                if(cardData.usersCard){
+                    //Setting the image URL
+                    var imageURL = "";
+                    for(var i in cardData.usersCard){
+                        if(cardData.usersCard[i].biinie.facebookAvatarUrl && cardData.usersCard[i].biinie.facebookAvatarUrl != ""){
+                            imageURL = cardData.usersCard[i].biinie.facebookAvatarUrl;
+                        } else if(cardData.usersCard[i].biinie.url && cardData.usersCard[i].biinie.url != "" ){
+                            imageURL = cardData.usersCard[i].biinie.url;
+                        } else {
+                            imageURL = 'modules/core/img/icons/maleAvatar.png';
+                        }
+                        cardData.usersCard[i].image = imageURL;
+                    }
                 }
                 $scope.usersCard = cardData.usersCard;
-                console.log($scope.activeCard);
-                console.log($scope.usersCard );
+                console.log( $scope.usersCard);
                 $scope.isLoading = false;
             });
+        }
+        function reset() {
+            $scope.activeCard = null;
+            $scope.usersCard = [];
+            $scope.products = [];
         }
     }
 })();
@@ -3123,12 +3143,7 @@ angular.module('dashboard').config(['$stateProvider',
                         } else if(data[i].user &&  data[i].user.url && data[i].user.url != "" ){
                             imageURL = data[i].user.url;
                         } else {
-                            // if(data[i].user.gender==='male'){
-                                imageURL = 'modules/core/img/icons/maleAvatar.png';
-                            // } else{
-                                // imageURL = NO_IMAGE_PROFILE;
-                            // }
-
+                            imageURL = 'modules/core/img/icons/maleAvatar.png';
                         }
                         data[i].image = imageURL;
                         //Pushing the object
@@ -8376,8 +8391,6 @@ angular.module('products').config(['$stateProvider',
         .factory('Products', ['$http','Organization', ProductsService]);
 
     function ProductsService($http, Organization) {
-        var currentOrganization = Organization.selectedOrganization.identifier;
-
        /* Function to obtain the image of a product
         * @param type: [], productIdentifier
         * @param type: string, productIdentifier
@@ -8391,6 +8404,8 @@ angular.module('products').config(['$stateProvider',
         }
         /* Function to obtain the ready products */
         function getReadyProducts() {
+            var currentOrganization = Organization.selectedOrganization.identifier;
+
             return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization + '/readyElements/')
             .then(function (response) {
                 return response.data;

@@ -49,11 +49,10 @@
                             <div class="col-sm-9">
                                 <p>{{user.biinie.firstName}} {{user.biinie.lastName}}</p>
                                 <small>{{user.biinie.email}}</small>
-                            </div>
-                        </div>
-                        <div class="row userStars">
-                            <div class="col-sm-12">
-
+                                <div>
+                                    <span class="fa fa-star star" data-ng-repeat="star in _.range(activeCard.slots)"
+                                          data-ng-class="{ 'starYellow': $index < user.usedSlots}"></span>
+                                </div>
                             </div>
                         </div>
                     </li>

@@ -96,12 +96,7 @@
                         } else if(data[i].user &&  data[i].user.url && data[i].user.url != "" ){
                             imageURL = data[i].user.url;
                         } else {
-                            // if(data[i].user.gender==='male'){
-                                imageURL = 'modules/core/img/icons/maleAvatar.png';
-                            // } else{
-                                // imageURL = NO_IMAGE_PROFILE;
-                            // }
-
+                            imageURL = 'modules/core/img/icons/maleAvatar.png';
                         }
                         data[i].image = imageURL;
                         //Pushing the object
