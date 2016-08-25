@@ -1320,9 +1320,9 @@ angular.module('cards').config(['$stateProvider',
         .module('cards')
         .controller('CardsController', CardsController);
 
-    CardsController.$inject = ['$http', '$window', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate', 'toaster'];
+    CardsController.$inject = ['$http', '$window', '$state',  '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate', 'toaster'];
 
-    function CardsController($http, $window, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate, toaster) {
+    function CardsController($http, $window, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate, toaster) {
         var card = this;
 
         if (!Authentication.user) {
@@ -2914,6 +2914,9 @@ angular.module('dashboard').config(['$stateProvider',
                 return $scope.dashboardService.getActiveCardInfo();
             }).then(function(cardData){
                 $scope.activeCard = cardData.activeCard;
+                if($scope.activeCard){
+                    $scope.activeCard.image = Products.getImage($scope.activeCard.gift.productIdentifier, $scope.products);
+                }
                 $scope.usersCard = cardData.usersCard;
                 console.log($scope.activeCard);
                 console.log($scope.usersCard );
@@ -8380,13 +8383,11 @@ angular.module('products').config(['$stateProvider',
         * @param type: string, productIdentifier
         */
         function getImage(product, products) {
-            console.log(product);
-            console.log(products);
-            // for(var i in products){
-            //     if(products[i].elementIdentifier === product){
-            //         return products[i].media[0].url;
-            //     }
-            // }
+            for(var i in products){
+                if(products[i].elementIdentifier === product){
+                    return products[i].media[0].url;
+                }
+            }
         }
         /* Function to obtain the ready products */
         function getReadyProducts() {
@@ -9666,8 +9667,8 @@ angular.module('sites').config(['$stateProvider',
         .module('sites')
         .controller('SitesController', SitesController);
 
-    SitesController.$inject = ['$http', '$window','$timeout' ,'$scope','$translate', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery','Loading'];
-    function SitesController($http, $window, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
+    SitesController.$inject = ['$http', '$window', '$state', '$timeout' ,'$scope','$translate', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery','Loading'];
+    function SitesController($http, $window, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
         if (!Authentication.user) {
             $window.location = '/';
         }
