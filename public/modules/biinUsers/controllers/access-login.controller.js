@@ -10,14 +10,14 @@
         .module('biinUsers')
         .controller('LoginFormController', LoginFormController);
 
-    LoginFormController.$inject = ['$http', '$state','$location','$scope','$translate','Authentication','Organization'];
+    LoginFormController.$inject = ['$http', '$state','$location','$scope','$translate','Authentication','Organization', '$window'];
 
-    function LoginFormController($http, $state,$location,$scope,$translate,Authentication,Organization) {
+    function LoginFormController($http, $state,$location,$scope,$translate,Authentication,Organization, $window) {
         var vm = this;
         $scope.authentication = Authentication;
 
         if ($scope.authentication.user) {
-            $location.path('/dashboard');
+            $state.go('app.dashboard');
         }
 
         activate();
@@ -43,6 +43,9 @@
                         vm.authMsg = $translate('LOGIN.INVALID_CREDENTIALS');
                     }else{
                         $scope.authentication.user = response.data.account;
+                        var cookievalue= JSON.stringify(response.data.account) + ";";
+                        document.cookie="user=" + cookievalue;
+
                         Organization.getSelectedOrganization().then(function() {
                             Organization.getOrganizations().then( function() {
                                 $state.go('app.dashboard');

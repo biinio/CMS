@@ -582,14 +582,14 @@ angular.module('biinUsers').config(['$stateProvider',
         .module('biinUsers')
         .controller('LoginFormController', LoginFormController);
 
-    LoginFormController.$inject = ['$http', '$state','$location','$scope','$translate','Authentication','Organization'];
+    LoginFormController.$inject = ['$http', '$state','$location','$scope','$translate','Authentication','Organization', '$window'];
 
-    function LoginFormController($http, $state,$location,$scope,$translate,Authentication,Organization) {
+    function LoginFormController($http, $state,$location,$scope,$translate,Authentication,Organization, $window) {
         var vm = this;
         $scope.authentication = Authentication;
 
         if ($scope.authentication.user) {
-            $location.path('/dashboard');
+            $state.go('app.dashboard');
         }
 
         activate();
@@ -615,6 +615,9 @@ angular.module('biinUsers').config(['$stateProvider',
                         vm.authMsg = $translate('LOGIN.INVALID_CREDENTIALS');
                     }else{
                         $scope.authentication.user = response.data.account;
+                        var cookievalue= JSON.stringify(response.data.account) + ";";
+                        document.cookie="user=" + cookievalue;
+
                         Organization.getSelectedOrganization().then(function() {
                             Organization.getOrganizations().then( function() {
                                 $state.go('app.dashboard');
@@ -807,6 +810,9 @@ angular.module('biins').config(['$stateProvider',
     BiinsController.$inject = ['$http', '$state', '$scope', '$translate', 'Authentication', 'Organization', 'ObjectsSidebar', 'Loading'];
     function BiinsController($http, $state, $scope, $translate, Authentication, Organization, ObjectsSidebar, Loading) {
 
+        if (!Authentication.user) {
+            $state.go('page.login');
+        }
 
         /**=============================================================================================================
          *  Functions
@@ -1314,10 +1320,14 @@ angular.module('cards').config(['$stateProvider',
         .module('cards')
         .controller('CardsController', CardsController);
 
-    CardsController.$inject = ['$http', '$state', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate', 'toaster'];
+    CardsController.$inject = ['$http', '$window', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate', 'toaster'];
 
-    function CardsController($http, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate, toaster) {
+    function CardsController($http, $window, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate, toaster) {
         var card = this;
+
+        if (!Authentication.user) {
+            $window.location = '/';
+        }
 
         //Running init function
         init();
@@ -2224,9 +2234,13 @@ angular.module('cards').config(['$stateProvider',
 
 'use strict';
 
-angular.module('app.core').controller('HeaderController', ['$scope', 'Authentication', 'Menus','Organization',
-	function($scope, Authentication, Menus,Organization) {
-		$scope.authentication = Authentication;
+angular.module('app.core').controller('HeaderController', ['$scope', 'Authentication', 'Menus','Organization', '$window',
+	function($scope, Authentication, Menus,Organization, $window) {
+		init();
+
+		function init() {
+			$scope.authentication = Authentication;
+		}
 		$scope.isCollapsed = false;
 		$scope.menu = Menus.getMenu('topbar');
 		$scope.organizationService = Organization;
@@ -2240,6 +2254,17 @@ angular.module('app.core').controller('HeaderController', ['$scope', 'Authentica
 			$scope.isCollapsed = false;
 		});
 
+		$scope.logout = function() {
+			var match = document.cookie.match(new RegExp('user=([^;]+)'));
+			var now = new Date();
+
+			now.setMonth( now.getMonth() - 1 );
+
+			if (match) {
+				$window.location = '/';
+				document.cookie = 'user=; expires=' + now.toUTCString() + ';';
+			}
+		}
 	}
 ]);
 
@@ -2859,11 +2884,11 @@ angular.module('dashboard').config(['$stateProvider',
         .module('dashboard')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$http', '$state','$scope', 'Authentication', 'Organization', 'ObjectsSidebar', 'GlobalFilters', 'Loading'];
-    function DashboardController($http, $state, $scope, Authentication, Organization, ObjectsSidebar, GlobalFilters, Loading) {
+    DashboardController.$inject = ['$http', '$window','$scope', 'Authentication', 'Organization', 'ObjectsSidebar', 'GlobalFilters', 'Loading'];
+    function DashboardController($http, $window, $scope, Authentication, Organization, ObjectsSidebar, GlobalFilters, Loading) {
 
         if (!Authentication.user) {
-            $location.path('/');
+            $window.location = '/';
         }
 
         $scope.authentication = Authentication;
@@ -5445,10 +5470,14 @@ angular.module('gifts').config(['$stateProvider',
         .module('gifts')
         .controller('GiftsController', GiftsController);
 
-    GiftsController.$inject = ['$http', '$state', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate'];
+    GiftsController.$inject = ['$http', '$window', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate'];
 
-    function GiftsController($http, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate) {
+    function GiftsController($http, $window, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate) {
         var gift = this;
+
+        if (!Authentication.user) {
+            $window.location = '/';
+        }
 
         //Running init function
         init();
@@ -7016,6 +7045,11 @@ angular.module('organization').config(['$stateProvider',
     OrganizationController.$inject = ['$http', '$state', '$scope','$translate', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar','Loading'];
     function OrganizationController($http, $state, $scope,$translate, Authentication, toaster, $location, Organization,ObjectsSidebar,Loading) {
         var vm = this;
+
+        if (!Authentication.user) {
+            $state.go('page.login');
+        }
+        
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.organizationService = Organization;
         $scope.loadingService = Loading;
@@ -7861,9 +7895,14 @@ angular.module('products').config(['$stateProvider',
         .module('products')
         .controller('ProductsController', ProductsController);
 
-    ProductsController.$inject = ['$http', '$state','$timeout','$scope','$translate', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading','textAngularManager'];
+    ProductsController.$inject = ['$http', '$window','$timeout','$scope','$translate', 'Authentication', 'Organization', 'Categories', 'ObjectsSidebar','Gallery','Loading','textAngularManager'];
 
-    function ProductsController($http, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading,textAngularManager) {
+    function ProductsController($http, $window, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading,textAngularManager) {
+
+        if (!Authentication.user) {
+            $window.location = '/';
+        }
+
         activate();
 
         $scope.objectsSidebarService = ObjectsSidebar;
@@ -8320,14 +8359,14 @@ angular.module('dashboard').config(['$stateProvider',
         .module('profile')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$http', '$state', '$scope', 'Authentication', 'toaster', '$location', 'Organization','Loading', 'ObjectsSidebar'];
-    function ProfileController($http, $state, $scope, Authentication, toaster, $location, Organization, Loading, ObjectsSidebar) {
+    ProfileController.$inject = ['$http', '$window', '$scope', 'Authentication', 'toaster', '$location', 'Organization','Loading', 'ObjectsSidebar'];
+    function ProfileController($http, $window, $scope, Authentication, toaster, $location, Organization, Loading, ObjectsSidebar) {
         var vm = this;
         $scope.organizationService = Organization;
         $scope.objectsSidebarService = ObjectsSidebar;
 
         if (!Authentication.user) {
-            $location.path('/');
+            $window.location = '/';
         }
         $scope.loadingService = Loading;
         $scope.loadingService.isLoading = true;
@@ -8631,8 +8670,12 @@ angular.module('showcases').config(['$stateProvider',
         .module('showcases')
         .controller('ShowcasesController', ShowcasesController);
 
-    ShowcasesController.$inject = ['$http', '$scope', '$translate', 'Authentication', 'Organization', 'ObjectsSidebar','ElementsService','BiinsService','Loading'];
-    function ShowcasesController($http, $scope, $translate, Authentication, Organization, ObjectsSidebar,ElementsService,BiinsService,Loading) {
+    ShowcasesController.$inject = ['$http', '$scope', '$window', '$translate', 'Authentication', 'Organization', 'ObjectsSidebar','ElementsService','BiinsService','Loading'];
+    function ShowcasesController($http, $scope, $window, $translate, Authentication, Organization, ObjectsSidebar,ElementsService,BiinsService,Loading) {
+        if (!Authentication.user) {
+            $window.location = '/';
+        }
+
         activate();
 
         ////////////////
@@ -9500,8 +9543,12 @@ angular.module('sites').config(['$stateProvider',
         .module('sites')
         .controller('SitesController', SitesController);
 
-    SitesController.$inject = ['$http', '$state','$timeout' ,'$scope','$translate', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery','Loading'];
-    function SitesController($http, $state, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
+    SitesController.$inject = ['$http', '$window','$timeout' ,'$scope','$translate', 'Authentication', 'Organization','Categories', 'ObjectsSidebar','Gallery','Loading'];
+    function SitesController($http, $window, $timeout, $scope,$translate, Authentication, Organization,Categories, ObjectsSidebar,Gallery,Loading) {
+        if (!Authentication.user) {
+            $window.location = '/';
+        }
+
         activate();
 
         function activate() {
@@ -10225,17 +10272,22 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 'use strict';
 
 // Authentication service for user variables
-angular.module('users').factory('Authentication', [
-	function() {
+angular.module('users').factory('Authentication', ['$window',
+	function($window) {
 		var _this = this;
+		var user;
+		var match = document.cookie.match(new RegExp('user=([^;]+)'));
 
+		if (match) user = JSON.parse(match[1]);
+		
 		_this._data = {
-			user: window.user
+			user: user
 		};
 
 		return _this._data;
 	}
 ]);
+
 'use strict';
 
 // Users service used for communicating with the users REST endpoint

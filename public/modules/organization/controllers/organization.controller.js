@@ -16,6 +16,11 @@
     OrganizationController.$inject = ['$http', '$state', '$scope','$translate', 'Authentication', 'toaster', '$location', 'Organization','ObjectsSidebar','Loading'];
     function OrganizationController($http, $state, $scope,$translate, Authentication, toaster, $location, Organization,ObjectsSidebar,Loading) {
         var vm = this;
+
+        if (!Authentication.user) {
+            $state.go('page.login');
+        }
+        
         $scope.objectsSidebarService = ObjectsSidebar;
         $scope.organizationService = Organization;
         $scope.loadingService = Loading;

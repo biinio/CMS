@@ -13,6 +13,9 @@
     BiinsController.$inject = ['$http', '$state', '$scope', '$translate', 'Authentication', 'Organization', 'ObjectsSidebar', 'Loading'];
     function BiinsController($http, $state, $scope, $translate, Authentication, Organization, ObjectsSidebar, Loading) {
 
+        if (!Authentication.user) {
+            $state.go('page.login');
+        }
 
         /**=============================================================================================================
          *  Functions
