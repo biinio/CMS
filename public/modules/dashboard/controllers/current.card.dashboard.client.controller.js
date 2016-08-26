@@ -48,45 +48,75 @@
             getInitialData();
         });
 
+        $scope.$on('Biin: Current Card Refresh', function(){
+            refreshData();
+        });
+
         /**=============================================================================================================
          * Functions
          =============================================================================================================*/
+        /*
+         *Function to get all the initial data need it to initialization of the module
+         */
         function getInitialData() {
-            $scope.isLoading = true;
-            $scope.qrCodeService.getCurrentQr().then(function(currentQR) {
-                $scope.currentQR = currentQR;
-                return $scope.productsService.getReadyProducts();
-            }).then(function(products){
-                $scope.products = products.data.elements;
-                return $scope.dashboardService.getActiveCardInfo();
-            }).then(function(cardData){
-                if(cardData.activeCard){
-                    cardData.activeCard.image = $scope.getImage(cardData.activeCard.gift.productIdentifier, $scope.products);
-                }
-                $scope.activeCard = cardData.activeCard;
-                if(cardData.usersCard){
-                    //Setting the image URL
-                    var imageURL = "";
-                    for(var i in cardData.usersCard){
-                        if(cardData.usersCard[i].biinie.facebookAvatarUrl && cardData.usersCard[i].biinie.facebookAvatarUrl != ""){
-                            imageURL = cardData.usersCard[i].biinie.facebookAvatarUrl;
-                        } else if(cardData.usersCard[i].biinie.url && cardData.usersCard[i].biinie.url != "" ){
-                            imageURL = cardData.usersCard[i].biinie.url;
-                        } else {
-                            imageURL = 'modules/core/img/icons/maleAvatar.png';
-                        }
-                        cardData.usersCard[i].image = imageURL;
-                    }
-                }
-                $scope.usersCard = cardData.usersCard;
-                console.log( $scope.usersCard);
-                $scope.isLoading = false;
-            });
+            if($scope.organizationId){
+                $scope.isLoading = true;
+                $scope.qrCodeService.getCurrentQr().then(function(currentQR) {
+                    $scope.currentQR = currentQR;
+                    return $scope.productsService.getReadyProducts();
+                }).then(function(products){
+                    $scope.products = products.data.elements;
+                    return $scope.dashboardService.getActiveCardInfo();
+                }).then(function(cardData){
+                    parseCardInfoData(cardData);
+                });
+            }
         }
+        /*
+         *  Function that resets some scope values
+         */
         function reset() {
             $scope.activeCard = null;
             $scope.usersCard = [];
             $scope.products = [];
+        }
+        /*
+         *  Function to refresh just the current Card data
+         */
+        function refreshData() {
+            $scope.isLoading = true;
+            $scope.dashboardService.getActiveCardInfo().then(function(cardData) {
+                parseCardInfoData(cardData);
+            });
+        }
+        /*
+         * Function to parse some data information of active Card
+         * param type: {}, data
+         */
+        function parseCardInfoData(data){
+            if(data.activeCard){
+                data.activeCard.image = $scope.getImage(data.activeCard.gift.productIdentifier, $scope.products);
+            }
+            //Setting activeCard
+            $scope.activeCard = data.activeCard;
+
+            if(data.usersCard){
+                //Setting the image URL
+                var imageURL = "";
+                for(var i in data.usersCard){
+                    if(data.usersCard[i].biinie.facebookAvatarUrl && data.usersCard[i].biinie.facebookAvatarUrl != ""){
+                        imageURL = data.usersCard[i].biinie.facebookAvatarUrl;
+                    } else if(data.usersCard[i].biinie.url && data.usersCard[i].biinie.url != "" ){
+                        imageURL = data.usersCard[i].biinie.url;
+                    } else {
+                        imageURL = 'modules/core/img/icons/maleAvatar.png';
+                    }
+                    data.usersCard[i].image = imageURL;
+                }
+            }
+            //Setting usersCard
+            $scope.usersCard = data.usersCard;
+            $scope.isLoading = false;
         }
     }
 })();

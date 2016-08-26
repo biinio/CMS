@@ -66,6 +66,7 @@
             <v-pane class="currentCard">
                 <v-pane-header>
                     <h4>Programa de lealtad</h4>
+                    <span class="fa fa-refresh first-btn pull-right" ng-click="refreshCurrentCardData($event.stopPropagation())"></span>
                 </v-pane-header>
                 <v-pane-content>
                     <ng-include src="'modules/dashboard/views/partials/current.card.partial.client.view.html'" />

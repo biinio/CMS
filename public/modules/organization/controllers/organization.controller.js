@@ -78,11 +78,7 @@
         $scope.$on('changeOrganizationImage',function(scope,newPicture){
             $scope.objectsSidebarService.selectedObject.media[0]=newPicture;
         });
-
-        if (!Authentication.user) {
-            $location.path('/');
-        }
-
+        
         $scope.saveOrganization = function () {
             if ($scope.objectsSidebarService.selectedObject == null)
                 return;

@@ -10,8 +10,8 @@
         .module('dashboard')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$http', '$window','$scope', 'Authentication', 'Organization', 'ObjectsSidebar', 'GlobalFilters', 'Loading'];
-    function DashboardController($http, $window, $scope, Authentication, Organization, ObjectsSidebar, GlobalFilters, Loading) {
+    DashboardController.$inject = ['$http', '$window','$scope', '$rootScope', 'Authentication', 'Organization', 'ObjectsSidebar', 'GlobalFilters', 'Loading'];
+    function DashboardController($http, $window, $scope, $rootScope, Authentication, Organization, ObjectsSidebar, GlobalFilters, Loading) {
 
         if (!Authentication.user) {
             $window.location = '/';
@@ -89,10 +89,13 @@
             $scope.globalFilters.changeSelectedSite($scope.organizationService.selectedOrganization.sites[0]);
         });
 
-        $scope.setSelectedSite = function(site){
+        $scope.setSelectedSite = function(site) {
             resetValues();
             $scope.globalFilters.selectedSite = site;
             $scope.globalFilters.changeSelectedSite($scope.globalFilters.selectedSite);
+        }
+        $scope.refreshCurrentCardData = function() {
+            $rootScope.$broadcast("Biin: Current Card Refresh");
         }
     }
 })();
