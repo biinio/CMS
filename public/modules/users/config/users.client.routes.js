@@ -40,6 +40,21 @@ angular.module('users').config(['$stateProvider',
 		state('app.accounts', {
 			url: '/settings/accounts',
 			templateUrl: 'modules/users/views/settings/social-accounts.client.view.html'
-		});
+		}).
+		state('app.users', {
+			url: '/users',
+			templateUrl: 'modules/users/views/users/users.client.view.html',
+			resolve: {
+				permissions: function(Permission) {
+					return Permission.getPermissions();
+				},
+				selectedOrganization: function (Organization) {
+					return Organization.getSelectedOrganization();
+				},
+				organization: function (Organization) {
+					return Organization.getOrganizations();
+				}
+			}
+		});;
 	}
 ]);

@@ -35,7 +35,7 @@
                 $http.put('api/account', {model: $scope.profile}).success(function (data, status) {
                     if (status === 200) {
                         if (data.needToRelog)
-                            window.location.href = '/auth/signout';
+                            window.location.href = '/';
                         else{
                             $scope.profileCopy = $.extend(true,{},$scope.profile);
                             toaster.pop('success', '', 'Your information has been saved');
