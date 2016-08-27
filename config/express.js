@@ -86,7 +86,7 @@ module.exports = function(db) {
 	//app.use(cookieParser());
 
 	// Express MongoDB session storage
-	app.use(session({
+	/*app.use(session({
 	//	saveUninitialized: true,
 	//	resave: true,
 		secret: config.sessionSecret,
@@ -94,11 +94,11 @@ module.exports = function(db) {
 			db: db.connection.db,
 			collection: config.sessionCollection
 		})
-	}));
+	}));*/
 
 	// use passport session
-	app.use(passport.initialize());
-	app.use(passport.session());
+	//app.use(passport.initialize());
+	//app.use(passport.session());
 
 	// connect flash for flash messages
 	app.use(flash());

@@ -32,7 +32,7 @@
 
         $scope.saveInformation = function () {
             if (typeof($scope.profile) !== 'undefined' && isProfileDirty()) {//If is Profile Dirty
-                $http.put('api/account', {model: $scope.profile}).success(function (data, status) {
+                $http.put(ApplicationConfiguration.applicationBackendURL +'api/account', {model: $scope.profile}).success(function (data, status) {
                     if (status === 200) {
                         if (data.needToRelog)
                             window.location.href = '/auth/signout';
@@ -66,7 +66,7 @@
 
         function activate() {
             $scope.authentication = Authentication;
-            $http.get("/api/account").success(function (data) {
+            $http.get(ApplicationConfiguration.applicationBackendURL +"api/account",{headers:{user:$scope.authentication.user.name}}).success(function (data) {
                 $scope.profile = data.data;
                 $scope.profileCopy = $.extend(true,{},data.data);
                 $scope.loadingService.isLoading = false;
