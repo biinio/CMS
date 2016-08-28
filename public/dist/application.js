@@ -7240,11 +7240,7 @@ angular.module('organization').config(['$stateProvider',
         $scope.$on('changeOrganizationImage',function(scope,newPicture){
             $scope.objectsSidebarService.selectedObject.media[0]=newPicture;
         });
-
-        if (!Authentication.user) {
-            $location.path('/');
-        }
-
+        
         $scope.saveOrganization = function () {
             if ($scope.objectsSidebarService.selectedObject == null)
                 return;
@@ -8550,7 +8546,7 @@ angular.module('dashboard').config(['$stateProvider',
 
         $scope.saveInformation = function () {
             if (typeof($scope.profile) !== 'undefined' && isProfileDirty()) {//If is Profile Dirty
-                $http.put('api/account', {model: $scope.profile}).success(function (data, status) {
+                $http.put(ApplicationConfiguration.applicationBackendURL +'api/account', {model: $scope.profile}).success(function (data, status) {
                     if (status === 200) {
                         if (data.needToRelog)
                             window.location.href = '/auth/signout';
@@ -8584,7 +8580,7 @@ angular.module('dashboard').config(['$stateProvider',
 
         function activate() {
             $scope.authentication = Authentication;
-            $http.get("/api/account").success(function (data) {
+            $http.get(ApplicationConfiguration.applicationBackendURL +"api/account",{headers:{user:$scope.authentication.user.name}}).success(function (data) {
                 $scope.profile = data.data;
                 $scope.profileCopy = $.extend(true,{},data.data);
                 $scope.loadingService.isLoading = false;
