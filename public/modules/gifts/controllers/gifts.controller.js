@@ -10,47 +10,41 @@
         .module('gifts')
         .controller('GiftsController', GiftsController);
 
-    GiftsController.$inject = ['$http', '$window', '$state', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate'];
+    GiftsController.$inject = ['$http', '$window', '$state', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate', 'Sites', 'Gifts', 'Products'];
 
-    function GiftsController($http, $window, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate) {
+    function GiftsController($http, $window, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate, Sites, Gifts, Products) {
         var gift = this;
-
+        
+        /* Redirect to login if there is no user*/
         if (!Authentication.user) {
             $window.location = '/';
         }
 
-        //Running init function
+        /* Running init function */
         init();
+        
         /**=============================================================================================================
          * Init Function
          =============================================================================================================*/
 
         function init() {
-            //----Services needed----//
-            //Loading Service
+            /* Initial Settings */
             $scope.loadingService = Loading;
-            //Organization Service
-            $scope.organizationService = Organization;
-            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-            //Objects Sidebar Service
+            $scope.selectedOrganizationId = Organization.selectedOrganizationId;
             $scope.objectsSidebarService = ObjectsSidebar;
-            //Authentication Service
-            $scope.authentication = Authentication;
-            //Gift Object
-            $scope.objectsSidebarService.selectedObject = {};
-            //----Variables----//
-            //Ready to fill
-            $scope.ready = false;
-            $scope.products = [];
-            $scope.gifts = [];
-            $scope.sites = [];
-            //State of loading screen
-            $scope.loadingService.isLoading = true;
-            //Current Date
-            $scope.currentDate = new Date().getTime();
-            //Default alerts/hints
-            $scope.show_alert = true;
+            $scope.giftsService = Gifts;
+            $scope.productsService = Products;
+            $scope.sitesService = Sites;
 
+            getInitialData();
+
+            /* Ready to fill/display the form */
+            $scope.ready = false;
+            /* Current Date */
+            $scope.currentDate = new Date().getTime();
+            /* Default alerts/hints (Last block) */
+            $scope.show_alert = true;
+            /* ObjectsSidebar gift template */
             $scope.sidebarTemplate =
                 "<div class='col-md-3 thumbListImage'>" +
                     "<img ng-if='item.productIdentifier.length==0' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
@@ -80,33 +74,20 @@
         });
 
         $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
-            //Parsing dates to work on AngularJS
+            /* Parsing dates to work on AngularJS */
             objectClicked.startDate = moment(new Date(objectClicked.startDate)).endOf("day").toDate();
             objectClicked.endDate = moment(new Date(objectClicked.endDate)).endOf("day").toDate();
-            //All ready to show the gift info
+            /* All ready to show the gift info */
             $scope.ready = true;
         });
         
         $scope.$on('organizationChanged',function(){
-            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             $scope.loadingService.isLoading = true;
-            //Get the List of Gifts
+
+            /* Get data again, depending of the new organization */
             $scope.ready = false;
-            if($scope.organizationId){
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
-                    $scope.gifts = gifts;
-                    $scope.objectsSidebarService.setObjects($scope.gifts);
-                    $state.reload();
-                    $scope.loadingService.isLoading = false;
-                });
-                //Get the List of Products
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
-                    $scope.products = data.data.elements;
-                });
-                //Get the List of Sites
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
-                    $scope.locals = data.data.sites;
-                });
+            if($scope.selectedOrganizationId){
+                getInitialData();
             }
         });
 
@@ -114,28 +95,31 @@
          * Functions
          =============================================================================================================*/
 
-        if($scope.organizationId){
-            //Get the List of Products
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
-                $scope.products = data.data.elements;
-            });
-            //Get the List of Sites
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/'+ $scope.organizationId +'/sites').success(function(data){
-                $scope.locals = data.data.sites;
-            });
-            //Get the List of Gifts
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
-                $scope.gifts = gifts;
-                $scope.objectsSidebarService.setObjects($scope.gifts);
-                $scope.loadingService.isLoading = false;
-            });
+        /*
+         *Function to get all the initial data need it to initialization of the module
+         */
+        function getInitialData() {
+            if($scope.selectedOrganizationId){
+                $scope.isLoading = true;
+                $scope.productsService.getReadyProducts().then(function(products) {
+                    $scope.products = products.data.elements;
+                    return $scope.giftsService.getGifts();
+                }).then(function(gifts) {
+                    $scope.gifts = gifts;
+                    $scope.objectsSidebarService.setObjects($scope.gifts);
+                    return $scope.sitesService.getSites();
+                }).then(function(sites) {
+                    $scope.locals = sites.data.sites;
+                    $scope.loadingService.isLoading = false;
+                });
+            }
         }
         
         //Create a gift
         $scope.create = function(){
             var titleText = $translate.instant("GIFT.CREATING");
             swal({   title: titleText,  type: "info",   showConfirmButton: false });
-            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gift,status){
+            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.selectedOrganizationId + '/gifts').success(function(gift,status){
                 if(status == 201){
                     var gifts = $scope.objectsSidebarService.getObjects();
                     gift.startDate = new Date(gift.startDate);
@@ -231,7 +215,7 @@
                 }, function () {
                     $scope.objectsSidebarService.selectedObject.isActive = true;
 
-                    $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/' + giftToUpdate.identifier, {isActive: true}).success(function (data, status) {
+                    $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.selectedOrganizationId + '/gifts/' + giftToUpdate.identifier, {isActive: true}).success(function (data, status) {
                         swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["GIFT.ACTIVATE_TEXT"], "success");
                     });
                 });
@@ -261,7 +245,7 @@
         $scope.removeGiftAt = function(index){
             var giftToDelete = $scope.objectsSidebarService.objects[index];
             var translatedTexts  = $translate.instant(["GIFT.DELETED_TEXT","GENERIC.DELETED"]);
-            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+ giftToDelete.identifier,{data:giftToDelete}).success(function(data){
+            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.selectedOrganizationId + '/gifts/'+ giftToDelete.identifier,{data:giftToDelete}).success(function(data){
                     $scope.ready = false;
                     $scope.objectsSidebarService.objects.splice(index,1);
                     swal(translatedTexts["GENERIC.DELETED"], translatedTexts["GIFT.DELETED_TEXT"], "success");
@@ -277,7 +261,7 @@
                 return;
 
             if(gift.myForm.$valid  && $scope.objectsSidebarService.selectedObject.sites.length > 0 && $scope.objectsSidebarService.selectedObject.availableIn.length > 0) {
-                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
+                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.selectedOrganizationId + '/gifts/'+giftToUpdate.identifier,giftToUpdate).success(function(data,status){
                     console.log('Actualizado');
                 });
             }

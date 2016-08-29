@@ -78,14 +78,20 @@
         function generateDisplayInfo(data) {
             $scope.items = [
                 {'name': 'Enviados','status':'SENT','gifts':[],'allowedTypes':[]},
-                {'name': 'Reclamados','status':'CLAIMED','gifts':[],'allowedTypes':['SENT']},
+                {'name': 'Reclamados','status':'CLAIMED','gifts':[],'allowedTypes':['SENT','SHARED']},
                 {'name': 'Entregados','status':'DELIVERED','gifts':[],'allowedTypes':['CLAIMED']}
             ];
 
             if (Array.isArray(data)) {
                 for(var i in data){
                     var currentStatus = data[i].status;
-                    var list = _.find($scope.items, function(o) {return o.status === currentStatus;});
+                    var list;
+                    if(currentStatus === 'SHARED'){
+                        list = _.find($scope.items, function(o) {return o.status === 'SENT';});
+                    } else{
+                        list = _.find($scope.items, function(o) {return o.status === currentStatus;});
+                    }
+
                     //If status is REFUSED nothing happens
                     if(list){
                         //Setting the image URL

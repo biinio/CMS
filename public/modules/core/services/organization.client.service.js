@@ -58,7 +58,6 @@ angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope',
                                 while (!orgFound && index < service.organizationsList.length) {
                                     if (service.organizationsList[index].identifier == service.selectedOrganizationId) {
                                         service.selectedOrganization = service.organizationsList[index];
-                                        $rootScope.$broadcast('organizationReady');
                                         orgFound = true;
                                     }
                                     index++;

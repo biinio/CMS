@@ -65,11 +65,7 @@
             $scope.loadingService.isLoading = true;
             $scope.objectsSidebarService.reset();
         });
-
-        $scope.$on('organizationReady', function(){
-            $scope.selectedOrganization = Organization.selectedOrganization;
-        });
-
+        
         $scope.$on("Biin: On Object Created", function(){
             $scope.create();
         });
