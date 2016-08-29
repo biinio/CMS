@@ -59,11 +59,11 @@
                 </ul>
             </div>
             <div class="col-sm-4 qrCodeDisplay">
-                <h5>Código QR de {{currentSite.title1}} - {{currentSite.title2}}</h5>
+                <h5>Código QR de {{globalFiltersService.selectedSite.title1}} - {{globalFiltersService.selectedSite.title2}}</h5>
                 <small data-ng-if="!currentQR">(Este sitio no ha generado su código QR)</small>
                 <div data-ng-if="currentQR">
-                    <qrcode version="6" error-correction-level="M" data="biin/{{currentSite.identifier}}/{{currentQR.identifier}}" size="200"
-                            download="true" download-file-name="Código QR {{currentSite.title1}}-{{currentSite.title2}}">
+                    <qrcode version="6" error-correction-level="M" data="biin/{{globalFiltersService.selectedSite.identifier}}/{{currentQR.identifier}}" size="200"
+                            download="true" download-file-name="Código QR {{globalFiltersService.selectedSite.title1}}-{{globalFiltersService.selectedSite.title2}}">
                     </qrcode>
                     <div class="clearfix"></div>
                     <small>*Click al código para descargar</small>

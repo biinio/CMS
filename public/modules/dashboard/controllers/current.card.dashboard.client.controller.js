@@ -21,9 +21,8 @@
         function init(){
             /* Initial Settings */
             $scope.organizationService = Organization;
-            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-            $scope.globalFilters = GlobalFilters;
-            $scope.currentSite = $scope.globalFilters.selectedSite;
+            $scope.selectedOrganizationId = Organization.selectedOrganizationId;
+            $scope.globalFiltersService = GlobalFilters;
             $scope.qrCodeService = Qrcode;
             $scope.dashboardService = Dashboard;
             $scope.productsService = Products;
@@ -60,7 +59,7 @@
          *Function to get all the initial data need it to initialization of the module
          */
         function getInitialData() {
-            if($scope.organizationId){
+            if($scope.selectedOrganizationId){
                 $scope.isLoading = true;
                 $scope.qrCodeService.getCurrentQr().then(function(currentQR) {
                     $scope.currentQR = currentQR;

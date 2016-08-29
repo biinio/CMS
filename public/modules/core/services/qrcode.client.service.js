@@ -8,11 +8,11 @@
 
     function Qrcode($http, Organization, GlobalFilters) {
         var currentSite = GlobalFilters.selectedSite;
-        var currentOrganization = Organization.selectedOrganization.identifier;
+        var selectedOrganizationId = Organization.selectedOrganizationId;;
         
         /* Function to obtain the current qr code of a site */
         function getCurrentQr() {
-            return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization + '/sites/' + currentSite.identifier + '/getqrcode').then(function (response) {
+            return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + selectedOrganizationId + '/sites/' + currentSite.identifier + '/getqrcode').then(function (response) {
                 return response.data;
             });
         }
