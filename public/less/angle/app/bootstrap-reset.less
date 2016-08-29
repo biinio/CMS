@@ -372,7 +372,14 @@ v-pane{
   padding: 5px 30px;
   margin-bottom: 6px;
 }
+v-pane.is-expanded{
+  v-pane-header{
+    border-bottom-color: #DDDDDD !important;
+  }
+}
 v-pane-header{
+  border-bottom: 1px solid #DDDDDD !important;
+
   &:after, &:before{
     background-color: #D8D8D8 !important;
     width: 12px !important;

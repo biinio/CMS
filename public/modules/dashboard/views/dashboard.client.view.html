@@ -63,7 +63,7 @@
                 </v-pane-content>
             </v-pane>
             <!--Current card-->
-            <v-pane class="currentCard">
+            <v-pane expanded  class="currentCard">
                 <v-pane-header>
                     <h4>Programa de lealtad</h4>
                     <span class="fa fa-refresh first-btn pull-right" ng-click="refreshCurrentCardData($event.stopPropagation())"></span>
@@ -73,7 +73,7 @@
                 </v-pane-content>
             </v-pane>
             <!--NPS panel-->
-            <v-pane class="nps">
+            <v-pane expanded class="nps">
                     <v-pane-header>
                         <h4>Índice de promotor neto en {{globalFilters.selectedSite.title2}}</h4>
                     </v-pane-header>
@@ -82,7 +82,7 @@
                     </v-pane-content>
             </v-pane>
             <!--Presential Section panel-->
-            <v-pane class="presentialSection">
+            <v-pane expanded class="presentialSection">
                 <v-pane-header>
                     <h4>Interacciones presenciales en {{globalFilters.selectedSite.title2}}</h4>
                 </v-pane-header>
@@ -111,7 +111,7 @@
                 </v-pane-content>
             </v-pane>
             <!--Virtual Section panel-->
-            <v-pane class="virtualSection">
+            <v-pane expanded class="virtualSection">
                 <v-pane-header>
                     <h4>Interacciones virtuales en {{globalFilters.selectedSite.title2}}</h4>
                 </v-pane-header>
