@@ -3,16 +3,16 @@
         <div class="row">
             <div class="col-sm-12">
                 <uib-tabset active="active" class="userTabs">
-                    <uib-tab index="0" heading="Usuarios">
-                        <h4>Usuarios registrados en {{globalFiltersService.selectedSite.title1}}</h4>
+                    <uib-tab index="0" heading="Usuarios" active="activeTab[0]" ng-click="clickTab(0)">
+                        <h4 class="text-center">Usuarios registrados en {{globalFiltersService.selectedSite.title1}}</h4>
                         <table class="table table-bordered">
                             <!-- Head -->
                             <thead>
                             <tr>
-                                <th class="col-sm-3">Nombre</th>
-                                <th class="col-sm-3 hidden-xs">Correo</th>
-                                <th class="col-sm-3">Tipo Usuario</th>
-                                <th class="col-sm-3">Teléfono</th>
+                                <th class="col-sm-3" translate="USER.TH_NAME"></th>
+                                <th class="col-sm-3 hidden-xs" translate="USER.TH_EMAIL"></th>
+                                <th class="col-sm-3" translate="USER.TH_USER_TYPE"></th>
+                                <th class="col-sm-3" translate="USER.TH_PHONE"></th>
                             </tr>
                             </thead>
                             <!-- / Head -->
@@ -27,7 +27,55 @@
                             </tbody><!-- / Body -->
                         </table>
                     </uib-tab>
-                    <uib-tab index="1" heading="Invitar Usuarios">Vertical content 2</uib-tab>
+                    <uib-tab index="1" heading="Invitar Usuarios" active="activeTab[1]" ng-click="clickTab(1)">
+                        <h4 class="text-center">Invitar nuevo usuario a {{globalFiltersService.selectedSite.title1}}</h4>
+                        <!-- Card Form-->
+                        <form novalidate ng-submit="invite()" name="user.myForm" role="form" class="col-md-6 col-md-offset-3">
+                            <!--name name="name"-->
+                            <div class="form-group">
+                                <label for="userName" translate="USER.USER_NAME" class="control-label"></label>
+                                <input id="userName" ng-model="user.displayName"
+                                       name="name"
+                                       type="text" placeholder="{{ 'USER.USER_NAME_PLACEHOLDER' | translate }}"
+                                       required class="form-control title-value"/>
+                                <!-- Input name errors -->
+                                <div ng-messages="user.myForm.name.$error" ng-if="user.myForm.name.$touched"class="help-block">
+                                    <small ng-message="required" translate="USER.USER_NAME_REQUIRED"></small>
+                                </div>
+                            </div>
+                            <!--lastName name="lastName"-->
+                            <div class="form-group">
+                                <label for="lastName" translate="USER.LAST_NAME" class="control-label"></label>
+                                <input id="lastName" ng-model="user.lastName"
+                                       name="lastName"
+                                       type="text" placeholder="{{ 'USER.LAST_NAME_PLACEHOLDER' | translate }}"
+                                       required class="form-control title-value"/>
+                                <!-- Input lastName errors -->
+                                <div ng-messages="user.myForm.lastName.$error" ng-if="user.myForm.lastName.$touched"class="help-block">
+                                    <small ng-message="required" translate="USER.LAST_NAME_REQUIRED"></small>
+                                </div>
+                            </div>
+                            <!--email name="email"-->
+                            <div class="form-group">
+                                <label for="email" translate="USER.EMAIL" class="control-label"></label>
+                                <input id="email" ng-model="user.email"
+                                       name="email"
+                                       ng-pattern="/^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/"
+                                       type="text" placeholder="{{ 'USER.EMAIL_PLACEHOLDER' | translate }}"
+                                       required class="form-control title-value"/>
+                                <!-- Input email errors -->
+                                <div ng-messages="user.myForm.email.$error" ng-if="user.myForm.email.$touched"class="help-block">
+                                    <small ng-message="pattern" translate="USER.EMAIL_PATTERN"></small>
+                                    <small ng-message="required" translate="USER.EMAIL_REQUIRED"></small>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4 col-md-offset-8">
+                                    <button class="btn btn-primary btn-block" ng-disabled="user.myForm.$invalid" type="submit" translate="USER.INVITE"></button>
+                                </div>
+                            </div>
+                        </form>
+                    </uib-tab>
                 </uib-tabset>
             </div>
         </div>

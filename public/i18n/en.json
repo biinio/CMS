@@ -365,5 +365,26 @@
     "BENEFIT1": "Product or Sale",
     "BENEFIT_DESC": "Informs about products, sales or coupons",
     "IDENTIFIER": "Identifier"
+  },
+  "USER":{
+    "USER_LIST_TITLE": "Users registered in {{globalFiltersService.selectedSite.title1}}",
+    "TH_NAME": "Name",
+    "TH_EMAIL": "Email",
+    "TH_USER_TYPE": "User type",
+    "TH_PHONE": "Telephone",
+    "USER_ADD_TITLE": "Invite a new user to {{globalFiltersService.selectedSite.title1}}",
+    "USER_NAME": "User name",
+    "USER_NAME_PLACEHOLDER": "Writes the user name",
+    "USER_NAME_REQUIRED": "*The username is required",
+    "LAST_NAME": "Last name",
+    "LAST_NAME_PLACEHOLDER": "Writes the user last name",
+    "LAST_NAME_REQUIRED": "*The last name is required",
+    "EMAIL": "Email",
+    "EMAIL_PLACEHOLDER": "Writes the user email",
+    "EMAIL_REQUIRED": "The email is required",
+    "EMAIL_PATTERN": "Email is invalid",
+    "INVITE": "Invite",
+    "INVITE_SUCCESS": "User was successfully invited",
+    "INVITE_ERROR": "There was an error inviting the user"
   }
 }

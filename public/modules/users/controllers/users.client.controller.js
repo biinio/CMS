@@ -10,9 +10,9 @@
         .module('users')
         .controller('UsersController', UsersController);
 
-    UsersController.$inject = ['$window', '$state',  '$scope', 'Loading', 'Organization', 'Authentication', '$translate', 'toaster', 'UsersOrg','GlobalFilters'];
+    UsersController.$inject = ['$window', '$state',  '$scope', 'Loading', 'Organization', 'Authentication', '$translate', 'toaster', 'UsersOrg','GlobalFilters', '$timeout'];
 
-    function UsersController($window, $state, $scope, Loading, Organization, Authentication, $translate, toaster, UsersOrg, GlobalFilters) {
+    function UsersController($window, $state, $scope, Loading, Organization, Authentication, $translate, toaster, UsersOrg, GlobalFilters, $timeout) {
         var user = this;
 
         /* Redirect to login if there is no user*/
@@ -32,6 +32,8 @@
             $scope.loadingService = Loading;
             $scope.organizationService = Organization;
             $scope.globalFiltersService = GlobalFilters;
+            /* Controlling active tabs */
+            $scope.activeTab = [];
             // $scope.selectedOrganization = Organization.selectedOrganization;
             $scope.selectedOrganizationId = Organization.selectedOrganizationId;
             $scope.usersService = UsersOrg;
@@ -71,5 +73,19 @@
                 });
             }
         }
+        /*
+         *Function to invite a new user
+         * param type: {}, userToInvite
+         */
+        $scope.invite = function() {
+            $scope.activeTab[0] = true;
+        }
+
+       /* Function to control the tabs (active)
+        * param type: INT, index
+        */
+        $scope.clickTab = function(index) {
+            $scope.activeTab[index] = true;
+        };
     }
 })();

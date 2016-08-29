@@ -16881,7 +16881,7 @@ input.cmn-toggle-round:checked + label:after {
 /* Users section styles */
 .users-section .userTabs .tab-content {
   background-color: white;
-  height: 300px;
+  height: 415px;
 }
 .users-section .userTabs .nav-tabs > li.active > a {
   color: #1da1f2;

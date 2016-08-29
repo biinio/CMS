@@ -97,7 +97,7 @@
 
         function activate() {
             $scope.authentication = Authentication;
-            $scope.organizationService = Organization;
+            $scope.selectedOrganizationId = Organization.selectedOrganizationId;
             $scope.globalFilters = GlobalFilters;
 
             getGiftsData();
@@ -136,7 +136,7 @@
 
         function getRatingsData() {
             var filters = {};
-            filters.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            filters.organizationId = $scope.selectedOrganizationId;
             filters.dateRange = $scope.globalFilters.dateRange;
 
             //Get nps ratings
@@ -145,7 +145,7 @@
 
                 $http.get(ApplicationConfiguration.applicationBackendURL + 'ratings/nps', {
                     headers: {
-                        organizationid: $scope.organizationService.selectedOrganization.identifier,
+                        organizationid: $scope.selectedOrganizationId,
                         filters : JSON.stringify(filters),
                         offset : new Date().getTimezoneOffset()
                     }
@@ -165,22 +165,21 @@
         }
 
         function getGiftsData() {
-            var organizationId = $scope.organizationService.selectedOrganization.identifier;
             var siteId = $scope.globalFilters.selectedSite.identifier;
 
-            if (organizationId) {
+            if ($scope.selectedOrganizationId) {
                 //Get gifts fir automatic tasks
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/true')
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.selectedOrganizationId + '/sites/' + siteId + '/getavailablegifts/nps/true')
                     .success(function (data) {
                         $scope.npsGiftsAutomatic = data;
                     });
                 //Get gifts for manual tasks
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.selectedOrganizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
                     .success(function (data) {
                         $scope.npsGiftsManual = data;
                     });
                 //Get products to update gifts images
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + organizationId + '/readyElements/')
+                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.selectedOrganizationId + '/readyElements/')
                     .success(function (data) {
                         $scope.products = data.data.elements;
                     });

@@ -383,5 +383,24 @@
     "BENEFIT1": "Producto o promoción",
     "BENEFIT_DESC": "informa sobre productos, promociones o cupones",
     "IDENTIFIER": "Identificador"
+  },
+  "USER":{
+    "TH_NAME": "Nombre",
+    "TH_EMAIL": "Correo",
+    "TH_USER_TYPE": "Tipo de Usuario",
+    "TH_PHONE": "Teléfono",
+    "USER_NAME": "Nombre",
+    "USER_NAME_PLACEHOLDER": "Juan Diego",
+    "USER_NAME_REQUIRED": "*El nombre es requerido",
+    "LAST_NAME": "Apellidos",
+    "LAST_NAME_PLACEHOLDER": "Quesada Arce",
+    "LAST_NAME_REQUIRED": "*Los apellidos son requeridos",
+    "EMAIL": "Correo electrónico",
+    "EMAIL_PLACEHOLDER": "jquesada@gmail.com",
+    "EMAIL_REQUIRED": "*El correo es requerido",
+    "EMAIL_PATTERN": "*El correo es inválido",
+    "INVITE": "Invitar",
+    "INVITE_SUCCESS": "Usuario invitado exitosamente",
+    "INVITE_ERROR": "Hubo un error al invitar el usuario"
   }
 }
