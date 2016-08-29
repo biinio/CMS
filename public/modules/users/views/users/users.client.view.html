@@ -1,0 +1,35 @@
+<div ng-controller="UsersController as user" class="block-center">
+    <div id="wrapperContent" class="container-fluid users-section" ng-mouseleave="update()">
+        <div class="row">
+            <div class="col-sm-12">
+                <uib-tabset active="active" class="userTabs">
+                    <uib-tab index="0" heading="Usuarios">
+                        <h4>Usuarios registrados en {{globalFiltersService.selectedSite.title1}}</h4>
+                        <table class="table table-bordered">
+                            <!-- Head -->
+                            <thead>
+                            <tr>
+                                <th class="col-sm-3">Nombre</th>
+                                <th class="col-sm-3 hidden-xs">Correo</th>
+                                <th class="col-sm-3">Tipo Usuario</th>
+                                <th class="col-sm-3">Teléfono</th>
+                            </tr>
+                            </thead>
+                            <!-- / Head -->
+                            <!-- Body -->
+                            <tbody>
+                            <tr ng-repeat="user in users">
+                                <td>{{user.displayName}} {{user.lastName}}</td>
+                                <td class="hidden-xs">{{user.emails[0]}}</td>
+                                <td>{{user.role}}</td>
+                                <td>{{user.phoneNumber}}</td>
+                            </tr>
+                            </tbody><!-- / Body -->
+                        </table>
+                    </uib-tab>
+                    <uib-tab index="1" heading="Invitar Usuarios">Vertical content 2</uib-tab>
+                </uib-tabset>
+            </div>
+        </div>
+    </div>
+</div>

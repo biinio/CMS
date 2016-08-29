@@ -19,6 +19,7 @@
 
         $scope.authentication = Authentication;
         $scope.organizationService = Organization;
+
         $scope.globalFilters = GlobalFilters;
         $scope.objectsSidebar = ObjectsSidebar;
 

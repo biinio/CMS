@@ -1320,9 +1320,9 @@ angular.module('cards').config(['$stateProvider',
         .module('cards')
         .controller('CardsController', CardsController);
 
-    CardsController.$inject = ['$window', '$state',  '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate', 'toaster', 'Gifts', 'Cards', 'Products'];
+    CardsController.$inject = ['$window', '$state',  '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate', 'toaster', 'Gifts', 'Cards', 'Products', 'GlobalFilters'];
 
-    function CardsController($window, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate, toaster, Gifts, Cards, Products) {
+    function CardsController($window, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate, toaster, Gifts, Cards, Products, GlobalFilters) {
         var card = this;
 
         /* Redirect to login if there is no user*/
@@ -1340,7 +1340,7 @@ angular.module('cards').config(['$stateProvider',
         function init() {
             /* Initial Settings */
             $scope.loadingService = Loading;
-            $scope.selectedOrganization = Organization.selectedOrganization;
+            $scope.globalFiltersService = GlobalFilters;
             $scope.selectedOrganizationId = Organization.selectedOrganizationId;
             $scope.objectsSidebarService = ObjectsSidebar;
             $scope.cardsService = Cards;
@@ -1472,7 +1472,7 @@ angular.module('cards').config(['$stateProvider',
                 return;
 
             var cardToUpdate = $scope.objectsSidebarService.selectedObject;
-            cardToUpdate.conditionsText = 'Al hacer tap en OK aceptas las condiciones de uso de la tarjeta de cliente frecuente de ' + $scope.selectedOrganization.name + '.'
+            cardToUpdate.conditionsText = 'Al hacer tap en OK aceptas las condiciones de uso de la tarjeta de cliente frecuente de ' + $scope.globalFiltersService.selectedSite.title1 + '.'
             if(card.myForm.$valid && ($scope.objectsSidebarService.selectedObject.conditionsText || $scope.objectsSidebarService.selectedObject.conditionsURL)) {
                 $scope.cardsService.updateCard(cardToUpdate, cardToUpdate).then(function(response) {
                     console.log('Actualizado');
@@ -2133,7 +2133,7 @@ angular.module('cards').config(['$stateProvider',
         // Menus.addMenuItem('sidebar', 'Organizaciones', 'organization'   , null, 'app.organization'  , false, null, null, 'icon-globe', "SIDEBAR.MENU_ORGANIZATIONS");
         // Menus.addMenuItem('sidebar', 'Perfil'      , 'profile'         , null, 'app.profile'      , false, null, null, 'icon-user', "SIDEBAR.MENU_PROFILE");
         //Maintenance has role field: maintenance
-        Menus.addMenuItem('sidebar', 'Usuarios', 'maintenance', null, 'app.users', false, 'maintenance', null, 'icon-settings', "SIDEBAR.MENU_USERS");
+        Menus.addMenuItem('sidebar', 'Usuarios', 'maintenance', null, 'app.users', false, 'maintenance', null, 'icon-user', "SIDEBAR.MENU_USERS");
         Menus.addMenuItem('sidebar', 'Mantenimiento', 'maintenance', null, 'app.maintenance', false, 'maintenance', null, 'icon-settings', "SIDEBAR.MENU_MAINTENANCE");
     }
 
@@ -3041,6 +3041,7 @@ angular.module('dashboard').config(['$stateProvider',
 
         $scope.authentication = Authentication;
         $scope.organizationService = Organization;
+
         $scope.globalFilters = GlobalFilters;
         $scope.objectsSidebar = ObjectsSidebar;
 
@@ -10566,6 +10567,82 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 		};
 	}
 ]);
+/**=========================================================
+ * Module: users.client.controller.js
+ * Controller of users
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('users')
+        .controller('UsersController', UsersController);
+
+    UsersController.$inject = ['$window', '$state',  '$scope', 'Loading', 'Organization', 'Authentication', '$translate', 'toaster', 'UsersOrg','GlobalFilters'];
+
+    function UsersController($window, $state, $scope, Loading, Organization, Authentication, $translate, toaster, UsersOrg, GlobalFilters) {
+        var user = this;
+
+        /* Redirect to login if there is no user*/
+        if (!Authentication.user) {
+            $window.location = '/';
+        }
+
+        /* Running init function */
+        init();
+
+        /**=============================================================================================================
+         * Init Function
+         =============================================================================================================*/
+
+        function init() {
+            /* Initial Settings */
+            $scope.loadingService = Loading;
+            $scope.organizationService = Organization;
+            $scope.globalFiltersService = GlobalFilters;
+            // $scope.selectedOrganization = Organization.selectedOrganization;
+            $scope.selectedOrganizationId = Organization.selectedOrganizationId;
+            $scope.usersService = UsersOrg;
+
+            getInitialData();
+        }
+
+        /**=============================================================================================================
+         * Event Listeners
+         =============================================================================================================*/
+
+        $scope.$on('$stateChangeStart', function(){
+            $scope.loadingService.isLoading = true;
+        });
+
+        $scope.$on('organizationChanged',function(){
+            $scope.loadingService.isLoading = true;
+            /* Get data again, depending of the new organization */
+            if($scope.selectedOrganizationId){
+                getInitialData();
+            }
+        });
+
+        /**=============================================================================================================
+         * Functions
+         =============================================================================================================*/
+        /*
+         *Function to get all the initial data need it to initialization of the module
+         */
+        function getInitialData() {
+            if($scope.selectedOrganizationId){
+                $scope.isLoading = true;
+                $scope.usersService.getUsers().then(function(users) {
+                    $scope.users = users;
+                    console.log(users);
+                    $scope.loadingService.isLoading = false;
+                });
+            }
+        }
+    }
+})();
+
 'use strict';
 
 // Authentication service for user variables
@@ -10597,6 +10674,35 @@ angular.module('users').factory('Users', ['$resource',
 		});
 	}
 ]);
+
+//Users Service
+(function() {
+    'use strict';
+
+    angular /*  Module getter */
+        .module('users')
+        .factory('UsersOrg', ['$http','Organization', UsersService]);
+
+    function UsersService($http, Organization) {
+        /* Function to obtain the users of an organization*/
+        function getUsers() {
+            var currentOrganization = Organization.selectedOrganizationId;
+
+            return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/clients/organization/' + currentOrganization)
+                .then(function (response) {
+                    return response.data;
+                },function (error) {
+                    console.log(error);
+                });
+        }
+
+
+        return {
+            getUsers: getUsers
+        };
+    }  /* UsersService function ends */
+})();
+
 /**=========================================================
  * Module: animate-enabled.js
  * Enable or disables ngAnimate for element with directive

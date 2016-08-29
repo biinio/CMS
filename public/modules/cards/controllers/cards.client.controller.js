@@ -10,9 +10,9 @@
         .module('cards')
         .controller('CardsController', CardsController);
 
-    CardsController.$inject = ['$window', '$state',  '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate', 'toaster', 'Gifts', 'Cards', 'Products'];
+    CardsController.$inject = ['$window', '$state',  '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate', 'toaster', 'Gifts', 'Cards', 'Products', 'GlobalFilters'];
 
-    function CardsController($window, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate, toaster, Gifts, Cards, Products) {
+    function CardsController($window, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate, toaster, Gifts, Cards, Products, GlobalFilters) {
         var card = this;
 
         /* Redirect to login if there is no user*/
@@ -30,7 +30,7 @@
         function init() {
             /* Initial Settings */
             $scope.loadingService = Loading;
-            $scope.selectedOrganization = Organization.selectedOrganization;
+            $scope.globalFiltersService = GlobalFilters;
             $scope.selectedOrganizationId = Organization.selectedOrganizationId;
             $scope.objectsSidebarService = ObjectsSidebar;
             $scope.cardsService = Cards;
@@ -162,7 +162,7 @@
                 return;
 
             var cardToUpdate = $scope.objectsSidebarService.selectedObject;
-            cardToUpdate.conditionsText = 'Al hacer tap en OK aceptas las condiciones de uso de la tarjeta de cliente frecuente de ' + $scope.selectedOrganization.name + '.'
+            cardToUpdate.conditionsText = 'Al hacer tap en OK aceptas las condiciones de uso de la tarjeta de cliente frecuente de ' + $scope.globalFiltersService.selectedSite.title1 + '.'
             if(card.myForm.$valid && ($scope.objectsSidebarService.selectedObject.conditionsText || $scope.objectsSidebarService.selectedObject.conditionsURL)) {
                 $scope.cardsService.updateCard(cardToUpdate, cardToUpdate).then(function(response) {
                     console.log('Actualizado');

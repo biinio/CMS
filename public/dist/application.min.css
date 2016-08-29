@@ -16872,6 +16872,35 @@ input.cmn-toggle-round:checked + label:after {
 .currentCard .usersCard .list-item .userInfo .starYellow {
   color: #ffdd16;
 }
+/* Users section styles */
+.users-section .userTabs .tab-content {
+  background-color: white;
+  height: 300px;
+}
+.users-section .userTabs .nav-tabs > li.active > a {
+  color: #1da1f2;
+}
+.users-section .userTabs .nav-tabs > li > a:hover {
+  color: #656565;
+}
+.users-section .userTabs table {
+  margin-top: 5px;
+}
+/* Users extra */
+@media (min-width: 992px) {
+  .nav-users {
+    position: fixed;
+  }
+}
+.remove-account-container {
+  display: inline-block;
+  position: relative;
+}
+.btn-remove-account {
+  top: 10px;
+  right: 10px;
+  position: absolute;
+}
 .preloader-progress {
   background-image: url('/modules/preloader/img/preloader.empty.png');
 }
