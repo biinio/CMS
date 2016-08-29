@@ -140,30 +140,27 @@
                                         </div>
                                     </div>
                                     <!--Amount name="amount"-->
-                                    <div class="form-group limitedCard">
+                                    <div class="form-group">
                                         <label for="cardAmount" translate="CARD.AMOUNT" class="control-label"></label>
+                                        <div class="clearfix"></div>
                                         <input id="cardAmount" ng-model="objectsSidebarService.selectedObject.quantity"
+                                               ng-if="!objectsSidebarService.selectedObject.isUnlimited"
                                                name="quantity" ng-pattern="/^\+?([1-9]\d*)$/"
                                                type="text" placeholder="{{ 'CARD.AMOUNT_PLACEHOLDER' | translate }}"
-                                               required class="form-control"
+                                               required class="form-control limitedCard"
                                                ng-disabled="objectsSidebarService.selectedObject.isActive || objectsSidebarService.selectedObject.isUnlimited==true"/>
-                                        <!-- Input title errors -->
-                                        <div ng-messages="card.myForm.quantity.$error" ng-if="card.myForm.quantity.$touched"class="help-block">
-                                            <small ng-message="required" translate="CARD.AMOUNT_REQUIRED"></small>
-                                            <small ng-message="pattern" translate="CARD.AMOUNT_PATTERN"></small>
-                                        </div>
-                                    </div>
-                                    <!--Unlimited amount name="unlimitedAmount"-->
-                                    <div class="form-group unlimitedCard">
-                                        <!--Positive checkbox-->
-                                        <label> </label>
-                                        <div class="checkbox c-checkbox pull-left mt0">
+                                        <div class="checkbox c-checkbox pull-left mt0 unlimitedCard">
                                             <label>
                                                 <input type="checkbox" name="unlimitedAmount" ng-model="objectsSidebarService.selectedObject.isUnlimited"
                                                        ng-disabled="objectsSidebarService.selectedObject.isActive"
                                                        ng-change="checkUnlimited()"/>
                                                 <span class="fa fa-check"></span>{{ 'GENERIC.UNLIMITED' | translate }}
                                             </label>
+                                        </div>
+                                        <!-- Input title errors -->
+                                        <div ng-messages="card.myForm.quantity.$error" ng-if="card.myForm.quantity.$touched"class="help-block">
+                                            <small ng-message="required" translate="CARD.AMOUNT_REQUIRED"></small>
+                                            <small ng-message="pattern" translate="CARD.AMOUNT_PATTERN"></small>
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -191,41 +188,6 @@
                                 </div>
                             </div>
                         </section>
-                        <!--<legend translate="CARD.CONDITIONS"></legend>-->
-                        <!--&lt;!&ndash;conditionsText - conditionsURL - hasConditionURL&ndash;&gt;-->
-                        <!--<div class="form-group">-->
-                            <!--<label translate="CARD.CONDITIONS_STATEMENT" class="form-label"></label>-->
-                            <!--<text-angular name="conditions" serial="1"-->
-                                          <!--ng-model="objectsSidebarService.selectedObject.conditionsText"-->
-                                          <!--ta-disabled="objectsSidebarService.selectedObject.hasConditionsURL">-->
-                            <!--</text-angular>-->
-                        <!--</div>-->
-                        <!--&lt;!&ndash;conditionsURL name="conditionsURL"&ndash;&gt;-->
-                        <!--<div class="form-group limitedCard" ng-if="objectsSidebarService.selectedObject.hasConditionsURL==true">-->
-                            <!--<input ng-model="objectsSidebarService.selectedObject.conditionsURL"-->
-                                   <!--name="conditionsURL"-->
-                                   <!--type="url" placeholder="{{ 'CARD.URL_PLACEHOLDER' | translate }}"-->
-                                   <!--required class="form-control"-->
-                                   <!--ng-disabled="objectsSidebarService.selectedObject.isActive"/>-->
-                            <!--&lt;!&ndash; Input conditionsURL errors &ndash;&gt;-->
-                            <!--<div ng-messages="card.myForm.conditionsURL.$error" ng-if="card.myForm.conditionsURL.$touched"class="help-block">-->
-                                <!--<small ng-message="required" translate="CARD.URL_REQUIRED"></small>-->
-                                <!--<small ng-message="url" translate="CARD.URL_PATTERN"></small>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--&lt;!&ndash;hasConditionsURL name="hasConditionsURL"&ndash;&gt;-->
-                        <!--<div class="form-group urlCheckbox">-->
-                            <!--&lt;!&ndash;Positive checkbox&ndash;&gt;-->
-                            <!--<label> </label>-->
-                            <!--<div class="checkbox c-checkbox pull-left">-->
-                                <!--<label>-->
-                                    <!--<input type="checkbox" name="hasConditionsURL" ng-model="objectsSidebarService.selectedObject.hasConditionsURL"-->
-                                           <!--ng-disabled="objectsSidebarService.selectedObject.isActive"/>-->
-                                    <!--<span class="fa fa-check"></span>{{ 'CARD.URL' | translate }}-->
-                                <!--</label>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="clearfix"></div>-->
                     </form>
                 </div>
             </div>

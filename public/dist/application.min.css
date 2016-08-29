@@ -9600,6 +9600,7 @@ body {
   position: fixed;
   top: 0;
   bottom: 0;
+  overflow-y: auto;
 }
 .layout-fixed .wrapper > section {
   margin-top: 114px;
@@ -16466,27 +16467,24 @@ input.cmn-toggle-round:checked + label:after {
 }
 .cards-section .period-negative {
   margin-left: 40px;
-  margin-bottom: 15px;
 }
-.cards-section .unlimitedCard,
-.cards-section .limitedCard,
-.cards-section .urlCheckbox {
-  float: left;
+.cards-section .checkbox {
+  margin-bottom: 0;
 }
 .cards-section .limitedCard {
+  float: left;
   width: 70%;
   margin-right: 5%;
 }
-.cards-section .unlimitedCard,
-.cards-section .urlCheckbox {
+.cards-section .unlimitedCard {
   width: 24%;
-  margin-top: 33px;
-}
-.cards-section .urlCheckbox {
-  margin-top: 0;
+  margin-bottom: 20px;
 }
 .cards-section .hasConditionsURL {
   margin-top: 10px;
+}
+.cards-section .activate-gift {
+  margin-top: 45px;
 }
 .dashboard {
   /* The finishing CSS styles for the enter animation */

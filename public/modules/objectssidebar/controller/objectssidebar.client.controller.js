@@ -26,7 +26,7 @@
             //Organization Service
             $scope.organizationService = Organization;
             //Draggable Properties
-            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.organizationId = $scope.organizationService.selectedOrganizationId;
             $scope.currentDate = new Date().getTime();
 
             if($scope.organizationId) {
@@ -50,7 +50,7 @@
                 }
             }
         };
-
+        
         //Formatting dates
         $scope.formDate = function(date) {
             return new Date(date).getTime();

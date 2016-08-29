@@ -300,7 +300,8 @@
     "MENU_ORGANIZATIONS": "Organizations",
     "MENU_NPS": "Net Promoter Score",
     "MENU_GIFTS":"Gifts",
-    "MENU_CARDS": "Cards"
+    "MENU_CARDS": "Cards",
+    "MENU_USERS": "Users"
   },
   "SITES":{
     "TITLE": "Establishment Details",

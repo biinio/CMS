@@ -14,7 +14,6 @@ angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope',
             organizationsList: [],
 
             getSelectedOrganization: function () {
-
                 if (Authentication.user) {
                     var promise = $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + Authentication.user.accountIdentifier + '/selectedOrganization/');
                     deferObject = deferObject || $q.defer();
@@ -31,7 +30,6 @@ angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope',
             },
 
             getOrganizations: function () {
-
                 if (Authentication.user) {
                     var promise = $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations', {headers:{user: Authentication.user.accountIdentifier}});
                     deferObject = deferObject || $q.defer();
@@ -60,6 +58,7 @@ angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope',
                                 while (!orgFound && index < service.organizationsList.length) {
                                     if (service.organizationsList[index].identifier == service.selectedOrganizationId) {
                                         service.selectedOrganization = service.organizationsList[index];
+                                        $rootScope.$broadcast('organizationReady');
                                         orgFound = true;
                                     }
                                     index++;

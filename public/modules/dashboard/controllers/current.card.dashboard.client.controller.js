@@ -19,6 +19,7 @@
         init();
 
         function init(){
+            /* Initial Settings */
             $scope.organizationService = Organization;
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             $scope.globalFilters = GlobalFilters;
@@ -26,10 +27,10 @@
             $scope.qrCodeService = Qrcode;
             $scope.dashboardService = Dashboard;
             $scope.productsService = Products;
-
+            /* Getting initial Data */
             getInitialData();
 
-            //Functions from services
+            /* Functions from services */
             $scope.getImage = Products.getImage;
         }
 

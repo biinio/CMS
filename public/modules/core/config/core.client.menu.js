@@ -17,9 +17,10 @@
         Menus.addMenuItem('sidebar', 'Locales'        , 'sites'           , null, 'app.sites'        , false, null, null, 'icon-pointer', "SIDEBAR.MENU_SITES");
         Menus.addMenuItem('sidebar', 'Regalos'        , 'gifts'           , null, 'app.gifts'        , false, null, null, 'icon-present', "SIDEBAR.MENU_GIFTS");
         Menus.addMenuItem('sidebar', 'Tarjetas'        , 'cards'           , null, 'app.cards'        , false, null, null, 'icon-note', "SIDEBAR.MENU_CARDS");
-        Menus.addMenuItem('sidebar', 'Organizaciones', 'organization'   , null, 'app.organization'  , false, null, null, 'icon-globe', "SIDEBAR.MENU_ORGANIZATIONS");
-        Menus.addMenuItem('sidebar', 'Perfil'      , 'profile'         , null, 'app.profile'      , false, null, null, 'icon-user', "SIDEBAR.MENU_PROFILE");
+        // Menus.addMenuItem('sidebar', 'Organizaciones', 'organization'   , null, 'app.organization'  , false, null, null, 'icon-globe', "SIDEBAR.MENU_ORGANIZATIONS");
+        // Menus.addMenuItem('sidebar', 'Perfil'      , 'profile'         , null, 'app.profile'      , false, null, null, 'icon-user', "SIDEBAR.MENU_PROFILE");
         //Maintenance has role field: maintenance
+        Menus.addMenuItem('sidebar', 'Usuarios', 'maintenance', null, 'app.users', false, 'maintenance', null, 'icon-settings', "SIDEBAR.MENU_USERS");
         Menus.addMenuItem('sidebar', 'Mantenimiento', 'maintenance', null, 'app.maintenance', false, 'maintenance', null, 'icon-settings', "SIDEBAR.MENU_MAINTENANCE");
     }
 

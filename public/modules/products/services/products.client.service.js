@@ -3,7 +3,7 @@
     'use strict';
 
     angular /*  Module getter */
-        .module('dashboard')
+        .module('products')
         .factory('Products', ['$http','Organization', ProductsService]);
 
     function ProductsService($http, Organization) {
@@ -20,7 +20,7 @@
         }
         /* Function to obtain the ready products */
         function getReadyProducts() {
-            var currentOrganization = Organization.selectedOrganization.identifier;
+            var currentOrganization = Organization.selectedOrganizationId;
 
             return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization + '/readyElements/')
             .then(function (response) {
@@ -35,5 +35,5 @@
             getImage: getImage,
             getReadyProducts: getReadyProducts
         };
-    }  /*  DashboardService function ends */
+    }  /* ProductsService function ends */
 })();

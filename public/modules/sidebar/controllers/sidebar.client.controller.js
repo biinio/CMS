@@ -23,6 +23,10 @@
           $scope.authentication = Authentication;
           $scope.selectedOrganization = Organization.selectedOrganization;
 
+          $scope.$on('organizationReady', function(){
+            $scope.selectedOrganization = Organization.selectedOrganization;
+          });
+
           // demo: when switch from collapse to hover, close all items
           $rootScope.$watch('app.layout.asideHover', function(oldVal, newVal){
             if ( newVal === false && oldVal === true) {

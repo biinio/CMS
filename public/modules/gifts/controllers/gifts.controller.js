@@ -10,9 +10,9 @@
         .module('gifts')
         .controller('GiftsController', GiftsController);
 
-    GiftsController.$inject = ['$http', '$window', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate'];
+    GiftsController.$inject = ['$http', '$window', '$state', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate'];
 
-    function GiftsController($http, $window, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate) {
+    function GiftsController($http, $window, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate) {
         var gift = this;
 
         if (!Authentication.user) {

@@ -1320,16 +1320,17 @@ angular.module('cards').config(['$stateProvider',
         .module('cards')
         .controller('CardsController', CardsController);
 
-    CardsController.$inject = ['$http', '$window', '$state',  '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate', 'toaster'];
+    CardsController.$inject = ['$window', '$state',  '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate', 'toaster', 'Gifts', 'Cards', 'Products'];
 
-    function CardsController($http, $window, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate, toaster) {
+    function CardsController($window, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate, toaster, Gifts, Cards, Products) {
         var card = this;
 
+        /* Redirect to login if there is no user*/
         if (!Authentication.user) {
             $window.location = '/';
         }
 
-        //Running init function
+        /* Running init function */
         init();
 
         /**=============================================================================================================
@@ -1337,34 +1338,27 @@ angular.module('cards').config(['$stateProvider',
          =============================================================================================================*/
 
         function init() {
-            //----Services needed----//
-            //Loading Service
+            /* Initial Settings */
             $scope.loadingService = Loading;
-            //Organization Service
-            $scope.organizationService = Organization;
-            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
-            //Objects Sidebar Service
+            $scope.selectedOrganization = Organization.selectedOrganization;
+            $scope.selectedOrganizationId = Organization.selectedOrganizationId;
             $scope.objectsSidebarService = ObjectsSidebar;
-            //Authentication Service
-            $scope.authentication = Authentication;
-            //Card Object
-            $scope.objectsSidebarService.selectedObject = {};
-            //----Variables----//
-            //Ready to fill
+            $scope.cardsService = Cards;
+            $scope.giftsService = Gifts;
+            $scope.productsService = Products;
+
+            getInitialData();
+
+            /* Ready to fill/display the form */
             $scope.ready = false;
-            $scope.cards = [];
             $scope.slotsQuantities = [10,12,14];
-            //State of loading screen
-            $scope.loadingService.isLoading = true;
-            //Current Date
-            $scope.currentDate = new Date().getTime();
-            //Default alerts/hints
+            /* Default alerts/hints (Last block) */
             $scope.show_alert = true;
-            //ObjectsSidebar card template
+            /* ObjectsSidebar card template */
             $scope.sidebarTemplate =
                 "<div class='col-md-3 thumbListImage'>" +
                     "<img ng-if='!item.gift' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+' alt=''/>" +
-                    "<img ng-if='item.gift' ng-src='{{setProductImage(item.gift.productIdentifier)}}' pending-indicator='pending-indicator'/>"+
+                    "<img ng-if='item.gift' ng-src='{{item.gift.image}}' pending-indicator='pending-indicator'/>"+
                 "</div>" +
                 "<div class='col-md-9 leftInformationArea'>"+
                     "<label class='twoRowTitle'>{{organizationService.selectedOrganization.name}}</label>"+
@@ -1382,76 +1376,70 @@ angular.module('cards').config(['$stateProvider',
             $scope.objectsSidebarService.reset();
         });
 
+        $scope.$on('organizationReady', function(){
+            $scope.selectedOrganization = Organization.selectedOrganization;
+        });
+
         $scope.$on("Biin: On Object Created", function(){
             $scope.create();
         });
 
         $scope.$on("Biin: On Object Clicked", function (event, objectClicked) {
-            //Already to show the gift info
+            /* Already to show the gift info */
             $scope.ready = true;
         });
 
         $scope.$on('organizationChanged',function(){
-            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             $scope.loadingService.isLoading = true;
-            //Get the List of Gifts
+
+            /* Get data again, depending of the new organization */
             $scope.ready = false;
-            if($scope.organizationId){
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards').success(function(cards) {
-                    $scope.cards = cards;
-                    $scope.objectsSidebarService.setObjects($scope.cards);
-                    $state.reload();
-                    $scope.loadingService.isLoading = false;
-                });
-                //Get the List of Products
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/readyElements/').success(function(data) {
-                    $scope.products = data.data.elements;
-                });
-                //Get the List of Gifts
-                $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
-                    getAvailableGifts(gifts);
-                });
+            if($scope.selectedOrganizationId){
+                getInitialData();
             }
         });
 
         /**=============================================================================================================
          * Functions
          =============================================================================================================*/
-
-        if($scope.organizationId){
-            //Get the List of Cards
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards').success(function(cards) {
-                console.log(cards);
-                $scope.cards = cards;
-                $scope.objectsSidebarService.setObjects($scope.cards);
-                $scope.loadingService.isLoading = false;
-            });
-            //Get the List of Gifts
-            $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/gifts').success(function(gifts) {
-                getAvailableGifts(gifts);
-            });
+        /*
+         *Function to get all the initial data need it to initialization of the module
+         */
+        function getInitialData() {
+            if($scope.selectedOrganizationId){
+                $scope.isLoading = true;
+                $scope.productsService.getReadyProducts().then(function(products) {
+                    $scope.products = products.data.elements;
+                    return $scope.cardsService.getCards();
+                }).then(function(cards) {
+                    $scope.cards = parseCards(cards);
+                    $scope.objectsSidebarService.setObjects($scope.cards);
+                    return $scope.giftsService.getAvailableGifts();
+                }).then(function(gifts) {
+                    $scope.gifts = gifts;
+                    $scope.loadingService.isLoading = false;
+                });
+            }
         }
 
-        //Create a card
+        /* Function to create a card */
         $scope.create = function(){
             var titleText = $translate.instant("CARD.CREATING");
             swal({   title: titleText,  type: "info",   showConfirmButton: false });
-            $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards').success(function(card,status){
-                if(status == 201){
-                    var cards = $scope.objectsSidebarService.getObjects();
-                    cards.unshift(card);
-                    $scope.objectsSidebarService.setObjects(cards);
-                    $scope.objectsSidebarService.setSelectedObject(card);
-                    $scope.ready = true;
+            $scope.cardsService.createCard().then(function(card) {
+                var cards = $scope.objectsSidebarService.getObjects();
+                cards.unshift(card);
+                $scope.objectsSidebarService.setObjects(cards);
+                $scope.objectsSidebarService.setSelectedObject(card);
+                $scope.ready = true;
 
-                    setTimeout(function(){
-                        swal.close();
-                    },2000);
-                }
+                setTimeout(function () {
+                    swal.close();
+                }, 2000);
             });
         }
 
-        //Function that display the swal as a confirmation to remove card
+        /* Function that display the swal as a confirmation to remove card */
         $scope.deleteCard = function(message, selectedObject) {
             var translatedTexts  = $translate.instant(["GENERIC.DELETE_CARD_TITLE","GENERIC.DELETE_CARD_CONFIRMATION","GENERIC.DELETE","GENERIC.CANCEL"]);
 
@@ -1470,39 +1458,38 @@ angular.module('cards').config(['$stateProvider',
             });
         };
 
-        //Remove card at specific position
+        /* Remove card at specific position */
         $scope.removeCardAt = function(index){
             var cardToDelete = $scope.objectsSidebarService.objects[index];
             var translatedTexts  = $translate.instant(["CARD.DELETED_TEXT","GENERIC.DELETED"]);
-            $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+ cardToDelete.identifier,{data:cardToDelete}).success(function(data){
-                    $scope.ready = false;
-                    $scope.objectsSidebarService.objects.splice(index,1);
-                    swal(translatedTexts["GENERIC.DELETED"], translatedTexts["CARD.DELETED_TEXT"], "success");
-                }
-            );
+            $scope.cardsService.deleteCard(cardToDelete).then(function() {
+                $scope.ready = false;
+                $scope.objectsSidebarService.objects.splice(index,1);
+                swal(translatedTexts["GENERIC.DELETED"], translatedTexts["CARD.DELETED_TEXT"], "success");
+            });
         };
         
-        //Save gift information
+        /* Save gift information */
         $scope.update = function(){
-            var cardToUpdate = $scope.objectsSidebarService.selectedObject;
-            cardToUpdate.conditionsText = 'Al hacer tap en OK aceptas las condiciones de uso de la tarjeta de cliente frecuente de ' + $scope.organizationService.selectedOrganization.name + '.'
-            // Don't do anything if there is no selected card
+            /* Don't do anything if there is no selected card */
             if ($scope.ready == false)
                 return;
 
+            var cardToUpdate = $scope.objectsSidebarService.selectedObject;
+            cardToUpdate.conditionsText = 'Al hacer tap en OK aceptas las condiciones de uso de la tarjeta de cliente frecuente de ' + $scope.selectedOrganization.name + '.'
             if(card.myForm.$valid && ($scope.objectsSidebarService.selectedObject.conditionsText || $scope.objectsSidebarService.selectedObject.conditionsURL)) {
-                $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+ cardToUpdate.identifier,cardToUpdate).success(function(data,status){
+                $scope.cardsService.updateCard(cardToUpdate, cardToUpdate).then(function(response) {
                     console.log('Actualizado');
                 });
             }
         }
 
-        //Function to activate a card
+        /* Function to activate a card */
         $scope.activate = function () {
             var isOneActive = false;
             var isActive = $scope.objectsSidebarService.selectedObject.isActive;
 
-            //Check if there is a card active
+            /* Check if there is a card active */
             for(var i in $scope.cards){
                 if($scope.cards[i].isActive==true){
                     isOneActive = true;
@@ -1513,9 +1500,11 @@ angular.module('cards').config(['$stateProvider',
                 toaster.pop('warning', 'Solo puede haber una tarjeta activa');
             } else {
                 var cardToUpdate = $scope.objectsSidebarService.selectedObject;
-                //Activate card
+
+                /* Activate card */
                 if(card.myForm.$valid && !isActive) {
                     var translatedTexts  = $translate.instant(["GENERIC.ACTIVATE_CARD_TITLE","GENERIC.ACTIVATE_CARD_CONFIRMATION","GENERIC.ACTIVATE","GENERIC.CANCEL","GENERIC.ACTIVATED","CARD.ACTIVATE_TEXT"]);
+                    var propertyToUpdate = {isActive:true};
                     swal({
                         title: translatedTexts["GENERIC.ACTIVATE_CARD_TITLE"],
                         text: translatedTexts["GENERIC.ACTIVATE_CARD_CONFIRMATION"],
@@ -1528,15 +1517,15 @@ angular.module('cards').config(['$stateProvider',
                         closeOnConfirm: false
                     }, function () {
                         $scope.objectsSidebarService.selectedObject.isActive = true;
-
-                        $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+cardToUpdate.identifier,{isActive:true}).success(function(data,status){
+                        $scope.cardsService.updateCard(cardToUpdate, propertyToUpdate).then(function() {
                             swal(translatedTexts["GENERIC.ACTIVATED"], translatedTexts["CARD.ACTIVATE_TEXT"], "success");
                         });
                     });
                 }
-                //Deactivate card
+                /*Deactivate card */
                 if(isActive){
                     var translatedTexts  = $translate.instant(["GENERIC.DEACTIVATE_CARD_TITLE","GENERIC.DEACTIVATE_CARD_CONFIRMATION","GENERIC.DEACTIVATE","GENERIC.CANCEL","GENERIC.DEACTIVATED","CARD.DEACTIVATE_TEXT"]);
+                    var propertyToUpdate = {isActive:false};
                     swal({
                         title: translatedTexts["GENERIC.DEACTIVATE_CARD_TITLE"],
                         text: translatedTexts["GENERIC.DEACTIVATE_CARD_CONFIRMATION"],
@@ -1549,30 +1538,89 @@ angular.module('cards').config(['$stateProvider',
                         closeOnConfirm: false
                     }, function () {
                         $scope.objectsSidebarService.selectedObject.isActive = false;
-
-                        $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.organizationId + '/cards/'+cardToUpdate.identifier,{isActive:false}).success(function(data,status){
+                        $scope.cardsService.updateCard(cardToUpdate, propertyToUpdate).then(function() {
                             swal(translatedTexts["GENERIC.DEACTIVATED"], translatedTexts["CARD.DEACTIVATE_TEXT"], "success");
                         });
                     });
                 }
             }
         }
-        //Function to remove expire and spent gifts
-        function getAvailableGifts(gifts) {
-            console.log(gifts);
-            $scope.gifts = [];
-            for(var i in gifts){
-                gifts[i].endDate = new Date();
-                if((gifts[i].amount > gifts[i].amountSpent && $scope.currentDate < gifts[i].endDate.getTime()) || (gifts[i].amount ==-1 && $scope.currentDate < gifts[i].endDate.getTime())){
-                   $scope.gifts.push(gifts[i]);
-                }
-            }
-        }
-        //Define a display number for quantity
+        /* Define a display number for quantity */
         $scope.checkUnlimited = function() {
-            $scope.objectsSidebarService.selectedObject.quantity = 1;
+            $scope.objectsSidebarService.selectedObject.quantity = null;
+        }
+        /* Function to add the images to the gifts*/
+        function parseCards(cards) {
+            for(var i in cards) {
+                cards[i].gift.image = $scope.productsService.getImage(cards[i].gift.productIdentifier, $scope.products);
+            }
+            return cards;
         }
     }
+})();
+
+//Cards Service
+(function() {
+    'use strict';
+
+    angular /*  Module getter */
+        .module('cards')
+        .factory('Cards', ['$http','Organization', CardsService]);
+
+    function CardsService($http, Organization) {
+        /* Function to obtain the cards */
+        function getCards() {
+            var currentOrganization = Organization.selectedOrganizationId;
+
+            return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization + '/cards')
+                .then(function (response) {
+                    return response.data;
+                },function (error) {
+                    console.log(error);
+                });
+        }
+        /* Function to create a card */
+        function createCard() {
+            var currentOrganization = Organization.selectedOrganizationId;
+
+            return $http.post(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization + '/cards')
+                .then(function (response) {
+                    return response.data;
+                },function (error) {
+                    console.log(error);
+                });
+        }
+        /* Function to delete a card */
+        function deleteCard(cardToDelete) {
+            var currentOrganization = Organization.selectedOrganizationId;
+            
+            return $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization  + '/cards/' + cardToDelete.identifier,{data:cardToDelete})
+                .then(function (response) {
+                    return response.data;
+                },function (error) {
+                    console.log(error);
+                });
+        }
+        /* Function to delete a card */
+        function updateCard(cardToUpdate, propertyToUpdate) {
+            var currentOrganization = Organization.selectedOrganizationId;
+
+            return $http.put(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization  + '/cards/' + cardToUpdate.identifier,propertyToUpdate)
+                .then(function (response) {
+                    return response.data;
+                },function (error) {
+                    console.log(error);
+                });
+        }
+        
+        
+        return {
+            getCards: getCards,
+            createCard: createCard,
+            deleteCard: deleteCard,
+            updateCard: updateCard
+        };
+    }  /* CardsService function ends */
 })();
 
 /**=========================================================
@@ -2086,9 +2134,10 @@ angular.module('cards').config(['$stateProvider',
         Menus.addMenuItem('sidebar', 'Locales'        , 'sites'           , null, 'app.sites'        , false, null, null, 'icon-pointer', "SIDEBAR.MENU_SITES");
         Menus.addMenuItem('sidebar', 'Regalos'        , 'gifts'           , null, 'app.gifts'        , false, null, null, 'icon-present', "SIDEBAR.MENU_GIFTS");
         Menus.addMenuItem('sidebar', 'Tarjetas'        , 'cards'           , null, 'app.cards'        , false, null, null, 'icon-note', "SIDEBAR.MENU_CARDS");
-        Menus.addMenuItem('sidebar', 'Organizaciones', 'organization'   , null, 'app.organization'  , false, null, null, 'icon-globe', "SIDEBAR.MENU_ORGANIZATIONS");
-        Menus.addMenuItem('sidebar', 'Perfil'      , 'profile'         , null, 'app.profile'      , false, null, null, 'icon-user', "SIDEBAR.MENU_PROFILE");
+        // Menus.addMenuItem('sidebar', 'Organizaciones', 'organization'   , null, 'app.organization'  , false, null, null, 'icon-globe', "SIDEBAR.MENU_ORGANIZATIONS");
+        // Menus.addMenuItem('sidebar', 'Perfil'      , 'profile'         , null, 'app.profile'      , false, null, null, 'icon-user', "SIDEBAR.MENU_PROFILE");
         //Maintenance has role field: maintenance
+        Menus.addMenuItem('sidebar', 'Usuarios', 'maintenance', null, 'app.users', false, 'maintenance', null, 'icon-settings', "SIDEBAR.MENU_USERS");
         Menus.addMenuItem('sidebar', 'Mantenimiento', 'maintenance', null, 'app.maintenance', false, 'maintenance', null, 'icon-settings', "SIDEBAR.MENU_MAINTENANCE");
     }
 
@@ -2664,7 +2713,6 @@ angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope',
             organizationsList: [],
 
             getSelectedOrganization: function () {
-
                 if (Authentication.user) {
                     var promise = $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + Authentication.user.accountIdentifier + '/selectedOrganization/');
                     deferObject = deferObject || $q.defer();
@@ -2681,7 +2729,6 @@ angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope',
             },
 
             getOrganizations: function () {
-
                 if (Authentication.user) {
                     var promise = $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations', {headers:{user: Authentication.user.accountIdentifier}});
                     deferObject = deferObject || $q.defer();
@@ -2710,6 +2757,7 @@ angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope',
                                 while (!orgFound && index < service.organizationsList.length) {
                                     if (service.organizationsList[index].identifier == service.selectedOrganizationId) {
                                         service.selectedOrganization = service.organizationsList[index];
+                                        $rootScope.$broadcast('organizationReady');
                                         orgFound = true;
                                     }
                                     index++;
@@ -2874,6 +2922,7 @@ angular.module('dashboard').config(['$stateProvider',
         init();
 
         function init(){
+            /* Initial Settings */
             $scope.organizationService = Organization;
             $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
             $scope.globalFilters = GlobalFilters;
@@ -2881,10 +2930,10 @@ angular.module('dashboard').config(['$stateProvider',
             $scope.qrCodeService = Qrcode;
             $scope.dashboardService = Dashboard;
             $scope.productsService = Products;
-
+            /* Getting initial Data */
             getInitialData();
 
-            //Functions from services
+            /* Functions from services */
             $scope.getImage = Products.getImage;
         }
 
@@ -5603,9 +5652,9 @@ angular.module('gifts').config(['$stateProvider',
         .module('gifts')
         .controller('GiftsController', GiftsController);
 
-    GiftsController.$inject = ['$http', '$window', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate'];
+    GiftsController.$inject = ['$http', '$window', '$state', '$scope', 'Loading', 'Organization', 'ObjectsSidebar', 'Authentication', '$translate'];
 
-    function GiftsController($http, $window, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate) {
+    function GiftsController($http, $window, $state, $scope, Loading, Organization, ObjectsSidebar, Authentication, $translate) {
         var gift = this;
 
         if (!Authentication.user) {
@@ -5891,6 +5940,61 @@ angular.module('gifts').config(['$stateProvider',
             $scope.objectsSidebarService.selectedObject.amount = 1;
         }
     }
+})();
+
+//Gifts Service
+(function() {
+    'use strict';
+
+    angular /*  Module getter */
+        .module('gifts')
+        .factory('Gifts', ['$http','Organization', GiftsService]);
+
+    function GiftsService($http, Organization) {
+        /* Function to obtain the gifts */
+        function getGifts() {
+            var currentOrganization = Organization.selectedOrganizationId;
+
+            return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization + '/gifts')
+                .then(function (response) {
+                    return response.data;
+                },function (error) {
+                    console.log(error);
+                });
+        }
+
+        /* Function to obtain available gifts */
+        function getAvailableGifts() {
+            var currentOrganization = Organization.selectedOrganizationId;
+
+            return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization + '/gifts')
+                .then(function (response) {
+                    return parseAvailableGifts(response.data);
+                },function (error) {
+                    console.log(error);
+                });
+        }
+
+        /* Function to parse available gifts */
+        function parseAvailableGifts(gifts) {
+            var parseGifts = [];
+            var currentDate = new Date();
+            for(var i in gifts){
+                gifts[i].endDate = new Date(gifts[i].endDate);
+                /* This verifies if the gift is not spent and is not expired*/
+                if(((gifts[i].amount > gifts[i].amountSpent || gifts[i].isUnlimited) && currentDate < gifts[i].endDate.getTime() && gifts[i].hasAvailablePeriod) || ((gifts[i].amount > gifts[i].amountSpent || gifts[i].isUnlimited) && !gifts[i].hasAvailablePeriod)){
+                    parseGifts.push(gifts[i]);
+                }
+            }
+            return parseGifts;
+        }
+
+
+        return {
+            getGifts: getGifts,
+            getAvailableGifts: getAvailableGifts
+        };
+    }  /*  GiftsService function ends */
 })();
 
 'use strict';
@@ -6999,7 +7103,7 @@ angular.module('nps').config(['$stateProvider',
             //Organization Service
             $scope.organizationService = Organization;
             //Draggable Properties
-            $scope.organizationId = $scope.organizationService.selectedOrganization.identifier;
+            $scope.organizationId = $scope.organizationService.selectedOrganizationId;
             $scope.currentDate = new Date().getTime();
 
             if($scope.organizationId) {
@@ -7023,7 +7127,7 @@ angular.module('nps').config(['$stateProvider',
                 }
             }
         };
-
+        
         //Formatting dates
         $scope.formDate = function(date) {
             return new Date(date).getTime();
@@ -7240,7 +7344,11 @@ angular.module('organization').config(['$stateProvider',
         $scope.$on('changeOrganizationImage',function(scope,newPicture){
             $scope.objectsSidebarService.selectedObject.media[0]=newPicture;
         });
-        
+
+        if (!Authentication.user) {
+            $location.path('/');
+        }
+
         $scope.saveOrganization = function () {
             if ($scope.objectsSidebarService.selectedObject == null)
                 return;
@@ -8416,7 +8524,7 @@ angular.module('products').config(['$stateProvider',
     'use strict';
 
     angular /*  Module getter */
-        .module('dashboard')
+        .module('products')
         .factory('Products', ['$http','Organization', ProductsService]);
 
     function ProductsService($http, Organization) {
@@ -8433,7 +8541,7 @@ angular.module('products').config(['$stateProvider',
         }
         /* Function to obtain the ready products */
         function getReadyProducts() {
-            var currentOrganization = Organization.selectedOrganization.identifier;
+            var currentOrganization = Organization.selectedOrganizationId;
 
             return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization + '/readyElements/')
             .then(function (response) {
@@ -8448,7 +8556,7 @@ angular.module('products').config(['$stateProvider',
             getImage: getImage,
             getReadyProducts: getReadyProducts
         };
-    }  /*  DashboardService function ends */
+    }  /* ProductsService function ends */
 })();
 
 /**
@@ -8549,7 +8657,7 @@ angular.module('dashboard').config(['$stateProvider',
                 $http.put(ApplicationConfiguration.applicationBackendURL +'api/account', {model: $scope.profile}).success(function (data, status) {
                     if (status === 200) {
                         if (data.needToRelog)
-                            window.location.href = '/auth/signout';
+                            window.location.href = '/';
                         else{
                             $scope.profileCopy = $.extend(true,{},$scope.profile);
                             toaster.pop('success', '', 'Your information has been saved');
@@ -9330,6 +9438,10 @@ angular.module('showcases').config(['$stateProvider',
 
           $scope.authentication = Authentication;
           $scope.selectedOrganization = Organization.selectedOrganization;
+
+          $scope.$on('organizationReady', function(){
+            $scope.selectedOrganization = Organization.selectedOrganization;
+          });
 
           // demo: when switch from collapse to hover, close all items
           $rootScope.$watch('app.layout.asideHover', function(oldVal, newVal){
@@ -10278,7 +10390,22 @@ angular.module('users').config(['$stateProvider',
 		state('app.accounts', {
 			url: '/settings/accounts',
 			templateUrl: 'modules/users/views/settings/social-accounts.client.view.html'
-		});
+		}).
+		state('app.users', {
+			url: '/users',
+			templateUrl: 'modules/users/views/users/users.client.view.html',
+			resolve: {
+				permissions: function(Permission) {
+					return Permission.getPermissions();
+				},
+				selectedOrganization: function (Organization) {
+					return Organization.getSelectedOrganization();
+				},
+				organization: function (Organization) {
+					return Organization.getOrganizations();
+				}
+			}
+		});;
 	}
 ]);
 

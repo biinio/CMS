@@ -317,7 +317,8 @@
     "MENU_ORGANIZATIONS": "Organizaciones",
     "MENU_NPS": "Senso de Clientes",
     "MENU_GIFTS": "Regalos",
-    "MENU_CARDS": "Tarjetas"
+    "MENU_CARDS": "Tarjetas",
+    "MENU_USERS": "Usuarios"
   },
   "SITES":{
     "TITLE": "Detalles del Local",
