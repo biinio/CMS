@@ -2127,18 +2127,15 @@ angular.module('cards').config(['$stateProvider',
         // Add default menu entry
         //Menus.addMenuItem('sidebar', 'Home', 'home', null, '/home', true, null, null, 'icon-home');
 
-        Menus.addMenuItem('sidebar', 'Resumen'    , 'dashboard'       , null, 'app.dashboard'    , false, null, null, 'icon-speedometer', "SIDEBAR.MENU_DASHBOARD");
-        Menus.addMenuItem('sidebar', 'Productos'     , 'products'        , null, 'app.products'     , false, null, null, 'icon-book-open', "SIDEBAR.MENU_PRODUCTS");
-        Menus.addMenuItem('sidebar', 'Vitrinas'     , 'showcases'       , null, 'app.showcases'     , false, null, null, 'icon-docs', "SIDEBAR.MENU_SHOWCASES");
-        Menus.addMenuItem('sidebar', 'Avisos'        , 'biins'           , null, 'app.biins'        , false, null, null, 'icon-feed', "SIDEBAR.MENU_BIINS");
-        Menus.addMenuItem('sidebar', 'Locales'        , 'sites'           , null, 'app.sites'        , false, null, null, 'icon-pointer', "SIDEBAR.MENU_SITES");
-        Menus.addMenuItem('sidebar', 'Regalos'        , 'gifts'           , null, 'app.gifts'        , false, null, null, 'icon-present', "SIDEBAR.MENU_GIFTS");
-        Menus.addMenuItem('sidebar', 'Tarjetas'        , 'cards'           , null, 'app.cards'        , false, null, null, 'icon-note', "SIDEBAR.MENU_CARDS");
-        // Menus.addMenuItem('sidebar', 'Organizaciones', 'organization'   , null, 'app.organization'  , false, null, null, 'icon-globe', "SIDEBAR.MENU_ORGANIZATIONS");
-        // Menus.addMenuItem('sidebar', 'Perfil'      , 'profile'         , null, 'app.profile'      , false, null, null, 'icon-user', "SIDEBAR.MENU_PROFILE");
-        //Maintenance has role field: maintenance
-        Menus.addMenuItem('sidebar', 'Usuarios', 'maintenance', null, 'app.users', false, 'maintenance', null, 'icon-user', "SIDEBAR.MENU_USERS");
-        Menus.addMenuItem('sidebar', 'Mantenimiento', 'maintenance', null, 'app.maintenance', false, 'maintenance', null, 'icon-settings', "SIDEBAR.MENU_MAINTENANCE");
+        Menus.addMenuItem('sidebar', 'Resumen'      , 'dashboard'       , null, 'app.dashboard'     , false, 'access_dashboard'     , null, 'icon-speedometer'  , "SIDEBAR.MENU_DASHBOARD");
+        Menus.addMenuItem('sidebar', 'Productos'    , 'products'        , null, 'app.products'      , false, 'access_products'      , null, 'icon-book-open'    , "SIDEBAR.MENU_PRODUCTS");
+        Menus.addMenuItem('sidebar', 'Vitrinas'     , 'showcases'       , null, 'app.showcases'     , false, 'access_showcases'     , null, 'icon-docs'         , "SIDEBAR.MENU_SHOWCASES");
+        Menus.addMenuItem('sidebar', 'Avisos'       , 'biins'           , null, 'app.biins'         , false, 'access_notices'       , null, 'icon-feed'         , "SIDEBAR.MENU_BIINS");
+        Menus.addMenuItem('sidebar', 'Locales'      , 'sites'           , null, 'app.sites'         , false, 'access_locals'        , null, 'icon-pointer'      , "SIDEBAR.MENU_SITES");
+        Menus.addMenuItem('sidebar', 'Regalos'      , 'gifts'           , null, 'app.gifts'         , false, 'access_gifts'         , null, 'icon-present'      , "SIDEBAR.MENU_GIFTS");
+        Menus.addMenuItem('sidebar', 'Tarjetas'     , 'cards'           , null, 'app.cards'         , false, 'access_cards'         , null, 'icon-note'         , "SIDEBAR.MENU_CARDS");
+        Menus.addMenuItem('sidebar', 'Usuarios'     , 'maintenance'     , null, 'app.users'         , false, 'access_maintenance'   , null, 'icon-user'         , "SIDEBAR.MENU_USERS");
+        Menus.addMenuItem('sidebar', 'Mantenimiento', 'maintenance'     , null, 'app.maintenance'   , false, 'access_maintenance'   , null, 'icon-settings'     , "SIDEBAR.MENU_MAINTENANCE");
     }
 
 })();
@@ -10611,6 +10608,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 
         $scope.$on('$stateChangeStart', function(){
             $scope.loadingService.isLoading = true;
+            console.log(user.myForm);
         });
 
         $scope.$on('organizationChanged',function(){
@@ -10639,15 +10637,15 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
         }
         /* Function to invite a new user */
         $scope.invite = function() {
-            // $scope.usersService.invite($scope.user).then(function(response) {
-            //     if(response.status === 200){
-            //         return $scope.usersService.getUsers();
-            //     }
-            // }).then(function(users) {
-            //     $scope.users = users;
+            $scope.usersService.invite($scope.user).then(function(response) {
+                if(response.status === 200){
+                    return $scope.usersService.getUsers();
+                }
+            }).then(function(users) {
+                $scope.users = users;
                 resetForm();
                 $scope.activeTab[0] = true;
-            // });
+            });
         }
 
        /* Function to control the tabs (active)
@@ -10658,16 +10656,16 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
         };
         /* Function to reset form */
         function resetForm() {
-            $scope.user = '';
-            console.log( user.myForm);
-            user.myForm.$dirty = false;
-            user.myForm.$pristine = true;
-            user.myForm.$submitted = false;
-            user.myForm.$error = {};
-            user.myForm.$setUntouched();
+            $scope.user = {};
+            // console.log( user.myForm);
+            // user.myForm.$dirty = false;
+            // user.myForm.$pristine = true;
+            // user.myForm.$submitted = false;
+            // user.myForm.$error = {};
+            // user.myForm.$setUntouched();
             user.myForm.$setPristine();
-            user.myForm.$setValidity();
-            user.myForm.$rollbackViewValue();
+            // user.myForm.$setValidity();
+            // user.myForm.$rollbackViewValue();
             // user.myForm.$setUntouched();
             // user.myForm.$error = {};
             console.log( user.myForm);
