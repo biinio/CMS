@@ -47,6 +47,7 @@
 
         $scope.$on('$stateChangeStart', function(){
             $scope.loadingService.isLoading = true;
+            console.log(user.myForm);
         });
 
         $scope.$on('organizationChanged',function(){
@@ -75,7 +76,7 @@
         }
         /* Function to invite a new user */
         $scope.invite = function() {
-            // $scope.usersService.invite($scope.user).then(function(response) {
+            // $scope.usersService.invite($scope.originalUser).then(function(response) {
             //     if(response.status === 200){
             //         return $scope.usersService.getUsers();
             //     }
@@ -94,16 +95,16 @@
         };
         /* Function to reset form */
         function resetForm() {
-            $scope.user = '';
-            console.log( user.myForm);
-            user.myForm.$dirty = false;
-            user.myForm.$pristine = true;
-            user.myForm.$submitted = false;
-            user.myForm.$error = {};
-            user.myForm.$setUntouched();
+            $scope.user = {};
+            // console.log( user.myForm);
+            // user.myForm.$dirty = false;
+            // user.myForm.$pristine = true;
+            // user.myForm.$submitted = false;
+            // user.myForm.$error = {};
+            // user.myForm.$setUntouched();
             user.myForm.$setPristine();
-            user.myForm.$setValidity();
-            user.myForm.$rollbackViewValue();
+            // user.myForm.$setValidity();
+            // user.myForm.$rollbackViewValue();
             // user.myForm.$setUntouched();
             // user.myForm.$error = {};
             console.log( user.myForm);
