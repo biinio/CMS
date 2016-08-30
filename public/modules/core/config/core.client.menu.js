@@ -20,8 +20,8 @@
         // Menus.addMenuItem('sidebar', 'Organizaciones', 'organization'   , null, 'app.organization'  , false, null, null, 'icon-globe', "SIDEBAR.MENU_ORGANIZATIONS");
         // Menus.addMenuItem('sidebar', 'Perfil'      , 'profile'         , null, 'app.profile'      , false, null, null, 'icon-user', "SIDEBAR.MENU_PROFILE");
         //Maintenance has role field: maintenance
-        Menus.addMenuItem('sidebar', 'Usuarios', 'maintenance', null, 'app.users', false, 'maintenance', null, 'icon-user', "SIDEBAR.MENU_USERS");
-        Menus.addMenuItem('sidebar', 'Mantenimiento', 'maintenance', null, 'app.maintenance', false, 'maintenance', null, 'icon-settings', "SIDEBAR.MENU_MAINTENANCE");
+        Menus.addMenuItem('sidebar', 'Usuarios', 'maintenance', null, 'app.users', false, 'access_maintenance', null, 'icon-user', "SIDEBAR.MENU_USERS");
+        Menus.addMenuItem('sidebar', 'Mantenimiento', 'maintenance', null, 'app.maintenance', false, 'access_maintenance', null, 'icon-settings', "SIDEBAR.MENU_MAINTENANCE");
     }
 
 })();
