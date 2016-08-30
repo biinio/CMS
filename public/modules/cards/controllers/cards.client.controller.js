@@ -237,10 +237,14 @@
         }
         /* Function to add the images to the gifts*/
         function parseCards(cards) {
+            var parseCards = [];
             for(var i in cards) {
-                cards[i].gift.image = $scope.productsService.getImage(cards[i].gift.productIdentifier, $scope.products);
+                if(cards[i].gift && cards[i].gift.productIdentifier){
+                    cards[i].gift.image = $scope.productsService.getImage(cards[i].gift.productIdentifier, $scope.products);
+                }
+                parseCards.push(cards[i]);
             }
-            return cards;
+            return parseCards;
         }
     }
 })();

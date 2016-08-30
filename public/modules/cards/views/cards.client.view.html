@@ -72,8 +72,8 @@
                                         <select name="gift"
                                                 ng-model="objectsSidebarService.selectedObject.gift"
                                                 ng-disabled="objectsSidebarService.selectedObject.isActive"
-                                                ng-options="gift as gift.name for gift in gifts track by gift.identifier"
-                                                class="form-control" required>
+                                                ng-options="gift as gift.name for gift in gifts | filter:{ isActive : true } track by gift.identifier"
+                                                class="form-control" required >
                                             <option value="" translate="GENERIC.CHOOSE"></option>
                                         </select>
                                         <!-- Input slots errors -->

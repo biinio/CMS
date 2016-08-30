@@ -32,7 +32,7 @@
             return $http.post(ApplicationConfiguration.applicationBackendURL + 'api/clients/invite',user)
                 .then(function (response) {
                     toaster.pop('success', '', translateText['USER.INVITE_SUCCESS']);
-                    return response.data;
+                    return response;
                 },function (error) {
                     toaster.pop('error', translateText['USER.INVITE_ERROR']);
                     console.log(error);

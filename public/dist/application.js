@@ -1547,10 +1547,14 @@ angular.module('cards').config(['$stateProvider',
         }
         /* Function to add the images to the gifts*/
         function parseCards(cards) {
+            var parseCards = [];
             for(var i in cards) {
-                cards[i].gift.image = $scope.productsService.getImage(cards[i].gift.productIdentifier, $scope.products);
+                if(cards[i].gift && cards[i].gift.productIdentifier){
+                    cards[i].gift.image = $scope.productsService.getImage(cards[i].gift.productIdentifier, $scope.products);
+                }
+                parseCards.push(cards[i]);
             }
-            return cards;
+            return parseCards;
         }
     }
 })();
@@ -10633,12 +10637,18 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
                 });
             }
         }
-        /*
-         *Function to invite a new user
-         * param type: {}, userToInvite
-         */
+        /* Function to invite a new user */
         $scope.invite = function() {
-            $scope.activeTab[0] = true;
+            $scope.usersService.invite($scope.user).then(function(response) {
+                if(response.status !== 200){
+                    return $scope.usersService.getUsers();
+                }
+            }).then(function(users) {
+                $scope.users = users;
+                $scope.user = '';
+            }).finally(function() {
+                $scope.activeTab[0] = true;
+            });
         }
 
        /* Function to control the tabs (active)
@@ -10716,7 +10726,7 @@ angular.module('users').factory('Users', ['$resource',
             return $http.post(ApplicationConfiguration.applicationBackendURL + 'api/clients/invite',user)
                 .then(function (response) {
                     toaster.pop('success', '', translateText['USER.INVITE_SUCCESS']);
-                    return response.data;
+                    return response;
                 },function (error) {
                     toaster.pop('error', translateText['USER.INVITE_ERROR']);
                     console.log(error);

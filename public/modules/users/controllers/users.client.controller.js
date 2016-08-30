@@ -73,12 +73,18 @@
                 });
             }
         }
-        /*
-         *Function to invite a new user
-         * param type: {}, userToInvite
-         */
+        /* Function to invite a new user */
         $scope.invite = function() {
-            $scope.activeTab[0] = true;
+            $scope.usersService.invite($scope.user).then(function(response) {
+                if(response.status !== 200){
+                    return $scope.usersService.getUsers();
+                }
+            }).then(function(users) {
+                $scope.users = users;
+                $scope.user = '';
+            }).finally(function() {
+                $scope.activeTab[0] = true;
+            });
         }
 
        /* Function to control the tabs (active)
