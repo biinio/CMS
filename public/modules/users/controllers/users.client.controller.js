@@ -75,16 +75,15 @@
         }
         /* Function to invite a new user */
         $scope.invite = function() {
-            $scope.usersService.invite($scope.user).then(function(response) {
-                if(response.status !== 200){
-                    return $scope.usersService.getUsers();
-                }
-            }).then(function(users) {
-                $scope.users = users;
-                $scope.user = '';
-            }).finally(function() {
+            // $scope.usersService.invite($scope.user).then(function(response) {
+            //     if(response.status === 200){
+            //         return $scope.usersService.getUsers();
+            //     }
+            // }).then(function(users) {
+            //     $scope.users = users;
+                resetForm();
                 $scope.activeTab[0] = true;
-            });
+            // });
         }
 
        /* Function to control the tabs (active)
@@ -93,5 +92,22 @@
         $scope.clickTab = function(index) {
             $scope.activeTab[index] = true;
         };
+        /* Function to reset form */
+        function resetForm() {
+            $scope.user = '';
+            console.log( user.myForm);
+            user.myForm.$dirty = false;
+            user.myForm.$pristine = true;
+            user.myForm.$submitted = false;
+            user.myForm.$error = {};
+            user.myForm.$setUntouched();
+            user.myForm.$setPristine();
+            user.myForm.$setValidity();
+            user.myForm.$rollbackViewValue();
+            // user.myForm.$setUntouched();
+            // user.myForm.$error = {};
+            console.log( user.myForm);
+
+        }
     }
 })();
