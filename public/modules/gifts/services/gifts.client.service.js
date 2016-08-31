@@ -4,9 +4,9 @@
 
     angular /*  Module getter */
         .module('gifts')
-        .factory('Gifts', ['$http','Organization', GiftsService]);
+        .factory('Gifts', ['$http','Organization', 'GlobalFilters', GiftsService]);
 
-    function GiftsService($http, Organization) {
+    function GiftsService($http, Organization, GlobalFilters) {
         /* Function to obtain the gifts */
         function getGifts() {
             var currentOrganization = Organization.selectedOrganizationId;
@@ -45,10 +45,37 @@
             return parseGifts;
         }
 
+        /* Function to obtain AutomaticGifts */
+        function getAutomaticGifts() {
+            var currentOrganization = Organization.selectedOrganizationId;
+            var currentSite = GlobalFilters.selectedSite.identifier;
+
+            return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization + '/sites/' + currentSite + '/getavailablegifts/nps/true')
+                .then(function (response) {
+                    return parseAvailableGifts(response.data);
+                },function (error) {
+                    console.log(error);
+                });
+        }
+
+        /* Function to obtain ManualGifts */
+        function getManualGifts() {
+            var currentOrganization = Organization.selectedOrganizationId;
+            var currentSite = GlobalFilters.selectedSite.identifier;
+
+            return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + currentOrganization + '/sites/' + currentSite + '/getavailablegifts/nps/false')
+                .then(function (response) {
+                    return parseAvailableGifts(response.data);
+                },function (error) {
+                    console.log(error);
+                });
+        }
 
         return {
             getGifts: getGifts,
-            getAvailableGifts: getAvailableGifts
+            getAvailableGifts: getAvailableGifts,
+            getAutomaticGifts: getAutomaticGifts,
+            getManualGifts: getManualGifts
         };
     }  /*  GiftsService function ends */
 })();
