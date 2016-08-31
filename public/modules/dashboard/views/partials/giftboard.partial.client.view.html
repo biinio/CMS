@@ -29,10 +29,10 @@
                                 <img ng-src="{{gift.image}}" alt="Avatar"/>
                             </div>
                             <div class="infoDisplay">
-                                <small class="userName"><strong>{{gift.user.firstName}} {{gift.user.lastName}}</strong></small>
-                                <small>{{gift.user.email}}</small>
+                                <small class="userName"><strong>{{gift.name}} {{gift.lastname}}</strong></small>
+                                <small>{{gift.email}}</small>
                                 <hr>
-                                <small>Regalo: {{setProductName(gift.gift.productIdentifier)}}</small>
+                                <small>Regalo: {{setProductName(gift.productIdentifier)}}</small>
                             </div>
                             <div class="infoDates">
                                 <small ng-if="gift.recievedDate" class="pull-right">Enviado: {{gift.recievedDate | date:'dd-MM-yyyy'}}</small>

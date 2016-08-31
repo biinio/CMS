@@ -177,22 +177,6 @@
                 }).then(function(manualGifts) {
                     $scope.npsGiftsManual = manualGifts;
                 });
-                //Get gifts for automatic tasks
-                // $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.selectedOrganizationId + '/sites/' + siteId + '/getavailablegifts/nps/true')
-                //     .success(function (data) {
-                //         $scope.npsGiftsAutomatic = data;
-                //     });
-                //Get gifts for manual tasks
-                // $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.selectedOrganizationId + '/sites/' + siteId + '/getavailablegifts/nps/false')
-                //     .success(function (data) {
-                //         $scope.npsGiftsManual = data;
-                //     });
-                //Get products to update gifts images
-                // $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + $scope.selectedOrganizationId + '/readyElements/')
-                //     .success(function (data) {
-                //         $scope.products = data.data.elements;
-                //     });
-
             }
         }
 
@@ -237,7 +221,6 @@
                 generateLastComments(data);
             }
             generateChartData(data);
-
         }
 
         function generateLastComments(data){
@@ -326,7 +309,8 @@
                     toaster.pop('success', '', 'Su regalo fue enviado con éxito');
                 })
                 .error(function (data) {
-                toaster.pop('warning', 'Acción no se puede llevar a cabo', 'Este usuario ya tiene asignado ese regalo, puede intentar con uno diferente');
+                    console.log(data);
+                    toaster.pop('warning', 'Acción no se puede llevar a cabo', 'Este usuario ya tiene asignado ese regalo, puede intentar con uno diferente');
                 });
             } else if ($scope.giftDisplay=='automatic'){
                 $http.post(ApplicationConfiguration.applicationBackendURL + 'api/gift/assign/auto/nps', {
