@@ -3152,16 +3152,22 @@ angular.module('dashboard').config(['$stateProvider',
 
         $scope.$on('organizationChanged', function () {
             $timeout.cancel($scope.giftBoardTimeout);
+            $scope.items = null;
+            $scope.selectedOrganizationId = Organization.selectedOrganizationId;
             getGiftBoardData();
         });
 
         $scope.$on('Biin: Site Changed', function (scope, site) {
             $timeout.cancel($scope.giftBoardTimeout);
+            $scope.items = null;
+            $scope.selectedOrganizationId = Organization.selectedOrganizationId;
             getGiftBoardData();
         });
 
         $scope.$on('Biin: Days Range Changed', function (scope, numberdays) {
             $timeout.cancel($scope.giftBoardTimeout);
+            $scope.items = null;
+            $scope.selectedOrganizationId = Organization.selectedOrganizationId;
             getGiftBoardData();
         });
 
