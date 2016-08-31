@@ -56,9 +56,11 @@
          =============================================================================================================*/
         /* Function to get all the initial data need it to initialization of the module */
         function getInitialData() {
+            var site = GlobalFilters.selectedSite.identifier;
+
             if($scope.selectedOrganizationId){
                 $scope.isLoading = true;
-                $scope.qrCodeService.getCurrentQr().then(function(currentQR) {
+                $scope.qrCodeService.getCurrentQr(site).then(function(currentQR) {
                     $scope.currentQR = currentQR;
                     return $scope.productsService.getReadyProducts();
                 }).then(function(products){

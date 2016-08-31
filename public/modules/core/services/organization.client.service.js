@@ -15,26 +15,22 @@ angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope',
 
             getSelectedOrganization: function () {
                 if (Authentication.user) {
-                    var promise = $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + Authentication.user.accountIdentifier + '/selectedOrganization/');
-                    deferObject = deferObject || $q.defer();
+                    return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + Authentication.user.accountIdentifier + '/selectedOrganization/')
 
-                    promise.then(function (result) {
+                    .then(function (result) {
                             service.selectedOrganizationId = result.data.data.selectedOrganization;
-                            deferObject.resolve(result);
                         },
                         function (reason) {
-                            deferObject.reject(reason);
+                            console.log(reason)
                         });
-                    return deferObject.promise;
                 }
             },
 
             getOrganizations: function () {
                 if (Authentication.user) {
-                    var promise = $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations', {headers:{user: Authentication.user.accountIdentifier}});
-                    deferObject = deferObject || $q.defer();
+                    return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations', {headers:{user: Authentication.user.accountIdentifier}})
 
-                    promise.then(function (result) {
+                    .then(function (result) {
                             service.organizationsList = result.data.data;
 
                             // Filter deleted sites
@@ -65,13 +61,10 @@ angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope',
 
                             }
                             GlobalFilters.setDefaultSite(service.selectedOrganization.sites[0]);
-
-                            deferObject.resolve(result);
                         },
                         function (reason) {
-                            deferObject.reject(reason);
+                            console.log(reason);
                         });
-                    return deferObject.promise;
                 }
             },
 

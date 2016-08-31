@@ -2711,26 +2711,22 @@ angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope',
 
             getSelectedOrganization: function () {
                 if (Authentication.user) {
-                    var promise = $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + Authentication.user.accountIdentifier + '/selectedOrganization/');
-                    deferObject = deferObject || $q.defer();
+                    return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + Authentication.user.accountIdentifier + '/selectedOrganization/')
 
-                    promise.then(function (result) {
+                    .then(function (result) {
                             service.selectedOrganizationId = result.data.data.selectedOrganization;
-                            deferObject.resolve(result);
                         },
                         function (reason) {
-                            deferObject.reject(reason);
+                            console.log(reason)
                         });
-                    return deferObject.promise;
                 }
             },
 
             getOrganizations: function () {
                 if (Authentication.user) {
-                    var promise = $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations', {headers:{user: Authentication.user.accountIdentifier}});
-                    deferObject = deferObject || $q.defer();
+                    return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations', {headers:{user: Authentication.user.accountIdentifier}})
 
-                    promise.then(function (result) {
+                    .then(function (result) {
                             service.organizationsList = result.data.data;
 
                             // Filter deleted sites
@@ -2761,13 +2757,10 @@ angular.module('app.core').service('Organization', ['$http', '$q', '$rootScope',
 
                             }
                             GlobalFilters.setDefaultSite(service.selectedOrganization.sites[0]);
-
-                            deferObject.resolve(result);
                         },
                         function (reason) {
-                            deferObject.reject(reason);
+                            console.log(reason);
                         });
-                    return deferObject.promise;
                 }
             },
 
@@ -2856,12 +2849,11 @@ angular.module('app.core').service('Permission', ['$http', '$q', 'Authentication
         .factory('Qrcode', ['$http', 'Organization', 'GlobalFilters', Qrcode]);
 
     function Qrcode($http, Organization, GlobalFilters) {
-        var globalFiltersService = GlobalFilters;
-        var selectedOrganizationId = Organization.selectedOrganizationId;;
-        
         /* Function to obtain the current qr code of a site */
-        function getCurrentQr() {
-            return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + selectedOrganizationId + '/sites/' + globalFiltersService.selectedSite.identifier + '/getqrcode').then(function (response) {
+        function getCurrentQr(site) {
+            var selectedOrganizationId = Organization.selectedOrganizationId;
+
+            return $http.get(ApplicationConfiguration.applicationBackendURL + 'api/organizations/' + selectedOrganizationId + '/sites/' + site + '/getqrcode').then(function (response) {
                 return response.data;
             });
         }
@@ -2955,9 +2947,11 @@ angular.module('dashboard').config(['$stateProvider',
          =============================================================================================================*/
         /* Function to get all the initial data need it to initialization of the module */
         function getInitialData() {
+            var site = GlobalFilters.selectedSite.identifier;
+
             if($scope.selectedOrganizationId){
                 $scope.isLoading = true;
-                $scope.qrCodeService.getCurrentQr().then(function(currentQR) {
+                $scope.qrCodeService.getCurrentQr(site).then(function(currentQR) {
                     $scope.currentQR = currentQR;
                     return $scope.productsService.getReadyProducts();
                 }).then(function(products){
@@ -3703,7 +3697,6 @@ angular.module('dashboard').config(['$stateProvider',
             if ($scope.selectedOrganizationId) {
                 $scope.productsService.getReadyProducts().then(function(products) {
                     $scope.products = products.data.elements;
-                    console.log($scope.products);
                     return $scope.giftsService.getAutomaticGifts();
                 }).then(function(automaticGifts) {
                     $scope.npsGiftsAutomatic = automaticGifts;
@@ -3832,8 +3825,8 @@ angular.module('dashboard').config(['$stateProvider',
         }
         //Assign a gift to an user
         $scope.assignGift = function () {
-
             if ($scope.giftDisplay=='manual') {
+                console.log($scope.userCommentIdentifier);
                 $http.post(ApplicationConfiguration.applicationBackendURL + 'api/gift/assign/nps', {
                     npsCommentIdentifier: $scope.npsCommentIdentifier,
                     biinieIdentifier: $scope.userCommentIdentifier,

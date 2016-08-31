@@ -1,6 +1,6 @@
 .nps{
   //Nps partial client view styles
-  .tab-content{
+  .commentsContainer{
     padding-bottom: 0;
 
     .actions-box{
@@ -21,22 +21,20 @@
       background-color: white;
     }
     .list-group{
-      max-height: 340px;
-      min-height: 340px;
+      height: 340px;
       overflow-x: hidden;
       overflow-y: auto;
       padding-top: 0px;
+      margin: 0;
 
       .list-group-item{
-        min-height: 117px;
+        height: 117px;
+        &:first-child, &:last-child{
+          border-radius: 0;
+        }
       }
     }
   }
-  //.nps-badge{
-  //  position: absolute;
-  //  top: -5px;
-  //  right: 5px;
-  //}
   .panel{
     border-radius: 0;
   }
@@ -118,7 +116,7 @@
       }
     }
     .commentsContainer{
-      height: 415px;
+      height: 318px;
       overflow: hidden;
       overflow-y: auto;
     }

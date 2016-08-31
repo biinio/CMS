@@ -169,7 +169,6 @@
             if ($scope.selectedOrganizationId) {
                 $scope.productsService.getReadyProducts().then(function(products) {
                     $scope.products = products.data.elements;
-                    console.log($scope.products);
                     return $scope.giftsService.getAutomaticGifts();
                 }).then(function(automaticGifts) {
                     $scope.npsGiftsAutomatic = automaticGifts;
@@ -298,8 +297,8 @@
         }
         //Assign a gift to an user
         $scope.assignGift = function () {
-
             if ($scope.giftDisplay=='manual') {
+                console.log($scope.userCommentIdentifier);
                 $http.post(ApplicationConfiguration.applicationBackendURL + 'api/gift/assign/nps', {
                     npsCommentIdentifier: $scope.npsCommentIdentifier,
                     biinieIdentifier: $scope.userCommentIdentifier,
