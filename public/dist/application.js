@@ -1556,6 +1556,10 @@ angular.module('cards').config(['$stateProvider',
             }
             return parseCards;
         }
+        /* Set new Image if the product select change*/
+        $scope.setNewImage = function (product) {
+            $scope.objectsSidebarService.selectedObject.gift.image = $scope.productsService.getImage(product, $scope.products);
+        }
     }
 })();
 
