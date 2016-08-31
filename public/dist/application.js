@@ -1361,7 +1361,7 @@ angular.module('cards').config(['$stateProvider',
                     "<img ng-if='item.gift' ng-src='{{item.gift.image}}' pending-indicator='pending-indicator'/>"+
                 "</div>" +
                 "<div class='col-md-9 leftInformationArea'>"+
-                    "<label class='twoRowTitle'>{{organizationService.selectedOrganization.name}}</label>"+
+                    "<label class='twoRowTitle'>{{item.title}}</label>"+
                     "<small>Cliente frecuente </small><label ng-if='item.isActive' class='fa fa-check-circle enlarge-icon'></label>"+
                 "</div>";
             $scope.objectsSidebarService.template =$scope.sidebarTemplate;
@@ -1605,7 +1605,7 @@ angular.module('cards').config(['$stateProvider',
                     console.log(error);
                 });
         }
-        /* Function to delete a card */
+        /* Function to update a card */
         function updateCard(cardToUpdate, propertyToUpdate) {
             var currentOrganization = Organization.selectedOrganizationId;
 
@@ -10615,9 +10615,9 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
         .module('users')
         .controller('UsersController', UsersController);
 
-    UsersController.$inject = ['$window', '$state',  '$scope', 'Loading', 'Organization', 'Authentication', '$translate', 'toaster', 'UsersOrg','GlobalFilters', '$timeout'];
+    UsersController.$inject = ['$q', '$window', '$state',  '$scope', 'Loading', 'Organization', 'Authentication', '$translate', 'toaster', 'UsersOrg','GlobalFilters', '$timeout'];
 
-    function UsersController($window, $state, $scope, Loading, Organization, Authentication, $translate, toaster, UsersOrg, GlobalFilters, $timeout) {
+    function UsersController($q, $window, $state, $scope, Loading, Organization, Authentication, $translate, toaster, UsersOrg, GlobalFilters, $timeout) {
         var user = this;
 
         /* Redirect to login if there is no user*/
@@ -10642,6 +10642,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
             // $scope.selectedOrganization = Organization.selectedOrganization;
             $scope.selectedOrganizationId = Organization.selectedOrganizationId;
             $scope.usersService = UsersOrg;
+            $scope.currentUser = {};
 
             getInitialData();
         }
@@ -10673,7 +10674,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
             if($scope.selectedOrganizationId){
                 $scope.isLoading = true;
                 $scope.usersService.getUsers().then(function(users) {
-                    $scope.users = users;
+                    $scope.users = users.reverse();
                     console.log(users);
                     $scope.loadingService.isLoading = false;
                 });
@@ -10681,12 +10682,14 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
         }
         /* Function to invite a new user */
         $scope.invite = function() {
-            $scope.usersService.invite($scope.user).then(function(response) {
-                if(response.status === 200){
+            $scope.usersService.invite($scope.currentUser).then(function(response) {
+                if(response && response.status==200){
                     return $scope.usersService.getUsers();
+                } else {
+                    return $q.reject('Some error occured');
                 }
             }).then(function(users) {
-                $scope.users = users;
+                $scope.users = users.reverse();
                 resetForm();
                 $scope.activeTab[0] = true;
             });
@@ -10700,20 +10703,9 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
         };
         /* Function to reset form */
         function resetForm() {
-            $scope.user = {};
-            // console.log( user.myForm);
-            // user.myForm.$dirty = false;
-            // user.myForm.$pristine = true;
-            // user.myForm.$submitted = false;
-            // user.myForm.$error = {};
-            // user.myForm.$setUntouched();
+            user.myForm.$setUntouched();
             user.myForm.$setPristine();
-            // user.myForm.$setValidity();
-            // user.myForm.$rollbackViewValue();
-            // user.myForm.$setUntouched();
-            // user.myForm.$error = {};
-            console.log( user.myForm);
-
+            $scope.currentUser = {};
         }
     }
 })();

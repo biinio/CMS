@@ -34,7 +34,7 @@
                             <!--name name="name"-->
                             <div class="form-group">
                                 <label for="userName" translate="USER.USER_NAME" class="control-label"></label>
-                                <input id="userName" ng-model="user.displayName"
+                                <input id="userName" ng-model="currentUser.displayName"
                                        name="name"
                                        type="text" placeholder="{{ 'USER.USER_NAME_PLACEHOLDER' | translate }}"
                                        required class="form-control title-value"/>
@@ -46,7 +46,7 @@
                             <!--lastName name="lastName"-->
                             <div class="form-group">
                                 <label for="lastName" translate="USER.LAST_NAME" class="control-label"></label>
-                                <input id="lastName" ng-model="user.lastName"
+                                <input id="lastName" ng-model="currentUser.lastName"
                                        name="lastName"
                                        type="text" placeholder="{{ 'USER.LAST_NAME_PLACEHOLDER' | translate }}"
                                        required class="form-control title-value"/>
@@ -58,7 +58,7 @@
                             <!--email name="email"-->
                             <div class="form-group">
                                 <label for="email" translate="USER.EMAIL" class="control-label"></label>
-                                <input id="email" ng-model="user.email"
+                                <input id="email" ng-model="currentUser.email"
                                        name="email"
                                        ng-pattern="/^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/"
                                        type="text" placeholder="{{ 'USER.EMAIL_PLACEHOLDER' | translate }}"

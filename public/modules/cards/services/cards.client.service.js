@@ -40,7 +40,7 @@
                     console.log(error);
                 });
         }
-        /* Function to delete a card */
+        /* Function to update a card */
         function updateCard(cardToUpdate, propertyToUpdate) {
             var currentOrganization = Organization.selectedOrganizationId;
 
