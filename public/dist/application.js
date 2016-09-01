@@ -10695,6 +10695,31 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
             });
         }
 
+        /* Function that display the swal as a confirmation to remove user */
+        $scope.removeUser = function(user) {
+            var translatedTexts  = $translate.instant(["GENERIC.REMOVE_USER_TITLE","GENERIC.REMOVE_USER_CONFIRMATION","GENERIC.REMOVE","GENERIC.CANCEL"]);
+
+            swal({
+                title: translatedTexts["GENERIC.REMOVE_USER_TITLE"],
+                text: translatedTexts["GENERIC.REMOVE_USER_CONFIRMATION"],
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText:translatedTexts["GENERIC.CANCEL"],
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: translatedTexts["GENERIC.REMOVE"],
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            }, function () {
+                $scope.usersService.removeUser(user.accountIdentifier).then(function() {
+                    var translatedTexts  = $translate.instant(["USER.DELETED_TEXT","GENERIC.REMOVED"]);
+                    swal(translatedTexts["GENERIC.REMOVED"], translatedTexts["USER.DELETED_TEXT"], "success");
+                    return $scope.usersService.getUsers();
+                }).then(function(users) {
+                    $scope.users = users.reverse();
+                });
+            });
+        };
+        
        /* Function to control the tabs (active)
         * param type: INT, index
         */
@@ -10783,10 +10808,24 @@ angular.module('users').factory('Users', ['$resource',
                 });
         }
 
+        /* Function to remove an user */
+
+        function removeUser(userId) {
+            var currentOrganization = Organization.selectedOrganizationId;
+
+            return $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/clients/' + userId + '/organization/' + currentOrganization)
+                .then(function (response) {
+                    return response;
+                },function (error) {
+                    console.log(error);
+                });
+        }
+
 
         return {
             getUsers: getUsers,
-            invite: invite
+            invite: invite,
+            removeUser: removeUser
         };
     }  /* UsersService function ends */
 })();

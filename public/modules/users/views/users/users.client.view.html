@@ -12,7 +12,8 @@
                                 <th class="col-sm-3" translate="USER.TH_NAME"></th>
                                 <th class="col-sm-3 hidden-xs" translate="USER.TH_EMAIL"></th>
                                 <th class="col-sm-3" translate="USER.TH_USER_TYPE"></th>
-                                <th class="col-sm-3" translate="USER.TH_PHONE"></th>
+                                <th class="col-sm-2" translate="USER.TH_PHONE"></th>
+                                <th class="col-sm-1" translate="USER.TH_ACTIONS"></th>
                             </tr>
                             </thead>
                             <!-- / Head -->
@@ -23,6 +24,7 @@
                                 <td class="hidden-xs">{{user.emails[0]}}</td>
                                 <td>{{user.role}}</td>
                                 <td>{{user.phoneNumber}}</td>
+                                <td class="actions"><button uib-tooltip="{{'GENERIC.REMOVE' | translate}}" class="btn btn-xs btn-danger" data-ng-click="removeUser(user)"><span class="fa fa-trash"></span></button></td>
                             </tr>
                             </tbody><!-- / Body -->
                         </table>

@@ -16896,6 +16896,9 @@ input.cmn-toggle-round:checked + label:after {
 .users-section .userTabs table {
   margin-top: 5px;
 }
+.users-section .userTabs table .actions .btn {
+  border-radius: 5px;
+}
 /* Users extra */
 @media (min-width: 992px) {
   .nav-users {
