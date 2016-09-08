@@ -39,10 +39,24 @@
                 });
         }
 
+        /* Function to remove an user */
+
+        function removeUser(userId) {
+            var currentOrganization = Organization.selectedOrganizationId;
+
+            return $http.delete(ApplicationConfiguration.applicationBackendURL + 'api/clients/' + userId + '/organization/' + currentOrganization)
+                .then(function (response) {
+                    return response;
+                },function (error) {
+                    console.log(error);
+                });
+        }
+
 
         return {
             getUsers: getUsers,
-            invite: invite
+            invite: invite,
+            removeUser: removeUser
         };
     }  /* UsersService function ends */
 })();

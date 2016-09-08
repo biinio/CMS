@@ -23,6 +23,7 @@
             $scope.selectedOrganizationId = Organization.selectedOrganizationId;
             /* Check if an items had been dragged */
             $scope.itemDragged = false;
+            $scope.items = null;
             getGiftBoardData();
         }
 
@@ -33,16 +34,22 @@
 
         $scope.$on('organizationChanged', function () {
             $timeout.cancel($scope.giftBoardTimeout);
+            $scope.items = null;
+            $scope.selectedOrganizationId = Organization.selectedOrganizationId;
             getGiftBoardData();
         });
 
         $scope.$on('Biin: Site Changed', function (scope, site) {
             $timeout.cancel($scope.giftBoardTimeout);
+            $scope.items = null;
+            $scope.selectedOrganizationId = Organization.selectedOrganizationId;
             getGiftBoardData();
         });
 
         $scope.$on('Biin: Days Range Changed', function (scope, numberdays) {
             $timeout.cancel($scope.giftBoardTimeout);
+            $scope.items = null;
+            $scope.selectedOrganizationId = Organization.selectedOrganizationId;
             getGiftBoardData();
         });
 
@@ -76,7 +83,7 @@
         }
         //Function to parse the information to what we need to display
         function generateDisplayInfo(data) {
-            $scope.items = [
+            $scope.itemsBase = [
                 {'name': 'Enviados','status':'SENT','gifts':[],'allowedTypes':[]},
                 {'name': 'Reclamados','status':'CLAIMED','gifts':[],'allowedTypes':['SENT','SHARED']},
                 {'name': 'Entregados','status':'DELIVERED','gifts':[],'allowedTypes':['CLAIMED']}
@@ -84,16 +91,27 @@
 
             if (Array.isArray(data)) {
                 for(var i in data){
+                    var newItem = {};
                     var currentStatus = data[i].status;
                     var list;
                     if(currentStatus === 'SHARED'){
-                        list = _.find($scope.items, function(o) {return o.status === 'SENT';});
+                        list = _.find($scope.itemsBase, function(o) {return o.status === 'SENT';});
                     } else{
-                        list = _.find($scope.items, function(o) {return o.status === currentStatus;});
+                        list = _.find($scope.itemsBase, function(o) {return o.status === currentStatus;});
                     }
 
                     //If status is REFUSED nothing happens
                     if(list){
+                        newItem.lastname = data[i].user.lastName;
+                        newItem.name = data[i].user.firstName;
+                        newItem.email = data[i].user.email;
+                        newItem.productIdentifier = data[i].gift.productIdentifier;
+                        newItem.recievedDate = data[i].recievedDate;
+                        newItem.claimedDate = data[i].claimedDate;
+                        newItem.deliveredDate = data[i].deliveredDate;
+                        newItem.status = data[i].status;
+                        newItem.identifier = data[i].identifier;
+
                         //Setting the image URL
                         var imageURL = "";
 
@@ -104,11 +122,20 @@
                         } else {
                             imageURL = 'modules/core/img/icons/maleAvatar.png';
                         }
-                        data[i].image = imageURL;
+                        newItem.image = imageURL;
                         //Pushing the object
-                        list.gifts.push(data[i]);
+                        list.gifts.push(newItem);
                     }
                 }
+                if(!$scope.items){
+                    $scope.items = $scope.itemsBase;
+                } else {
+                    if(angular.toJson($scope.items) !== angular.toJson($scope.itemsBase)) {
+                        $scope.items = angular.copy($scope.itemsBase);
+                        console.log('Hubo un cambio');
+                    }
+                }
+
             }
             refreshingData();
         }

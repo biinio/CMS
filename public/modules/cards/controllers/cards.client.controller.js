@@ -51,7 +51,7 @@
                     "<img ng-if='item.gift' ng-src='{{item.gift.image}}' pending-indicator='pending-indicator'/>"+
                 "</div>" +
                 "<div class='col-md-9 leftInformationArea'>"+
-                    "<label class='twoRowTitle'>{{organizationService.selectedOrganization.name}}</label>"+
+                    "<label class='twoRowTitle'>{{item.title}}</label>"+
                     "<small>Cliente frecuente </small><label ng-if='item.isActive' class='fa fa-check-circle enlarge-icon'></label>"+
                 "</div>";
             $scope.objectsSidebarService.template =$scope.sidebarTemplate;
@@ -245,6 +245,10 @@
                 parseCards.push(cards[i]);
             }
             return parseCards;
+        }
+        /* Set new Image if the product select change*/
+        $scope.setNewImage = function (product) {
+            $scope.objectsSidebarService.selectedObject.gift.image = $scope.productsService.getImage(product, $scope.products);
         }
     }
 })();

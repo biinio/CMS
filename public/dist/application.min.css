@@ -16606,38 +16606,42 @@ input.cmn-toggle-round:checked + label:after {
   background-color: white;
   display: table;
 }
-.nps .tab-content {
+.nps .commentsContainer {
   padding-bottom: 0;
 }
-.nps .tab-content .actions-box {
+.nps .commentsContainer .actions-box {
   height: 100%;
 }
-.nps .tab-content .actions-box small {
+.nps .commentsContainer .actions-box small {
   font-size: 10px;
 }
-.nps .tab-content small {
+.nps .commentsContainer small {
   display: block;
 }
-.nps .tab-content button {
+.nps .commentsContainer button {
   margin-top: 5px;
   width: 110px;
   left: 40px;
 }
-.nps .tab-content a.list-group-item:hover,
-.nps .tab-content button.list-group-item:hover,
-.nps .tab-content a.list-group-item:focus,
-.nps .tab-content button.list-group-item:focus {
+.nps .commentsContainer a.list-group-item:hover,
+.nps .commentsContainer button.list-group-item:hover,
+.nps .commentsContainer a.list-group-item:focus,
+.nps .commentsContainer button.list-group-item:focus {
   background-color: white;
 }
-.nps .tab-content .list-group {
-  max-height: 340px;
-  min-height: 340px;
+.nps .commentsContainer .list-group {
+  height: 340px;
   overflow-x: hidden;
   overflow-y: auto;
   padding-top: 0px;
+  margin: 0;
 }
-.nps .tab-content .list-group .list-group-item {
-  min-height: 117px;
+.nps .commentsContainer .list-group .list-group-item {
+  height: 117px;
+}
+.nps .commentsContainer .list-group .list-group-item:first-child,
+.nps .commentsContainer .list-group .list-group-item:last-child {
+  border-radius: 0;
 }
 .nps .panel {
   border-radius: 0;
@@ -16706,7 +16710,7 @@ input.cmn-toggle-round:checked + label:after {
   text-align: center;
 }
 .nps .npsContainer .commentsContainer {
-  height: 415px;
+  height: 318px;
   overflow: hidden;
   overflow-y: auto;
 }
@@ -16891,6 +16895,9 @@ input.cmn-toggle-round:checked + label:after {
 }
 .users-section .userTabs table {
   margin-top: 5px;
+}
+.users-section .userTabs table .actions .btn {
+  border-radius: 5px;
 }
 /* Users extra */
 @media (min-width: 992px) {
