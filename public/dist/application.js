@@ -290,15 +290,15 @@ angular.module('basiccms').config(['$stateProvider',
                 url: '/basiccms',
                 templateUrl: 'modules/basiccms/views/basic.client.view.html',
                 resolve: {
-                    permissions: function(Permission) {
+                    permissions: ["Permission", function(Permission) {
                         return Permission.getPermissions();
-                    },
-                    selectedOrganization: function (Organization) {
+                    }],
+                    selectedOrganization: ["Organization", function (Organization) {
                         return Organization.getSelectedOrganization();
-                    },
-                    organization: function (Organization) {
+                    }],
+                    organization: ["Organization", function (Organization) {
                         return Organization.getOrganizations();
-                    }
+                    }]
                 }
             });
     }
@@ -657,15 +657,15 @@ angular.module('biins').config(['$stateProvider',
                 url: '/biins',
                 templateUrl: 'modules/biins/views/biins.client.view.html',
                 resolve: {
-                    permissions: function(Permission) {
+                    permissions: ["Permission", function(Permission) {
                         return Permission.getPermissions();
-                    },
-                    selectedOrganization: function (Organization) {
+                    }],
+                    selectedOrganization: ["Organization", function (Organization) {
                         return Organization.getSelectedOrganization();
-                    },
-                    organization: function (Organization) {
+                    }],
+                    organization: ["Organization", function (Organization) {
                         return Organization.getOrganizations();
-                    }
+                    }]
                 }
             });
     }
@@ -1294,15 +1294,15 @@ angular.module('cards').config(['$stateProvider',
             url: '/cards',
             templateUrl: 'modules/cards/views/cards.client.view.html',
             resolve:{
-                permissions: function(Permission) {
+                permissions: ["Permission", function(Permission) {
                     return Permission.getPermissions();
-                },
-                selectedOrganization: function (Organization) {
+                }],
+                selectedOrganization: ["Organization", function (Organization) {
                     return Organization.getSelectedOrganization();
-                },
-                organization: function (Organization) {
+                }],
+                organization: ["Organization", function (Organization) {
                     return Organization.getOrganizations();
-                }
+                }]
             }
         });
     }
@@ -2175,15 +2175,15 @@ angular.module('cards').config(['$stateProvider',
                 //url: '/home',
                 templateUrl: 'modules/core/views/home.client.view.html',
                 resolve: {
-                    permissions: function(Permission) {
+                    permissions: ["Permission", function(Permission) {
                         return Permission.getPermissions();
-                    },
-                    selectedOrganization: function (Organization) {
+                    }],
+                    selectedOrganization: ["Organization", function (Organization) {
                         return Organization.getSelectedOrganization();
-                    },
-                    organization: function (Organization) {
+                    }],
+                    organization: ["Organization", function (Organization) {
                         return Organization.getOrganizations();
-                    }
+                    }]
                 }
             })
             .state('appleftbar', {
@@ -2879,15 +2879,15 @@ angular.module('dashboard').config(['$stateProvider',
                 url: '/dashboard',
                 templateUrl: 'modules/dashboard/views/dashboard.client.view.html',
                 resolve: {
-                    permissions: function(Permission) {
+                    permissions: ["Permission", function(Permission) {
                         return Permission.getPermissions();
-                    },
-                    selectedOrganization: function (Organization) {
+                    }],
+                    selectedOrganization: ["Organization", function (Organization) {
                         return Organization.getSelectedOrganization();
-                    },
-                    organization: function (Organization) {
+                    }],
+                    organization: ["Organization", function (Organization) {
                         return Organization.getOrganizations();
-                    }
+                    }]
                 }
             });
     }
@@ -3217,7 +3217,7 @@ angular.module('dashboard').config(['$stateProvider',
                     }
 
                     //If status is REFUSED nothing happens
-                    if(list){
+                    if(list && data[i].user){
                         newItem.lastname = data[i].user.lastName;
                         newItem.name = data[i].user.firstName;
                         newItem.email = data[i].user.email;
@@ -5638,15 +5638,15 @@ angular.module('gifts').config(['$stateProvider',
             url: '/gifts',
             templateUrl: 'modules/gifts/views/gifts.client.view.html',
             resolve:{
-                permissions: function(Permission) {
+                permissions: ["Permission", function(Permission) {
                     return Permission.getPermissions();
-                },
-                selectedOrganization: function (Organization) {
+                }],
+                selectedOrganization: ["Organization", function (Organization) {
                     return Organization.getSelectedOrganization();
-                },
-                organization: function (Organization) {
+                }],
+                organization: ["Organization", function (Organization) {
                     return Organization.getOrganizations();
-                }
+                }]
             }
         });
     }
@@ -6343,15 +6343,15 @@ angular.module('maintenance').config(['$stateProvider',
                 url: '/maintenance',
                 templateUrl: 'modules/maintenance/views/maintenance.client.view.html',
                 resolve: {
-                    permissions: function(Permission) {
+                    permissions: ["Permission", function(Permission) {
                         return Permission.getPermissions();
-                    },
-                    selectedOrganization: function (Organization) {
+                    }],
+                    selectedOrganization: ["Organization", function (Organization) {
                         return Organization.getSelectedOrganization();
-                    },
-                    organization: function (Organization) {
+                    }],
+                    organization: ["Organization", function (Organization) {
                         return Organization.getOrganizations();
-                    }
+                    }]
                 }
             });
     }
@@ -6834,15 +6834,15 @@ angular.module('nps').config(['$stateProvider',
                 url: '/nps',
                 templateUrl: 'modules/nps/views/nps.client.view.html',
                 resolve: {
-                    permissions: function(Permission) {
+                    permissions: ["Permission", function(Permission) {
                         return Permission.getPermissions();
-                    },
-                    selectedOrganization: function (Organization) {
+                    }],
+                    selectedOrganization: ["Organization", function (Organization) {
                         return Organization.getSelectedOrganization();
-                    },
-                    organization: function (Organization) {
+                    }],
+                    organization: ["Organization", function (Organization) {
                         return Organization.getOrganizations();
-                    }
+                    }]
                 }
             });
         /*.
@@ -7239,15 +7239,15 @@ angular.module('organization').config(['$stateProvider',
                 url: '/organization',
                 templateUrl: 'modules/organization/views/organization.client.view.html',
                 resolve: {
-                    permissions: function(Permission) {
+                    permissions: ["Permission", function(Permission) {
                         return Permission.getPermissions();
-                    },
-                    selectedOrganization: function (Organization) {
+                    }],
+                    selectedOrganization: ["Organization", function (Organization) {
                         return Organization.getSelectedOrganization();
-                    },
-                    organization: function (Organization) {
+                    }],
+                    organization: ["Organization", function (Organization) {
                         return Organization.getOrganizations();
-                    }
+                    }]
                 }
             });
         /*.
@@ -8128,15 +8128,15 @@ angular.module('products').config(['$stateProvider',
             url: '/products',
             templateUrl: 'modules/products/views/products.client.view.html',
             resolve:{
-                permissions: function(Permission) {
+                permissions: ["Permission", function(Permission) {
                     return Permission.getPermissions();
-                },
-                selectedOrganization: function (Organization) {
+                }],
+                selectedOrganization: ["Organization", function (Organization) {
                     return Organization.getSelectedOrganization();
-                },
-                organization: function (Organization) {
+                }],
+                organization: ["Organization", function (Organization) {
                     return Organization.getOrganizations();
-                }
+                }]
             }
         });
     }
@@ -8595,15 +8595,15 @@ angular.module('dashboard').config(['$stateProvider',
                 url: '/profile',
                 templateUrl: 'modules/profile/views/profile.client.view.html',
                 resolve: {
-                    permissions: function(Permission) {
+                    permissions: ["Permission", function(Permission) {
                         return Permission.getPermissions();
-                    },
-                    selectedOrganization: function (Organization) {
+                    }],
+                    selectedOrganization: ["Organization", function (Organization) {
                         return Organization.getSelectedOrganization();
-                    },
-                    organization: function (Organization) {
+                    }],
+                    organization: ["Organization", function (Organization) {
                         return Organization.getOrganizations();
-                    }
+                    }]
                 }
             });
         /*.
@@ -8942,15 +8942,15 @@ angular.module('showcases').config(['$stateProvider',
                 url: '/showcases',
                 templateUrl: 'modules/showcases/views/showcases.client.view.html',
                 resolve: {
-                    permissions: function(Permission) {
+                    permissions: ["Permission", function(Permission) {
                         return Permission.getPermissions();
-                    },
-                    selectedOrganization: function (Organization) {
+                    }],
+                    selectedOrganization: ["Organization", function (Organization) {
                         return Organization.getSelectedOrganization();
-                    },
-                    organization: function (Organization) {
+                    }],
+                    organization: ["Organization", function (Organization) {
                         return Organization.getOrganizations();
-                    }
+                    }]
                 }
             });
     }
@@ -9812,15 +9812,15 @@ angular.module('sites').config(['$stateProvider',
                 url: '/sites',
                 templateUrl: 'modules/sites/views/sites.client.view.html',
                 resolve: {
-                    permissions: function(Permission) {
+                    permissions: ["Permission", function(Permission) {
                         return Permission.getPermissions();
-                    },
-                    selectedOrganization: function (Organization) {
+                    }],
+                    selectedOrganization: ["Organization", function (Organization) {
                         return Organization.getSelectedOrganization();
-                    },
-                    organization: function (Organization) {
+                    }],
+                    organization: ["Organization", function (Organization) {
                         return Organization.getOrganizations();
-                    }
+                    }]
                 }
             });
     }
@@ -10440,15 +10440,15 @@ angular.module('users').config(['$stateProvider',
 			url: '/users',
 			templateUrl: 'modules/users/views/users/users.client.view.html',
 			resolve: {
-				permissions: function(Permission) {
+				permissions: ["Permission", function(Permission) {
 					return Permission.getPermissions();
-				},
-				selectedOrganization: function (Organization) {
+				}],
+				selectedOrganization: ["Organization", function (Organization) {
 					return Organization.getSelectedOrganization();
-				},
-				organization: function (Organization) {
+				}],
+				organization: ["Organization", function (Organization) {
 					return Organization.getOrganizations();
-				}
+				}]
 			}
 		});;
 	}

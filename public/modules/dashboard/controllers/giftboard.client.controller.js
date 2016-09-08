@@ -101,7 +101,7 @@
                     }
 
                     //If status is REFUSED nothing happens
-                    if(list){
+                    if(list && data[i].user){
                         newItem.lastname = data[i].user.lastName;
                         newItem.name = data[i].user.firstName;
                         newItem.email = data[i].user.email;
