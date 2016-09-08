@@ -98,19 +98,23 @@
             if(data.usersCard){
                 /* Setting the image URL */
                 var imageURL = "";
+                var usersDataCard = [];
                 for(var i in data.usersCard){
-                    if(data.usersCard[i].biinie.facebookAvatarUrl && data.usersCard[i].biinie.facebookAvatarUrl != ""){
-                        imageURL = data.usersCard[i].biinie.facebookAvatarUrl;
-                    } else if(data.usersCard[i].biinie.url && data.usersCard[i].biinie.url != "" ){
-                        imageURL = data.usersCard[i].biinie.url;
-                    } else {
-                        imageURL = 'modules/core/img/icons/maleAvatar.png';
+                    if(data.usersCard[i].biinie) {
+                        if (data.usersCard[i].biinie.facebookAvatarUrl && data.usersCard[i].biinie.facebookAvatarUrl != "") {
+                            imageURL = data.usersCard[i].biinie.facebookAvatarUrl;
+                        } else if (data.usersCard[i].biinie.url && data.usersCard[i].biinie.url != "") {
+                            imageURL = data.usersCard[i].biinie.url;
+                        } else {
+                            imageURL = 'modules/core/img/icons/maleAvatar.png';
+                        }
+                        data.usersCard[i].image = imageURL;
+                        usersDataCard.push(data.usersCard[i]);
                     }
-                    data.usersCard[i].image = imageURL;
                 }
             }
             /* Setting usersCard */
-            $scope.usersCard = data.usersCard;
+            $scope.usersCard = usersDataCard;
             $scope.isLoading = false;
         }
     }
